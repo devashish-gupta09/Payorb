@@ -31,9 +31,10 @@ function LandingCarousel({ urls }) {
         }}
         autoPlay={false}
       >
-        {urls.map((url) => {
+        {urls.map((url, index) => {
           return (
             <div
+              key={index}
               style={{
                 background: `linear-gradient(89.91deg, rgba(0, 0, 0, 0.79) 3.64%, rgba(0, 0, 0, 0.78) 28.9%, rgba(0, 0, 0, 0) 99.93%), url(${url}) no-repeat`,
                 height: "91vh",
