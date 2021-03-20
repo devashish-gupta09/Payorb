@@ -8,7 +8,8 @@ The landing page is divided into couple of sections as listed below
 
 Certain parts of the section mentioned are presented below as they would 
 be stored in the strapi cms. 
-   
+
+```
 LandingPage
     - Home
       - titleSection1
@@ -43,4 +44,4 @@ LandingPage
       - price
       - features
         - feature
-    
+```
