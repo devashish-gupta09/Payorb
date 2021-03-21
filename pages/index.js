@@ -1,9 +1,12 @@
+import { Grid } from "@material-ui/core"
 import { getClientReviewContent, getEventRegistrationContent, getFeaturesContent, getHomeContent, getUserRegistrationContent } from "../src/services/landing"
 import Landing from "./_landing"
 
 export default function Index({ landing }) {
   return (
-    <Landing content={landing} />
+    <Grid style={{backgroundColor:"#BDF5F2"}}>
+      <Landing content={landing} />
+    </Grid>
   )
 }
 
