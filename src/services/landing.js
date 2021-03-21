@@ -30,6 +30,8 @@ export const getFeaturesContent = async () => {
         )
 
         return {
+            title: res.data.title,
+            sectionLogo: buildImageUrl(res.data.sectionLogo.url),
             sectionTitle: res.data.sectionTitle,
             features: res.data.features
         }
