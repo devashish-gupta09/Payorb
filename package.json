@@ -15,5 +15,8 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-material-ui-carousel": "^2.2.1"
+  },
+  "devDependencies": {
+    "file-loader": "^6.2.0"
   }
 }
