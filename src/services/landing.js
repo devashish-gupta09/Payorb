@@ -46,6 +46,7 @@ export const getEventRegistrationContent = async () => {
         const res = await axios.get(`${CMS_URL}/event-registration`)
 
         return {
+            sectionLogo: buildImageUrl(res.data.sectionLogo.url),
             sectionTitle: res.data.sectionTitle,
             title: res.data.title,
             description: res.data.description,
@@ -62,6 +63,7 @@ export const getUserRegistrationContent = async () => {
         const res = await axios.get(`${CMS_URL}/user-registration`)
 
         return {
+            sectionLogo: buildImageUrl(res.data.sectionLogo.url),
             sectionTitle: res.data.sectionTitle,
             title: res.data.title,
             description: res.data.description,
@@ -83,6 +85,8 @@ export const getClientReviewContent = async () => {
         )
 
         return {
+            title: res.data.title,
+            sectionLogo: buildImageUrl(res.data.sectionLogo.url),
             sectionTitle: res.data.sectionTitle,
             clients: res.data.clients
         }
