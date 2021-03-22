@@ -38,7 +38,7 @@ export const styles = makeStyles({
     },
     carouselContentBodyContainer: {
         height: "100%",
-        paddingRight: "1em",
+        paddingRight: "3em",
     },
     clientProfileImage: {
         height: "60%",

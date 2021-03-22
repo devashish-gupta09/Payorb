@@ -1,10 +1,10 @@
 import { Grid } from "@material-ui/core"
-import { getClientReviewContent, getEventRegistrationContent, getFeaturesContent, getHomeContent, getUserRegistrationContent } from "../src/services/landing"
+import { getClientReviewContent, getEventRegistrationContent, getFeaturesContent, getHomeContent, getUserRegistrationContent, getGrowthContent } from "../src/services/landing"
 import Landing from "./_landing"
 
 export default function Index({ landing }) {
   return (
-    <Grid style={{backgroundColor:"#BDF5F2"}}>
+    <Grid style={{ backgroundColor: "#BDF5F2" }}>
       <Landing content={landing} />
     </Grid>
   )
@@ -17,11 +17,12 @@ export async function getStaticProps({ params, preview = null }) {
   const userRegistration = await getUserRegistrationContent()
   const eventRegistration = await getEventRegistrationContent()
   const clientReview = await getClientReviewContent()
+  const growth = await getGrowthContent()
 
   return {
     props: {
       landing: {
-        home, feature, userRegistration, eventRegistration, clientReview
+        home, feature, userRegistration, eventRegistration, clientReview, growth
       }
     }
   }
