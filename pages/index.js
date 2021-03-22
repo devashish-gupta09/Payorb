@@ -1,6 +1,7 @@
 import { Grid } from "@material-ui/core"
+import Landing from "../src/components/Landing"
 import { getClientReviewContent, getEventRegistrationContent, getFeaturesContent, getHomeContent, getUserRegistrationContent, getGrowthContent } from "../src/services/landing"
-import Landing from "./_landing"
+
 
 export default function Index({ landing }) {
   return (

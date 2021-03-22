@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles({
     container: {
-        padding: "3em 6em 3em 6em", background: "white"
+        padding: "4em 6em", background: "white"
     },
     pointsContainer: {
         padding: "1em 0"
