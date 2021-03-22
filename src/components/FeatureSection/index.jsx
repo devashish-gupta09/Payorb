@@ -18,9 +18,9 @@ function FeatureSection({ content }) {
         </Grid>
         <Grid container item sm={8}>
           <Grid container alignItems={"stretch"} spacing={4}>
-            {content.features.map((feature) => {
+            {content.features.map((feature, index) => {
               return (
-                <Grid container item sm={4}>
+                <Grid container item sm={4} key={index}>
                   <SectionCard
                     image={feature.image}
                     title={feature.title}
