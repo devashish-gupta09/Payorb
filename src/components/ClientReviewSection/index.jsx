@@ -18,7 +18,7 @@ function ReviewContentSection({ review, name, classes }) {
         <Typography paragraph variant="h4" className={globalStylesClasses.bold}>
           {review}
         </Typography>
-        <Typography fullWidth className={globalStylesClasses.bold} variant="h6">
+        <Typography className={globalStylesClasses.bold} variant="h6">
           {name}
         </Typography>
       </Grid>

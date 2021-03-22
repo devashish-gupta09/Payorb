@@ -95,3 +95,24 @@ export const getClientReviewContent = async () => {
         console.error(err.message)
     }
 }
+
+
+export const getGrowthContent = async () => {
+    try {
+        const res = await axios.get(`${CMS_URL}/growth`)
+
+        res.data.growth_points.map((point, index) => {
+            res.data.growth_points[index].image = buildImageUrl(point.pointImage.url)
+        })
+
+        return {
+            title: res.data.title,
+            sectionLogo: buildImageUrl(res.data.sectionLogo.url),
+            sectionTitle: res.data.sectionTitle,
+            growthPoints: res.data.growth_points
+        }
+
+    } catch (err) {
+        console.error(err.message)
+    }
+}
