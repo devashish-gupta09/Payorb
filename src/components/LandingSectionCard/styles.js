@@ -1,11 +1,16 @@
 import { makeStyles } from "@material-ui/core";
 
-export const styles = makeStyles({
+export const styles = makeStyles((theme) => ({
     container: {
         flex: 1,
         borderRadius: "0.75em",
         padding: "2em 0 1em 0",
         boxShadow: "0px 1em 2em rgba(0, 0, 0, 0.1)",
+        [theme.breakpoints.down("sm")]: {
+            width: "80vw",
+            height: "50vh"
+        }
+
     },
     logo: {
         padding: "4em 0"
@@ -28,4 +33,4 @@ export const styles = makeStyles({
         padding: "0.5em 3em 1em 3em",
         color: "#828282"
     }
-})
+}))

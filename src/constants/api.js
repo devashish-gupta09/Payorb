@@ -1,1 +1,1 @@
-export const CMS_URL = "http://localhost:1337"
+export const CMS_URL = "http://192.168.1.5:1337"

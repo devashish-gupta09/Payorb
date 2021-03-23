@@ -1,10 +1,12 @@
 import { makeStyles } from "@material-ui/core";
 
-export const styles = makeStyles({
+export const styles = makeStyles((theme) => ({
     root: {
         backgroundColor: "white",
         padding: "0.5em 4em",
-
+        [theme.breakpoints.down("sm")]: {
+            padding: "0.5em 1em",
+        }
     },
     buttonSpacing: {
         padding: "0 1.5em",
@@ -17,6 +19,27 @@ export const styles = makeStyles({
         marginLeft: "1em"
     },
     buttonContainer: {
-        width: "fit-content"
-    }
-})
+        width: "fit-content",
+        [theme.breakpoints.down("sm")]: {
+            display: "None"
+        }
+    },
+    menuButtonContainer: {
+        display: "None",
+        [theme.breakpoints.down("sm")]: {
+            display: "contents"
+        }
+    },
+    drawerList: {
+        "& > li": {
+            listStyleType: "None",
+            padding: "1em 0",
+            color: "#828282",
+            letterSpacing: "1px"
+        }
+    }, drawerItemContainer: {
+        padding: "0 1.5em", width: "95vw"
+    },
+    drawerTitleContainer: { padding: "3em 0 2em 0" },
+    drawerClose: { color: "black" }
+}))

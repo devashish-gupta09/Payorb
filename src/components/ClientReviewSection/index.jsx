@@ -15,10 +15,17 @@ function ReviewContentSection({ review, name, classes }) {
       className={classes.carouselContentBodyContainer}
     >
       <Grid>
-        <Typography paragraph variant="h4" className={globalStylesClasses.bold}>
+        <Typography
+          paragraph
+          variant="h4"
+          className={`${classes.reviewTitle} ${globalStylesClasses.bold}`}
+        >
           {review}
         </Typography>
-        <Typography className={globalStylesClasses.bold} variant="h6">
+        <Typography
+          className={`${classes.nameTitle} ${globalStylesClasses.bold}`}
+          variant="h6"
+        >
           {name}
         </Typography>
       </Grid>
@@ -38,10 +45,14 @@ function ClientReviewSection({ content }) {
         />
       </Grid>
       <Carousel
-        stopAutoPlayOnHover
+        fullHeightHover={false}
+        stopAutoPlayOnHover={true}
         swipe={true}
         navButtonsProps={{
           className: `${classes.navButton}`,
+        }}
+        navButtonsWrapperProps={{
+          className: `${classes.navButtonContainer}`,
         }}
         IndicatorIcon={<Grid></Grid>}
         indicatorIconButtonProps={{
@@ -50,6 +61,7 @@ function ClientReviewSection({ content }) {
         activeIndicatorIconButtonProps={{
           className: `${classes.activeIndicator}`,
         }}
+        
       >
         {content.clients.map((client, index) => {
           return (
@@ -64,14 +76,14 @@ function ClientReviewSection({ content }) {
                     justify="center"
                     alignItems="center"
                     item
-                    sm={4}
+                    xs={4}
                   >
                     <img
                       className={classes.clientProfileImage}
                       src={client.image}
                     />
                   </Grid>
-                  <Grid item sm={8}>
+                  <Grid item xs={8}>
                     <ReviewContentSection
                       review={client.review}
                       name={client.name}

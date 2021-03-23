@@ -1,7 +1,9 @@
 import { Grid, Typography } from "@material-ui/core";
 import React from "react";
+import ButtonCapsule from "../ButtonCapsule";
 import LandingSectionContent from "../LandingSectionContent";
 import { styles } from "./styles";
+import Link from "next/link";
 
 function GrowthSection({ content }) {
   const classes = styles();
@@ -14,11 +16,14 @@ function GrowthSection({ content }) {
         title={content.title}
       />
       <Grid container className={classes.pointsContainer}>
-        {content.growthPoints.map((point) => {
+        {content.growthPoints.map((point, index) => {
           return (
-            <Grid item sm={6}>
+            <Grid key={index} item sm={6}>
               <Grid container className={classes.point}>
-                <img src={point.image} className={classes.pointCheck} />
+                <Grid>
+                  <img src={point.image} className={classes.pointCheck} />
+                </Grid>
+
                 <Typography className={classes.pointText}>
                   {point.description}
                 </Typography>
@@ -26,6 +31,11 @@ function GrowthSection({ content }) {
             </Grid>
           );
         })}
+      </Grid>
+      <Grid container justify={"center"} className={classes.bottomButton}>
+        <Link href={"/signup"}>
+          <ButtonCapsule text={"Get Started"} />
+        </Link>
       </Grid>
     </Grid>
   );
