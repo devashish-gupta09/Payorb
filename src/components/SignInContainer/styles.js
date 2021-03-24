@@ -1,7 +1,19 @@
 import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
+    container: {
+        height: "100%",
+        [theme.breakpoints.down("sm")]: {
+            height: "fit-content"
+        }
+    },
+    leftContainer: {
+        [theme.breakpoints.down("sm")]: {
+            height: "fit-content"
+        }
+    },
     imageRight: {
+        flex: 1,
         [theme.breakpoints.down("sm")]: {
             display: "None"
         }
@@ -9,7 +21,8 @@ export const styles = makeStyles((theme) => ({
     imageTop: {
         display: "None",
         [theme.breakpoints.down("sm")]: {
-            display: "contents"
+            display: "contents",
+            height: "min-content"
         }
     },
     formLeft: {

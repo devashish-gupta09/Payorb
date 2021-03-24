@@ -19,7 +19,7 @@ export const styles = makeStyles((theme) => ({
     backLogo: {
         display: "None",
         [theme.breakpoints.down("sm")]: {
-            display: "contents"
+            display: "block"
         }
     }
 }))

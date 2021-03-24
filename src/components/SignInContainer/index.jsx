@@ -4,24 +4,24 @@ import SignInForm from "../SignInForm";
 import SigningBanner from "../SigningBanner";
 import { styles } from "./styles";
 
-function SignInContainer() {
+function SignInContainer({ content }) {
   const classes = styles();
   return (
-    <Grid container>
-      <Grid item sm={6}>
+    <Grid container className={classes.container} alignItems="stretch">
+      <Grid item sm={6} className={classes.leftContainer}>
         <Grid className={classes.formLeft}>
           <SignInForm />
         </Grid>
         <Grid className={classes.imageTop}>
-          <SigningBanner />
+          <SigningBanner content={content} />
         </Grid>
       </Grid>
-      <Grid item sm={6}>
+      <Grid item sm={6} container alignItems="stretch">
         <Grid className={classes.formBottom}>
           <SignInForm />
         </Grid>
         <Grid className={classes.imageRight}>
-          <SigningBanner />
+          <SigningBanner content={content} />
         </Grid>
       </Grid>
     </Grid>
