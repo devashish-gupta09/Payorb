@@ -17,7 +17,7 @@ function EventRegistrationSection({ content }) {
           />
         </Grid>
         <Grid container item sm={8} justify="center">
-          <img src={content.image}></img>
+          <img className={classes.image} src={content.image}></img>
         </Grid>
       </Grid>
     </Grid>

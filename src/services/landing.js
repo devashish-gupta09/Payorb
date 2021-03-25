@@ -17,6 +17,13 @@ export const getHomeContent = async () => {
 
     } catch (err) {
         console.error(err.message)
+        return {
+            titleSection1: "One",
+            titleSection2: "Workspace.",
+            titleSection3: "Endless Solutions",
+            description: "PayOrb powerful Event management solutions with a single source of truth. The only limit is your imagination.",
+            urls: ["https://storage.googleapis.com/bucket_icon_assets/assets/erik-brolin-ZARfCYDaVg0-unsplash%201.png"]
+        }
     }
 }
 
@@ -38,6 +45,16 @@ export const getFeaturesContent = async () => {
 
     } catch (err) {
         console.error(err.message)
+        return {
+            title: "What payorb can offer you",
+            sectionLogo: "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
+            sectionTitle: "FEATURES",
+            features: [{
+                title: "Safky",
+                description: "skafy",
+                image: "https://storage.googleapis.com/bucket_icon_assets/assets/Group.png",
+            }]
+        }
     }
 }
 
@@ -54,7 +71,14 @@ export const getEventRegistrationContent = async () => {
         }
 
     } catch (err) {
-        console.error(err.message)
+
+        return {
+            sectionLogo: "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
+            sectionTitle: "Event Registration",
+            title: "Event Registration",
+            description: "Some random description",
+            image: "https://storage.googleapis.com/bucket_icon_assets/assets/Rectangle%2035.png"
+        }
     }
 }
 
@@ -72,6 +96,13 @@ export const getUserRegistrationContent = async () => {
 
     } catch (err) {
         console.error(err.message)
+        return {
+            sectionLogo: "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
+            sectionTitle: "Event Registration",
+            title: "Event Registration",
+            description: "Some random description",
+            image: "https://storage.googleapis.com/bucket_icon_assets/assets/Rectangle%2035.png"
+        }
     }
 }
 
@@ -93,6 +124,18 @@ export const getClientReviewContent = async () => {
 
     } catch (err) {
         console.error(err.message)
+        return {
+            title: "Client Words",
+            sectionLogo: "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
+            sectionTitle: "REVIEW",
+            clients: [
+                {
+                    name: "Jonathon",
+                    review: "salkfhjsafsnfsda f sdaf sadf sadf saf sa fsa fsa dfnbadsf dsafsad f sadf sadf sad fdsa fdsa f dsaf",
+                    image: "https://storage.googleapis.com/bucket_icon_assets/assets/Ellipse%201.png"
+                }
+            ]
+        }
     }
 }
 
@@ -114,5 +157,15 @@ export const getGrowthContent = async () => {
 
     } catch (err) {
         console.error(err.message)
+        return {
+            title: "Growth",
+            sectionLogo: "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
+            sectionTitle: "GROWTH",
+            growthPoints: [
+                { description: "Lorem ipsum dolor sit amet, consectetur adipiscing", image: "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png" }
+
+                , { description: "Lorem ipsum dolor sit amet, consectetur adipiscing", image: "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png" }, { description: "Lorem ipsum dolor sit amet, consectetur adipiscing", image: "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png" }, { description: "Lorem ipsum dolor sit amet, consectetur adipiscing", image: "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png" }, { description: "Lorem ipsum dolor sit amet, consectetur adipiscing", image: "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png" }
+            ]
+        }
     }
 }
