@@ -1,19 +1,11 @@
-import { FormControl, Grid, TextField, Typography } from "@material-ui/core";
+import { Button, FormControl, Grid, TextField, Typography } from "@material-ui/core";
 import { styles } from "./styles";
 
 function SignUpForm() {
   const classes = styles();
   return (
     <Grid className={classes.container}>
-      <Typography
-        style={{
-          letterSpacing: "2px",
-          paddingBottom: "0.5em",
-          color: "#828282",
-        }}
-      >
-        SIGN UP
-      </Typography>
+      <Typography className={classes.sectionTitle}>SIGN UP</Typography>
       <Typography variant={"h4"} className={classes.title}>
         Get Started
       </Typography>
@@ -54,6 +46,21 @@ function SignUpForm() {
           label="Location"
           variant="outlined"
         />
+        <Button className={classes.signupButton}>Sign Up</Button>
+        <Typography align="center" className={classes.orText}>
+          OR
+        </Typography>
+
+        <Button className={classes.socialMediaButtons}>
+          Connect with google
+        </Button>
+
+        <Button className={classes.socialMediaButtons}>
+          Sign in with Facebook
+        </Button>
+        <Typography align="center" className={classes.signupMessage}>
+          Dont’s have an account? Sign Up
+        </Typography>
       </FormControl>
     </Grid>
   );
