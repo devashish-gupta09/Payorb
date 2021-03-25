@@ -38,7 +38,9 @@ function LandingHeader() {
           <Grid className={classes.drawerList}>
             <li>Events</li>
             <li>About Us</li>
-            <li>Sign In</li>
+            <Link href="/signin">
+              <li>Sign In</li>
+            </Link>
             <Link href="/signup">
               <li>Sign Up for Vendor</li>
             </Link>
@@ -60,11 +62,15 @@ function LandingHeader() {
           >
             <Button className={classes.buttonSpacing}>Events</Button>
             <Button className={classes.buttonSpacing}>About Us</Button>
-            <Link href="/signup">
+            <Link href="/signin">
               <Button className={classes.buttonSpacing}>Sign In</Button>
             </Link>
 
-            <Button className={classes.signupButton}>Sign up for Vendor</Button>
+            <Link href="/signup">
+              <Button className={classes.signupButton}>
+                Sign up for Vendor
+              </Button>
+            </Link>
           </Grid>
           <Grid
             className={classes.menuButtonContainer}
