@@ -5,23 +5,23 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { signUp } from "../../utils/auth";
+
 import { styles } from "./styles";
 
 function SignUpForm() {
   const classes = styles();
 
-  const handleSignUp = async () => {
-    const user = await signUp({
-      name: "Abhijeet",
-      username: "test",
-      password: "Ussword@2741",
-      email: "abhijeetrastogi1997@gmail.com",
-      phoneNumber: "+918968969078",
-    });
+  // const handleSignUp = async () => {
+  //   const user = await signUp({
+  //     name: "Abhijeet",
+  //     username: "test",
+  //     password: "Ussword@2741",
+  //     email: "abhijeetrastogi1997@gmail.com",
+  //     phoneNumber: "+918968969078",
+  //   });
 
-    console.log(user);
-  };
+  //   console.log(user);
+  // };
 
   return (
     <Grid className={classes.container}>

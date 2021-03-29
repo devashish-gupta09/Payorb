@@ -2,9 +2,9 @@ import '../styles/globals.css'
 
 import Amplify from 'aws-amplify';
 import awsconfig from '../aws-exports';
-Amplify.configure(awsconfig);
+// Amplify.configure(awsconfig);
 
-console.log(awsconfig)
+// console.log(awsconfig)
 
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
