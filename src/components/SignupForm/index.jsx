@@ -1,8 +1,28 @@
-import { Button, FormControl, Grid, TextField, Typography } from "@material-ui/core";
+import {
+  Button,
+  FormControl,
+  Grid,
+  TextField,
+  Typography,
+} from "@material-ui/core";
+
 import { styles } from "./styles";
 
 function SignUpForm() {
   const classes = styles();
+
+  // const handleSignUp = async () => {
+  //   const user = await signUp({
+  //     name: "Abhijeet",
+  //     username: "test",
+  //     password: "Ussword@2741",
+  //     email: "abhijeetrastogi1997@gmail.com",
+  //     phoneNumber: "+918968969078",
+  //   });
+
+  //   console.log(user);
+  // };
+
   return (
     <Grid className={classes.container}>
       <Typography className={classes.sectionTitle}>SIGN UP</Typography>
@@ -46,7 +66,9 @@ function SignUpForm() {
           label="Location"
           variant="outlined"
         />
-        <Button className={classes.signupButton}>Sign Up</Button>
+        <Button className={classes.signupButton} onClick={handleSignUp}>
+          Sign Up
+        </Button>
         <Typography align="center" className={classes.orText}>
           OR
         </Typography>
