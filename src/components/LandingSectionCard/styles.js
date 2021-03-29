@@ -4,7 +4,7 @@ export const styles = makeStyles((theme) => ({
     container: {
         flex: 1,
         borderRadius: "0.75em",
-        padding: "2em 0 1em 0",
+        padding: "2em 1em 1em 1em",
         boxShadow: "0px 1em 2em rgba(0, 0, 0, 0.1)",
         [theme.breakpoints.down("sm")]: {
             width: "80vw",

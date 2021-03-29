@@ -19,9 +19,9 @@ export const getHomeContent = async () => {
         console.error(err.message)
         return {
             titleSection1: "One",
-            titleSection2: "Workspace.",
-            titleSection3: "Endless Solutions",
-            description: "PayOrb powerful Event management solutions with a single source of truth. The only limit is your imagination.",
+            titleSection2: "Platform",
+            titleSection3: "Infinite Opportunities",
+            description: "A place to start & grow all your business ideas",
             urls: ["https://storage.googleapis.com/bucket_icon_assets/assets/erik-brolin-ZARfCYDaVg0-unsplash%201.png"]
         }
     }
@@ -50,13 +50,40 @@ export const getFeaturesContent = async () => {
             sectionLogo: "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
             sectionTitle: "FEATURES",
             features: [{
-                title: "Safky",
-                description: "skafy",
+                title: "Event Creation or One-on-one service Booking",
+                description: "As many as you want",
+                image: "https://storage.googleapis.com/bucket_icon_assets/assets/Group.png",
+            },
+            {
+                title: "One click to share & promote event",
+                description: null,
+                image: "https://storage.googleapis.com/bucket_icon_assets/assets/Group.png",
+            },
+            {
+                title: "Easy one-click event booking for your clients",
+                description: null,
+                image: "https://storage.googleapis.com/bucket_icon_assets/assets/Group.png",
+            },
+            {
+                title: "Instant Payouts",
+                description: null,
+                image: "https://storage.googleapis.com/bucket_icon_assets/assets/Group.png",
+            },
+            {
+                title: "User reviews to boost profile credibility",
+                description: null,
+                image: "https://storage.googleapis.com/bucket_icon_assets/assets/Group.png",
+            },
+            {
+                title: "Real-time analytics for your business",
+                description: null,
                 image: "https://storage.googleapis.com/bucket_icon_assets/assets/Group.png",
             }]
         }
     }
 }
+
+
 
 export const getEventRegistrationContent = async () => {
     try {
@@ -76,7 +103,7 @@ export const getEventRegistrationContent = async () => {
             sectionLogo: "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
             sectionTitle: "Event Registration",
             title: "Event Registration",
-            description: "Some random description",
+            description: "All details & analytics you would need of your Events, Users and Financials",
             image: "https://storage.googleapis.com/bucket_icon_assets/assets/Rectangle%2035.png"
         }
     }
@@ -100,7 +127,7 @@ export const getUserRegistrationContent = async () => {
             sectionLogo: "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
             sectionTitle: "Event Registration",
             title: "Event Registration",
-            description: "Some random description",
+            description: "Space to add an engaging intro video, so that your clients get to know you better",
             image: "https://storage.googleapis.com/bucket_icon_assets/assets/Rectangle%2035.png"
         }
     }
@@ -158,13 +185,19 @@ export const getGrowthContent = async () => {
     } catch (err) {
         console.error(err.message)
         return {
-            title: "Growth",
+            title: "Pricing",
             sectionLogo: "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
-            sectionTitle: "GROWTH",
+            sectionTitle: "Starting at $25/month",
             growthPoints: [
-                { description: "Lorem ipsum dolor sit amet, consectetur adipiscing", image: "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png" }
+                { description: "Zero Onboarding Fee", image: "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png" }
 
-                , { description: "Lorem ipsum dolor sit amet, consectetur adipiscing", image: "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png" }, { description: "Lorem ipsum dolor sit amet, consectetur adipiscing", image: "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png" }, { description: "Lorem ipsum dolor sit amet, consectetur adipiscing", image: "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png" }, { description: "Lorem ipsum dolor sit amet, consectetur adipiscing", image: "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png" }
+                , { description: "No annual subscription charges", image: "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png" },
+
+                { description: "Platform Usage Chages 6%(plus taxes) on transactions", image: "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png" },
+
+                { description: "Instant Payouts", image: "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png" },
+
+
             ]
         }
     }
