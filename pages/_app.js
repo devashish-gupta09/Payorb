@@ -1,13 +1,11 @@
+import { ThemeProvider } from '@material-ui/styles'
+import theme from '../src/theme'
 import '../styles/globals.css'
 
-import Amplify from 'aws-amplify';
-import awsconfig from '../aws-exports';
-// Amplify.configure(awsconfig);
-
-// console.log(awsconfig)
-
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return <ThemeProvider theme={theme}>
+    <Component {...pageProps} />
+  </ThemeProvider>
 }
 
 export default MyApp

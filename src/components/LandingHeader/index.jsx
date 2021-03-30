@@ -36,8 +36,8 @@ function LandingHeader() {
           </Grid>
 
           <Grid className={classes.drawerList}>
-            <li>Events</li>
-            <li>About Us</li>
+            {/* <li>Events</li>
+            <li>About Us</li> */}
             <Link href="/signin">
               <li>Sign In</li>
             </Link>
@@ -60,8 +60,8 @@ function LandingHeader() {
             container
             justify="space-evenly"
           >
-            <Button className={classes.buttonSpacing}>Events</Button>
-            <Button className={classes.buttonSpacing}>About Us</Button>
+            {/* <Button className={classes.buttonSpacing}>Events</Button>
+            <Button className={classes.buttonSpacing}>About Us</Button> */}
             <Link href="/signin">
               <Button className={classes.buttonSpacing}>Sign In</Button>
             </Link>

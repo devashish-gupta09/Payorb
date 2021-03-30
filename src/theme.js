@@ -3,6 +3,10 @@ import { red } from '@material-ui/core/colors';
 
 // Create a theme instance.
 const theme = createMuiTheme({
+  typography: {
+    fontFamily: "Work Sans",
+    style: "normal"
+  },
   palette: {
     primary: {
       main: '#556cd6',
