@@ -3,7 +3,7 @@ import SignUpContainer from "../src/components/SignUpContainer";
 import SigningHeader from "../src/components/SigningHeader";
 import { getHomeContent } from "../src/services/landing";
 
-export default function SignIn({ content }) {
+export default function SignUp({ content }) {
 
     return (
         <Grid style={{ height: "90vh" }}>

@@ -5,7 +5,6 @@ import SigningHeader from "../src/components/SigningHeader";
 import { getHomeContent } from "../src/services/landing";
 
 export default function SignIn({ content }) {
-    
     return (
         <Grid style={{ height: "90vh" }}>
             <SigningHeader />
@@ -15,9 +14,7 @@ export default function SignIn({ content }) {
 }
 
 export async function getStaticProps({ params, preview = null }) {
-
     const home = await getHomeContent()
-
     return {
         props: {
             content: {
@@ -28,4 +25,3 @@ export async function getStaticProps({ params, preview = null }) {
         }
     }
 }
-

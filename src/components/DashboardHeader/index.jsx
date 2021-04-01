@@ -45,7 +45,7 @@ function VendorDashboardHeader() {
               <Logo dark={true} width={"35%"}></Logo>
             </Grid>
             <Grid container item sm={8} style={{ backgroundColor: "pink" }}>
-              <TabBarHeader />
+              {/* <TabBarHeader /> */}
             </Grid>
             <Grid item sm={2} style={{ background: "pink" }}>
               <ProfileSectionHeader

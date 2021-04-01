@@ -2,17 +2,14 @@ import { Grid, ThemeProvider } from "@material-ui/core"
 import Landing from "../src/components/Landing"
 import { getClientReviewContent, getEventRegistrationContent, getFeaturesContent, getHomeContent, getUserRegistrationContent, getGrowthContent } from "../src/services/landing"
 import theme from "../src/theme"
-
+import { useRouter } from "next/router"
+import AuthenticationContext, { Context } from "../src/components/AuthenticationContext"
 
 export default function Index({ landing }) {
-  return (
-    // <ThemeProvider theme={theme}>
-      <Grid style={{ backgroundColor: "#BDF5F2" }}>
-        <Landing content={landing} />
-      </Grid>
-    // </ThemeProvider>
-
-  )
+  return < Grid style={{ backgroundColor: "#BDF5F2" }
+  }>
+    <Landing content={landing} />
+  </Grid>
 }
 
 export async function getStaticProps({ params, preview = null }) {
@@ -32,3 +29,4 @@ export async function getStaticProps({ params, preview = null }) {
     }
   }
 }
+
