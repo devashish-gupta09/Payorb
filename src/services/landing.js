@@ -197,10 +197,10 @@ export const getGrowthContent = async () => {
   } catch (err) {
     console.error(err.message);
     return {
-      title: "Pricing",
+      title: "Platform Pricing",
       sectionLogo:
         "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
-      sectionTitle: "Starting at $25/month",
+      sectionTitle: "Platform pricing",
       growthPoints: [
         {
           description: "Zero Onboarding Fee",

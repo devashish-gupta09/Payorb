@@ -1,4 +1,3 @@
-import Auth from "@aws-amplify/auth";
 import { Grid } from "@material-ui/core";
 import SignInContainer from "../src/components/SignInContainer";
 import SigningHeader from "../src/components/SigningHeader";

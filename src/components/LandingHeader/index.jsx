@@ -36,8 +36,8 @@ function LandingHeader() {
           </Grid>
 
           <Grid className={classes.drawerList}>
-            {/* <li>Events</li>
-            <li>About Us</li> */}
+            {/* <li>Events</li> */}
+            <li>About Us</li>
             <Link href="/signin">
               <li>Sign In</li>
             </Link>

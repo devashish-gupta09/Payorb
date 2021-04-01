@@ -70,6 +70,7 @@ function SignUpForm() {
           console.log(
             "Not able to persist the user, therefore sign out the user to sign in again."
           );
+          alert("Please try again.")
           const firebaseInstance = FirebaseAuth.Singleton();
           await firebaseInstance.signOut();
         }
