@@ -1,14 +1,13 @@
-import { Grid } from "@material-ui/core"
+import { Grid, ThemeProvider } from "@material-ui/core"
 import Landing from "../src/components/Landing"
 import { getClientReviewContent, getEventRegistrationContent, getFeaturesContent, getHomeContent, getUserRegistrationContent, getGrowthContent } from "../src/services/landing"
 
 
 export default function Index({ landing }) {
-  return (
-    <Grid style={{ backgroundColor: "#BDF5F2" }}>
-      <Landing content={landing} />
-    </Grid>
-  )
+  return < Grid style={{ backgroundColor: "#BDF5F2" }
+  }>
+    <Landing content={landing} />
+  </Grid>
 }
 
 export async function getStaticProps({ params, preview = null }) {

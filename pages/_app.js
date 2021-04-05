@@ -1,13 +1,15 @@
+import { ThemeProvider } from '@material-ui/styles'
+import theme from '../src/theme'
 import '../styles/globals.css'
-
-import Amplify from 'aws-amplify';
-import awsconfig from '../aws-exports';
-// Amplify.configure(awsconfig);
-
-// console.log(awsconfig)
+import AuthenticationContext, { Context } from '../src/components/AuthenticationContext'
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return <AuthenticationContext>
+    <ThemeProvider theme={theme}>
+      <Component {...pageProps} />
+    </ThemeProvider>
+  </AuthenticationContext>
+
 }
 
 export default MyApp

@@ -5,21 +5,32 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "format": "prettier --write 'src/**/*.{js, jsx}'",
+    "lint:fix": "eslint --fix 'src/**/*.{js, jsx}'"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
-    "aws-amplify": "^3.3.26",
     "axios": "^0.21.1",
+    "dotenv": "^8.2.0",
+    "firebase": "^8.3.1",
+    "formik": "^2.2.6",
+    "moment": "^2.29.1",
     "next": "10.0.9",
     "react": "17.0.1",
     "react-device-detect": "^1.17.0",
     "react-dom": "17.0.1",
-    "react-material-ui-carousel": "^2.2.1"
+    "react-material-ui-carousel": "^2.2.1",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@netlify/plugin-nextjs": "^3.0.3",
-    "file-loader": "^6.2.0"
+    "eslint": "^7.23.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.23.1",
+    "file-loader": "^6.2.0",
+    "prettier": "^2.2.1"
   }
 }

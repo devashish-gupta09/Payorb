@@ -3,7 +3,7 @@ import React from "react";
 import ButtonCapsule from "../ButtonCapsule";
 import LandingSectionContent from "../LandingSectionContent";
 import { styles } from "./styles";
-import Link from "next/link";
+
 
 function GrowthSection({ content }) {
   const classes = styles();
@@ -33,9 +33,9 @@ function GrowthSection({ content }) {
         })}
       </Grid>
       <Grid container justify={"center"} className={classes.bottomButton}>
-        <Link href={"/signup"}>
-          <ButtonCapsule text={"Get Started"} />
-        </Link>
+        <ButtonCapsule text={"Get Started"} />
+        {/* <Link href={"/signup"}>
+        </Link> */}
       </Grid>
     </Grid>
   );
