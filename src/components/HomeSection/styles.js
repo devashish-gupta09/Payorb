@@ -14,9 +14,6 @@ export const styles = makeStyles((theme) => ({
   titleSection: {
     color: "white",
     fontWeight: "bolder",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "1.5em",
-    },
   },
   aquaText: {
     color: "aqua",

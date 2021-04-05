@@ -3,6 +3,7 @@ import { Close } from "@material-ui/icons";
 import React from "react";
 import Logo from "../Logo";
 import ProfileSectionHeader from "../ProfileSectionHeader";
+import TabBarHeader from "../TabBarHeader";
 import { styles } from "./styles";
 
 function VendorDashboardHeader() {
@@ -12,6 +13,7 @@ function VendorDashboardHeader() {
   const toggleDrawer = () => {
     setAppMenu(!appMenu);
   };
+
   return (
     <AppBar className={classes.root} position={"static"}>
       <Drawer anchor="left" open={appMenu} onClose={toggleDrawer}>
@@ -41,13 +43,11 @@ function VendorDashboardHeader() {
           {/* For Desktop and wide screens */}
 
           <Grid container alignItems="center" className={classes.wideScreen}>
-            <Grid item sm={2} style={{ background: "pink" }}>
+            <Grid item sm={2}>
               <Logo dark={true} width={"35%"}></Logo>
             </Grid>
-            <Grid container item sm={8} style={{ backgroundColor: "pink" }}>
-              {/* <TabBarHeader /> */}
-            </Grid>
-            <Grid item sm={2} style={{ background: "pink" }}>
+            <Grid container item sm={8}></Grid>
+            <Grid item sm={2}>
               <ProfileSectionHeader
                 image="https://www.google.com/imgres?imgurl=https%3A%2F%2Fmaterial-ui.com%2Fstatic%2Fimages%2Favatar%2F1.jpg&imgrefurl=https%3A%2F%2Fmaterial-ui.com%2Fcomponents%2Favatars%2F&tbnid=AyLA-QjKOR7zDM&vet=12ahUKEwiMvvHPg9fvAhWK7TgGHeFRA28QMygAegUIARClAQ..i&docid=lwWju4eQyAN6LM&w=128&h=128&q=avatar%20material%20ui&ved=2ahUKEwiMvvHPg9fvAhWK7TgGHeFRA28QMygAegUIARClAQ"
                 name="Alfredo Culhane"

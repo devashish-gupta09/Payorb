@@ -26,7 +26,6 @@ import useFederatedAuth from "../../hooks/useFederatedAuth";
 import { PAGE_PATHS } from "../../constants/paths";
 import { useFormik } from "formik";
 
-import Yup from "yup";
 import { signUpValidation } from "../../validations/signup";
 
 export const handleUserAddition = async (userRes, idToken) => {

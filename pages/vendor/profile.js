@@ -1,8 +1,8 @@
 import { Backdrop, CircularProgress, Grid, Typography } from "@material-ui/core";
 import { useRouter } from "next/router";
-import { Context } from "../src/components/AuthenticationContext";
+import { Context } from "../../src/components/AuthenticationContext";
 import React from 'react';
-import VendorDashboard from "../src/components/VendorDashboard";
+import VendorDashboard from "../../src/components/VendorDashboard";
 
 export default function Vendor() {
 
@@ -22,7 +22,7 @@ export default function Vendor() {
     }, [user])
 
     return <Grid>
-        {user ? (<VendorDashboard>
+        {!user ? (<VendorDashboard>
         </VendorDashboard>) :
             <Backdrop open>
                 <Grid>

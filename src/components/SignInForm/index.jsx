@@ -11,9 +11,16 @@ import React from "react";
 import { AlternateEmail, Lock } from "@material-ui/icons";
 import { useFormik } from "formik";
 import { signInValidation } from "../../validations/signup";
+import { AUTH_PROVIDERS } from "../../constants/auth";
+import { handleUserAddition } from "../SignupForm";
+import { useRouter } from "next/router";
+import useFederatedAuth from "../../hooks/useFederatedAuth";
+import { FirebaseAuth } from "../AuthenticationContext";
 
 function SigninForm() {
   const classes = styles();
+  const { fedSignUp } = useFederatedAuth();
+  const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
@@ -25,6 +32,34 @@ function SigninForm() {
       console.log("Received Some values to sign in the user.");
     },
   });
+
+  // In case of fedrated sign up we are going to
+  // sign in a user using a social platform but
+  // we would also need to persist the user's information
+  // to the backend as well
+  const handleFederatedSignUp = async (provider) => {
+    try {
+      const { userInfo, idToken } = await fedSignUp(provider);
+
+      if (userInfo && idToken) {
+        const res = await handleUserAddition(userInfo, idToken);
+        if (res) {
+          router.push(PAGE_PATHS.VENDOR_DASHBOARD);
+        } else {
+          console.log(
+            "Not able to persist the user, therefore sign out the user to sign in again."
+          );
+          alert("Please try again.");
+          const firebaseInstance = FirebaseAuth.Singleton();
+          await firebaseInstance.signOut();
+        }
+      } else {
+        throw "Not able to sign in the user using a federated source.";
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Grid className={classes.container}>
@@ -98,6 +133,7 @@ function SigninForm() {
                 style={{ padding: "0 0.5em" }}
               />
             }
+            onClick={() => handleFederatedSignUp(AUTH_PROVIDERS.GOOGLE)}
           >
             Connect with google
           </Button>
@@ -110,6 +146,7 @@ function SigninForm() {
                 style={{ padding: "0 0.5em" }}
               />
             }
+            onClick={() => handleFederatedSignUp(AUTH_PROVIDERS.FACEBOOK)}
           >
             Sign in with Facebook
           </Button>

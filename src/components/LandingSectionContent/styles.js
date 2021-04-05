@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core";
+import { appColors } from "../../../styles/colors";
 
 export const styles = makeStyles((theme) => ({
   container: {
@@ -6,7 +7,7 @@ export const styles = makeStyles((theme) => ({
   },
   sectionTitle: {
     padding: "0.6em 0",
-    color: "#828282",
+    color: appColors.grey,
     letterSpacing: "4%",
     textTransform: "uppercase",
     [theme.breakpoints.down("sm")]: {
@@ -22,7 +23,7 @@ export const styles = makeStyles((theme) => ({
     },
   },
   description: {
-    color: "#828282",
+    color: appColors.grey,
     [theme.breakpoints.down("sm")]: {
       paddingBottom: "1em",
     },

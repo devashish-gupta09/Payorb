@@ -1,10 +1,11 @@
 import { makeStyles } from "@material-ui/core";
+import { appColors } from "../../../styles/colors";
 
 export const styles = makeStyles((theme) => ({
   sectionTitle: {
     letterSpacing: "1px",
     paddingBottom: "0.5em",
-    color: "#828282",
+    color: appColors.grey,
   },
   textInput: {
     margin: "0.75em 0",

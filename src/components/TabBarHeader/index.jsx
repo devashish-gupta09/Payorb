@@ -1,5 +1,8 @@
-import React from 'react';
+import { Tab, Tabs } from "@material-ui/core";
+import React from "react";
 
-function TabBarHeader (){
-    
+function TabBarHeader() {
+  return null;
 }
+
+export default TabBarHeader;
