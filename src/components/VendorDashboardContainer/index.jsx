@@ -4,7 +4,7 @@ import { styles } from "./styles";
 
 function VendorDashboardContainer({ children }) {
   const classes = styles();
-  return <Grid className={classes.container}>{children}</Grid>;
+  return <div className={classes.container}>{children}</div>;
 }
 
 export default VendorDashboardContainer;

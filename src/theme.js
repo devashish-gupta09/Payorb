@@ -23,6 +23,22 @@ const theme = createMuiTheme({
   },
 });
 
+theme.typography.h6 = {
+  fontWeight: 400,
+  fontSize: "1.8em",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "0.9em"
+  }
+}
+
+theme.typography.h5 = {
+  fontSize: "1.9em",
+  fontWeight: 400,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1em"
+  }
+}
+
 theme.typography.h3 = {
   fontSize: "3em",
   [theme.breakpoints.down("sm")]: {
