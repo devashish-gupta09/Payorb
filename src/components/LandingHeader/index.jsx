@@ -60,8 +60,8 @@ function LandingHeader() {
             container
             justify="space-evenly"
           >
-            {/* <Button className={classes.buttonSpacing}>Events</Button>
-            <Button className={classes.buttonSpacing}>About Us</Button> */}
+            {/* <Button className={classes.buttonSpacing}>Events</Button> */}
+            <Button className={classes.buttonSpacing}>About Us</Button>
             <Link href="/signin">
               <Button className={classes.buttonSpacing}>Sign In</Button>
             </Link>
