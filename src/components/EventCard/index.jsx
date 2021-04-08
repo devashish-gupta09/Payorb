@@ -105,7 +105,6 @@ function EventCard({ event }) {
               item
               sm={4}
               container
-              justify="flex-end"
               alignItems="center"
               className={classes.editButtonContainer}
             >

@@ -7,6 +7,7 @@ import FallbackPage from "../FallbackPage";
 import Profile from "../Profile";
 import VendorDashboardContainer from "../VendorDashboardContainer";
 import VendorEvents from "../VendorEvents";
+import VendorFinancials from "../VendorFinancials";
 import { styles } from "./styles";
 
 function VendorDashboard() {
@@ -16,6 +17,8 @@ function VendorDashboard() {
     switch (route) {
       case PAGE_PATHS.VENDOR_DASHBOARD_PROFILE:
         return <Profile />;
+      case PAGE_PATHS.VENDOR_DASHBOARD_FINANCIALS:
+        return <VendorFinancials />;
       case PAGE_PATHS.VENDOR_DASHBOARD_EVENTS:
         return <VendorEvents />;
       default:
