@@ -1,5 +1,6 @@
 import { Grid, makeStyles } from "@material-ui/core";
 import React from "react";
+import VendorEventsStats from "../VendorEventStats";
 import VendorRevenueUserAggSec from "../VendorRevenueUserAggSec";
 
 function VendorFinancials() {
@@ -7,6 +8,7 @@ function VendorFinancials() {
   return (
     <Grid className={classes.root}>
       <VendorRevenueUserAggSec></VendorRevenueUserAggSec>
+      <VendorEventsStats></VendorEventsStats>
     </Grid>
   );
 }

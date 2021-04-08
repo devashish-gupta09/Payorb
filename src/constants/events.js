@@ -14,6 +14,7 @@ export const defaultEvents = [
         totalRevenue: "32000",
         totalSeats: "100",
         seatsBooked: "32",
+        status: "Running"
     },
     {
         name: `FREE Master Class on “HOW to Communicate with IMPORTERS & International BUYERS”`,
@@ -25,6 +26,7 @@ export const defaultEvents = [
         totalRevenue: "32000",
         totalSeats: "100",
         seatsBooked: "32",
+        status: "Completed"
     },
     {
         name: `FREE Master Class on “HOW to Communicate with IMPORTERS & International BUYERS”`,
@@ -36,5 +38,6 @@ export const defaultEvents = [
         totalRevenue: "32000",
         totalSeats: "100",
         seatsBooked: "32",
+        status: "Running"
     },
 ];

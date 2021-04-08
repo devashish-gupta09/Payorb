@@ -1,7 +1,6 @@
 import { Grid, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 import { globalStyles } from "../../../styles/globalStyles";
-import DashboardCard from "../DashboardCard";
 import numeral from "numeral";
 import ValueCard from "../ValueCard";
 
@@ -10,7 +9,7 @@ function VendorRevenueUserAggSec() {
   const globalClasses = globalStyles();
 
   return (
-    <Grid>
+    <Grid style={{ width: "100%" }}>
       <Typography
         variant={"h6"}
         className={`${globalClasses.boldSixHundred} ${classes.title}`}
