@@ -133,7 +133,7 @@ function SignUpForm() {
           <Grid container alignItems="center" spacing={1}>
             <Grid
               item
-              sm={usernameType === USERNAME_TYPE.PHONE_NUMBER ? 8 : 12}
+              xs={usernameType === USERNAME_TYPE.PHONE_NUMBER ? 8 : 12}
             >
               <TextField
                 className={classes.textInput}
