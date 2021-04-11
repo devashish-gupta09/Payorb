@@ -14,6 +14,7 @@ export const styles = makeStyles((theme) => ({
     imageContainer: {
         padding: "1em",
         maxHeight: "30em",
+        width: "100%",
         [theme.breakpoints.down("sm")]: {
             padding: 0,
         },
@@ -31,6 +32,7 @@ export const styles = makeStyles((theme) => ({
     },
     eventDetailContainer: {
         padding: "1.5em 1.5em 1em 1em",
+
     },
     eventImage: {
         width: "100%",
@@ -50,7 +52,9 @@ export const styles = makeStyles((theme) => ({
         paddingTop: "0.8em",
     },
     editButtonContainer: {
+        justifyContent: "flex-end",
         [theme.breakpoints.down("sm")]: {
+            justifyContent: "center",
             padding: "1em 0",
         },
     },
