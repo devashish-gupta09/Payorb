@@ -8,22 +8,32 @@ import {
 } from "@material-ui/core";
 import { styles } from "./styles";
 import React from "react";
-import { AlternateEmail, Lock } from "@material-ui/icons";
+import {
+  AccountCircle,
+  AlternateEmail,
+  Lock,
+  Maximize,
+  MoreHoriz,
+} from "@material-ui/icons";
 import { useFormik } from "formik";
-import { signInValidation } from "../../validations/signup";
-import { AUTH_PROVIDERS } from "../../constants/auth";
-import { handleUserAddition } from "../SignupForm";
+import { phoneRegExp, signInValidation } from "../../validations/signup";
+import { AUTH_PROVIDERS, USERNAME_TYPE } from "../../constants/auth";
+import { getUserNameFieldLabel, handleUserAddition } from "../SignupForm";
 import { useRouter } from "next/router";
 import useFederatedAuth from "../../hooks/useFederatedAuth";
 import { FirebaseAuth } from "../AuthenticationContext";
+import ButtonCapsule from "../ButtonCapsule";
 
 function SigninForm() {
   const classes = styles();
   const { fedSignUp } = useFederatedAuth();
   const router = useRouter();
+  const [usernameType, setUsernameType] = React.useState();
 
   const formik = useFormik({
     initialValues: {
+      username: "",
+      otp: "",
       email: "",
       password: "",
     },
@@ -61,6 +71,19 @@ function SigninForm() {
     }
   };
 
+  const handleUsernameChange = (event) => {
+    formik.handleChange(event);
+
+    if (/^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/.test(event.target.value)) {
+      console.log("Test");
+      setUsernameType(USERNAME_TYPE.EMAIL);
+    } else if (phoneRegExp.test(event.target.value)) {
+      setUsernameType(USERNAME_TYPE.PHONE_NUMBER);
+    } else {
+      setUsernameType();
+    }
+  };
+
   return (
     <Grid className={classes.container}>
       <Typography className={classes.sectionTitle}>SIGN IN</Typography>
@@ -69,43 +92,90 @@ function SigninForm() {
       </Typography>
       <form onSubmit={formik.handleSubmit}>
         <FormControl className={classes.formContainer}>
-          <TextField
-            className={classes.textInput}
-            id="email"
-            label="Email Id"
-            variant="outlined"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.email}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <AlternateEmail style={{ color: "rgba(189, 189, 189, 1" }} />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <TextField
-            className={classes.textInput}
-            id="password"
-            name="password"
-            label="Password"
-            variant="outlined"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.password}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={formik.touched.password && formik.errors.password}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Lock style={{ color: "rgba(189, 189, 189, 1" }} />
-                </InputAdornment>
-              ),
-            }}
-          />
+          <Grid container alignItems="center" spacing={1}>
+            <Grid
+              item
+              xs={usernameType === USERNAME_TYPE.PHONE_NUMBER ? 8 : 12}
+            >
+              <TextField
+                className={classes.textInput}
+                id="username"
+                label={getUserNameFieldLabel(usernameType)}
+                variant="outlined"
+                onChange={handleUsernameChange}
+                onBlur={formik.handleBlur}
+                fullWidth
+                value={formik.values.username}
+                error={
+                  formik.touched.username && Boolean(formik.errors.username)
+                }
+                helperText={formik.touched.username && formik.errors.username}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <AccountCircle
+                        style={{ color: "rgba(189, 189, 189, 1" }}
+                      />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+            {usernameType === USERNAME_TYPE.PHONE_NUMBER && (
+              <Grid item xs={4} container justify="flex-end">
+                <ButtonCapsule
+                  text="Get OTP"
+                  buttonStyle={classes.getOtp}
+                ></ButtonCapsule>
+              </Grid>
+            )}
+          </Grid>
+          {usernameType === USERNAME_TYPE.EMAIL && (
+            <TextField
+              className={classes.textInput}
+              id="password"
+              name="password"
+              label="Password"
+              variant="outlined"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Lock style={{ color: "rgba(189, 189, 189, 1" }} />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          )}
+          {usernameType === USERNAME_TYPE.PHONE_NUMBER && (
+            <TextField
+              className={classes.textInput}
+              id="otp"
+              label="OTP"
+              variant="outlined"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.otp}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Grid style={{ display: "flex", flexDirection: "column" }}>
+                      <MoreHoriz
+                        style={{
+                          color: "rgba(189, 189, 189, 1",
+                        }}
+                      />
+                      <Maximize style={{ color: "rgba(189, 189, 189, 1" }} />
+                    </Grid>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          )}
           <Typography align="right" className={classes.forgotPassword}>
             Forgot Password ?
           </Typography>

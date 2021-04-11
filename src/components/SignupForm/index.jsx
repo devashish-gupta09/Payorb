@@ -15,18 +15,21 @@ import {
   Phone,
 } from "@material-ui/icons";
 
+import ButtonCapsule from "../ButtonCapsule";
+
 import { styles } from "./styles";
 
 import app from "../../utils/firebase";
 import { FirebaseAuth } from "../AuthenticationContext";
 import { useRouter } from "next/router";
 import { addUser } from "../../services/auth";
-import { AUTH_PROVIDERS } from "../../constants/auth";
+import { AUTH_PROVIDERS, USERNAME_TYPE } from "../../constants/auth";
 import useFederatedAuth from "../../hooks/useFederatedAuth";
 import { PAGE_PATHS } from "../../constants/paths";
 import { useFormik } from "formik";
+import React from "react";
 
-import { signUpValidation } from "../../validations/signup";
+import { signUpValidation, phoneRegExp } from "../../validations/signup";
 
 export const handleUserAddition = async (userRes, idToken) => {
   try {
@@ -48,10 +51,21 @@ export const handleUserAddition = async (userRes, idToken) => {
   }
 };
 
+export const getUserNameFieldLabel = (type) => {
+  if (type === USERNAME_TYPE.EMAIL) {
+    return "Email";
+  } else if (type === USERNAME_TYPE.PHONE_NUMBER) {
+    return "Phone Number";
+  } else {
+    return "Email or Phone Number";
+  }
+};
+
 function SignUpForm() {
   const classes = styles();
   const router = useRouter();
   const { fedSignUp } = useFederatedAuth();
+  const [usernameType, setUsernameType] = React.useState();
 
   // In case of fedrated sign up we are going to
   // sign in a user using a social platform but
@@ -69,7 +83,7 @@ function SignUpForm() {
           console.log(
             "Not able to persist the user, therefore sign out the user to sign in again."
           );
-          alert("Please try again.")
+          alert("Please try again.");
           const firebaseInstance = FirebaseAuth.Singleton();
           await firebaseInstance.signOut();
         }
@@ -83,17 +97,30 @@ function SignUpForm() {
 
   const formik = useFormik({
     initialValues: {
+      username: "",
       name: "",
-      email: "",
       password: "",
-      phoneNumber: "",
       location: "",
+      otp: "",
     },
     validationSchema: signUpValidation,
     onSubmit: (values) => {
       console.log("The values submitted", values);
     },
   });
+
+  const handleUsernameChange = (event) => {
+    formik.handleChange(event);
+
+    if (/^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/.test(event.target.value)) {
+      console.log("Test");
+      setUsernameType(USERNAME_TYPE.EMAIL);
+    } else if (phoneRegExp.test(event.target.value)) {
+      setUsernameType(USERNAME_TYPE.PHONE_NUMBER);
+    } else {
+      setUsernameType();
+    }
+  };
 
   return (
     <Grid className={classes.container}>
@@ -103,6 +130,91 @@ function SignUpForm() {
       </Typography>
       <form onSubmit={formik.handleSubmit}>
         <FormControl className={classes.formContainer}>
+          <Grid container alignItems="center" spacing={1}>
+            <Grid
+              item
+              sm={usernameType === USERNAME_TYPE.PHONE_NUMBER ? 8 : 12}
+            >
+              <TextField
+                className={classes.textInput}
+                id="username"
+                label={getUserNameFieldLabel(usernameType)}
+                variant="outlined"
+                onChange={handleUsernameChange}
+                onBlur={formik.handleBlur}
+                fullWidth
+                value={formik.values.username}
+                error={
+                  formik.touched.username && Boolean(formik.errors.username)
+                }
+                helperText={formik.touched.username && formik.errors.username}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <AccountCircle
+                        style={{ color: "rgba(189, 189, 189, 1" }}
+                      />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+            {usernameType === USERNAME_TYPE.PHONE_NUMBER && (
+              <Grid item xs={4} container justify="flex-end">
+                <ButtonCapsule
+                  text="Get OTP"
+                  buttonStyle={classes.getOtp}
+                ></ButtonCapsule>
+              </Grid>
+            )}
+          </Grid>
+          {usernameType === USERNAME_TYPE.EMAIL && (
+            <TextField
+              className={classes.textInput}
+              id="password"
+              name="password"
+              label="Password"
+              variant="outlined"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Lock style={{ color: "rgba(189, 189, 189, 1" }} />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          )}
+          {usernameType === USERNAME_TYPE.PHONE_NUMBER && (
+            <TextField
+              className={classes.textInput}
+              id="otp"
+              label="OTP"
+              variant="outlined"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.otp}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Grid style={{ display: "flex", flexDirection: "column" }}>
+                      <MoreHoriz
+                        style={{
+                          color: "rgba(189, 189, 189, 1",
+                        }}
+                      />
+                      <Maximize style={{ color: "rgba(189, 189, 189, 1" }} />
+                    </Grid>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          )}
+
           <TextField
             className={classes.textInput}
             id="name"
@@ -117,64 +229,6 @@ function SignUpForm() {
               endAdornment: (
                 <InputAdornment position="end">
                   <AccountCircle style={{ color: "rgba(189, 189, 189, 1" }} />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <TextField
-            className={classes.textInput}
-            id="email"
-            label="Email Id"
-            variant="outlined"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.email}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <AlternateEmail style={{ color: "rgba(189, 189, 189, 1" }} />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <TextField
-            className={classes.textInput}
-            id="password"
-            name="password"
-            label="Password"
-            variant="outlined"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.password}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={formik.touched.password && formik.errors.password}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Lock style={{ color: "rgba(189, 189, 189, 1" }} />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <TextField
-            className={classes.textInput}
-            id="phoneNumber"
-            name="phoneNumber"
-            label="Phone Number"
-            variant="outlined"
-            value={formik.values.phoneNumber}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)
-            }
-            helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Phone style={{ color: "rgba(189, 189, 189, 1" }} />
                 </InputAdornment>
               ),
             }}
@@ -196,27 +250,21 @@ function SignUpForm() {
               ),
             }}
           />
-          <TextField
-            className={classes.textInput}
-            id="outlined-basic"
-            label="OTP"
-            variant="outlined"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Grid style={{ display: "flex", flexDirection: "column" }}>
-                    <MoreHoriz
-                      style={{
-                        color: "rgba(189, 189, 189, 1",
-                      }}
-                    />
-                    <Maximize style={{ color: "rgba(189, 189, 189, 1" }} />
-                  </Grid>
-                </InputAdornment>
-              ),
-            }}
-          />
-          <Button className={classes.signupButton} type="submit">
+          <Button
+            disabled={
+              !formik.values.name ||
+              !formik.values.username ||
+              (usernameType === USERNAME_TYPE.EMAIL &&
+                !formik.values.password) ||
+              (usernameType === USERNAME_TYPE.PHONE_NUMBER &&
+                !formik.values.otp) ||
+              formik.errors.password ||
+              formik.errors.name ||
+              formik.errors.username
+            }
+            className={classes.signupButton}
+            type="submit"
+          >
             Sign Up
           </Button>
           <Typography align="center" className={classes.orText}>
