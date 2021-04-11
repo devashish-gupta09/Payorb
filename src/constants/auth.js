@@ -3,3 +3,8 @@ export const AUTH_PROVIDERS = {
   FACEBOOK: "FACEBOOK",
   CREDENTIALS: "CREDENTIALS",
 };
+
+export const USERNAME_TYPE = {
+  "EMAIL": "EMAIL",
+  "PHONE_NUMBER": "PHONE_NUMBER"
+}

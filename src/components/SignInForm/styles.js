@@ -7,6 +7,12 @@ export const styles = makeStyles((theme) => ({
     paddingBottom: "0.5em",
     color: appColors.grey,
   },
+  getOtp: {
+    width: "80%",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+    }
+  },
   textInput: {
     margin: "0.75em 0",
     color: "#BDBDBD",
