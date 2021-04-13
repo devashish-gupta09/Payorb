@@ -12,14 +12,14 @@ export const styles = makeStyles((theme) => ({
     height: "30vh",
     [theme.breakpoints.down("sm")]: {
       width: "75vw",
-      height: "70vh"
-    }
+      height: "70vh",
+    },
   },
   getOtp: {
     width: "80%",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
-    }
+    },
   },
   textInput: {
     margin: "0.75em 0",

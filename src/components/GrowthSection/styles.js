@@ -22,12 +22,12 @@ export const styles = makeStyles((theme) => ({
     },
   },
   pointCheck: {
-    paddingRight: "1em"
+    paddingRight: "1em",
   },
   pointLine: {
     [theme.breakpoints.up("sm")]: {
-      display: "flex"
-    }
+      display: "flex",
+    },
   },
   point: {
     padding: "0.3em 0",
