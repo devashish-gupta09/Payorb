@@ -18,15 +18,16 @@ export const styles = makeStyles((theme) => ({
     letterSpacing: "1px",
     fontWeight: "500",
     [theme.breakpoints.down("sm")]: {
-      width: "80%",
       fontSize: "0.8em",
     },
   },
   pointCheck: {
-    paddingRight: "1em",
-    [theme.breakpoints.down("sm")]: {
-      paddingRight: "1em",
-    },
+    paddingRight: "1em"
+  },
+  pointLine: {
+    [theme.breakpoints.up("sm")]: {
+      display: "flex"
+    }
   },
   point: {
     padding: "0.3em 0",

@@ -1,5 +1,7 @@
 import {
   Button,
+  Dialog,
+  DialogContent,
   FormControl,
   Grid,
   InputAdornment,
@@ -7,7 +9,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { styles } from "./styles";
-import React from "react";
+import React, { useRef } from "react";
 import {
   AccountCircle,
   AlternateEmail,
@@ -23,23 +25,49 @@ import { useRouter } from "next/router";
 import useFederatedAuth from "../../hooks/useFederatedAuth";
 import { FirebaseAuth } from "../AuthenticationContext";
 import ButtonCapsule from "../ButtonCapsule";
+import Link from "next/link";
+import app from "../../utils/firebase";
+import { PAGE_PATHS } from "../../constants/paths";
 
 function SigninForm() {
   const classes = styles();
   const { fedSignUp } = useFederatedAuth();
   const router = useRouter();
   const [usernameType, setUsernameType] = React.useState();
+  const [confirmationResult, setConfirmationResult] = React.useState();
+  const [otpModal, setOtpModal] = React.useState({ display: false, text: "" });
 
   const formik = useFormik({
     initialValues: {
       username: "",
       otp: "",
-      email: "",
       password: "",
     },
-    validationSchema: signInValidation,
-    onSubmit: () => {
-      console.log("Received Some values to sign in the user.");
+    onSubmit: async (values) => {
+      try {
+        // Create a account with firebase.
+        if (usernameType === USERNAME_TYPE.PHONE_NUMBER) {
+          if (!confirmationResult) {
+            throw new Error(
+              `Make sure you have received OTP on phone Number before proceeding forward.`
+            );
+          }
+
+          await confirmationResult.confirm(values.otp);
+        } else if (usernameType === USERNAME_TYPE.EMAIL) {
+          await app
+            .auth()
+            .signInUserWithEmailAndPassword(values.username, values.password);
+        }
+
+        router.push(
+          `${PAGE_PATHS.VENDOR}/${PAGE_PATHS.VENDOR_DASHBOARD_EVENTS}`
+        );
+      } catch (err) {
+        const firebaseInstance = FirebaseAuth.Singleton();
+        await firebaseInstance.signOut();
+        setOtpModal({ display: true, text: err.message });
+      }
     },
   });
 
@@ -52,22 +80,14 @@ function SigninForm() {
       const { userInfo, idToken } = await fedSignUp(provider);
 
       if (userInfo && idToken) {
-        const res = await handleUserAddition(userInfo, idToken);
-        if (res) {
-          router.push(PAGE_PATHS.VENDOR_DASHBOARD);
-        } else {
-          console.log(
-            "Not able to persist the user, therefore sign out the user to sign in again."
-          );
-          alert("Please try again.");
-          const firebaseInstance = FirebaseAuth.Singleton();
-          await firebaseInstance.signOut();
-        }
+        router.push(
+          `${PAGE_PATHS.VENDOR}/${PAGE_PATHS.VENDOR_DASHBOARD_EVENTS}`
+        );
       } else {
         throw "Not able to sign in the user using a federated source.";
       }
     } catch (err) {
-      console.log(err);
+      setOtpModal({ display: true, text: err.message });
     }
   };
 
@@ -84,8 +104,39 @@ function SigninForm() {
     }
   };
 
+  const handleSendOTP = async () => {
+    window.recaptchaVerifier = new app.auth.RecaptchaVerifier(
+      "sign-in-button",
+      {
+        size: "invisible",
+      }
+    );
+
+    const phoneNumber = `+91${formik.values.username}`;
+    const appVerifier = window.recaptchaVerifier;
+
+    try {
+      const response = await app
+        .auth()
+        .signInWithPhoneNumber(phoneNumber, appVerifier);
+      setOtpModal({ display: true, text: "OTP sent" });
+      setConfirmationResult(response);
+    } catch (err) {
+      setOtpModal({ display: true, text: "OTP sent" });
+    }
+  };
+
+  const handleModalClose = () => {
+    setOtpModal({ display: false, text: "" });
+  };
+
   return (
     <Grid className={classes.container}>
+      <Dialog open={otpModal.display} onClose={handleModalClose}>
+        <DialogContent className={classes.otpModal}>
+          <Typography>{otpModal.text}</Typography>
+        </DialogContent>
+      </Dialog>
       <Typography className={classes.sectionTitle}>SIGN IN</Typography>
       <Typography variant={"h4"} className={classes.title}>
         Welcome back
@@ -126,7 +177,9 @@ function SigninForm() {
                 <ButtonCapsule
                   text="Get OTP"
                   buttonStyle={classes.getOtp}
+                  onClick={handleSendOTP}
                 ></ButtonCapsule>
+                <div id="sign-in-button"></div>
               </Grid>
             )}
           </Grid>
@@ -137,6 +190,7 @@ function SigninForm() {
               name="password"
               label="Password"
               variant="outlined"
+              type="password"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.password}
@@ -160,6 +214,7 @@ function SigninForm() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.otp}
+              type="password"
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -183,10 +238,11 @@ function SigninForm() {
             className={classes.signinButton}
             type="submit"
             disabled={
-              !formik.values.password ||
-              !formik.values.email ||
-              formik.errors.password ||
-              formik.errors.email
+              !formik.values.username ||
+              (usernameType === USERNAME_TYPE.EMAIL &&
+                !formik.values.password) ||
+              (usernameType === USERNAME_TYPE.PHONE_NUMBER &&
+                !formik.values.otp)
             }
           >
             Sign In
@@ -221,7 +277,7 @@ function SigninForm() {
             Sign in with Facebook
           </Button>
           <Typography align="center" className={classes.signupMessage}>
-            Dont’s have an account? Sign Up
+            Don't have an account? <Link href={PAGE_PATHS.SIGNUP}>Sign Up</Link>
           </Typography>
         </FormControl>
       </form>

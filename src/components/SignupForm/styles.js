@@ -7,6 +7,14 @@ export const styles = makeStyles((theme) => ({
     paddingBottom: "0.5em",
     color: appColors.grey,
   },
+  otpModal: {
+    width: "20vw",
+    height: "30vh",
+    [theme.breakpoints.down("sm")]: {
+      width: "75vw",
+      height: "70vh"
+    }
+  },
   getOtp: {
     width: "80%",
     [theme.breakpoints.down("sm")]: {

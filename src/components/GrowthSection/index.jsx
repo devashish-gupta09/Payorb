@@ -4,7 +4,6 @@ import ButtonCapsule from "../ButtonCapsule";
 import LandingSectionContent from "../LandingSectionContent";
 import { styles } from "./styles";
 
-
 function GrowthSection({ content }) {
   const classes = styles();
 
@@ -19,14 +18,13 @@ function GrowthSection({ content }) {
         {content.growthPoints.map((point, index) => {
           return (
             <Grid key={index} item sm={6}>
-              <Grid container className={classes.point}>
-                <Grid>
+              <Grid className={classes.point}>
+                {/* <Typography className={classes.pointText}> */}
+                <Grid className={classes.pointLine}>
                   <img src={point.image} className={classes.pointCheck} />
-                </Grid>
-
-                <Typography className={classes.pointText}>
                   {point.description}
-                </Typography>
+                </Grid>
+                {/* </Typography> */}
               </Grid>
             </Grid>
           );

@@ -34,10 +34,6 @@ export class FirebaseAuth {
   async signOut() {
     await app.auth().signOut();
   }
-
-  async signinPhone(phoneNumber, recaptchaVerifier) {
-    await app.auth().signInWithPhoneNumber();
-  }
 }
 
 export const Context = React.createContext(null);

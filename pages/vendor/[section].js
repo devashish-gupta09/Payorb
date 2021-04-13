@@ -19,14 +19,14 @@ export default function Vendor() {
         return () => {
             console.log("Vendor component has unmounted")
         }
-    }, [user])
+    }, [])
 
     return <Grid>
-        {!user ? (<VendorDashboard>
+        {user ? (<VendorDashboard>
         </VendorDashboard>) :
             <Backdrop open>
                 <Grid>
-                    <Typography variant="h3">{"Loading"}</Typography>
+                    <Typography variant="h3" style={{ color: "white" }}>{"Loading"}</Typography>
                     <CircularProgress size="3rem" variant="indeterminate" />
                 </Grid>
             </Backdrop >}
