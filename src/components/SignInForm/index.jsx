@@ -57,7 +57,7 @@ function SigninForm() {
         } else if (usernameType === USERNAME_TYPE.EMAIL) {
           await app
             .auth()
-            .signInUserWithEmailAndPassword(values.username, values.password);
+            .signInWithEmailAndPassword(values.username, values.password);
         } else {
           return;
         }
