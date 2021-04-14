@@ -28,11 +28,14 @@ import React from "react";
 import { signUpValidation, phoneRegExp } from "../../validations/signup";
 
 export const handleUserAddition = async (userRes, idToken) => {
+  console.log("This is the USER :", userRes);
   try {
     if (userRes && idToken) {
       const addUserRes = await addUser(
         {
-          name: userRes.user.displayName,
+          name: userRes.user.displayName
+            ? userRes.user.displayName
+            : userRes.user.name,
           email: userRes.user.email,
           phoneNumber: userRes.user.phoneNumber,
           location: userRes.location,
@@ -44,7 +47,7 @@ export const handleUserAddition = async (userRes, idToken) => {
       return addUserRes;
     }
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
 
@@ -64,7 +67,7 @@ function SignUpForm() {
   const { fedSignUp } = useFederatedAuth();
   const [usernameType, setUsernameType] = React.useState();
   const [confirmationResult, setConfirmationResult] = React.useState();
-  const [otpModal, setOtpModal] = React.useState(false);
+  const [otpModal, setOtpModal] = React.useState({ display: false, text: "" });
 
   const formik = useFormik({
     initialValues: {
@@ -73,6 +76,7 @@ function SignUpForm() {
       password: "",
       location: "",
       otp: "",
+      confirmPassword: "",
     },
     validationSchema: signUpValidation,
     onSubmit: async (values) => {
@@ -83,7 +87,7 @@ function SignUpForm() {
         if (usernameType === USERNAME_TYPE.PHONE_NUMBER) {
           if (!confirmationResult) {
             throw new Error(
-              `Make sure you have received OTP on phone Number before proceeding forward.`
+              `Make sure you have received OTP on phone number before proceeding forward.`
             );
           }
 
@@ -92,27 +96,29 @@ function SignUpForm() {
           user = await app
             .auth()
             .createUserWithEmailAndPassword(values.username, values.password);
+
+          // console.log(window.location);
         }
+        if (user) {
+          await handleUserAddition(
+            { ...user, location: values.location },
+            await FirebaseAuth.Singleton().getIdToken()
+          );
 
-        await handleUserAddition(
-          { ...user, location: values.location },
-          FirebaseAuth.Singleton().getIdToken()
-        );
-
-        router.push(
-          `${PAGE_PATHS.VENDOR}/${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`
-        );
+          router.push(
+            `${PAGE_PATHS.VENDOR}/${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`
+          );
+        }
       } catch (err) {
         const firebaseInstance = FirebaseAuth.Singleton();
         await firebaseInstance.signOut();
-        console.log(err);
-        alert("Error", err);
+        setOtpModal({ display: true, text: err.message });
       }
     },
   });
 
   const handleModalClose = () => {
-    setOtpModal(false);
+    setOtpModal({ display: false, text: "" });
   };
 
   // In case of fedrated sign up we are going to
@@ -126,20 +132,19 @@ function SignUpForm() {
       if (userInfo && idToken) {
         const res = await handleUserAddition(userInfo, idToken);
         if (res) {
-          router.push(PAGE_PATHS.VENDOR_DASHBOARD);
-        } else {
-          console.log(
-            "Not able to persist the user, therefore sign out the user to sign in again."
+          router.push(
+            `${PAGE_PATHS.VENDOR}/${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`
           );
-          alert("Please try again.");
+        } else {
           const firebaseInstance = FirebaseAuth.Singleton();
           await firebaseInstance.signOut();
+          throw "Not able to save the user. Try refreshing page.";
         }
       } else {
         throw "Not able to sign in the user using a federated source.";
       }
     } catch (err) {
-      console.log(err);
+      setOtpModal({ display: true, text: err.message });
     }
   };
 
@@ -157,10 +162,11 @@ function SignUpForm() {
       const response = await app
         .auth()
         .signInWithPhoneNumber(phoneNumber, appVerifier);
-      setOtpModal(true);
+
+      setOtpModal({ display: true, test: "OTP Sent" });
       setConfirmationResult(response);
     } catch (err) {
-      alert("Can't send OTP");
+      setOtpModal({ display: true, text: err.message });
     }
   };
 
@@ -178,9 +184,9 @@ function SignUpForm() {
 
   return (
     <Grid className={classes.container}>
-      <Dialog open={otpModal} onClose={handleModalClose}>
+      <Dialog open={otpModal.display} onClose={handleModalClose}>
         <DialogContent>
-          <Typography variant={"h6"}>OTP Sent</Typography>
+          <Typography variant={"h6"}>{otpModal.text}</Typography>
         </DialogContent>
       </Dialog>
       <Typography className={classes.sectionTitle}>SIGN UP</Typography>
@@ -231,27 +237,58 @@ function SignUpForm() {
             )}
           </Grid>
           {usernameType === USERNAME_TYPE.EMAIL && (
-            <TextField
-              className={classes.textInput}
-              id="password"
-              name="password"
-              label="Password"
-              fullWidth
-              variant="outlined"
-              type="password"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.password}
-              error={formik.touched.password && Boolean(formik.errors.password)}
-              helperText={formik.touched.password && formik.errors.password}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Lock style={{ color: "rgba(189, 189, 189, 1" }} />
-                  </InputAdornment>
-                ),
-              }}
-            />
+            <Grid>
+              <TextField
+                className={classes.textInput}
+                id="password"
+                name="password"
+                label="Password"
+                fullWidth
+                variant="outlined"
+                type="password"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.password}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+                helperText={formik.touched.password && formik.errors.password}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Lock style={{ color: "rgba(189, 189, 189, 1" }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                className={classes.textInput}
+                id="confirmPassword"
+                name="confirmPassword"
+                label="Confirm Password"
+                fullWidth
+                variant="outlined"
+                type="password"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.confirmPassword}
+                error={
+                  formik.touched.confirmPassword &&
+                  Boolean(formik.errors.confirmPassword)
+                }
+                helperText={
+                  formik.touched.confirmPassword &&
+                  formik.errors.confirmPassword
+                }
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Lock style={{ color: "rgba(189, 189, 189, 1" }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
           )}
           {usernameType === USERNAME_TYPE.PHONE_NUMBER && (
             <TextField
@@ -323,7 +360,8 @@ function SignUpForm() {
               !formik.values.name ||
               !formik.values.username ||
               (usernameType === USERNAME_TYPE.EMAIL &&
-                !formik.values.password) ||
+                (!formik.values.password || !formik.values.confirmPassword)) ||
+              (formik.errors.password || formik.errors.confirmPassword) ||
               (usernameType === USERNAME_TYPE.PHONE_NUMBER &&
                 !formik.values.otp) ||
               formik.errors.name ||

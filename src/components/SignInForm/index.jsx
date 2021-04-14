@@ -58,6 +58,8 @@ function SigninForm() {
           await app
             .auth()
             .signInUserWithEmailAndPassword(values.username, values.password);
+        } else {
+          return;
         }
 
         router.push(
@@ -95,7 +97,6 @@ function SigninForm() {
     formik.handleChange(event);
 
     if (/^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/.test(event.target.value)) {
-      console.log("Test");
       setUsernameType(USERNAME_TYPE.EMAIL);
     } else if (phoneRegExp.test(event.target.value)) {
       setUsernameType(USERNAME_TYPE.PHONE_NUMBER);
@@ -184,26 +185,34 @@ function SigninForm() {
             )}
           </Grid>
           {usernameType === USERNAME_TYPE.EMAIL && (
-            <TextField
-              className={classes.textInput}
-              id="password"
-              name="password"
-              label="Password"
-              variant="outlined"
-              type="password"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.password}
-              error={formik.touched.password && Boolean(formik.errors.password)}
-              helperText={formik.touched.password && formik.errors.password}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Lock style={{ color: "rgba(189, 189, 189, 1" }} />
-                  </InputAdornment>
-                ),
-              }}
-            />
+            <Grid>
+              <TextField
+                className={classes.textInput}
+                id="password"
+                name="password"
+                label="Password"
+                variant="outlined"
+                type="password"
+                fullWidth
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.password}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+                helperText={formik.touched.password && formik.errors.password}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Lock style={{ color: "rgba(189, 189, 189, 1" }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <Typography align="right" className={classes.forgotPassword}>
+                Forgot Password ?
+              </Typography>
+            </Grid>
           )}
           {usernameType === USERNAME_TYPE.PHONE_NUMBER && (
             <TextField
@@ -231,9 +240,7 @@ function SigninForm() {
               }}
             />
           )}
-          <Typography align="right" className={classes.forgotPassword}>
-            Forgot Password ?
-          </Typography>
+
           <Button
             className={classes.signinButton}
             type="submit"

@@ -18,7 +18,7 @@ function useFederatedAuth() {
   const facebookSignIn = async () => {
     try {
       const userInfo = await firebaseAuth.facebookSignin();
-      const idToken = await firebaseAuth.getIddToken();
+      const idToken = await firebaseAuth.getIdToken();
       return { userInfo, idToken };
     } catch (err) {
       console.log(err);
