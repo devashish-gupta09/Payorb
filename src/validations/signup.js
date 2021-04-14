@@ -11,6 +11,8 @@ export const signUpValidation = Yup.object({
     passwordRegExp,
     "Password should contain at least one uppercase letter, one lowercase letter and one number"
   ),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+  confirmPassword: Yup.string().oneOf(
+    [Yup.ref("password"), null],
+    "Passwords must match"
+  ),
 });
