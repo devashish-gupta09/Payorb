@@ -1,19 +1,15 @@
 import {
   Button,
+  Dialog,
+  DialogContent,
   FormControl,
   Grid,
   InputAdornment,
   TextField,
   Typography,
 } from "@material-ui/core";
-import {
-  Maximize,
-  AccountCircle,
-  AlternateEmail,
-  Lock,
-  MoreHoriz,
-  Phone,
-} from "@material-ui/icons";
+import { Maximize, AccountCircle, Lock, MoreHoriz } from "@material-ui/icons";
+import Link from "next/link";
 
 import ButtonCapsule from "../ButtonCapsule";
 
@@ -32,13 +28,17 @@ import React from "react";
 import { signUpValidation, phoneRegExp } from "../../validations/signup";
 
 export const handleUserAddition = async (userRes, idToken) => {
+  console.log("This is the USER :", userRes);
   try {
     if (userRes && idToken) {
       const addUserRes = await addUser(
         {
-          name: userRes.user.displayName,
+          name: userRes.user.displayName
+            ? userRes.user.displayName
+            : userRes.user.name,
           email: userRes.user.email,
           phoneNumber: userRes.user.phoneNumber,
+          location: userRes.location,
           provider: userRes.additionalUserInfo.providerId,
         },
         idToken
@@ -47,7 +47,7 @@ export const handleUserAddition = async (userRes, idToken) => {
       return addUserRes;
     }
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
 
@@ -66,6 +66,60 @@ function SignUpForm() {
   const router = useRouter();
   const { fedSignUp } = useFederatedAuth();
   const [usernameType, setUsernameType] = React.useState();
+  const [confirmationResult, setConfirmationResult] = React.useState();
+  const [otpModal, setOtpModal] = React.useState({ display: false, text: "" });
+
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      name: "",
+      password: "",
+      location: "",
+      otp: "",
+      confirmPassword: "",
+    },
+    validationSchema: signUpValidation,
+    onSubmit: async (values) => {
+      try {
+        let user;
+
+        // Create a account with firebase.
+        if (usernameType === USERNAME_TYPE.PHONE_NUMBER) {
+          if (!confirmationResult) {
+            throw new Error(
+              `Make sure you have received OTP on phone number before proceeding forward.`
+            );
+          }
+
+          user = await confirmationResult.confirm(values.otp);
+        } else if (usernameType === USERNAME_TYPE.EMAIL) {
+          user = await app
+            .auth()
+            .createUserWithEmailAndPassword(values.username, values.password);
+
+          // console.log(window.location);
+        }
+        if (user) {
+          await handleUserAddition(
+            { ...user, location: values.location },
+            await FirebaseAuth.Singleton().getIdToken()
+          );
+
+          router.push(
+            `${PAGE_PATHS.VENDOR}/${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`
+          );
+        }
+      } catch (err) {
+        const firebaseInstance = FirebaseAuth.Singleton();
+        await firebaseInstance.signOut();
+        setOtpModal({ display: true, text: err.message });
+      }
+    },
+  });
+
+  const handleModalClose = () => {
+    setOtpModal({ display: false, text: "" });
+  };
 
   // In case of fedrated sign up we are going to
   // sign in a user using a social platform but
@@ -78,42 +132,48 @@ function SignUpForm() {
       if (userInfo && idToken) {
         const res = await handleUserAddition(userInfo, idToken);
         if (res) {
-          router.push(PAGE_PATHS.VENDOR_DASHBOARD);
-        } else {
-          console.log(
-            "Not able to persist the user, therefore sign out the user to sign in again."
+          router.push(
+            `${PAGE_PATHS.VENDOR}/${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`
           );
-          alert("Please try again.");
+        } else {
           const firebaseInstance = FirebaseAuth.Singleton();
           await firebaseInstance.signOut();
+          throw "Not able to save the user. Try refreshing page.";
         }
       } else {
         throw "Not able to sign in the user using a federated source.";
       }
     } catch (err) {
-      console.log(err);
+      setOtpModal({ display: true, text: err.message });
     }
   };
 
-  const formik = useFormik({
-    initialValues: {
-      username: "",
-      name: "",
-      password: "",
-      location: "",
-      otp: "",
-    },
-    validationSchema: signUpValidation,
-    onSubmit: (values) => {
-      console.log("The values submitted", values);
-    },
-  });
+  const handleSendOTP = async () => {
+    try {
+      window.recaptchaVerifier = new app.auth.RecaptchaVerifier(
+        "sign-in-button",
+        {
+          size: "invisible",
+        }
+      );
+
+      const phoneNumber = `+91${formik.values.username}`;
+      const appVerifier = window.recaptchaVerifier;
+      const response = await app
+        .auth()
+        .signInWithPhoneNumber(phoneNumber, appVerifier);
+
+      setOtpModal({ display: true, test: "OTP Sent" });
+      setConfirmationResult(response);
+    } catch (err) {
+      setOtpModal({ display: true, text: err.message });
+    }
+  };
 
   const handleUsernameChange = (event) => {
     formik.handleChange(event);
 
     if (/^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/.test(event.target.value)) {
-      console.log("Test");
       setUsernameType(USERNAME_TYPE.EMAIL);
     } else if (phoneRegExp.test(event.target.value)) {
       setUsernameType(USERNAME_TYPE.PHONE_NUMBER);
@@ -124,13 +184,19 @@ function SignUpForm() {
 
   return (
     <Grid className={classes.container}>
+      <Dialog open={otpModal.display} onClose={handleModalClose}>
+        <DialogContent>
+          <Typography variant={"h6"}>{otpModal.text}</Typography>
+        </DialogContent>
+      </Dialog>
       <Typography className={classes.sectionTitle}>SIGN UP</Typography>
       <Typography variant={"h4"} className={classes.title}>
         Get Started
       </Typography>
       <form onSubmit={formik.handleSubmit}>
-        <FormControl className={classes.formContainer}>
+        <Grid className={classes.formContainer}>
           <Grid container alignItems="center" spacing={1}>
+            {/* Username TextField */}
             <Grid
               item
               xs={usernameType === USERNAME_TYPE.PHONE_NUMBER ? 8 : 12}
@@ -164,37 +230,74 @@ function SignUpForm() {
                 <ButtonCapsule
                   text="Get OTP"
                   buttonStyle={classes.getOtp}
+                  onClick={handleSendOTP}
                 ></ButtonCapsule>
+                <div id="sign-in-button"></div>
               </Grid>
             )}
           </Grid>
           {usernameType === USERNAME_TYPE.EMAIL && (
-            <TextField
-              className={classes.textInput}
-              id="password"
-              name="password"
-              label="Password"
-              variant="outlined"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.password}
-              error={formik.touched.password && Boolean(formik.errors.password)}
-              helperText={formik.touched.password && formik.errors.password}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Lock style={{ color: "rgba(189, 189, 189, 1" }} />
-                  </InputAdornment>
-                ),
-              }}
-            />
+            <Grid>
+              <TextField
+                className={classes.textInput}
+                id="password"
+                name="password"
+                label="Password"
+                fullWidth
+                variant="outlined"
+                type="password"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.password}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+                helperText={formik.touched.password && formik.errors.password}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Lock style={{ color: "rgba(189, 189, 189, 1" }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                className={classes.textInput}
+                id="confirmPassword"
+                name="confirmPassword"
+                label="Confirm Password"
+                fullWidth
+                variant="outlined"
+                type="password"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.confirmPassword}
+                error={
+                  formik.touched.confirmPassword &&
+                  Boolean(formik.errors.confirmPassword)
+                }
+                helperText={
+                  formik.touched.confirmPassword &&
+                  formik.errors.confirmPassword
+                }
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Lock style={{ color: "rgba(189, 189, 189, 1" }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
           )}
           {usernameType === USERNAME_TYPE.PHONE_NUMBER && (
             <TextField
               className={classes.textInput}
               id="otp"
+              fullWidth
               label="OTP"
               variant="outlined"
+              type="password"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.otp}
@@ -223,6 +326,7 @@ function SignUpForm() {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.name}
+            fullWidth
             error={formik.touched.name && Boolean(formik.errors.name)}
             helperText={formik.touched.name && formik.errors.name}
             InputProps={{
@@ -238,6 +342,7 @@ function SignUpForm() {
             id="location"
             label="Location"
             variant="outlined"
+            fullWidth
             value={formik.values.location}
             onChange={formik.handleChange}
             error={formik.touched.location && Boolean(formik.errors.location)}
@@ -255,13 +360,14 @@ function SignUpForm() {
               !formik.values.name ||
               !formik.values.username ||
               (usernameType === USERNAME_TYPE.EMAIL &&
-                !formik.values.password) ||
+                (!formik.values.password || !formik.values.confirmPassword)) ||
+              (formik.errors.password || formik.errors.confirmPassword) ||
               (usernameType === USERNAME_TYPE.PHONE_NUMBER &&
                 !formik.values.otp) ||
-              formik.errors.password ||
               formik.errors.name ||
               formik.errors.username
             }
+            fullWidth
             className={classes.signupButton}
             type="submit"
           >
@@ -272,6 +378,7 @@ function SignUpForm() {
           </Typography>
 
           <Button
+            fullWidth
             className={classes.socialMediaButtons}
             startIcon={
               <img
@@ -285,6 +392,7 @@ function SignUpForm() {
           </Button>
 
           <Button
+            fullWidth
             className={classes.socialMediaButtons}
             startIcon={
               <img
@@ -297,9 +405,10 @@ function SignUpForm() {
             Sign in with Facebook
           </Button>
           <Typography align="center" className={classes.signupMessage}>
-            Dont’s have an account? Sign Up
+            Already have an account?{" "}
+            <Link href={PAGE_PATHS.SIGNIN}>Sign In</Link>
           </Typography>
-        </FormControl>
+        </Grid>
       </form>
     </Grid>
   );

@@ -11,7 +11,13 @@ export const styles = makeStyles((theme) => ({
     width: "80%",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
-    }
+    },
+  },
+  otpModal: {
+    padding: "5em",
+    [theme.breakpoints.down("sm")]: {
+      padding: "3em",
+    },
   },
   textInput: {
     margin: "0.75em 0",

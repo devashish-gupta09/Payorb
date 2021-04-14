@@ -5,6 +5,6 @@ export const AUTH_PROVIDERS = {
 };
 
 export const USERNAME_TYPE = {
-  "EMAIL": "EMAIL",
-  "PHONE_NUMBER": "PHONE_NUMBER"
-}
+  EMAIL: "EMAIL",
+  PHONE_NUMBER: "PHONE_NUMBER",
+};
