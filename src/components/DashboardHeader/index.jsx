@@ -1,12 +1,13 @@
-import { AppBar, Drawer, Grid, Toolbar, Typography } from "@material-ui/core";
+import { AppBar, Drawer, Grid, Link, Toolbar, Typography } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import React from "react";
+import { PAGE_PATHS } from "../../constants/paths";
 import Logo from "../Logo";
 import ProfileSectionHeader from "../ProfileSectionHeader";
 import TabBarHeader from "../TabBarHeader";
 import { styles } from "./styles";
 
-function VendorDashboardHeader() {
+function VendorDashboardHeader({ profileData }) {
   const classes = styles();
   const [appMenu, setAppMenu] = React.useState(false);
 
@@ -48,10 +49,14 @@ function VendorDashboardHeader() {
             </Grid>
             <Grid container item sm={8}></Grid>
             <Grid item sm={2}>
-              <ProfileSectionHeader
-                image="https://www.google.com/imgres?imgurl=https%3A%2F%2Fmaterial-ui.com%2Fstatic%2Fimages%2Favatar%2F1.jpg&imgrefurl=https%3A%2F%2Fmaterial-ui.com%2Fcomponents%2Favatars%2F&tbnid=AyLA-QjKOR7zDM&vet=12ahUKEwiMvvHPg9fvAhWK7TgGHeFRA28QMygAegUIARClAQ..i&docid=lwWju4eQyAN6LM&w=128&h=128&q=avatar%20material%20ui&ved=2ahUKEwiMvvHPg9fvAhWK7TgGHeFRA28QMygAegUIARClAQ"
-                name="Alfredo Culhane"
-              />
+              <Link
+                href={`${PAGE_PATHS.VENDOR}/${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`}
+              >
+                <ProfileSectionHeader
+                  image={profileData.profileImgUrl}
+                  name={profileData.name}
+                />
+              </Link>
             </Grid>
           </Grid>
         </Grid>

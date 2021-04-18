@@ -13,7 +13,6 @@ export default function Vendor() {
         if (!user && router.isReady) {
             console.log("Why is this being called", user, router)
             // router.push("/")
-            // Not sure why we are facing this error. 
         }
 
         return () => {

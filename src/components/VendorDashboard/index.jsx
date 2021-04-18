@@ -1,22 +1,29 @@
-import { Grid } from "@material-ui/core";
+import {
+  Backdrop,
+  CircularProgress,
+  Grid,
+  Typography,
+} from "@material-ui/core";
 import { useRouter } from "next/router";
 import React from "react";
 import { PAGE_PATHS } from "../../constants/paths";
+import { getUser } from "../../services/auth";
 import VendorDashboardHeader from "../DashboardHeader";
 import FallbackPage from "../FallbackPage";
 import Profile from "../Profile";
 import VendorDashboardContainer from "../VendorDashboardContainer";
 import VendorEvents from "../VendorEvents";
 import VendorFinancials from "../VendorFinancials";
-import { styles } from "./styles";
 
 function VendorDashboard() {
   const router = useRouter();
+  const [loading, setLoading] = React.useState(true);
+  const [profileData, setProfileData] = React.useState(null);
 
-  const getComponent = (route) => {
+  const getComponent = (route, profileData) => {
     switch (route) {
       case PAGE_PATHS.VENDOR_DASHBOARD_PROFILE:
-        return <Profile />;
+        return <Profile profileData={profileData} />;
       case PAGE_PATHS.VENDOR_DASHBOARD_FINANCIALS:
         return <VendorFinancials />;
       case PAGE_PATHS.VENDOR_DASHBOARD_EVENTS:
@@ -31,13 +38,50 @@ function VendorDashboard() {
     }
   };
 
+  React.useEffect(() => {
+    getUser()
+      .then((res) => {
+        if (res.data) {
+          // allowing a user to head to the profile section even if no data exists in the firestore
+          if (Object.keys(res.data).length > 0) {
+            setProfileData(res.data);
+            setLoading(false);
+          } else {
+            router.push(
+              `${PAGE_PATHS.VENDOR}/${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`
+            );
+          }
+        } else {
+          router.push("/signup");
+        }
+      })
+      .catch((err) => {
+        console.error("Error getting profile data", err.message);
+        router.push("/");
+      });
+  }, []);
+
   return (
-    <Grid>
-      <VendorDashboardHeader />
-      <VendorDashboardContainer>
-        {getComponent(router.query.section)}
-      </VendorDashboardContainer>
-    </Grid>
+    <>
+      {loading ? (
+        <Backdrop open>
+          <Grid>
+            <Typography variant="h3" style={{ color: "white" }}>
+              {"Loading"}
+            </Typography>
+            <CircularProgress size="3rem" variant="indeterminate" />
+          </Grid>
+        </Backdrop>
+      ) : (
+        <Grid>
+          <VendorDashboardHeader profileData={profileData} />
+          <VendorDashboardContainer>
+            {getComponent(router.query.section, profileData)}
+          </VendorDashboardContainer>
+          )
+        </Grid>
+      )}
+    </>
   );
 }
 

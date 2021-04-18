@@ -28,21 +28,18 @@ import React from "react";
 import { signUpValidation, phoneRegExp } from "../../validations/signup";
 
 export const handleUserAddition = async (userRes, idToken) => {
-  console.log("This is the USER :", userRes);
   try {
     if (userRes && idToken) {
-      const addUserRes = await addUser(
-        {
-          name: userRes.user.displayName
-            ? userRes.user.displayName
-            : userRes.user.name,
-          email: userRes.user.email,
-          phoneNumber: userRes.user.phoneNumber,
-          location: userRes.location,
-          provider: userRes.additionalUserInfo.providerId,
-        },
-        idToken
-      );
+      const addUserRes = await addUser({
+        name: userRes.user.displayName
+          ? userRes.user.displayName
+          : userRes.user.name,
+        email: userRes.user.email,
+        phoneNumber: userRes.user.phoneNumber
+          ? userRes.user.phoneNumber
+          : undefined,
+        location: userRes.location,
+      });
 
       return addUserRes;
     }
@@ -96,8 +93,6 @@ function SignUpForm() {
           user = await app
             .auth()
             .createUserWithEmailAndPassword(values.username, values.password);
-
-          // console.log(window.location);
         }
         if (user) {
           await handleUserAddition(
@@ -361,7 +356,8 @@ function SignUpForm() {
               !formik.values.username ||
               (usernameType === USERNAME_TYPE.EMAIL &&
                 (!formik.values.password || !formik.values.confirmPassword)) ||
-              (formik.errors.password || formik.errors.confirmPassword) ||
+              formik.errors.password ||
+              formik.errors.confirmPassword ||
               (usernameType === USERNAME_TYPE.PHONE_NUMBER &&
                 !formik.values.otp) ||
               formik.errors.name ||

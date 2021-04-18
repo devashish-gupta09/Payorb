@@ -28,7 +28,7 @@ export class FirebaseAuth {
   }
 
   async getIdToken() {
-    return await app.auth().currentUser.getIdToken(true);
+    return await app.auth().currentUser.getIdToken();
   }
 
   async signOut() {

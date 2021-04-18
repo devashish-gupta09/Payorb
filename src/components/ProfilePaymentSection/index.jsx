@@ -12,18 +12,20 @@ import { appColors } from "../../../styles/colors";
 import { useFormik } from "formik";
 import ButtonCapsule from "../ButtonCapsule";
 
-function ProfilePaymentSection() {
+function getPaymentSectionValues(paymentDetails) {
+  return {
+    name: paymentDetails?.name || "",
+    bankName: paymentDetails?.bankName || "",
+    accNumber: paymentDetails?.accNumber || "",
+    IFSCCode: paymentDetails?.IFSCCode || "",
+    bankAddress: paymentDetails?.bankAddress || "",
+  };
+}
+
+function ProfilePaymentSection({ profileData }) {
   const classes = styles();
   const formik = useFormik({
-    initialValues: {
-      name: "Alfredo Culhane",
-      bankName: "XYZ Bank",
-      accNumber: "123412341234",
-      ifscCode: "7463BB7",
-      bankAddress: `D-20,midc,add.ambernath, Ambernath
-      Mumbai
-      Maharashtra`,
-    },
+    initialValues: getPaymentSectionValues(profileData.paymentDetails),
     onSubmit: () => {
       console.log("Received Some values to update payment details");
     },
@@ -85,7 +87,7 @@ function ProfilePaymentSection() {
             <Grid container item sm={6}>
               <TextField
                 className={classes.textInput}
-                id="ifscCode"
+                id="IFSCCode"
                 label="IFSC Code"
                 variant="outlined"
                 onChange={formik.handleChange}

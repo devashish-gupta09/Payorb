@@ -4,56 +4,77 @@ import React from "react";
 import { globalStyles } from "../../../styles/globalStyles";
 import DashboardCard from "../DashboardCard";
 
+function DetailRow({ section, icon, text, classes, editable }) {
+  const globalClasses = globalStyles();
+  return (
+    <Grid container className={classes.infoRow}>
+      <Grid className={classes.logo}>{icon}</Grid>
+      <Typography className={`${globalClasses.bold}`}>
+        {text || `Please add your ${section}`}
+      </Typography>
+    </Grid>
+  );
+}
+
 function Details(props) {
   const globalClasses = globalStyles();
-  const { classes } = props;
+  const { classes, about, email, phoneNumber, location } = props;
   return (
     <>
       <Typography className={`${globalClasses.bold}`} gutterBottom>
         About
       </Typography>
       <Typography paragraph className={classes.infoRow}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nisl
-        turpis vitae mi convallis tristique sed. Malesuada sed in ac diam arcu
-        vel at. Id neque, ipsum sed pharetra. Nunc vulputate lectus egestas elit
-        odio odio posuere tellus sed. Nunc vulputate lectus egestas elit odio
-        odio posuere tellus sed.
+        {about ? about : "Please add some details about yourself"}
       </Typography>
-      <Grid container className={classes.infoRow}>
-        <Grid className={classes.logo}>
-          <MailOutline />
-        </Grid>
-        <Typography className={`${globalClasses.bold}`}>
-          alfredoculhane@g.co
-        </Typography>
-      </Grid>
-      <Grid container className={classes.infoRow}>
-        <Grid className={classes.logo}>
-          <Phone />
-        </Grid>
-        <Typography className={`${globalClasses.bold}`}>
-          +91 1242 1234 12
-        </Typography>
-      </Grid>
+
+      <DetailRow
+        section={"email"}
+        text={email}
+        classes={classes}
+        icon={<MailOutline />}
+      />
+
+      <DetailRow
+        section={"phone number"}
+        text={phoneNumber}
+        classes={classes}
+        icon={<Phone />}
+      />
+      <DetailRow
+        section={"location"}
+        text={location}
+        classes={classes}
+        icon={<Place />}
+      />
+
       <Grid container className={classes.infoRow}>
         <Grid className={classes.logo}>
           <Place />
         </Grid>
-        <Typography className={`${globalClasses.bold}`}>Ahmedabad</Typography>
+        <Typography className={`${globalClasses.bold}`}>
+          {location ? location : "Please update your location"}
+        </Typography>
       </Grid>
     </>
   );
 }
 
-function ProfileAboutCard() {
+function ProfileAboutCard({ profileData }) {
   const classes = styles();
 
   return (
-    <DashboardCard rootClass={classes.root} >
+    <DashboardCard rootClass={classes.root}>
       <Grid>
         <Grid container spacing={5} className={classes.desktop}>
           <Grid item sm={6}>
-            <Details classes={classes} />
+            <Details
+              about={profileData.about}
+              email={profileData.email}
+              phoneNumber={profileData.phoneNumber}
+              location={profileData.location}
+              classes={classes}
+            />
           </Grid>
           <Grid item sm={6}>
             {/* Need to include a video section over here. */}
@@ -66,7 +87,13 @@ function ProfileAboutCard() {
             <img style={{ width: "100%" }} src={"../assets/video.png"} />
           </Grid>
           <Grid className={classes.mobileDetailsContainer}>
-            <Details classes={classes} />
+            <Details
+              about={profileData.about}
+              email={profileData.email}
+              phoneNumber={profileData.phoneNumber}
+              location={profileData.location}
+              classes={classes}
+            />
           </Grid>
         </Grid>
       </Grid>
@@ -75,7 +102,6 @@ function ProfileAboutCard() {
 }
 
 const styles = makeStyles((theme) => ({
-
   root: {
     borderRadius: "0.8em",
     padding: "2em",
