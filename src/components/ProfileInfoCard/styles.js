@@ -1,11 +1,13 @@
 import { makeStyles } from "@material-ui/core";
+import { appColors } from "../../../styles/colors";
 
 export const styles = makeStyles((theme) => ({
   profileImage: {
+    minHeight: "50%",
     maxHeight: "70%",
     borderRadius: "50%",
     [theme.breakpoints.down("sm")]: {
-      height: "5em",
+      height: "4em",
     },
   },
   titleCardProfileContainer: {
@@ -23,6 +25,17 @@ export const styles = makeStyles((theme) => ({
   grey: {
     paddingBottom: "0.2em",
     fontWeight: 500,
-    color: "rgba(130, 130, 130, 1)",
+    color: appColors.grey,
   },
+  textField: {
+    padding: "0",
+    color: "yellow"
+  },
+  saveButton: {
+    width: "5vw"
+  },
+  cancelButton: {
+    margin: "0 0.5em",
+    background: "#BDBDBD"
+  }
 }));

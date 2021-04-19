@@ -1,59 +1,175 @@
-import { Grid, makeStyles, Typography } from "@material-ui/core";
-import { LocationCity, MailOutline, Phone, Place } from "@material-ui/icons";
+import { Button, Grid, makeStyles, Typography } from "@material-ui/core";
+import { MailOutline, Phone, Place } from "@material-ui/icons";
+import { useFormik } from "formik";
+import { useRouter } from "next/router";
 import React from "react";
+import { appColors } from "../../../styles/colors";
 import { globalStyles } from "../../../styles/globalStyles";
+import { updateUser } from "../../services/auth";
+import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
+import EditableTextField from "../EditableTextfield";
+
+function DetailRow({ icon, classes, children }) {
+  return (
+    <Grid container className={classes.infoRow} alignItems="center">
+      <Grid item xs={1} className={classes.logo}>
+        {icon}
+      </Grid>
+      <Grid item xs={11}>
+        {children}
+      </Grid>
+    </Grid>
+  );
+}
 
 function Details(props) {
   const globalClasses = globalStyles();
-  const { classes } = props;
+  const { classes, about, email, phoneNumber, location } = props;
+  const [edit, setEdit] = React.useState(false);
+  const router = useRouter();
+
+  const formik = useFormik({
+    initialValues: {
+      email: email || "",
+      phoneNumber: phoneNumber || "",
+      location: location || "",
+      about: about || "",
+    },
+    onSubmit: async (values) => {
+      try {
+        const res = await updateUser(values);
+        if (res?.success) {
+          alert("User updated.");
+          router.reload();
+        } else {
+          alert("User not updated.");
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    },
+  });
+
+  const handleEditProfile = () => {
+    setEdit(!edit);
+  };
   return (
     <>
-      <Typography className={`${globalClasses.bold}`} gutterBottom>
-        About
-      </Typography>
-      <Typography paragraph className={classes.infoRow}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nisl
-        turpis vitae mi convallis tristique sed. Malesuada sed in ac diam arcu
-        vel at. Id neque, ipsum sed pharetra. Nunc vulputate lectus egestas elit
-        odio odio posuere tellus sed. Nunc vulputate lectus egestas elit odio
-        odio posuere tellus sed.
-      </Typography>
-      <Grid container className={classes.infoRow}>
-        <Grid className={classes.logo}>
-          <MailOutline />
-        </Grid>
-        <Typography className={`${globalClasses.bold}`}>
-          alfredoculhane@g.co
+      <form onSubmit={formik.handleSubmit}>
+        <Typography className={`${globalClasses.bold}`} gutterBottom>
+          About
         </Typography>
-      </Grid>
-      <Grid container className={classes.infoRow}>
-        <Grid className={classes.logo}>
-          <Phone />
+
+        <Grid className={classes.aboutContainer}>
+          <EditableTextField
+            edit={edit}
+            value={about || "Please add some information about yourself"}
+            textFieldProps={{
+              fullWidth: true,
+              id: "about",
+              label: "About",
+              value: formik.values.about,
+              variant: "outlined",
+              margin: "normal",
+              onChange: formik.handleChange,
+              onBlur: formik.onBlur,
+            }}
+          />
         </Grid>
-        <Typography className={`${globalClasses.bold}`}>
-          +91 1242 1234 12
-        </Typography>
-      </Grid>
-      <Grid container className={classes.infoRow}>
-        <Grid className={classes.logo}>
-          <Place />
+
+        <DetailRow classes={classes} icon={<MailOutline />}>
+          <EditableTextField
+            edit={edit}
+            value={email || `Please add your email`}
+            textFieldProps={{
+              fullWidth: true,
+              id: "email",
+              label: "Email",
+              value: formik.values.email,
+              variant: "outlined",
+              margin: "normal",
+              onChange: formik.handleChange,
+              onBlur: formik.onBlur,
+            }}
+          />
+        </DetailRow>
+
+        <DetailRow classes={classes} icon={<Phone />}>
+          <EditableTextField
+            edit={edit}
+            value={phoneNumber || `Please add your phone number`}
+            textFieldProps={{
+              fullWidth: true,
+              id: "phoneNumber",
+              label: "Phone Number",
+              value: formik.values.phoneNumber,
+              variant: "outlined",
+              margin: "normal",
+              onChange: formik.handleChange,
+              onBlur: formik.onBlur,
+            }}
+          />
+        </DetailRow>
+
+        <DetailRow classes={classes} icon={<Place />}>
+          <EditableTextField
+            edit={edit}
+            value={location || `Please add your location`}
+            textFieldProps={{
+              fullWidth: true,
+              id: "location",
+              label: "location",
+              value: formik.values.location,
+              variant: "outlined",
+              margin: "normal",
+              onChange: formik.handleChange,
+              onBlur: formik.onBlur,
+            }}
+          />
+        </DetailRow>
+
+        <Grid style={{ paddingTop: "1em" }}>
+          {edit ? (
+            <>
+              <Button className={classes.saveButton} type="submit">
+                Save
+              </Button>
+              <ButtonCapsule
+                text="Cancel"
+                buttonStyle={classes.cancelButton}
+                onClick={handleEditProfile}
+              ></ButtonCapsule>
+            </>
+          ) : (
+            <ButtonCapsule
+              text="Edit Profile"
+              onClick={handleEditProfile}
+            ></ButtonCapsule>
+          )}
         </Grid>
-        <Typography className={`${globalClasses.bold}`}>Ahmedabad</Typography>
-      </Grid>
+      </form>
     </>
   );
 }
 
-function ProfileAboutCard() {
+function ProfileAboutCard({ profileData }) {
   const classes = styles();
 
   return (
-    <DashboardCard rootClass={classes.root} >
+    <DashboardCard rootClass={classes.root}>
       <Grid>
         <Grid container spacing={5} className={classes.desktop}>
           <Grid item sm={6}>
-            <Details classes={classes} />
+            <Grid className={classes.detailsContainer}>
+              <Details
+                about={profileData.about}
+                email={profileData.email}
+                phoneNumber={profileData.phoneNumber}
+                location={profileData.location}
+                classes={classes}
+              />
+            </Grid>
           </Grid>
           <Grid item sm={6}>
             {/* Need to include a video section over here. */}
@@ -66,7 +182,13 @@ function ProfileAboutCard() {
             <img style={{ width: "100%" }} src={"../assets/video.png"} />
           </Grid>
           <Grid className={classes.mobileDetailsContainer}>
-            <Details classes={classes} />
+            <Details
+              about={profileData.about}
+              email={profileData.email}
+              phoneNumber={profileData.phoneNumber}
+              location={profileData.location}
+              classes={classes}
+            />
           </Grid>
         </Grid>
       </Grid>
@@ -75,7 +197,6 @@ function ProfileAboutCard() {
 }
 
 const styles = makeStyles((theme) => ({
-
   root: {
     borderRadius: "0.8em",
     padding: "2em",
@@ -87,8 +208,17 @@ const styles = makeStyles((theme) => ({
     paddingRight: "0.75em",
     color: "rgba(121, 223, 223, 1)",
   },
+  grey: {
+    paddingBottom: "0.2em",
+    fontWeight: 500,
+    color: appColors.grey,
+  },
   infoRow: {
     paddingBottom: "0.5em",
+  },
+  cancelButton: {
+    margin: "0 0.5em",
+    background: "#BDBDBD",
   },
   desktop: {
     [theme.breakpoints.down("sm")]: {
@@ -105,6 +235,15 @@ const styles = makeStyles((theme) => ({
   },
   mobileDetailsContainer: {
     padding: "1em",
+  },
+  detailsContainer: {
+    width: "75%",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+    },
+  },
+  aboutContainer: {
+    paddingBottom: "1em",
   },
 }));
 

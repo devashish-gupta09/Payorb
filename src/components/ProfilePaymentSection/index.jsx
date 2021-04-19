@@ -11,21 +11,38 @@ import { globalStyles } from "../../../styles/globalStyles";
 import { appColors } from "../../../styles/colors";
 import { useFormik } from "formik";
 import ButtonCapsule from "../ButtonCapsule";
+import { updateUser } from "../../services/auth";
+import { useRouter } from "next/router";
 
-function ProfilePaymentSection() {
+function getPaymentSectionValues(paymentDetails) {
+  return {
+    name: paymentDetails?.name || "",
+    bankName: paymentDetails?.bankName || "",
+    accNumber: paymentDetails?.accNumber || "",
+    ifscCode: paymentDetails?.ifscCode || "",
+    bankAddress: paymentDetails?.bankAddress || "",
+  };
+}
+
+function ProfilePaymentSection({ profileData }) {
   const classes = styles();
+  const router = useRouter();
   const formik = useFormik({
-    initialValues: {
-      name: "Alfredo Culhane",
-      bankName: "XYZ Bank",
-      accNumber: "123412341234",
-      ifscCode: "7463BB7",
-      bankAddress: `D-20,midc,add.ambernath, Ambernath
-      Mumbai
-      Maharashtra`,
-    },
-    onSubmit: () => {
-      console.log("Received Some values to update payment details");
+    initialValues: getPaymentSectionValues(profileData.paymentDetails),
+    onSubmit: async (values) => {
+      try {
+        const res = await updateUser({
+          paymentDetails: values,
+        });
+        if (res?.success) {
+          alert("User updated.");
+          router.reload();
+        } else {
+          alert("User not updated.");
+        }
+      } catch (err) {
+        console.error(err);
+      }
     },
   });
 
@@ -127,6 +144,7 @@ function ProfilePaymentSection() {
           >
             <ButtonCapsule
               text="Save"
+              type="submit"
               buttonStyle={classes.saveButton}
             ></ButtonCapsule>
           </Grid>

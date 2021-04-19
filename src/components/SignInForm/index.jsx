@@ -80,6 +80,7 @@ function SigninForm() {
   const handleFederatedSignUp = async (provider) => {
     try {
       const { userInfo, idToken } = await fedSignUp(provider);
+      console.log(idToken);
 
       if (userInfo && idToken) {
         router.push(

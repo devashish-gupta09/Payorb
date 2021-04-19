@@ -1,5 +1,5 @@
 import { Avatar, Grid, Typography } from "@material-ui/core";
-import { ArrowDownward, KeyboardArrowDown } from "@material-ui/icons";
+import { KeyboardArrowDown } from "@material-ui/icons";
 import React from "react";
 
 function ProfileSectionHeader({ image, name }) {
@@ -10,8 +10,8 @@ function ProfileSectionHeader({ image, name }) {
       alignItems="center"
       style={{ color: "#333333" }}
     >
-      <Avatar src={image}></Avatar>
-      <Typography>{name}</Typography>
+      {image && <Avatar src={image} />}
+      <Typography>{name ? name : "Welcome User"}</Typography>
       <KeyboardArrowDown style={{ fontSize: "1em" }} />
     </Grid>
   );
