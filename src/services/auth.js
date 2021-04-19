@@ -1,5 +1,4 @@
 import axios from "axios";
-import { FirebaseAuth } from "../components/AuthenticationContext";
 import { API_URL } from "../config/urls";
 import { END_POINTS } from "../constants/api";
 import { getAuthHeader } from "./api";
@@ -22,7 +21,7 @@ export const getUser = async () => {
   }
 };
 
-export const updateUser = () => {
+export const updateUser = async (userDetails) => {
   const res = await axios.patch(`${API_URL}/${END_POINTS.VENDOR}`, userDetails, {
     headers: await getAuthHeader(),
   });

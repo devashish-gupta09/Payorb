@@ -2,10 +2,11 @@ import { Button } from "@material-ui/core";
 import React from "react";
 import { styles } from "./styles";
 
-function ButtonCapsule({ text, onClick, buttonStyle}) {
+function ButtonCapsule({ type, text, onClick, buttonStyle }) {
   const classes = styles();
   return (
     <Button
+      type={type}
       onClick={onClick}
       className={`${classes.signupButton} ${buttonStyle}`}
     >

@@ -11,23 +11,38 @@ import { globalStyles } from "../../../styles/globalStyles";
 import { appColors } from "../../../styles/colors";
 import { useFormik } from "formik";
 import ButtonCapsule from "../ButtonCapsule";
+import { updateUser } from "../../services/auth";
+import { useRouter } from "next/router";
 
 function getPaymentSectionValues(paymentDetails) {
   return {
     name: paymentDetails?.name || "",
     bankName: paymentDetails?.bankName || "",
     accNumber: paymentDetails?.accNumber || "",
-    IFSCCode: paymentDetails?.IFSCCode || "",
+    ifscCode: paymentDetails?.ifscCode || "",
     bankAddress: paymentDetails?.bankAddress || "",
   };
 }
 
 function ProfilePaymentSection({ profileData }) {
   const classes = styles();
+  const router = useRouter();
   const formik = useFormik({
     initialValues: getPaymentSectionValues(profileData.paymentDetails),
-    onSubmit: () => {
-      console.log("Received Some values to update payment details");
+    onSubmit: async (values) => {
+      try {
+        const res = await updateUser({
+          paymentDetails: values,
+        });
+        if (res?.success) {
+          alert("User updated.");
+          router.reload();
+        } else {
+          alert("User not updated.");
+        }
+      } catch (err) {
+        console.error(err);
+      }
     },
   });
 
@@ -87,7 +102,7 @@ function ProfilePaymentSection({ profileData }) {
             <Grid container item sm={6}>
               <TextField
                 className={classes.textInput}
-                id="IFSCCode"
+                id="ifscCode"
                 label="IFSC Code"
                 variant="outlined"
                 onChange={formik.handleChange}
@@ -129,6 +144,7 @@ function ProfilePaymentSection({ profileData }) {
           >
             <ButtonCapsule
               text="Save"
+              type="submit"
               buttonStyle={classes.saveButton}
             ></ButtonCapsule>
           </Grid>
