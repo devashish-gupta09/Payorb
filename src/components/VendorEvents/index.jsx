@@ -1,6 +1,8 @@
 import { Grid, makeStyles } from "@material-ui/core";
+import { useRouter } from "next/router";
 import React from "react";
 import { defaultEvents, EVENT_VIEWS } from "../../constants/events";
+import { PAGE_PATHS } from "../../constants/paths";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
 import EventsViewList from "../EventsViewList";
@@ -8,7 +10,10 @@ import EventsViewList from "../EventsViewList";
 function VendorEvents() {
   const classes = styles();
   const [view, setView] = React.useState(EVENT_VIEWS.LIST);
-
+  const router = useRouter();
+  const handleCreateEvent = () => {
+    router.push(PAGE_PATHS.VENDOR_DASHBOARD_CREATE_EVENT);
+  };
   // const toggleView = () => {
   //   if (view === EVENT_VIEWS.LIST) {
   //     setView(EVENT_VIEWS.CALENDER);
@@ -30,6 +35,7 @@ function VendorEvents() {
           <ButtonCapsule
             text="Create New Event"
             buttonStyle={classes.createEventButton}
+            onClick={handleCreateEvent}
           />
         </Grid>
       </DashboardCard>

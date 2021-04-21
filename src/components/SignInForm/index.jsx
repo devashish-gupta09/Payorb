@@ -63,7 +63,7 @@ function SigninForm() {
         }
 
         router.push(
-          `${PAGE_PATHS.VENDOR}/${PAGE_PATHS.VENDOR_DASHBOARD_EVENTS}`
+          `${PAGE_PATHS.VENDOR_DASHBOARD_EVENTS}`
         );
       } catch (err) {
         const firebaseInstance = FirebaseAuth.Singleton();
@@ -84,7 +84,7 @@ function SigninForm() {
 
       if (userInfo && idToken) {
         router.push(
-          `${PAGE_PATHS.VENDOR}/${PAGE_PATHS.VENDOR_DASHBOARD_EVENTS}`
+          `${PAGE_PATHS.VENDOR_DASHBOARD_EVENTS}`
         );
       } else {
         throw "Not able to sign in the user using a federated source.";

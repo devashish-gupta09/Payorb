@@ -50,7 +50,7 @@ function VendorDashboardHeader({ profileData }) {
             <Grid container item sm={8}></Grid>
             <Grid item sm={2}>
               <Link
-                href={`${PAGE_PATHS.VENDOR}/${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`}
+                href={`${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`}
               >
                 <ProfileSectionHeader
                   image={profileData.profileImgUrl}
