@@ -21,9 +21,7 @@ function VendorDashboard() {
   const [loading, setLoading] = React.useState(true);
   const [profileData, setProfileData] = React.useState(null);
 
-  console.log("router Object", router);
   const getComponent = (route, profileData) => {
-    console.log(" ########## ROUTE ######## ", route);
     switch (route) {
       case PAGE_PATHS.VENDOR_DASHBOARD_PROFILE:
         return <Profile profileData={profileData} />;

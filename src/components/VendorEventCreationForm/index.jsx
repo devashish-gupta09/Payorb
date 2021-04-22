@@ -92,7 +92,6 @@ function VendorEventCreationForm() {
   });
 
   const handleCancel = () => {
-    console.log("Handle Cancel");
     router.push(PAGE_PATHS.VENDOR_DASHBOARD_EVENTS);
   };
 

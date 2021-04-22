@@ -58,6 +58,7 @@ function ProfilePaymentSection({ profileData }) {
           <Grid container item sm={6} spacing={5}>
             <Grid container item sm={6}>
               <TextField
+                fullWidth
                 className={classes.textInput}
                 id="name"
                 label="Your Name"
@@ -71,6 +72,7 @@ function ProfilePaymentSection({ profileData }) {
             </Grid>
             <Grid container item sm={6}>
               <TextField
+                fullWidth
                 className={classes.textInput}
                 id="bankName"
                 label="Bank Name"
@@ -86,6 +88,7 @@ function ProfilePaymentSection({ profileData }) {
             </Grid>
             <Grid container item sm={6}>
               <TextField
+                fullWidth
                 className={classes.textInput}
                 id="accNumber"
                 label="Account Number"
@@ -105,6 +108,7 @@ function ProfilePaymentSection({ profileData }) {
                 id="ifscCode"
                 label="IFSC Code"
                 variant="outlined"
+                fullWidth
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.ifscCode}
@@ -137,6 +141,7 @@ function ProfilePaymentSection({ profileData }) {
           </Grid>
           <Grid
             container
+            item
             sm={12}
             justify="center"
             alignItems="center"
