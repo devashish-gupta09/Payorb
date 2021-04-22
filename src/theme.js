@@ -42,7 +42,7 @@ theme.typography.h5 = {
 theme.typography.h3 = {
   fontSize: "3em",
   [theme.breakpoints.down("sm")]: {
-    fontSize: "1.2em",
+    fontSize: "1.4em",
   },
 };
 

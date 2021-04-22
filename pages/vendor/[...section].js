@@ -14,10 +14,6 @@ export default function Vendor() {
             console.log("Why is this being called", user, router)
             // router.push("/")
         }
-
-        return () => {
-            console.log("Vendor component has unmounted")
-        }
     }, [])
 
     return <Grid>

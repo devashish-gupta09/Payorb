@@ -3,6 +3,25 @@ export const EVENT_VIEWS = {
   CALENDER: "CALENDER",
 };
 
+export const EVENT_TYPES = {
+  "ONE_TIME": "ONE_TIME",
+  "ONE_ON_ONE": "ONE_ON_ONE"
+}
+
+export const EVENT_MODES = {
+  "ONLINE": "ONLINE",
+  "OFFLINE": "OFFLINE"
+}
+
+export const EVENT_DESCRIPTION = {
+  [EVENT_TYPES.ONE_ON_ONE]: "Pariatur veniam exercitation deserunt et sint mollit magna.",
+  [EVENT_TYPES.ONE_TIME]: "Dolore occaecat labore aliqua qui laboris amet do."
+}
+
+export const EVENT_CATEGORY = {
+  EDUCATION: "Education"
+}
+
 export const defaultEvents = [
   {
     name: `FREE Master Class on “HOW to Communicate with IMPORTERS & International BUYERS”`,

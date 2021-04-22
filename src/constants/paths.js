@@ -3,7 +3,8 @@ export const PAGE_PATHS = {
   SIGNIN: "/signin",
   LANDING: "/",
   VENDOR: "/vendor",
-  VENDOR_DASHBOARD_PROFILE: "profile",
-  VENDOR_DASHBOARD_EVENTS: "events",
-  VENDOR_DASHBOARD_FINANCIALS: "financials",
+  VENDOR_DASHBOARD_PROFILE: "/vendor/profile",
+  VENDOR_DASHBOARD_EVENTS: "/vendor/events",
+  VENDOR_DASHBOARD_FINANCIALS: "/vendor/financials",
+  VENDOR_DASHBOARD_CREATE_EVENT: "/vendor/events/create"
 };

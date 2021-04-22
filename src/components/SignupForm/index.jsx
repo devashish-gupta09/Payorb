@@ -101,7 +101,7 @@ function SignUpForm() {
           );
 
           router.push(
-            `${PAGE_PATHS.VENDOR}/${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`
+            `${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`
           );
         }
       } catch (err) {
@@ -128,7 +128,7 @@ function SignUpForm() {
         const res = await handleUserAddition(userInfo, idToken);
         if (res) {
           router.push(
-            `${PAGE_PATHS.VENDOR}/${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`
+            `${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`
           );
         } else {
           const firebaseInstance = FirebaseAuth.Singleton();

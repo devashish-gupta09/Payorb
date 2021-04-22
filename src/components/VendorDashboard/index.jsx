@@ -12,6 +12,7 @@ import VendorDashboardHeader from "../DashboardHeader";
 import FallbackPage from "../FallbackPage";
 import Profile from "../Profile";
 import VendorDashboardContainer from "../VendorDashboardContainer";
+import VendorEventCreationForm from "../VendorEventCreationForm";
 import VendorEvents from "../VendorEvents";
 import VendorFinancials from "../VendorFinancials";
 
@@ -26,6 +27,8 @@ function VendorDashboard() {
         return <Profile profileData={profileData} />;
       case PAGE_PATHS.VENDOR_DASHBOARD_FINANCIALS:
         return <VendorFinancials />;
+      case PAGE_PATHS.VENDOR_DASHBOARD_CREATE_EVENT:
+        return <VendorEventCreationForm />;
       case PAGE_PATHS.VENDOR_DASHBOARD_EVENTS:
         return <VendorEvents />;
       default:
@@ -47,9 +50,7 @@ function VendorDashboard() {
             setProfileData(res.data);
             setLoading(false);
           } else {
-            router.push(
-              `${PAGE_PATHS.VENDOR}/${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`
-            );
+            router.push(`${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`);
           }
         } else {
           router.push("/signup");
@@ -57,7 +58,7 @@ function VendorDashboard() {
       })
       .catch((err) => {
         console.error("Error getting profile data", err.message);
-        router.push("/");
+        router.back();
       });
   }, []);
 
@@ -76,9 +77,8 @@ function VendorDashboard() {
         <Grid>
           <VendorDashboardHeader profileData={profileData} />
           <VendorDashboardContainer>
-            {getComponent(router.query.section, profileData)}
+            {getComponent(router.asPath, profileData)}
           </VendorDashboardContainer>
-          )
         </Grid>
       )}
     </>
