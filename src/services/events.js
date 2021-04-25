@@ -14,6 +14,17 @@ export const createEvent = async (eventDetails) => {
     }
 };
 
+export const editEvent = async (eventDetails) => {
+    try {
+        const res = await axios.patch(`${API_URL}/${END_POINTS.EVENTS}`, eventDetails, {
+            headers: await getAuthHeader(),
+        });
+        return res.data;
+    } catch (err) {
+        throw err.response.data
+    }
+};
+
 export const getEvent = async (eventLink) => {
     try {
         const res = await axios.get(`${API_URL}/${END_POINTS.EVENTS}`,

@@ -51,6 +51,12 @@ export const styles = makeStyles((theme) => ({
     width: "100%",
     margin: "1em 0",
     padding: "0.75em"
+  },
+  editTitle: {
+    paddingLeft: "0.5em",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "1em"
+    }
   }
 
 }));
