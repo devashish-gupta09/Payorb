@@ -19,7 +19,7 @@ export const EVENT_DESCRIPTION = {
 }
 
 export const EVENT_CATEGORY = {
-  EDUCATION: "Education"
+  EDUCATION: "EDUCATION"
 }
 
 export const defaultEvents = [

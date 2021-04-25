@@ -36,6 +36,7 @@ export const styles = makeStyles((theme) => ({
   eventImage: {
     width: "100%",
     borderRadius: "10px",
+    maxHeight: "350px",
     [theme.breakpoints.down("sm")]: {
       borderRadius: "0.4em",
     },
@@ -70,4 +71,12 @@ export const styles = makeStyles((theme) => ({
   editButton: {
     padding: "1em 3em",
   },
+  dialogPaper: {
+    maxWidth: "80vw",
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: "100vw",
+      padding: "1em",
+      margin: "1em"
+    }
+  }
 }));

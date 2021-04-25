@@ -25,3 +25,51 @@ export const getTimeDiff = (isoTimeString) => {
         return `${secs} secs ago`
     }
 }
+
+export const getLocaleMonth = (date) => {
+    return date.toLocaleString('default', { month: "short" })
+}
+
+// 0< digits <= 4
+export const getYearDigits = (date, digits) => {
+    return date.getYear().toString().substr(-digits)
+}
+
+export const getEventMonth = (startDate, endDate) => {
+    startDate = new Date(startDate)
+    endDate = new Date(endDate)
+    if (startDate && endDate) {
+
+        if (startDate.getYear() === endDate.getYear()) {
+            if (startDate.getMonth() === endDate.getMonth()) {
+                return `${getLocaleMonth(startDate)}, ${getYearDigits(startDate, 2)}`
+            } else {
+                return `${getLocaleMonth(startDate)}-${getLocaleMonth(endDate)}, ${getYearDigits(startDate, 2)}`
+            }
+        } else {
+            return `${getLocaleMonth(startDate)}, ${getYearDigits(startDate, 2)} - ${getLocaleMonth(endDate)}, ${getYearDigits(endDate, 2)}`
+        }
+    }
+    return ""
+}
+
+export const getEventDate = (startDate, endDate) => {
+    startDate = new Date(startDate)
+    endDate = new Date(endDate)
+
+    if (startDate && endDate) {
+
+        if (startDate.getYear() === endDate.getYear()) {
+            if (startDate.getMonth() === endDate.getMonth()) {
+                return `${startDate.getDate()}`
+            } else {
+                return `${startDate.getDate()}-${endDate.getDate()}`
+            }
+        } else {
+            return `${startDate.getDate()}-${endDate.getDate()}`
+        }
+    }
+    return ""
+
+
+}
