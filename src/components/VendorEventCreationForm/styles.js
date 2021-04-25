@@ -27,7 +27,12 @@ export const styles = makeStyles((theme) => ({
       padding: "2em 0"
     }
   },
-
+  modal: {
+    padding: "5em",
+    [theme.breakpoints.down("sm")]: {
+      padding: "3em",
+    },
+  },
   textInput: {
     margin: "0.75em 0",
     color: "#BDBDBD",

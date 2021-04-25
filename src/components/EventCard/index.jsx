@@ -1,9 +1,25 @@
 import { Grid, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 import { globalStyles } from "../../../styles/globalStyles";
+import { getEventDate, getEventMonth } from "../../utils/dateTime";
+import { formatEventType } from "../../utils/events";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
 import { styles } from "./styles";
+
+function EventCardDate({ classes, startDate, endDate }) {
+  return (
+    <>
+      <Typography align="center" variant="h6" style={{ width: "max-content" }}>
+        {getEventMonth(startDate, endDate)}
+      </Typography>
+      <Typography align="center">{`${getEventDate(
+        startDate,
+        endDate
+      )}`}</Typography>
+    </>
+  );
+}
 
 function EventCard({ event }) {
   const classes = styles();
@@ -12,16 +28,17 @@ function EventCard({ event }) {
     <DashboardCard rootClass={classes.root}>
       <Grid container alignItems={"stretch"}>
         <Grid item sm={4} className={classes.imageContainer}>
-          <img className={classes.eventImage} src={event.image} />
+          <img
+            className={classes.eventImage}
+            src={event.image || "../assets/event.png"}
+          />
         </Grid>
 
         <Grid className={classes.eventDetailContainer} item sm={8}>
           <Grid container>
             {/* First Row - Event name and Booking Dates */}
             <Grid item sm={10}>
-              <Typography
-                className={`${globalClasses.bold} ${classes.title}`}
-              >
+              <Typography className={`${globalClasses.bold} ${classes.title}`}>
                 {event.name}
               </Typography>
             </Grid>
@@ -38,10 +55,11 @@ function EventCard({ event }) {
               }}
             >
               <Grid className={classes.datesInnerContainer}>
-                <Typography align="center" variant="h6">
-                  {event.month}
-                </Typography>
-                <Typography align="center">{event.dates}</Typography>
+                <EventCardDate
+                  classes={classes}
+                  startDate={event.startDate}
+                  endDate={event.endDate}
+                />
               </Grid>
             </Grid>
           </Grid>
@@ -56,13 +74,9 @@ function EventCard({ event }) {
                     gutterBottom
                     className={classes.greyFont}
                   >
-                    {event.type}
+                    {formatEventType(event.type)}
                   </Typography>
-                  <Typography
-                    // variant="body1"
-                    className={globalClasses.bold500}
-                    gutterBottom
-                  >
+                  <Typography className={globalClasses.bold500} gutterBottom>
                     {" "}
                     &#8377; {event.price}
                   </Typography>
@@ -76,10 +90,11 @@ function EventCard({ event }) {
                   }}
                 >
                   <Grid className={classes.datesInnerContainer}>
-                    <Typography align="center" variant="h5">
-                      {event.month}
-                    </Typography>
-                    <Typography align="center">{event.dates}</Typography>
+                    <EventCardDate
+                      classes={classes}
+                      startDate={event.startDate}
+                      endDate={event.endDate}
+                    />
                   </Grid>
                 </Grid>
               </Grid>
@@ -88,7 +103,8 @@ function EventCard({ event }) {
                 gutterBottom
                 className={`${classes.greyFont} ${classes.seats}`}
               >
-                Sold out seats: {event.seatsBooked}/{event.totalSeats}
+                Sold out seats: {event.customers ? event.customers.length : 0}/
+                {event.totalTickets}
               </Typography>
             </Grid>
 
@@ -97,7 +113,11 @@ function EventCard({ event }) {
                 className={`${classes.greyFont} ${classes.seats}`}
                 gutterBottom
               >
-                Total Revenue: &#8377;{event.totalRevenue}
+                Total Revenue: &#8377;
+                {`${
+                  parseInt(event.customers ? event.customers.length : 0) *
+                  parseInt(event.price)
+                }`}
               </Typography>
             </Grid>
 

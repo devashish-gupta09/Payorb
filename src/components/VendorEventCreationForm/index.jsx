@@ -12,6 +12,8 @@ import {
   TextField,
   Typography,
   FormHelperText,
+  Dialog,
+  DialogContent,
 } from "@material-ui/core";
 import { useFormik } from "formik";
 import React from "react";
@@ -36,6 +38,7 @@ import { createEventValidationSchema } from "../../validations/events";
 import ButtonCapsule from "../ButtonCapsule";
 import { PAGE_PATHS } from "../../constants/paths";
 import { useRouter } from "next/router";
+import { createEvent } from "../../services/events";
 
 function getCreationFormInitialState() {
   return {
@@ -49,8 +52,8 @@ function getCreationFormInitialState() {
     totalTickets: 0,
     link: "",
     type: "",
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: new Date().toISOString(),
+    endDate: new Date().toISOString(),
   };
 }
 
@@ -65,13 +68,14 @@ function VendorEventCreationForm() {
   const classes = styles();
   const globalClasses = globalStyles();
   const router = useRouter();
+  const [dialog, setDialog] = React.useState({ display: false, text: "" });
 
   const handleStartDate = (date) => {
-    formik.setFieldValue("startDate", date.toUTCString());
+    formik.setFieldValue("startDate", date.toISOString());
   };
 
   const handleEndDate = (date) => {
-    formik.setFieldValue("endDate", date.toUTCString());
+    formik.setFieldValue("endDate", date.toISOString());
   };
 
   const handleEventTypeChange = (event) => {
@@ -86,8 +90,15 @@ function VendorEventCreationForm() {
     initialValues: getCreationFormInitialState(),
     validationSchema: createEventValidationSchema,
 
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      if (values) {
+        try {
+          const res = await createEvent({ event: values });
+          router.push(PAGE_PATHS.VENDOR_DASHBOARD_EVENTS);
+        } catch (err) {
+          setDialog({ display: true, text: err.error });
+        }
+      }
     },
   });
 
@@ -95,8 +106,17 @@ function VendorEventCreationForm() {
     router.push(PAGE_PATHS.VENDOR_DASHBOARD_EVENTS);
   };
 
+  const handleDialogClose = () => {
+    setDialog({ display: false, text: "" });
+  };
+
   return (
     <form onSubmit={formik.handleSubmit}>
+      <Dialog open={dialog.display} onClose={handleDialogClose}>
+        <DialogContent className={classes.modal}>
+          <Typography>{dialog.text}</Typography>
+        </DialogContent>
+      </Dialog>
       <Grid
         container
         justify="space-between"
