@@ -2,30 +2,30 @@ import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
   root: {
-    width: "100%"
+    width: "100%",
   },
   container: {
     background: "white",
     borderRadius: "10px",
     padding: "2em",
     [theme.breakpoints.down("sm")]: {
-      padding: "1em"
-    }
+      padding: "1em",
+    },
   },
   containerSave: {
-    height: "100%"
+    height: "100%",
   },
   leftContainer: {
     padding: "2em",
     [theme.breakpoints.down("sm")]: {
-      padding: "0"
-    }
+      padding: "0",
+    },
   },
   rightContainer: {
     padding: "2em 2em 2em 0",
     [theme.breakpoints.down("sm")]: {
-      padding: "2em 0"
-    }
+      padding: "2em 0",
+    },
   },
   modal: {
     padding: "5em",
@@ -44,19 +44,18 @@ export const styles = makeStyles((theme) => ({
   titleContainer: {
     padding: "2em 2em 0 2em",
     [theme.breakpoints.down("sm")]: {
-      padding: "0 0 2em 0"
-    }
+      padding: "0 0 2em 0",
+    },
   },
   saveButton: {
     width: "100%",
     margin: "1em 0",
-    padding: "0.75em"
+    padding: "0.75em",
   },
   editTitle: {
     paddingLeft: "0.5em",
     [theme.breakpoints.down("sm")]: {
-      paddingLeft: "1em"
-    }
-  }
-
+      paddingLeft: "1em",
+    },
+  },
 }));

@@ -32,7 +32,6 @@ export const styles = makeStyles((theme) => ({
     },
   },
   drawerList: {
-    padding: "2em 0",
     "& > li": {
       listStyleType: "None",
       padding: "1em 0",
@@ -41,30 +40,9 @@ export const styles = makeStyles((theme) => ({
     },
   },
   drawerItemContainer: {
-    padding: "2.5em 1.5em",
+    padding: "0 1.5em",
     width: "95vw",
   },
   drawerTitleContainer: { padding: "3em 0 2em 0" },
   drawerClose: { color: "black" },
-  mobile: {
-    display: "None",
-    [theme.breakpoints.down("sm")]: {
-      display: "flex",
-    },
-  },
-  wideScreen: {
-    display: "flex",
-    [theme.breakpoints.down("sm")]: {
-      display: "None",
-    },
-  },
-  activeLink: {
-    fontWeight: "bold",
-    color: "#79DFDF !important",
-    // borderBottom: "4px solid"
-  },
-  activeTab: {
-    background: "#79DFDF",
-    height: "0.2em",
-  },
 }));

@@ -9,11 +9,10 @@ import {
 import React from "react";
 import { styles } from "./styles";
 import Link from "next/link";
-import { Close } from "@material-ui/icons";
+import { Close, Home } from "@material-ui/icons";
 import Logo from "../Logo";
-import { PAGE_PATHS } from "../../constants/paths";
 
-function LandingHeader() {
+function CustomerViewHeader() {
   const classes = styles();
   const [appMenu, setAppMenu] = React.useState(false);
 
@@ -37,14 +36,8 @@ function LandingHeader() {
           </Grid>
 
           <Grid className={classes.drawerList}>
-            <li>About Us</li>
-
-            <Link href={PAGE_PATHS.CUSTOMER_EVENTS}>
-              <li>Events</li>
-            </Link>
-
-            <Link href="/signin">
-              <li>Sign In</li>
+            <Link href="/">
+              <li>Home</li>
             </Link>
             <Link href="/signup">
               <li>Sign Up for Vendor</li>
@@ -65,15 +58,11 @@ function LandingHeader() {
             container
             justify="space-evenly"
           >
-            {/* <Button className={classes.buttonSpacing}>Events</Button> */}
-            <Button className={classes.buttonSpacing}>About Us</Button>
-            <Link href={PAGE_PATHS.CUSTOMER_EVENTS}>
-              <Button className={classes.buttonSpacing}>Events</Button>
+            <Link href="/">
+              <Button>
+                <Home />
+              </Button>
             </Link>
-            <Link href="/signin">
-              <Button className={classes.buttonSpacing}>Sign In</Button>
-            </Link>
-
             <Link href="/signup">
               <Button className={classes.signupButton}>
                 Sign up for Vendor
@@ -93,4 +82,4 @@ function LandingHeader() {
   );
 }
 
-export default LandingHeader;
+export default CustomerViewHeader;

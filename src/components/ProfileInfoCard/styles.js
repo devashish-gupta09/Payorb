@@ -29,13 +29,13 @@ export const styles = makeStyles((theme) => ({
   },
   textField: {
     padding: "0",
-    color: "yellow"
+    color: "yellow",
   },
   saveButton: {
-    width: "5vw"
+    width: "5vw",
   },
   cancelButton: {
     margin: "0 0.5em",
-    background: "#BDBDBD"
-  }
+    background: "#BDBDBD",
+  },
 }));

@@ -1,62 +1,17 @@
-import {
-  Backdrop,
-  Dialog,
-  DialogContent,
-  Grid,
-  makeStyles,
-  Typography,
-} from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import React from "react";
 import { globalStyles } from "../../../styles/globalStyles";
-import { getEventDate, getEventMonth } from "../../utils/dateTime";
 import { formatEventType } from "../../utils/events";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
-import VendorEventCreationForm from "../VendorEventCreationForm";
+import { EventCardDate } from "../EventCard";
 import { styles } from "./styles";
 
-export function EventCardDate({ classes, startDate, endDate }) {
-  return (
-    <>
-      <Typography align="center" variant="h6" style={{ width: "max-content" }}>
-        {getEventMonth(startDate, endDate)}
-      </Typography>
-      <Typography align="center">{`${getEventDate(
-        startDate,
-        endDate
-      )}`}</Typography>
-    </>
-  );
-}
-
-function EventCard({ event }) {
+function CustomerEventCard({ event }) {
   const classes = styles();
   const globalClasses = globalStyles();
-  const [edit, setEdit] = React.useState(false);
-  const handleEdit = () => {
-    setEdit(true);
-  };
-  const handleClose = () => {
-    setEdit(false);
-  };
   return (
     <DashboardCard rootClass={classes.root}>
-      {edit && (
-        <Dialog
-          PaperProps={{
-            className: classes.dialogPaper,
-          }}
-          open={edit}
-          handleClose={handleClose}
-        >
-          <VendorEventCreationForm
-            event={event}
-            edit={true}
-            handleClose={handleClose}
-          />
-        </Dialog>
-      )}
-
       <Grid container alignItems={"stretch"}>
         <Grid item sm={3} className={classes.imageContainer}>
           <img
@@ -100,7 +55,7 @@ function EventCard({ event }) {
 
           {/* Second Row : Event Type and General information */}
           <Grid container>
-            <Grid item sm={4} className={classes.generalInfoContainer}>
+            <Grid item sm={8} className={classes.generalInfoContainer}>
               <Grid container justify="space-between">
                 <Grid>
                   <Typography
@@ -132,21 +87,6 @@ function EventCard({ event }) {
                   </Grid>
                 </Grid>
               </Grid>
-
-              <Typography className={`${classes.greyFont} ${classes.seats}`}>
-                Sold out seats: {event.customers ? event.customers.length : 0}/
-                {event.totalTickets}
-              </Typography>
-            </Grid>
-
-            <Grid item container sm={4} alignItems="flex-end">
-              <Typography className={`${classes.greyFont} ${classes.seats}`}>
-                Total Revenue: &#8377;
-                {`${
-                  parseInt(event.customers ? event.customers.length : 0) *
-                  parseInt(event.price)
-                }`}
-              </Typography>
             </Grid>
 
             <Grid
@@ -157,9 +97,8 @@ function EventCard({ event }) {
               className={classes.editButtonContainer}
             >
               <ButtonCapsule
-                buttonStyle={`${globalClasses.bold} ${classes.editButton}`}
-                text="Edit Event"
-                onClick={handleEdit}
+                buttonStyle={`${globalClasses.boldSixHundred} ${classes.editButton}`}
+                text="Book now"
               ></ButtonCapsule>
             </Grid>
           </Grid>
@@ -169,4 +108,4 @@ function EventCard({ event }) {
   );
 }
 
-export default EventCard;
+export default CustomerEventCard;

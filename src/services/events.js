@@ -41,7 +41,6 @@ export const getEvent = async (eventLink) => {
 }
 
 export const getEventsVendorDashboard = async ({ limit, orderBy, orderType, startFrom }) => {
-    console.log(limit, orderBy, orderType)
     try {
         const res = await axios.get(`${API_URL}/${END_POINTS.EVENTS}`,
             {
@@ -51,6 +50,33 @@ export const getEventsVendorDashboard = async ({ limit, orderBy, orderType, star
                 }
             });
         return res.data;
+    } catch (err) {
+        throw err.response.data || err.message
+    }
+}
+
+export const getEventPublic = async (eventLink) => {
+    try {
+        const res = await axios.get(`${API_URL}/${END_POINTS.EVENTS}`,
+            {
+                params: {
+                    link: eventLink
+                }
+            });
+        return res.data;
+    } catch (err) {
+        throw err.response.data || err.message
+    }
+}
+
+export const getEventsPublic = async ({ limit, orderBy, startFrom }) => {
+    try {
+        const res = await axios.get(`${API_URL}/${END_POINTS.EVENTS}`, {
+            params: {
+                limit, orderBy, startFrom
+            }
+        })
+        return res.data
     } catch (err) {
         throw err.response.data || err.message
     }
