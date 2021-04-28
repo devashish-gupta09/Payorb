@@ -4,23 +4,24 @@ export const EVENT_VIEWS = {
 };
 
 export const EVENT_TYPES = {
-  "ONE_TIME": "ONE_TIME",
-  "ONE_ON_ONE": "ONE_ON_ONE"
-}
+  ONE_TIME: "ONE_TIME",
+  ONE_ON_ONE: "ONE_ON_ONE",
+};
 
 export const EVENT_MODES = {
-  "ONLINE": "ONLINE",
-  "OFFLINE": "OFFLINE"
-}
+  ONLINE: "ONLINE",
+  OFFLINE: "OFFLINE",
+};
 
 export const EVENT_DESCRIPTION = {
-  [EVENT_TYPES.ONE_ON_ONE]: "Pariatur veniam exercitation deserunt et sint mollit magna.",
-  [EVENT_TYPES.ONE_TIME]: "Dolore occaecat labore aliqua qui laboris amet do."
-}
+  [EVENT_TYPES.ONE_ON_ONE]:
+    "Pariatur veniam exercitation deserunt et sint mollit magna.",
+  [EVENT_TYPES.ONE_TIME]: "Dolore occaecat labore aliqua qui laboris amet do.",
+};
 
 export const EVENT_CATEGORY = {
-  EDUCATION: "EDUCATION"
-}
+  EDUCATION: "EDUCATION",
+};
 
 export const defaultEvents = [
   {
@@ -35,7 +36,7 @@ export const defaultEvents = [
     seatsBooked: "32",
     status: "Running",
     startDate: "2021-04-27T07:33:18.582Z",
-    endDate: "2021-04-27T07:33:18.582Z"
+    endDate: "2021-04-27T07:33:18.582Z",
   },
   {
     name: `FREE Master Class on “HOW to Communicate with IMPORTERS & International BUYERS”`,
@@ -49,7 +50,7 @@ export const defaultEvents = [
     seatsBooked: "32",
     status: "Completed",
     startDate: "2021-04-27T07:33:18.582Z",
-    endDate: "2021-04-27T07:33:18.582Z"
+    endDate: "2021-04-27T07:33:18.582Z",
   },
   {
     name: `FREE Master Class on “HOW to Communicate with IMPORTERS & International BUYERS”`,
@@ -63,7 +64,7 @@ export const defaultEvents = [
     seatsBooked: "32",
     status: "Running",
     startDate: "2021-04-27T07:33:18.582Z",
-    endDate: "2021-04-27T07:33:18.582Z"
+    endDate: "2021-04-27T07:33:18.582Z",
   },
   {
     name: `FREE Master Class on “HOW to Communicate with IMPORTERS & International BUYERS”`,
@@ -77,7 +78,7 @@ export const defaultEvents = [
     seatsBooked: "32",
     status: "Running",
     startDate: "2021-04-27T07:33:18.582Z",
-    endDate: "2021-04-27T07:33:18.582Z"
+    endDate: "2021-04-27T07:33:18.582Z",
   },
   {
     name: `FREE Master Class on “HOW to Communicate with IMPORTERS & International BUYERS”`,
@@ -91,6 +92,6 @@ export const defaultEvents = [
     seatsBooked: "32",
     status: "Running",
     startDate: "2021-04-27T07:33:18.582Z",
-    endDate: "2021-04-27T07:33:18.582Z"
-  }
+    endDate: "2021-04-27T07:33:18.582Z",
+  },
 ];

@@ -42,9 +42,9 @@ export const styles = makeStyles((theme) => ({
   },
   drawerItemContainer: {
     padding: "2.5em 1.5em",
-    width: "95vw"
+    width: "95vw",
   },
-  drawerTitleContainer: { padding: "3em 0 2em 0", },
+  drawerTitleContainer: { padding: "3em 0 2em 0" },
   drawerClose: { color: "black" },
   mobile: {
     display: "None",
@@ -65,6 +65,6 @@ export const styles = makeStyles((theme) => ({
   },
   activeTab: {
     background: "#79DFDF",
-    height: "0.2em"
-  }
+    height: "0.2em",
+  },
 }));

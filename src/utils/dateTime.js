@@ -1,81 +1,80 @@
-import moment from "moment"
+import moment from "moment";
 export const getTimeDiff = (isoTimeString) => {
-    const date = moment(new Date(isoTimeString))
-    const now = moment(new Date())
-    const duration = moment.duration(now.diff(date))
+  const date = moment(new Date(isoTimeString));
+  const now = moment(new Date());
+  const duration = moment.duration(now.diff(date));
 
-    const years = Math.floor(duration.asYears())
-    const months = Math.floor(duration.asMonths())
-    const days = Math.floor(duration.asDays())
-    const hours = Math.floor(duration.asHours())
-    const minutes = Math.floor(duration.asMinutes())
-    const secs = Math.floor(duration.asSeconds())
+  const years = Math.floor(duration.asYears());
+  const months = Math.floor(duration.asMonths());
+  const days = Math.floor(duration.asDays());
+  const hours = Math.floor(duration.asHours());
+  const minutes = Math.floor(duration.asMinutes());
+  const secs = Math.floor(duration.asSeconds());
 
-    if (years > 0) {
-        return `${years} years ago`
-    } else if (months > 0) {
-        return `${months} months ago`
-    } else if (days > 0) {
-        return `${days} days ago`
-    } else if (hours > 0) {
-        return `${hours} hours ago`
-    } else if (minutes > 0) {
-        return `${mins} mins ago`
-    } else {
-        return `${secs} secs ago`
-    }
-}
+  if (years > 0) {
+    return `${years} years ago`;
+  } else if (months > 0) {
+    return `${months} months ago`;
+  } else if (days > 0) {
+    return `${days} days ago`;
+  } else if (hours > 0) {
+    return `${hours} hours ago`;
+  } else if (minutes > 0) {
+    return `${minutes} mins ago`;
+  } else {
+    return `${secs} secs ago`;
+  }
+};
 
 export const getLocaleMonth = (date) => {
-    return date.toLocaleString('default', { month: "short" })
-}
+  return date.toLocaleString("default", { month: "short" });
+};
 
 // 0< digits <= 4
 export const getYearDigits = (date, digits) => {
-    return date.getYear().toString().substr(-digits)
-}
+  return date.getYear().toString().substr(-digits);
+};
 
 export const getEventMonth = (startDate, endDate) => {
-    startDate = new Date(startDate)
-    endDate = new Date(endDate)
-    if (startDate && endDate) {
-
-        if (startDate.getYear() === endDate.getYear()) {
-            if (startDate.getMonth() === endDate.getMonth()) {
-                return `${getLocaleMonth(startDate)}, ${getYearDigits(startDate, 2)}`
-            } else {
-                return `${getLocaleMonth(startDate)}-${getLocaleMonth(endDate)}, ${getYearDigits(startDate, 2)}`
-            }
-        } else {
-            return `${getLocaleMonth(startDate)}, ${getYearDigits(startDate, 2)} - ${getLocaleMonth(endDate)}, ${getYearDigits(endDate, 2)}`
-        }
+  startDate = new Date(startDate);
+  endDate = new Date(endDate);
+  if (startDate && endDate) {
+    if (startDate.getYear() === endDate.getYear()) {
+      if (startDate.getMonth() === endDate.getMonth()) {
+        return `${getLocaleMonth(startDate)}, ${getYearDigits(startDate, 2)}`;
+      } else {
+        return `${getLocaleMonth(startDate)}-${getLocaleMonth(
+          endDate
+        )}, ${getYearDigits(startDate, 2)}`;
+      }
+    } else {
+      return `${getLocaleMonth(startDate)}, ${getYearDigits(
+        startDate,
+        2
+      )} - ${getLocaleMonth(endDate)}, ${getYearDigits(endDate, 2)}`;
     }
-    return ""
-}
+  }
+  return "";
+};
 
 export const getEventDate = (startDate, endDate) => {
-    startDate = new Date(startDate)
-    endDate = new Date(endDate)
+  startDate = new Date(startDate);
+  endDate = new Date(endDate);
 
-    if (startDate && endDate) {
-
-        if (startDate.getYear() === endDate.getYear()) {
-            if (startDate.getMonth() === endDate.getMonth()) {
-
-                if (startDate.getDate() === endDate.getDate()) {
-                    return `${startDate.getDate()}`
-                }
-
-                return `${startDate.getDate()}-${endDate.getDate()}`
-
-            } else {
-                return `${startDate.getDate()}-${endDate.getDate()}`
-            }
-        } else {
-            return `${startDate.getDate()}-${endDate.getDate()}`
+  if (startDate && endDate) {
+    if (startDate.getYear() === endDate.getYear()) {
+      if (startDate.getMonth() === endDate.getMonth()) {
+        if (startDate.getDate() === endDate.getDate()) {
+          return `${startDate.getDate()}`;
         }
+
+        return `${startDate.getDate()}-${endDate.getDate()}`;
+      } else {
+        return `${startDate.getDate()}-${endDate.getDate()}`;
+      }
+    } else {
+      return `${startDate.getDate()}-${endDate.getDate()}`;
     }
-    return ""
-
-
-}
+  }
+  return "";
+};

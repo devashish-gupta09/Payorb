@@ -11,5 +11,5 @@ export const PAGE_PATHS = {
   CUSTOMER_EVENTS: "/customers/events",
   CUSTOMER_EVENTS_REGISTER: "/customers/events/register",
   CUSTOMER_EVENTS_REVIEW: "/customers/events/review",
-  CUSTOMER_VENDOR_VIEW: "/customers/vendor"
+  CUSTOMER_VENDOR_VIEW: "/customers/vendor",
 };

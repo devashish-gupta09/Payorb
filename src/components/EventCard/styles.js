@@ -76,7 +76,7 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       maxWidth: "100vw",
       padding: "1em",
-      margin: "1em"
-    }
-  }
+      margin: "1em",
+    },
+  },
 }));
