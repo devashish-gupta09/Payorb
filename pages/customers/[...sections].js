@@ -1,5 +1,5 @@
-import { Backdrop, CircularProgress, Grid, Typography } from "@material-ui/core";
 import React from 'react';
+import CustomersView from "../../src/components/CustomersView";
 
 /**
  * 
@@ -13,7 +13,5 @@ import React from 'react';
  */
 
 export default function Vendor() {
-    return <Grid>
-        
-    </Grid>
+    return <CustomersView />
 }

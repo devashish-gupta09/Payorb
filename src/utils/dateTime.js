@@ -61,7 +61,13 @@ export const getEventDate = (startDate, endDate) => {
 
         if (startDate.getYear() === endDate.getYear()) {
             if (startDate.getMonth() === endDate.getMonth()) {
-                return `${startDate.getDate()}`
+
+                if (startDate.getDate() === endDate.getDate()) {
+                    return `${startDate.getDate()}`
+                }
+
+                return `${startDate.getDate()}-${endDate.getDate()}`
+
             } else {
                 return `${startDate.getDate()}-${endDate.getDate()}`
             }

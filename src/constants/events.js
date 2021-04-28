@@ -34,6 +34,8 @@ export const defaultEvents = [
     totalSeats: "100",
     seatsBooked: "32",
     status: "Running",
+    startDate: "2021-04-27T07:33:18.582Z",
+    endDate: "2021-04-27T07:33:18.582Z"
   },
   {
     name: `FREE Master Class on “HOW to Communicate with IMPORTERS & International BUYERS”`,
@@ -46,6 +48,8 @@ export const defaultEvents = [
     totalSeats: "100",
     seatsBooked: "32",
     status: "Completed",
+    startDate: "2021-04-27T07:33:18.582Z",
+    endDate: "2021-04-27T07:33:18.582Z"
   },
   {
     name: `FREE Master Class on “HOW to Communicate with IMPORTERS & International BUYERS”`,
@@ -58,5 +62,35 @@ export const defaultEvents = [
     totalSeats: "100",
     seatsBooked: "32",
     status: "Running",
+    startDate: "2021-04-27T07:33:18.582Z",
+    endDate: "2021-04-27T07:33:18.582Z"
   },
+  {
+    name: `FREE Master Class on “HOW to Communicate with IMPORTERS & International BUYERS”`,
+    type: "Offline",
+    price: "1000",
+    image: "../assets/event.png",
+    month: "Feb",
+    dates: "14-16",
+    totalRevenue: "32000",
+    totalSeats: "100",
+    seatsBooked: "32",
+    status: "Running",
+    startDate: "2021-04-27T07:33:18.582Z",
+    endDate: "2021-04-27T07:33:18.582Z"
+  },
+  {
+    name: `FREE Master Class on “HOW to Communicate with IMPORTERS & International BUYERS”`,
+    type: "Offline",
+    price: "1000",
+    image: "../assets/event.png",
+    month: "Feb",
+    dates: "14-16",
+    totalRevenue: "32000",
+    totalSeats: "100",
+    seatsBooked: "32",
+    status: "Running",
+    startDate: "2021-04-27T07:33:18.582Z",
+    endDate: "2021-04-27T07:33:18.582Z"
+  }
 ];
