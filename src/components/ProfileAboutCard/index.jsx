@@ -8,20 +8,8 @@ import { globalStyles } from "../../../styles/globalStyles";
 import { updateUser } from "../../services/auth";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
+import DetailRow from "../DetailRow";
 import EditableTextField from "../EditableTextfield";
-
-function DetailRow({ icon, classes, children }) {
-  return (
-    <Grid container className={classes.infoRow} alignItems="center">
-      <Grid item xs={1} className={classes.logo}>
-        {icon}
-      </Grid>
-      <Grid item xs={11}>
-        {children}
-      </Grid>
-    </Grid>
-  );
-}
 
 function Details(props) {
   const globalClasses = globalStyles();

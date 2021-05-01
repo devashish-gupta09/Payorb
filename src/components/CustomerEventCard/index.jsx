@@ -1,6 +1,8 @@
 import { Grid, Typography } from "@material-ui/core";
+import { useRouter } from "next/router";
 import React from "react";
 import { globalStyles } from "../../../styles/globalStyles";
+import { PAGE_PATHS } from "../../constants/paths";
 import { formatEventType } from "../../utils/events";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
@@ -10,6 +12,17 @@ import { styles } from "./styles";
 function CustomerEventCard({ event }) {
   const classes = styles();
   const globalClasses = globalStyles();
+  const router = useRouter();
+
+  const handleEdit = () => {
+    router.push({
+      pathname: PAGE_PATHS.CUSTOMER_EVENTS_REGISTER,
+      query: {
+        event: event.link,
+      },
+    });
+  };
+
   return (
     <DashboardCard rootClass={classes.root}>
       <Grid container alignItems={"stretch"}>
@@ -98,6 +111,7 @@ function CustomerEventCard({ event }) {
             >
               <ButtonCapsule
                 buttonStyle={`${globalClasses.boldSixHundred} ${classes.editButton}`}
+                onClick={handleEdit}
                 text="Book now"
               ></ButtonCapsule>
             </Grid>
