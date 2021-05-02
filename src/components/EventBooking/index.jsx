@@ -91,7 +91,7 @@ function EventBooking({ eventLink }) {
             </Grid>
             <Grid item sm={12} className={classes.fullWidth}>
               <DashboardCard
-                rootClass={`${classes.posterRoot} ${classes.cardContainer}`}
+                rootClass={`${classes.posterRoot}`}
               >
                 <img
                   src="https://i.pinimg.com/736x/59/59/88/5959880ca0cb6b30926091b7bc251812.jpg"
@@ -115,7 +115,7 @@ function EventBooking({ eventLink }) {
           <Grid item container sm={3} spacing={3}>
             <Grid item sm={12}>
               <DashboardCard
-                rootClass={`${classes.formContainer} ${classes.cardContainer}`}
+                rootClass={`${classes.formContainer}`}
               >
                 <Typography
                   className={globalClasses.bold}
@@ -130,7 +130,7 @@ function EventBooking({ eventLink }) {
 
             <Grid item sm={12} className={`${classes.vendorCardContainer}`}>
               <DashboardCard
-                rootClass={`${classes.vendorCard} ${classes.cardContainer}`}
+                rootClass={`${classes.vendorCard}`}
               >
                 <EventBookingVendorCard vendorId={event.userUID} />
               </DashboardCard>

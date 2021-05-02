@@ -15,8 +15,8 @@ export const EVENT_MODES = {
 
 export const EVENT_DESCRIPTION = {
   [EVENT_TYPES.ONE_ON_ONE]:
-    "Pariatur veniam exercitation deserunt et sint mollit magna.",
-  [EVENT_TYPES.ONE_TIME]: "Dolore occaecat labore aliqua qui laboris amet do.",
+    "Clients can book individual service sessions with you from calendar availability.",
+  [EVENT_TYPES.ONE_TIME]: "Fixed schedule of event / service. Open to one or more clients.",
 };
 
 export const EVENT_CATEGORY = {
