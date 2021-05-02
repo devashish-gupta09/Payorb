@@ -12,6 +12,7 @@ import React from "react";
 import Skeleton from "react-loading-skeleton";
 import { defaultEvents } from "../../constants/events";
 import { getEventsPublic } from "../../services/events";
+import { delay } from "../../utils/dateTime";
 import CustomerEventsList from "../CustomerEventList";
 import DashboardCard from "../DashboardCard";
 
@@ -53,6 +54,7 @@ function CustomerEvents() {
     getEventsPublic(eventsParams)
       .then(async (res) => {
         if (res.data) {
+          await delay(50);
           setEvents(res.data.events);
           setEventsParams({ ...eventsParams, startFrom: res.data.lastEvent });
         }
@@ -139,7 +141,7 @@ function CustomerEvents() {
 const styles = makeStyles((theme) => ({
   skeleton: {
     padding: "2em",
-    width: "80vw",
+    marginTop: "2em",
     height: "fit-content",
     [theme.breakpoints.down("sm")]: {
       width: "90vw",

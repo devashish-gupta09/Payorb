@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import { appColors } from "../../../styles/colors";
 
-export const styles = makeStyles((theme) => ({
+export const styles = makeStyles(() => ({
   container: {
     padding: "2em 0",
   },

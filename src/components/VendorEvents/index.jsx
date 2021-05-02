@@ -9,14 +9,7 @@ import DashboardCard from "../DashboardCard";
 import EventsViewList from "../EventsViewList";
 
 import Skeleton from "react-loading-skeleton";
-
-const delay = async (time) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve();
-    }, time);
-  });
-};
+import { delay } from "../../utils/dateTime";
 
 function VendorEvents() {
   const classes = styles();
@@ -167,12 +160,12 @@ const styles = makeStyles((theme) => ({
   },
   skeleton: {
     padding: "2em",
+    margin: "2em 0",
     [theme.breakpoints.down("sm")]: {
       padding: "2em",
       width: "90vw",
       height: "80vh",
     },
-    width: "100%",
     height: "fit-content",
   },
 }));

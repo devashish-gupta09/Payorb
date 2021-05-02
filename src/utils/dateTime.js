@@ -78,3 +78,12 @@ export const getEventDate = (startDate, endDate) => {
   }
   return "";
 };
+
+
+export const delay = async (time) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve();
+    }, time);
+  });
+};
