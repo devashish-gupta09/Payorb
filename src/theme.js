@@ -27,7 +27,7 @@ theme.typography.h6 = {
   fontWeight: 400,
   fontSize: "1.4em",
   [theme.breakpoints.down("sm")]: {
-    fontSize: "0.9em",
+    fontSize: "1em",
   },
 };
 
@@ -35,7 +35,15 @@ theme.typography.h5 = {
   fontSize: "1.8em",
   fontWeight: 400,
   [theme.breakpoints.down("sm")]: {
-    fontSize: "1em",
+    fontSize: "1.2em",
+  },
+};
+
+theme.typography.h4 = {
+  fontSize: "2.4em",
+  fontWeight: 400,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1.3em",
   },
 };
 

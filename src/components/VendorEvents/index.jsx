@@ -9,14 +9,7 @@ import DashboardCard from "../DashboardCard";
 import EventsViewList from "../EventsViewList";
 
 import Skeleton from "react-loading-skeleton";
-
-const delay = async (time) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve();
-    }, time);
-  });
-};
+import { delay } from "../../utils/dateTime";
 
 function VendorEvents() {
   const classes = styles();
@@ -71,7 +64,7 @@ function VendorEvents() {
   return (
     <Grid className={classes.root}>
       {events ? (
-        <>
+        <Grid className={classes.container}>
           {events.length > 0 ? (
             <>
               <Grid className={classes.events}>
@@ -96,7 +89,7 @@ function VendorEvents() {
           ) : (
             <Typography>No events found</Typography>
           )}
-        </>
+        </Grid>
       ) : (
         <DashboardCard rootClass={classes.skeleton}>
           <h3>Loading Events</h3>
@@ -104,7 +97,12 @@ function VendorEvents() {
         </DashboardCard>
       )}
 
-      <Grid container justify="center" alignItems="center">
+      <Grid
+        container
+        justify="center"
+        alignItems="center"
+        // className={classes.createEventCardContainer}
+      >
         <DashboardCard rootClass={classes.createEventCard}>
           <Grid container justify="center" alignItems="center">
             <ButtonCapsule
@@ -121,22 +119,37 @@ function VendorEvents() {
 
 const styles = makeStyles((theme) => ({
   root: {
-    width: "fit-content",
     padding: "1em 0",
     minHeight: "80vh",
     maxHeight: "max-content",
   },
   events: {
     minHeight: "70vh",
-    maxHeight: "max-content",
+    maxHeight: "100%",
   },
   createEvent: {
     height: "min-content",
   },
+  createEventCardContainer: {
+    [theme.breakpoints.down("sm")]: {
+      padding: "2em",
+    },
+  },
+  container: {
+    [theme.breakpoints.down("sm")]: {
+      paddingBottom: "3em",
+    },
+  },
   createEventCard: {
     padding: "1em",
-    width: "75vw",
+    width: "100%",
     marginTop: "2em",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      position: "fixed",
+      bottom: "0",
+      borderRadius: "0",
+    },
   },
   createEventButton: {
     width: "25%",
@@ -147,12 +160,12 @@ const styles = makeStyles((theme) => ({
   },
   skeleton: {
     padding: "2em",
+    margin: "2em 0",
     [theme.breakpoints.down("sm")]: {
       padding: "2em",
       width: "90vw",
       height: "80vh",
     },
-    width: "80vw",
     height: "fit-content",
   },
 }));

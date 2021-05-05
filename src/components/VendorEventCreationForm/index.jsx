@@ -38,6 +38,7 @@ import ButtonCapsule from "../ButtonCapsule";
 import { PAGE_PATHS } from "../../constants/paths";
 import { useRouter } from "next/router";
 import { createEvent, editEvent } from "../../services/events";
+import PostEventCreationDialog from "../PostEventCreationDialog";
 
 function getCreationFormInitialState() {
   return {
@@ -68,6 +69,11 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
   const globalClasses = globalStyles();
   const router = useRouter();
   const [dialog, setDialog] = React.useState({ display: false, text: "" });
+  const [postEventDialog, setPostEventDialog] = React.useState(false);
+
+  const handlePostCreationDialogClose = () => {
+    router.push(PAGE_PATHS.VENDOR_DASHBOARD_EVENTS);
+  };
 
   const handleStartDate = (date) => {
     formik.setFieldValue("startDate", date.toISOString());
@@ -94,7 +100,7 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
         try {
           if (!edit) {
             await createEvent({ event: values });
-            router.push(PAGE_PATHS.VENDOR_DASHBOARD_EVENTS);
+            setPostEventDialog(true);
           } else {
             await editEvent({
               event: values,
@@ -129,6 +135,11 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
 
   return (
     <Grid style={{ width: "100%" }}>
+      <PostEventCreationDialog
+        event={formik.values}
+        open={postEventDialog}
+        onClose={handlePostCreationDialogClose}
+      />
       <form onSubmit={formik.handleSubmit}>
         <Dialog open={dialog.display} onClose={handleDialogClose}>
           <DialogContent className={classes.modal}>

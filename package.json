@@ -16,6 +16,7 @@
     "@material-ui/pickers": "^3.3.10",
     "axios": "^0.21.1",
     "chart.js": "^3.0.2",
+    "clipboard-copy": "^4.0.1",
     "date-fns": "^2.21.1",
     "dotenv": "^8.2.0",
     "firebase": "^8.3.1",
@@ -37,7 +38,7 @@
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-react": "^7.23.1",
+    "eslint-plugin-react": "^7.23.2",
     "file-loader": "^6.2.0",
     "prettier": "^2.2.1"
   }

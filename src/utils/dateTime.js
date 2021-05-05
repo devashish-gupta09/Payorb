@@ -78,3 +78,34 @@ export const getEventDate = (startDate, endDate) => {
   }
   return "";
 };
+
+export const getMonthDate = (startDate, endDate) => {
+  startDate = new Date(startDate)
+  endDate = new Date(endDate)
+
+  if (startDate && endDate) {
+    if (startDate.getYear() === endDate.getYear()) {
+      if (startDate.getMonth() === endDate.getMonth()) {
+
+        if (startDate.getDate() === endDate.getDate()) {
+          return `${getLocaleMonth(startDate)} ${startDate.getDate()}`
+        }
+
+        return `${getLocaleMonth(startDate)} ${startDate.getDate()}-${endDate.getDate()}`
+
+      } else {
+        return `${getLocaleMonth(startDate)} ${startDate.getDate()} - ${getLocaleMonth(endDate)} ${endDate.getDate()} `
+      }
+    } else {
+      return `${getLocaleMonth(startDate)} ${startDate.getDate()}, ${getYearDigits(startDate, 2)} - \n ${getLocaleMonth(endDate)} ${endDate.getDate()}, ${getYearDigits(endDate, 2)} `
+    }
+  }
+}
+
+export const delay = async (time) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve();
+    }, time);
+  });
+};
