@@ -19,6 +19,8 @@ import {
   submitSuccessOrder,
 } from "../../services/orders";
 import { getRzpAmountFormat } from "../../utils/payments";
+import { delay } from "../../utils/dateTime";
+import PaymentSuccess from "../PaymentSuccess";
 
 const loadRazorPay = () => {
   return new Promise((resolve) => {
@@ -43,6 +45,8 @@ function EventBookingForm({ eventLink, price }) {
     display: false,
     text: "",
   });
+  const [success, setSuccess] = React.useState(false);
+  const [orderId, setOrderId] = React.useState();
   const classes = styles();
   const formik = useFormik({
     initialValues: {
@@ -96,10 +100,6 @@ function EventBookingForm({ eventLink, price }) {
               return;
             }
           }
-          // setSnackbar({
-          //   display: true,
-          //   text: err.message || err,
-          // });
         }
       }
     },
@@ -156,6 +156,7 @@ function EventBookingForm({ eventLink, price }) {
         });
 
         try {
+          await delay(50);
           const res = await submitSuccessOrder({
             razorpayPaymentId: response.razorpay_payment_id,
             razorpaySignature: response.razorpay_signature,
@@ -168,6 +169,8 @@ function EventBookingForm({ eventLink, price }) {
               display: true,
               text: `Your order id: ${response.razorpay_order_id} `,
             });
+            setOrderId(response.razorpay_order_id);
+            setSuccess(true);
           } else {
             setSnackbar({
               display: true,
@@ -219,83 +222,89 @@ function EventBookingForm({ eventLink, price }) {
 
   return (
     <>
-      <form onSubmit={formik.handleSubmit}>
-        <div id="sign-in-button"></div>
-        <Grid container alignItems="center">
-          <TextField
-            id="name"
-            className={classes.textInput}
-            label={"Name"}
-            variant="outlined"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.name}
-            error={formik.touched.name && Boolean(formik.errors.name)}
-            helperText={formik.touched.name && formik.errors.name}
-            fullWidth
-          />
-          <TextField
-            id="email"
-            className={classes.textInput}
-            label={"Email Id"}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.email}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
-            variant="outlined"
-            fullWidth
-          />
-          <TextField
-            id="phoneNumber"
-            className={classes.textInput}
-            label={"Phone Number"}
-            variant="outlined"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.phoneNumber}
-            error={
-              formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)
-            }
-            helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Button onClick={sendOTP}>Get OTP</Button>
-                </InputAdornment>
-              ),
-            }}
-            fullWidth
-          />
-          <TextField
-            id="otp"
-            className={classes.textInput}
-            label={"OTP"}
-            variant="outlined"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.otp}
-            error={formik.touched.otp && Boolean(formik.errors.otp)}
-            helperText={formik.touched.otp && formik.errors.otp}
-            fullWidth
-          />
-          <ButtonCapsule
-            buttonStyle={classes.paybutton}
-            disabled={otpSent && confirmationResult}
-            text={`Pay Rs.${price}`}
-            type={"submit"}
-          />
-        </Grid>
+      {success ? (
+        <PaymentSuccess orderId={orderId} />
+      ) : (
+        <form onSubmit={formik.handleSubmit}>
+          <div id="sign-in-button"></div>
+          <Grid container alignItems="center">
+            <TextField
+              id="name"
+              className={classes.textInput}
+              label={"Name"}
+              variant="outlined"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.name}
+              error={formik.touched.name && Boolean(formik.errors.name)}
+              helperText={formik.touched.name && formik.errors.name}
+              fullWidth
+            />
+            <TextField
+              id="email"
+              className={classes.textInput}
+              label={"Email Id"}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
+              variant="outlined"
+              fullWidth
+            />
+            <TextField
+              id="phoneNumber"
+              className={classes.textInput}
+              label={"Phone Number"}
+              variant="outlined"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.phoneNumber}
+              error={
+                formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)
+              }
+              helperText={
+                formik.touched.phoneNumber && formik.errors.phoneNumber
+              }
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Button onClick={sendOTP}>Get OTP</Button>
+                  </InputAdornment>
+                ),
+              }}
+              fullWidth
+            />
+            <TextField
+              id="otp"
+              className={classes.textInput}
+              label={"OTP"}
+              variant="outlined"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.otp}
+              error={formik.touched.otp && Boolean(formik.errors.otp)}
+              helperText={formik.touched.otp && formik.errors.otp}
+              fullWidth
+            />
+            <ButtonCapsule
+              buttonStyle={classes.paybutton}
+              disabled={!otpSent && !confirmationResult}
+              text={`Pay Rs.${price}`}
+              type={"submit"}
+            />
+          </Grid>
 
-        <Snackbar
-          className={classes.snackbar}
-          open={snackbar.display}
-          autoHideDuration={2000}
-          onClose={handleSnackbarClose}
-        >
-          <Typography>{snackbar.text}</Typography>
-        </Snackbar>
-      </form>
+          <Snackbar
+            className={classes.snackbar}
+            open={snackbar.display}
+            autoHideDuration={2000}
+            onClose={handleSnackbarClose}
+          >
+            <Typography>{snackbar.text}</Typography>
+          </Snackbar>
+        </form>
+      )}
     </>
   );
 }

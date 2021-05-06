@@ -1,17 +1,20 @@
 import {
   Backdrop,
+  Button,
   Dialog,
   DialogContent,
   Grid,
   makeStyles,
   Typography,
 } from "@material-ui/core";
+import { Share } from "@material-ui/icons";
 import React from "react";
 import { globalStyles } from "../../../styles/globalStyles";
 import { getEventDate, getEventMonth } from "../../utils/dateTime";
 import { formatEventType } from "../../utils/events";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
+import PostEventCreationDialog from "../PostEventCreationDialog";
 import VendorEventCreationForm from "../VendorEventCreationForm";
 import { styles } from "./styles";
 
@@ -33,11 +36,20 @@ function EventCard({ event }) {
   const classes = styles();
   const globalClasses = globalStyles();
   const [edit, setEdit] = React.useState(false);
+  const [shareDialog, setShareDialog] = React.useState(false);
   const handleEdit = () => {
     setEdit(true);
   };
   const handleClose = () => {
     setEdit(false);
+  };
+
+  const handleShareDialog = () => {
+    setShareDialog(true);
+  };
+
+  const handleShareDialogClose = () => {
+    setShareDialog(false);
   };
   return (
     <DashboardCard rootClass={classes.root}>
@@ -55,6 +67,14 @@ function EventCard({ event }) {
             handleClose={handleClose}
           />
         </Dialog>
+      )}
+
+      {shareDialog && (
+        <PostEventCreationDialog
+          event={event}
+          open={shareDialog}
+          onClose={handleShareDialogClose}
+        />
       )}
 
       <Grid container alignItems={"stretch"}>
@@ -156,11 +176,16 @@ function EventCard({ event }) {
               alignItems="flex-end"
               className={classes.editButtonContainer}
             >
-              <ButtonCapsule
-                buttonStyle={`${globalClasses.bold} ${classes.editButton}`}
-                text="Edit Event"
-                onClick={handleEdit}
-              ></ButtonCapsule>
+              <Grid containerjustify="center" alignItems="center" spacing="2">
+                <ButtonCapsule
+                  buttonStyle={`${globalClasses.bold} ${classes.editButton}`}
+                  text="Edit"
+                  onClick={handleEdit}
+                ></ButtonCapsule>
+                <Button onClick={handleShareDialog}>
+                  <Share />
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
