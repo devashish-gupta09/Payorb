@@ -16,7 +16,8 @@ export const EVENT_MODES = {
 export const EVENT_DESCRIPTION = {
   [EVENT_TYPES.ONE_ON_ONE]:
     "Clients can book individual service sessions with you from calendar availability.",
-  [EVENT_TYPES.ONE_TIME]: "Fixed schedule of event / service. Open to one or more clients.",
+  [EVENT_TYPES.ONE_TIME]:
+    "Fixed schedule of event / service. Open to one or more clients.",
 };
 
 export const EVENT_CATEGORY = {

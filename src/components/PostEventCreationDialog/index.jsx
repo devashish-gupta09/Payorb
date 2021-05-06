@@ -55,7 +55,7 @@ function PostEventCreationDialog(props) {
                 className={classes.descriptionInfoContainer}
               >
                 <Typography variant={"h5"} className={classes.titleContainer}>
-                  {"sadfsdfsfsdafssdfsdf   fsadfdsaf adsf adfdsfdsafsadf"}
+                  {event.description}
                 </Typography>
                 <DateMonth
                   startDate={event.startDate}

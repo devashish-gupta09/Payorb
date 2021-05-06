@@ -22,8 +22,12 @@ export const getUser = async () => {
 };
 
 export const updateUser = async (userDetails) => {
-  const res = await axios.patch(`${API_URL}/${END_POINTS.VENDOR}`, userDetails, {
-    headers: await getAuthHeader(),
-  });
+  const res = await axios.patch(
+    `${API_URL}/${END_POINTS.VENDOR}`,
+    userDetails,
+    {
+      headers: await getAuthHeader(),
+    }
+  );
   return res.data;
-}
+};
