@@ -85,7 +85,7 @@ const styles = makeStyles((theme) => ({
   },
   profile: {
     minHeight: "100%",
-    maxHeight: "25em",
+    maxHeight: "7.5em",
     borderRadius: "50%",
   },
   occupation: {
