@@ -12,6 +12,30 @@ import React from "react";
 import ButtonCapsule from "../ButtonCapsule";
 import app from "../../utils/firebase";
 
+import { createCustomer } from "../../services/customers";
+import {
+  createOrder,
+  failOrder,
+  submitSuccessOrder,
+} from "../../services/orders";
+import { getRzpAmountFormat } from "../../utils/payments";
+
+const loadRazorPay = () => {
+  return new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    document.body.appendChild(script);
+
+    script.onload = () => {
+      resolve(true);
+    };
+
+    script.onerror = () => {
+      resolve(false);
+    };
+  });
+};
+
 function EventBookingForm({ eventLink, price }) {
   const [otpSent, setOtpSent] = React.useState(false);
   const [confirmationResult, setConfirmationResult] = React.useState();
@@ -25,7 +49,6 @@ function EventBookingForm({ eventLink, price }) {
       name: "",
       email: "",
       phoneNumber: "",
-      email: "",
       otp: "",
     },
     onSubmit: async (values) => {
@@ -40,7 +63,44 @@ function EventBookingForm({ eventLink, price }) {
       user = await confirmationResult.confirm(values.otp);
 
       if (user) {
-        console.log("User Registered.");
+        // Let's create a customer in Firestore
+        try {
+          const customerCreationRes = await createCustomer({
+            ...values,
+            otp: undefined,
+          });
+
+          console.log(customerCreationRes);
+          if (customerCreationRes.data.customer) {
+            console.log("CUSTOMER:", customerCreationRes.data.customer);
+            const order = await createOrder({
+              order: {
+                amount: price,
+                customerId: customerCreationRes.data.customer.customerId,
+              },
+              eventId: eventLink,
+            });
+
+            displayRazorpay(order.rzpOrderId, values);
+          }
+        } catch (err) {
+          console.log(err);
+
+          if (typeof err === "object") {
+            if (err.success === false) {
+              setSnackbar({
+                display: true,
+                text: err.error || err.message,
+              });
+
+              return;
+            }
+          }
+          // setSnackbar({
+          //   display: true,
+          //   text: err.message || err,
+          // });
+        }
       }
     },
   });
@@ -67,7 +127,7 @@ function EventBookingForm({ eventLink, price }) {
         formik.setFieldError("phoneNumber", "Please enter phone number");
       }
     } catch (err) {
-      setSnackbar({ display: true, text: "Error sending otp" });
+      setSnackbar({ display: true, text: err.message });
     }
   };
 
@@ -75,11 +135,93 @@ function EventBookingForm({ eventLink, price }) {
     setSnackbar({ display: false, text: "" });
   };
 
+  const displayRazorpay = async (orderId, orderData) => {
+    const res = await loadRazorPay();
+
+    if (!res) {
+      alert("Are you online?");
+    }
+
+    const options = {
+      key: process.env.NEXT_PUBLIC_PAYMENT_GATEWAY_KEY,
+      amount: getRzpAmountFormat(price),
+      currency: "INR",
+      name: orderData.name,
+      description: `Payment made for ${eventLink}`,
+      order_id: orderId,
+      handler: async function (response) {
+        setSnackbar({
+          display: true,
+          text: "Don't redirect... Order Booking in progress",
+        });
+
+        try {
+          const res = await submitSuccessOrder({
+            razorpayPaymentId: response.razorpay_payment_id,
+            razorpaySignature: response.razorpay_signature,
+            razorpayOrderId: response.razorpay_order_id,
+          });
+
+          console.log(res);
+          if (res.success) {
+            setSnackbar({
+              display: true,
+              text: `Your order id: ${response.razorpay_order_id} `,
+            });
+          } else {
+            setSnackbar({
+              display: true,
+              text: "Error booking your event. Please contact suport",
+            });
+          }
+        } catch (err) {
+          setSnackbar({
+            display: true,
+            text: "Error booking your event. Please contact suport",
+          });
+        }
+      },
+      prefill: {
+        name: orderData.name,
+        email: orderData.email,
+        contact: orderData.phoneNumber,
+        event: eventLink,
+      },
+      notes: {
+        address: "Payorb Corporate Office",
+      },
+      theme: {
+        color: "#BDF5F2",
+      },
+    };
+
+    var rzp1 = new window.Razorpay(options);
+    rzp1.on("payment.failed", async function (response) {
+      try {
+        const res = await failOrder(response.error.metadata.order_id);
+
+        if (res.success) {
+          setSnackbar({
+            display: true,
+            text: `Payment failed `,
+          });
+        }
+      } catch (err) {
+        setSnackbar({
+          display: true,
+          text: "Error booking your event. Please contact suport",
+        });
+      }
+    });
+
+    rzp1.open();
+  };
+
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
+        <div id="sign-in-button"></div>
         <Grid container alignItems="center">
-          
           <TextField
             id="name"
             className={classes.textInput}
@@ -107,13 +249,15 @@ function EventBookingForm({ eventLink, price }) {
           <TextField
             id="phoneNumber"
             className={classes.textInput}
-            label={"Name"}
+            label={"Phone Number"}
             variant="outlined"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.name}
-            error={formik.touched.name && Boolean(formik.errors.name)}
-            helperText={formik.touched.name && formik.errors.name}
+            value={formik.values.phoneNumber}
+            error={
+              formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)
+            }
+            helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -144,8 +288,9 @@ function EventBookingForm({ eventLink, price }) {
         </Grid>
 
         <Snackbar
+          className={classes.snackbar}
           open={snackbar.display}
-          autoHideDuration={6000}
+          autoHideDuration={2000}
           onClose={handleSnackbarClose}
         >
           <Typography>{snackbar.text}</Typography>
@@ -168,7 +313,10 @@ const styles = makeStyles((theme) => ({
     width: "100%",
     margin: "1em 0",
   },
- 
+  snackbar: {
+    padding: "1em 4em",
+    background: "#BDF5F2",
+  },
 }));
 
 export default EventBookingForm;

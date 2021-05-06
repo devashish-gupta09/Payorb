@@ -134,7 +134,7 @@ function EventCard({ event }) {
               </Grid>
 
               <Typography className={`${classes.greyFont} ${classes.seats}`}>
-                Sold out seats: {event.customers ? event.customers.length : 0}/
+                Sold out seats: {event.orders ? event.orders.length : 0}/
                 {event.totalTickets}
               </Typography>
             </Grid>
@@ -143,7 +143,7 @@ function EventCard({ event }) {
               <Typography className={`${classes.greyFont} ${classes.seats}`}>
                 Total Revenue: &#8377;
                 {`${
-                  parseInt(event.customers ? event.customers.length : 0) *
+                  parseInt(event.orders ? event.orders.length : 0) *
                   parseInt(event.price)
                 }`}
               </Typography>
