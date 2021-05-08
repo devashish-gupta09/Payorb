@@ -17,3 +17,4 @@ function ButtonCapsule({ disabled = false, type, text, onClick, buttonStyle }) {
 }
 
 export default ButtonCapsule;
+

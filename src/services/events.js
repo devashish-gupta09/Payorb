@@ -70,7 +70,6 @@ export const getEventsVendorDashboard = async ({
 };
 
 export const getEventPublic = async (link) => {
-  console.log(link);
   try {
     const res = await axios.get(`${API_URL}/${END_POINTS.EVENTS}`, {
       params: {
@@ -83,14 +82,10 @@ export const getEventPublic = async (link) => {
   }
 };
 
-export const getEventsPublic = async ({ limit, orderBy, startFrom }) => {
+export const getEventsPublic = async (params) => {
   try {
     const res = await axios.get(`${API_URL}/${END_POINTS.EVENTS}`, {
-      params: {
-        limit,
-        orderBy,
-        startFrom,
-      },
+      params,
     });
     return res.data;
   } catch (err) {

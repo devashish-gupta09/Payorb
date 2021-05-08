@@ -5,7 +5,7 @@ import ProfileReviewSection from "../ProfileReviewSection";
 import TabPanel from "../TabPanel";
 import { styles } from "./styles";
 
-function ProfileDetailsSection({profileData}) {
+function ProfileDetailsSection({ profileData, vendor }) {
   const classes = styles();
   const [value, setValue] = React.useState(0);
 
@@ -27,7 +27,7 @@ function ProfileDetailsSection({profileData}) {
         <Tab classes={{ root: classes.tabRoot }} label="Review"></Tab>
       </Tabs>
       <TabPanel value={value} index={0} boxClasses={classes.box}>
-        <ProfileAboutCard profileData={profileData}/>
+        <ProfileAboutCard profileData={profileData} vendor={vendor}/>
       </TabPanel>
 
       <TabPanel value={value} index={1} boxClasses={classes.box}>

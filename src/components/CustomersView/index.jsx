@@ -2,6 +2,7 @@ import { Grid } from "@material-ui/core";
 import { useRouter } from "next/router";
 import { PAGE_PATHS } from "../../constants/paths";
 import CustomerEvents from "../CustomerEvents";
+import CustomerVendorProfile from "../CustomerVendorProlile";
 import CustomerViewHeader from "../CustomerViewHeader";
 import EventBooking from "../EventBooking";
 import DashboardContainer from "../VendorDashboardContainer";
@@ -13,6 +14,14 @@ function CustomersView() {
     if (router.asPath.includes(PAGE_PATHS.CUSTOMER_EVENTS_REGISTER)) {
       if (router.query.event) {
         return <EventBooking eventLink={router.query.event}></EventBooking>;
+      }
+    } else if (router.asPath.includes(PAGE_PATHS.CUSTOMER_VENDOR_VIEW)) {
+      if (router.query.userUID) {
+        return (
+          <CustomerVendorProfile
+            userUID={router.query.userUID}
+          ></CustomerVendorProfile>
+        );
       }
     } else if (router.asPath.includes(PAGE_PATHS.CUSTOMER_EVENTS)) {
       return <CustomerEvents />;

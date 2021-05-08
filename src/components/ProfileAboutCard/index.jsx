@@ -13,7 +13,7 @@ import EditableTextField from "../EditableTextfield";
 
 function Details(props) {
   const globalClasses = globalStyles();
-  const { classes, about, email, phoneNumber, location } = props;
+  const { classes, about, email, phoneNumber, location, vendor } = props;
   const [edit, setEdit] = React.useState(false);
   const router = useRouter();
 
@@ -42,6 +42,7 @@ function Details(props) {
   const handleEditProfile = () => {
     setEdit(!edit);
   };
+
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
@@ -49,99 +50,111 @@ function Details(props) {
           About
         </Typography>
 
-        <Grid className={classes.aboutContainer}>
-          <EditableTextField
-            edit={edit}
-            value={about || "Please add some information about yourself"}
-            textFieldProps={{
-              fullWidth: true,
-              id: "about",
-              label: "About",
-              value: formik.values.about,
-              variant: "outlined",
-              margin: "normal",
-              onChange: formik.handleChange,
-              onBlur: formik.onBlur,
-            }}
-          />
-        </Grid>
+        {(about || vendor) && (
+          <Grid className={classes.aboutContainer}>
+            <EditableTextField
+              edit={edit}
+              value={
+                about || !vendor || "Please add some information about yourself"
+              }
+              textFieldProps={{
+                fullWidth: true,
+                id: "about",
+                label: "About",
+                value: formik.values.about,
+                variant: "outlined",
+                margin: "normal",
+                onChange: formik.handleChange,
+                onBlur: formik.onBlur,
+              }}
+            />
+          </Grid>
+        )}
 
-        <DetailRow classes={classes} icon={<MailOutline />}>
-          <EditableTextField
-            edit={edit}
-            value={email || `Please add your email`}
-            textFieldProps={{
-              fullWidth: true,
-              id: "email",
-              label: "Email",
-              value: formik.values.email,
-              variant: "outlined",
-              margin: "normal",
-              onChange: formik.handleChange,
-              onBlur: formik.onBlur,
-            }}
-          />
-        </DetailRow>
+        {(email || vendor) && (
+          <DetailRow classes={classes} icon={<MailOutline />}>
+            <EditableTextField
+              edit={edit}
+              value={email || !vendor || `Please add your email`}
+              textFieldProps={{
+                fullWidth: true,
+                id: "email",
+                label: "Email",
+                value: formik.values.email,
+                variant: "outlined",
+                margin: "normal",
+                onChange: formik.handleChange,
+                onBlur: formik.onBlur,
+              }}
+            />
+          </DetailRow>
+        )}
 
-        <DetailRow classes={classes} icon={<Phone />}>
-          <EditableTextField
-            edit={edit}
-            value={phoneNumber || `Please add your phone number`}
-            textFieldProps={{
-              fullWidth: true,
-              id: "phoneNumber",
-              label: "Phone Number",
-              value: formik.values.phoneNumber,
-              variant: "outlined",
-              margin: "normal",
-              onChange: formik.handleChange,
-              onBlur: formik.onBlur,
-            }}
-          />
-        </DetailRow>
+        {(phoneNumber || vendor) && (
+          <DetailRow classes={classes} icon={<Phone />}>
+            <EditableTextField
+              edit={edit}
+              value={phoneNumber || !vendor || `Please add your phone number`}
+              textFieldProps={{
+                fullWidth: true,
+                id: "phoneNumber",
+                label: "Phone Number",
+                value: formik.values.phoneNumber,
+                variant: "outlined",
+                margin: "normal",
+                onChange: formik.handleChange,
+                onBlur: formik.onBlur,
+              }}
+            />
+          </DetailRow>
+        )}
 
-        <DetailRow classes={classes} icon={<Place />}>
-          <EditableTextField
-            edit={edit}
-            value={location || `Please add your location`}
-            textFieldProps={{
-              fullWidth: true,
-              id: "location",
-              label: "location",
-              value: formik.values.location,
-              variant: "outlined",
-              margin: "normal",
-              onChange: formik.handleChange,
-              onBlur: formik.onBlur,
-            }}
-          />
-        </DetailRow>
+        {(location || vendor) && (
+          <DetailRow classes={classes} icon={<Place />}>
+            <EditableTextField
+              edit={edit}
+              value={location || !vendor || `Please add your location`}
+              textFieldProps={{
+                fullWidth: true,
+                id: "location",
+                label: "location",
+                value: formik.values.location,
+                variant: "outlined",
+                margin: "normal",
+                onChange: formik.handleChange,
+                onBlur: formik.onBlur,
+              }}
+            />
+          </DetailRow>
+        )}
 
-        <Grid style={{ paddingTop: "1em" }}>
-          {edit ? (
-            <>
-              <Button className={classes.saveButton} type="submit">
-                Save
-              </Button>
+        {vendor && (
+          <Grid style={{ paddingTop: "1em" }}>
+            {edit ? (
+              <>
+                <Button className={classes.saveButton} type="submit">
+                  Save
+                </Button>
+                <ButtonCapsule
+                  text="Cancel"
+                  buttonStyle={classes.cancelButton}
+                  onClick={handleEditProfile}
+                ></ButtonCapsule>
+              </>
+            ) : (
               <ButtonCapsule
-                text="Cancel"
-                buttonStyle={classes.cancelButton}
+                text="Edit Profile"
                 onClick={handleEditProfile}
               ></ButtonCapsule>
-            </>
-          ) : (
-            <ButtonCapsule
-              text="Edit Profile"
-              onClick={handleEditProfile}
-            ></ButtonCapsule>
-          )}
-        </Grid>
+            )}
+          </Grid>
+        )}
       </form>
     </>
   );
 }
 
-function ProfileAboutCard({ profileData }) {
+function ProfileAboutCard({ profileData, vendor }) {
   const classes = styles();
 
   return (
@@ -156,6 +169,7 @@ function ProfileAboutCard({ profileData }) {
                 phoneNumber={profileData.phoneNumber}
                 location={profileData.location}
                 classes={classes}
+                vendor={vendor}
               />
             </Grid>
           </Grid>
@@ -176,6 +190,7 @@ function ProfileAboutCard({ profileData }) {
               phoneNumber={profileData.phoneNumber}
               location={profileData.location}
               classes={classes}
+              vendor={vendor}
             />
           </Grid>
         </Grid>
