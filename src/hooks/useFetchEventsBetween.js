@@ -12,7 +12,7 @@ function useFetchEventsBetween(startDate, endDate) {
       .then((res) => {
         if (res.data) {
           setLoading(false);
-          console.log("RES : ", res)
+          console.log("RES : ", res);
           setData(res.data.events);
         } else {
           setLoading(false);

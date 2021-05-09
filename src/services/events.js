@@ -101,4 +101,4 @@ export const getEventsBetween = async (params) => {
   } catch (err) {
     throw err.response.data || err.message;
   }
-}
+};
