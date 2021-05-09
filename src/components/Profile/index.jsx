@@ -8,8 +8,8 @@ export default function Profile({ profileData }) {
   return (
     <Fade in={true} timeout={500}>
       <Grid>
-        <ProfileInfoCard profileData={profileData} />
-        <ProfileDetailsSection profileData={profileData} />
+        <ProfileInfoCard profileData={profileData} vendor={true} />
+        <ProfileDetailsSection profileData={profileData} vendor={true} />
         <ProfilePaymentSection profileData={profileData} />
       </Grid>
     </Fade>

@@ -20,3 +20,15 @@ export const createCustomer = async (customer) => {
     throw err.response.data || err.message;
   }
 };
+
+export const getCustomersForVendor = async () => {
+  try {
+    const res = await axios.get(`${API_URL}/${END_POINTS.CUSTOMER}`, {
+      headers: await getAuthHeader(),
+    });
+
+    return res.data;
+  } catch (err) {
+    throw err.response.data || err.message;
+  }
+};

@@ -19,23 +19,7 @@ import useFetchEvents from "../../hooks/useFetchEvents";
 import { getMonthDate } from "../../utils/dateTime";
 import { EVENT_STATUS } from "../../constants/events";
 import { date } from "yup/lib/locale";
-
-const styles = makeStyles((theme) => ({
-  root: {
-    width: "96%",
-    paddingTop: "1.5em",
-    [theme.breakpoints.down("sm")]: {
-      width: "100%",
-    },
-  },
-  container: {
-    // maxHeight: 300,
-  },
-  title: {
-    fontSize: "1.2em",
-    paddingBottom: "1em",
-  },
-}));
+import useFetchVendorCustomers from "../../hooks/useFetchCustomers";
 
 const getEventStatus = (startDate, endDate) => {
   if (new Date(endDate) <= Date.now()) {
@@ -50,62 +34,38 @@ const getEventStatus = (startDate, endDate) => {
   }
 };
 
-function createData(name, date, users, mode, revenue, startDate, endDate) {
+function createData(name, phoneNumber, email, date) {
   return {
     name,
+    phoneNumber,
+    email,
     date,
-    users,
-    mode,
-    revenue,
-    status: getEventStatus(startDate, endDate),
   };
 }
 
-function VendorEventsStats() {
+function VendorCustomers() {
   const classes = styles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-  const {
-    loading,
-    events,
-    moreEvents,
-    loadMoreEvents,
-    changeLimit,
-  } = useFetchEvents(true, {
-    limit: rowsPerPage,
-  });
-
   const globalClasses = globalStyles();
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(event.target.value);
-    // Trigger To fetch events
-    changeLimit(400);
-  };
+  const { customers, loading, error } = useFetchVendorCustomers();
 
   if (loading) {
     return (
       <Grid className={classes.root}>
-        <SkeletonLoading message={"Loading Event"} />
+        <SkeletonLoading message={"Loading customers"} />
       </Grid>
     );
   }
 
-  if (events) {
-    const rows = events.map((event) =>
+  console.log(customers);
+
+  if (customers) {
+    const rows = customers.map((customer) =>
       createData(
-        event.name,
-        getMonthDate(event.startDate, event.endDate),
-        event.orders.length,
-        event.mode,
-        event.orders.length * event.price,
-        event.startDate,
-        event.endDate
+        customer.name,
+        customer.phoneNumber,
+        customer.email,
+        getMonthDate(customer.createdAt, customer.createdAt)
       )
     );
 
@@ -115,7 +75,7 @@ function VendorEventsStats() {
           variant={"h6"}
           className={`${globalClasses.boldSixHundred} ${classes.title}`}
         >
-          Events
+          Customers
         </Typography>
         <DashboardCard>
           <TableContainer className={classes.container}>
@@ -135,7 +95,6 @@ function VendorEventsStats() {
               </TableHead>
               <TableBody>
                 {rows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
                     return (
                       <TableRow hover role="checkbox" tabIndex={-1} key={index}>
@@ -155,15 +114,6 @@ function VendorEventsStats() {
               </TableBody>
             </Table>
           </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 20]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
         </DashboardCard>
       </Grid>
     );
@@ -173,7 +123,7 @@ function VendorEventsStats() {
 }
 
 const columns = [
-  { id: "name", label: "Event Name", minWidth: 170 },
+  { id: "name", label: "Customers", minWidth: 170 },
   {
     id: "date",
     label: "Date",
@@ -181,30 +131,34 @@ const columns = [
     align: "center",
   },
   {
-    id: "users",
-    label: "Users",
+    id: "phoneNumber",
+    label: "Contact",
     minWidth: 100,
     align: "center",
   },
   {
-    id: "mode",
-    label: "Mode",
+    id: "email",
+    label: "Email",
     minWidth: 100,
-    align: "center",
-  },
-  {
-    id: "status",
-    label: "Status",
-    minWidth: 100,
-    align: "center",
-  },
-  {
-    id: "revenue",
-    label: "Revenue",
-    minWidth: 100,
-    format: (value) => numeral(value).format("0,0"),
     align: "center",
   },
 ];
 
-export default VendorEventsStats;
+const styles = makeStyles((theme) => ({
+  root: {
+    width: "96%",
+    paddingTop: "1.5em",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+    },
+  },
+  container: {
+    // maxHeight: 300,
+  },
+  title: {
+    fontSize: "1.2em",
+    paddingBottom: "1em",
+  },
+}));
+
+export default VendorCustomers;

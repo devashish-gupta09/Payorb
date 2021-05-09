@@ -35,8 +35,11 @@ function VendorDashboardHeader({ profileData }) {
       case 0:
         router.push(PAGE_PATHS.VENDOR_DASHBOARD_EVENTS);
         return;
-      case 2:
+      case 1:
         router.push(PAGE_PATHS.VENDOR_DASHBOARD_FINANCIALS);
+        return;
+      case 2:
+        router.push(PAGE_PATHS.VENDOR_DASHBOARD_CUSTOMERS);
         return;
       default:
         break;
@@ -72,7 +75,26 @@ function VendorDashboardHeader({ profileData }) {
                 Events
               </li>
             </Link>
-            <Link href={PAGE_PATHS.VENDOR_DASHBOARD_PROFILE} onClick={toggleDrawer}>
+            <Link
+              href={PAGE_PATHS.VENDOR_DASHBOARD_FINANCIALS}
+              onClick={toggleDrawer}
+            >
+              <li className={isActive("financials") && classes.activeLink}>
+                Financials
+              </li>
+            </Link>
+            <Link
+              href={PAGE_PATHS.VENDOR_DASHBOARD_CUSTOMERS}
+              onClick={toggleDrawer}
+            >
+              <li className={isActive("customers") && classes.activeLink}>
+                Customers
+              </li>
+            </Link>
+            <Link
+              href={PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}
+              onClick={toggleDrawer}
+            >
               <li className={isActive("profile") && classes.activeLink}>
                 Profile
               </li>
@@ -126,13 +148,13 @@ function VendorDashboardHeader({ profileData }) {
                     value={0}
                   />
                   <Tab
-                    className={isActive("customers") && classes.activeLink}
-                    label="Customers"
+                    className={isActive("financials") && classes.activeLink}
+                    label="Financials"
                     values={1}
                   />
                   <Tab
-                    className={isActive("financials") && classes.activeLink}
-                    label="Financials"
+                    className={isActive("customers") && classes.activeLink}
+                    label="Customers"
                     values={2}
                   />
                 </Tabs>

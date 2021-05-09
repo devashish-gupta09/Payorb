@@ -2,14 +2,14 @@ import { Grid, makeStyles } from "@material-ui/core";
 import React from "react";
 import CustomerEventCard from "../CustomerEventCard";
 
-function CustomerEventsList({ events }) {
+function CustomerEventsList({ events, expand }) {
   const classes = styles();
   return (
     <Grid>
       {events.map((event) => {
         return (
           <Grid className={classes.cardContainer}>
-            <CustomerEventCard event={event} />
+            <CustomerEventCard event={event} expand={expand} />
           </Grid>
         );
       })}

@@ -9,7 +9,7 @@ import React from "react";
 import { updateUser } from "../../services/auth";
 import { useRouter } from "next/router";
 
-function ProfileInfoCard({ profileData }) {
+function ProfileInfoCard({ profileData, vendor }) {
   const classes = styles();
   const globalClasses = globalStyles();
   const router = useRouter();
@@ -67,9 +67,9 @@ function ProfileInfoCard({ profileData }) {
                 <EditableTextField
                   edit={edit}
                   value={
-                    profileData.occupation
-                      ? profileData.occupation
-                      : "Please add your occupation"
+                    profileData.occupation ||
+                    !vendor ||
+                    "Please add your occupation"
                   }
                   textFieldProps={{
                     id: "occupation",
@@ -86,7 +86,11 @@ function ProfileInfoCard({ profileData }) {
               <Grid>
                 <EditableTextField
                   edit={edit}
-                  value={profileData.location || "Please add your location"}
+                  value={
+                    profileData.location ||
+                    !vendor ||
+                    "Please add your location"
+                  }
                   textFieldProps={{
                     id: "location",
                     label: "Location",
@@ -107,25 +111,27 @@ function ProfileInfoCard({ profileData }) {
             </Grid>
           </Grid>
           <Grid>
-            <Grid>
-              {edit ? (
-                <>
-                  <Button className={classes.saveButton} type="submit">
-                    Save
-                  </Button>
+            {vendor && (
+              <Grid>
+                {edit ? (
+                  <>
+                    <Button className={classes.saveButton} type="submit">
+                      Save
+                    </Button>
+                    <ButtonCapsule
+                      text="Cancel"
+                      buttonStyle={classes.cancelButton}
+                      onClick={handleEditProfile}
+                    ></ButtonCapsule>
+                  </>
+                ) : (
                   <ButtonCapsule
-                    text="Cancel"
-                    buttonStyle={classes.cancelButton}
+                    text="Edit Profile"
                     onClick={handleEditProfile}
                   ></ButtonCapsule>
-                </>
-              ) : (
-                <ButtonCapsule
-                  text="Edit Profile"
-                  onClick={handleEditProfile}
-                ></ButtonCapsule>
-              )}
-            </Grid>
+                )}
+              </Grid>
+            )}
           </Grid>
         </Grid>
       </form>

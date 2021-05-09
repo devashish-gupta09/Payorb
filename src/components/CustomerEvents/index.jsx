@@ -10,132 +10,96 @@ import {
 import { Search } from "@material-ui/icons";
 import React from "react";
 import Skeleton from "react-loading-skeleton";
-import { defaultEvents } from "../../constants/events";
-import { getEventsPublic } from "../../services/events";
-import { delay } from "../../utils/dateTime";
+import useFetchEvents from "../../hooks/useFetchEvents";
 import CustomerEventsList from "../CustomerEventList";
 import DashboardCard from "../DashboardCard";
+import SkeletonLoading from "../SkeletonLoading";
 
 function CustomerEvents() {
-  const [tabValue, setTabValue] = React.useState("EDUCATION");
-  const [events, setEvents] = React.useState();
   const classes = styles();
-  const [eventsParams, setEventsParams] = React.useState({
-    category: "EDUCATION",
-    limit: 5,
-    orderBy: "createdDate",
-    startFrom: 0,
-  });
-  const [loadMore, setLoadMore] = React.useState(true);
 
-  const loadMoreEvents = async () => {
-    try {
-      const res = await getEventsPublic(eventsParams);
-      if (res.data.events.length > 0) {
-        setEventsParams({
-          ...eventsParams,
-          startFrom: res.data.lastEvent,
-        });
-        setEvents([...events, ...res.data.events]);
-      } else {
-        setLoadMore(false);
-      }
-    } catch (err) {
-      console.log("error", err);
-    }
-  };
+  const [tabValue, setTabValue] = React.useState("EDUCATION");
 
   const handleTabChange = (_, value) => {
     setTabValue(value);
   };
 
-  React.useEffect(() => {
-    //   Fetch events of category selected in TAB
-    getEventsPublic(eventsParams)
-      .then(async (res) => {
-        if (res.data) {
-          await delay(50);
-          setEvents(res.data.events);
-          setEventsParams({ ...eventsParams, startFrom: res.data.lastEvent });
-        }
-      })
-      .catch((err) => {
-        console.log("Error", err);
-      });
-  }, []);
+  const { loading, events, moreEvents, loadMoreEvents } = useFetchEvents(
+    false,
+    { category: tabValue }
+  );
 
-  return (
-    <Grid>
-      <Grid container alignItems={"center"}>
-        <Grid item sm={8} style={{ width: "90vw" }}>
-          <Tabs
-            scrollButtons="auto"
-            value={tabValue}
-            onChange={handleTabChange}
-            variant="scrollable"
-            TabIndicatorProps={{
-              className: classes.activeTab,
-            }}
+  if (loading) {
+    return <SkeletonLoading message={"Loading events"} />;
+  }
+
+  if (events) {
+    return (
+      <Grid>
+        <Grid container alignItems={"center"}>
+          <Grid item sm={8} style={{ width: "90vw" }}>
+            <Tabs
+              scrollButtons="auto"
+              value={tabValue}
+              onChange={handleTabChange}
+              variant="scrollable"
+              TabIndicatorProps={{
+                className: classes.activeTab,
+              }}
+            >
+              <Tab value={"EDUCATION"} label="Education" />
+              <Tab label="Health & Wellness" />
+              <Tab label="Business" />
+              <Tab label="Business" />
+            </Tabs>
+          </Grid>
+
+          <Grid
+            item
+            sm={4}
+            container
+            justify="flex-end"
+            className={classes.filterIconOuterContainer}
           >
-            <Tab value={"EDUCATION"} label="Education" />
-            <Tab label="Health & Wellness" />
-            <Tab label="Business" />
-            <Tab label="Business" />
-          </Tabs>
-        </Grid>
-
-        <Grid
-          item
-          sm={4}
-          container
-          justify="flex-end"
-          className={classes.filterIconOuterContainer}
-        >
-          <Grid container className={classes.filterIconInnerContainer}>
-            <Grid className={classes.filterIcon}>
-              <Search></Search>
+            <Grid container className={classes.filterIconInnerContainer}>
+              <Grid className={classes.filterIcon}>
+                <Search></Search>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
+
+        <Divider></Divider>
+
+        <Grid>
+          {events && events.length > 0 ? (
+            <>
+              <Grid>
+                <CustomerEventsList events={events} />
+              </Grid>
+
+              <Grid
+                style={{ marginBottom: "1em" }}
+                container
+                alignItems="center"
+                justify="center"
+              >
+                {moreEvents ? (
+                  <Button onClick={loadMoreEvents}>Load more</Button>
+                ) : (
+                  <Typography>All events loaded. </Typography>
+                )}
+              </Grid>
+            </>
+          ) : (
+            <Typography>No events found</Typography>
+          )}
+        </Grid>
       </Grid>
+    );
+  }
 
-      <Divider></Divider>
-
-      <Grid>
-        {events ? (
-          <>
-            {events && events.length > 0 ? (
-              <>
-                <Grid>
-                  <CustomerEventsList events={events} />
-                </Grid>
-
-                <Grid
-                  style={{ marginBottom: "1em" }}
-                  container
-                  alignItems="center"
-                  justify="center"
-                >
-                  {loadMore ? (
-                    <Button onClick={loadMoreEvents}>Load more</Button>
-                  ) : (
-                    <Typography>All events loaded. </Typography>
-                  )}
-                </Grid>
-              </>
-            ) : (
-              <Typography>No events found</Typography>
-            )}
-          </>
-        ) : (
-          <DashboardCard rootClass={classes.skeleton}>
-            <h3>Loading Events</h3>
-            <Skeleton count={5} />
-          </DashboardCard>
-        )}
-      </Grid>
-    </Grid>
-  );
+  return <h1>Something went wrong.</h1>;
 }
 
 const styles = makeStyles((theme) => ({
