@@ -79,6 +79,9 @@ export const getEventDate = (startDate, endDate) => {
   return "";
 };
 
+/**
+ *  FORMAT: Feb 14-15
+ */
 export const getMonthDate = (startDate, endDate) => {
   startDate = new Date(startDate);
   endDate = new Date(endDate);

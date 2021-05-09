@@ -1,12 +1,24 @@
-import { Grid, makeStyles, Typography } from "@material-ui/core";
+import {
+  Grid,
+  makeStyles,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@material-ui/core";
 import React from "react";
 import { globalStyles } from "../../../styles/globalStyles";
 import numeral from "numeral";
 import ValueCard from "../ValueCard";
 
-function VendorRevenueUserAggSec() {
+function VendorRevenueUserAggSec({ stats }) {
   const classes = styles();
   const globalClasses = globalStyles();
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+
+  if (!stats) {
+    return <h1>{stats}</h1>;
+  }
 
   return (
     <Grid style={{ width: "100%" }}>
@@ -17,44 +29,36 @@ function VendorRevenueUserAggSec() {
         Dashboard
       </Typography>
 
-      <Grid container className={classes.fix}>
-        <Grid
-          item
-          sm={6}
-          container
-          spacing={3}
-          className={classes.leftContainer}
-        >
-          <Grid item xs={6}>
+      <Grid container className={classes.fix} spacing={2}>
+        <Grid item sm={6} container spacing={matches ? 0 : 3}>
+          <Grid item xs={6} className={classes.leftContainer}>
             <ValueCard
-              title={`$${numeral(3412).format("0,0")}`}
+              title={`Rs. ${numeral(stats.totalRevenue).format("0,0")}`}
               subTitle={"Total Revenue"}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={6} className={classes.rightContainer}>
             <ValueCard
-              title={`${numeral(341).format("0,0")}`}
-              subTitle={"Total User"}
+              title={`${numeral(stats.totalCustomers).format("0,0")}`}
+              subTitle={"Total Customers"}
             />
           </Grid>
         </Grid>
-        <Grid
-          item
-          sm={6}
-          container
-          spacing={3}
-          className={classes.rightContainer}
-        >
-          <Grid item xs={6}>
+        <Grid container item sm={6} spacing={matches ? 0 : 3}>
+          <Grid item xs={6} className={classes.leftContainer}>
             <ValueCard
-              title={`$${numeral(34152).format("0,0")}`}
-              subTitle={"Total Revenue"}
+              title={`Rs. ${numeral(stats.lastMonthSummary.revenue).format(
+                "0,0"
+              )}`}
+              subTitle={`Total Revenue last month`}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={6} className={classes.rightContainer}>
             <ValueCard
-              title={`$${numeral(34152).format("0,0")}`}
-              subTitle={"Total Revenue"}
+              title={`${numeral(stats.lastMonthSummary.customers).format(
+                "0,0"
+              )}`}
+              subTitle={"Total customers last month"}
             />
           </Grid>
         </Grid>
@@ -72,22 +76,16 @@ const styles = makeStyles((theme) => ({
     paddingBottom: "1em",
   },
   fix: {
-    [theme.breakpoints.down("sm")]: {
-      "& > div": {
-        margin: 0,
-      },
-    },
+    // padding: "0.5em",
   },
   leftContainer: {
-    paddingRight: "0.75em",
     [theme.breakpoints.down("sm")]: {
-      paddingRight: "0",
+      paddingRight: "0.5em",
     },
   },
   rightContainer: {
-    paddingLeft: "0.75em",
     [theme.breakpoints.down("sm")]: {
-      paddingLeft: "0",
+      paddingLeft: "0.5em",
     },
   },
 }));

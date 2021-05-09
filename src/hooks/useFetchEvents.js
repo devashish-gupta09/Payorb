@@ -1,13 +1,11 @@
 import React from "react";
-import { getEventsPublic } from "../services/events";
+import { getEventsPublic, getEventsVendorDashboard } from "../services/events";
 import { delay } from "../utils/dateTime";
 
 function useFetchEvents(isVendor, filterParams) {
   const [loading, setLoading] = React.useState(true);
   const [events, setEvents] = React.useState();
   const [error, setError] = React.useState();
-
-  console.log(filterParams);
 
   const [eventsParams, setEventsParams] = React.useState({
     orderBy: "createdDate",
@@ -18,18 +16,45 @@ function useFetchEvents(isVendor, filterParams) {
 
   const [moreEvents, setLoadMore] = React.useState(true);
 
+  const handleLimitChange = (limit) => {
+    console.log(limit)
+    setEventsParams({
+      ...eventsParams,
+      limit
+    });
+  }
+
   const loadMoreEvents = async () => {
     try {
-      const res = await getEventsPublic(eventsParams);
-      if (res.data.events.length > 0) {
-        setEventsParams({
+
+      if (isVendor) {
+        const res = await getEventsVendorDashboard({
           ...eventsParams,
-          startFrom: res.data.lastEvent,
+          startFrom: eventsParams.startFrom + eventsParams.limit,
         });
-        setEvents([...events, ...res.data.events]);
+        if (res.data.length > 0) {
+          setEventsParams({
+            ...eventsParams,
+            startFrom: eventsParams.startFrom + eventsParams.limit,
+          });
+          setEvents([...events, ...res.data]);
+        } else {
+          setLoadMore(false);
+        }
       } else {
-        setLoadMore(false);
+        const res = await getEventsPublic(eventsParams);
+        if (res.data.events.length > 0) {
+          setEventsParams({
+            ...eventsParams,
+            startFrom: res.data.lastEvent,
+          });
+          setEvents([...events, ...res.data.events]);
+        } else {
+          setLoadMore(false);
+        }
       }
+
+
     } catch (err) {
       console.log("error", err);
     }
@@ -37,12 +62,12 @@ function useFetchEvents(isVendor, filterParams) {
 
   React.useEffect(() => {
     if (isVendor) {
-      getEventsPublic(eventsParams)
+      getEventsVendorDashboard(eventsParams)
         .then(async (res) => {
           if (res.data) {
             await delay(50);
             setLoading(false);
-            setEvents(res.data.events);
+            setEvents(res.data);
             setEventsParams({ ...eventsParams, startFrom: res.data.lastEvent });
           }
         })
@@ -65,7 +90,7 @@ function useFetchEvents(isVendor, filterParams) {
           console.log("Error", err);
         });
     }
-  }, []);
+  }, [eventsParams.limit]);
 
   return {
     loading,
@@ -73,6 +98,7 @@ function useFetchEvents(isVendor, filterParams) {
     error,
     moreEvents,
     loadMoreEvents,
+    changeLimit: handleLimitChange
   };
 }
 

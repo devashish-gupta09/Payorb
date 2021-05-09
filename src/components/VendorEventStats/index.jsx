@@ -14,7 +14,11 @@ import React from "react";
 import { globalStyles } from "../../../styles/globalStyles";
 import DashboardCard from "../DashboardCard";
 import numeral from "numeral";
-import { defaultEvents } from "../../constants/events";
+import SkeletonLoading from "../SkeletonLoading";
+import useFetchEvents from "../../hooks/useFetchEvents";
+import { getMonthDate } from "../../utils/dateTime";
+import { EVENT_STATUS } from "../../constants/events";
+import { date } from "yup/lib/locale";
 
 const styles = makeStyles((theme) => ({
   root: {
@@ -25,7 +29,7 @@ const styles = makeStyles((theme) => ({
     },
   },
   container: {
-    maxHeight: 300,
+    // maxHeight: 300,
   },
   title: {
     fontSize: "1.2em",
@@ -33,10 +37,44 @@ const styles = makeStyles((theme) => ({
   },
 }));
 
+const getEventStatus = (startDate, endDate) => {
+  if (new Date(endDate) > Date.now()) {
+    return EVENT_STATUS.COMPLETED;
+  } else if (new Date(startDate) > Date.now()) {
+    return EVENT_STATUS.UPCOMING;
+  } else if (
+    new Date(startDate) >= Date.now() &&
+    new Date(startDate) <= Date.now()
+  ) {
+    return EVENT_STATUS.ONGOING;
+  }
+};
+
+function createData(name, date, users, mode, revenue, startDate, endDate) {
+  return {
+    name,
+    date,
+    users,
+    mode,
+    revenue,
+    status: getEventStatus(),
+  };
+}
+
 function VendorEventsStats() {
   const classes = styles();
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const {
+    loading,
+    events,
+    moreEvents,
+    loadMoreEvents,
+    changeLimit,
+  } = useFetchEvents(true, {
+    limit: rowsPerPage,
+  });
 
   const globalClasses = globalStyles();
 
@@ -45,68 +83,93 @@ function VendorEventsStats() {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
+    setRowsPerPage(event.target.value);
+    // Trigger To fetch events
+    changeLimit(400);
   };
 
-  return (
-    <Grid className={classes.root}>
-      <Typography
-        variant={"h6"}
-        className={`${globalClasses.boldSixHundred} ${classes.title}`}
-      >
-        Events
-      </Typography>
-      <DashboardCard>
-        <TableContainer className={classes.container}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                {columns.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{ minWidth: column.minWidth }}
-                  >
-                    {column.label}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                      {columns.map((column) => {
-                        const value = row[column.id];
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === "number"
-                              ? column.format(value)
-                              : value}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
-      </DashboardCard>
-    </Grid>
-  );
+  if (loading) {
+    return (
+      <Grid className={classes.root}>
+        <SkeletonLoading message={"Loading Event"} />
+      </Grid>
+    );
+  }
+
+  if (events) {
+    const rows = events.map((event) =>
+      createData(
+        event.name,
+        getMonthDate(event.startDate, event.endDate),
+        event.orders.length,
+        event.mode,
+        event.orders.length * event.price,
+        event.startDate,
+        event.endDate
+      )
+    );
+
+    return (
+      <Grid className={classes.root}>
+        <Typography
+          variant={"h6"}
+          className={`${globalClasses.boldSixHundred} ${classes.title}`}
+        >
+          Events
+        </Typography>
+        <DashboardCard>
+          <TableContainer className={classes.container}>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      style={{ minWidth: column.minWidth }}
+                    >
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, index) => {
+                    return (
+                      <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                        {columns.map((column) => {
+                          const value = row[column.id];
+                          return (
+                            <TableCell key={column.id} align={column.align}>
+                              {column.format && typeof value === "number"
+                                ? column.format(value)
+                                : value}
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 20]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        </DashboardCard>
+      </Grid>
+    );
+  }
+
+  return <h1>Something went wrong.</h1>;
 }
 
 const columns = [
@@ -114,67 +177,34 @@ const columns = [
   {
     id: "date",
     label: "Date",
-    minWidth: 170,
+    minWidth: 100,
     align: "center",
   },
   {
-    id: "seatsBooked",
+    id: "users",
     label: "Users",
-    minWidth: 170,
+    minWidth: 100,
     align: "center",
   },
   {
-    id: "type",
+    id: "mode",
     label: "Mode",
-    minWidth: 170,
+    minWidth: 100,
     align: "center",
   },
-
   {
     id: "status",
     label: "Status",
-    minWidth: 170,
-    format: (value) => value.toFixed(2),
+    minWidth: 100,
     align: "center",
   },
   {
-    id: "totalRevenue",
+    id: "revenue",
     label: "Revenue",
-    minWidth: 170,
+    minWidth: 100,
     format: (value) => numeral(value).format("0,0"),
     align: "center",
   },
 ];
-
-function createData(
-  name,
-  type,
-  dates,
-  month,
-  totalRevenue,
-  seatsBooked,
-  status
-) {
-  return {
-    name,
-    type,
-    date: `${month} ${dates}`,
-    totalRevenue,
-    seatsBooked,
-    status,
-  };
-}
-
-const rows = defaultEvents.map((event) =>
-  createData(
-    event.name,
-    event.type,
-    event.dates,
-    event.month,
-    event.totalRevenue,
-    event.seatsBooked,
-    event.status
-  )
-);
 
 export default VendorEventsStats;

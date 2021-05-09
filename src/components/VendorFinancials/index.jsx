@@ -1,14 +1,36 @@
 import { Grid, makeStyles } from "@material-ui/core";
 import React from "react";
+import useFetchStats from "../../hooks/useFetchStats";
 import VendorEventsStats from "../VendorEventStats";
 import VendorRevenueUserAggSec from "../VendorRevenueUserAggSec";
 import VendorSalesGraph from "../VendorSalesGraph";
+import SkeletonLoading from "../SkeletonLoading";
 
 function VendorFinancials() {
+  const endDate = new Date();
+  const startDate = new Date();
+  startDate.setDate(endDate.getDate() - 7);
+
   const classes = styles();
+
+  const { data, loading, error } = useFetchStats(startDate, endDate);
+
+  if (loading) {
+    return <SkeletonLoading />;
+  }
+
+  if (error) {
+    return (
+      <>
+        <h2>Something went wrong</h2>
+        <h5>error</h5>
+      </>
+    );
+  }
+
   return (
     <Grid className={classes.root}>
-      <VendorRevenueUserAggSec></VendorRevenueUserAggSec>
+      <VendorRevenueUserAggSec stats={data}></VendorRevenueUserAggSec>
       <VendorEventsStats></VendorEventsStats>
       <VendorSalesGraph />
     </Grid>

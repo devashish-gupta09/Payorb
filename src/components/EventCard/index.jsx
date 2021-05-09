@@ -176,7 +176,7 @@ function EventCard({ event }) {
               alignItems="flex-end"
               className={classes.editButtonContainer}
             >
-              <Grid containerjustify="center" alignItems="center" spacing="2">
+              <Grid spacing="2">
                 <ButtonCapsule
                   buttonStyle={`${globalClasses.bold} ${classes.editButton}`}
                   text="Edit"

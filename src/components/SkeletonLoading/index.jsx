@@ -7,7 +7,7 @@ function SkeletonLoading({ message }) {
   const classes = styles();
   return (
     <DashboardCard className={classes.root}>
-      <Typography></Typography>
+      <Typography variant={"h6"}>{message}</Typography>
       <Skeleton count={5} duration={0.5}></Skeleton>
     </DashboardCard>
   );

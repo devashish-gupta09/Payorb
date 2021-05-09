@@ -13,6 +13,7 @@ import Skeleton from "react-loading-skeleton";
 import useFetchEvents from "../../hooks/useFetchEvents";
 import CustomerEventsList from "../CustomerEventList";
 import DashboardCard from "../DashboardCard";
+import SkeletonLoading from "../SkeletonLoading";
 
 function CustomerEvents() {
   const classes = styles();
@@ -29,12 +30,7 @@ function CustomerEvents() {
   );
 
   if (loading) {
-    return (
-      <DashboardCard rootClass={classes.skeleton}>
-        <h3>Loading Events</h3>
-        <Skeleton count={5} />
-      </DashboardCard>
-    );
+    return <SkeletonLoading message={"Loading events"} />;
   }
 
   if (events) {

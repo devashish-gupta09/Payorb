@@ -16,6 +16,7 @@ function ValueCard({ title, subTitle }) {
 const styles = makeStyles((theme) => ({
   container: {
     padding: "2.5em 1em",
+    height: "100%",
     [theme.breakpoints.down("sm")]: {
       padding: "1em",
     },
@@ -30,6 +31,11 @@ const styles = makeStyles((theme) => ({
   subTitle: {
     fontSize: "1em",
     color: appColors.grey,
+    [theme.breakpoints.down("sm")]: {
+      paddingTop: "0.3em",
+      fontSize: "0.75em",
+      fontWeight: "500",
+    },
   },
 }));
 

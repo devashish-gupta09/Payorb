@@ -13,6 +13,12 @@ export const EVENT_MODES = {
   OFFLINE: "OFFLINE",
 };
 
+export const EVENT_STATUS = {
+  UPCOMING: "Upcoming",
+  COMPLETED: "Completed",
+  ONGOING: "On Going"
+}
+
 export const EVENT_DESCRIPTION = {
   [EVENT_TYPES.ONE_ON_ONE]:
     "Clients can book individual service sessions with you from calendar availability.",

@@ -50,7 +50,6 @@ export const getEvent = async (eventLink) => {
 export const getEventsVendorDashboard = async ({
   limit,
   orderBy,
-  orderType,
   startFrom,
 }) => {
   try {
@@ -59,7 +58,6 @@ export const getEventsVendorDashboard = async ({
       params: {
         limit,
         orderBy,
-        orderType,
         startFrom,
       },
     });
