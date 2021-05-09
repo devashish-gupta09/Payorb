@@ -90,3 +90,15 @@ export const getEventsPublic = async (params) => {
     throw err.response.data || err.message;
   }
 };
+
+export const getEventsBetween = async (params) => {
+  try {
+    const res = await axios.get(`${API_URL}/${END_POINTS.EVENTS}/schedule`, {
+      headers: await getAuthHeader(),
+      params,
+    });
+    return res.data;
+  } catch (err) {
+    throw err.response.data || err.message;
+  }
+}

@@ -10,10 +10,11 @@ import EventsViewList from "../EventsViewList";
 
 import Skeleton from "react-loading-skeleton";
 import { delay } from "../../utils/dateTime";
+import VendorEventsCalenderView from "../VendorEventsCalenderView";
 
 function VendorEvents() {
   const classes = styles();
-  const [view, setView] = React.useState(EVENT_VIEWS.LIST);
+  const [listView, setListView] = React.useState(true);
   const [events, setEvents] = React.useState();
   const [eventsParams, setEventsParams] = React.useState({
     limit: 5,
@@ -26,6 +27,10 @@ function VendorEvents() {
 
   const handleCreateEvent = () => {
     router.push(PAGE_PATHS.VENDOR_DASHBOARD_CREATE_EVENT);
+  };
+
+  const toggleView = () => {
+    setListView(!listView);
   };
 
   const loadMoreEvents = async () => {
@@ -63,38 +68,41 @@ function VendorEvents() {
 
   return (
     <Grid className={classes.root}>
-      {events ? (
-        <Grid className={classes.container}>
-          {events.length > 0 ? (
-            <>
-              <Grid className={classes.events}>
-                {view === EVENT_VIEWS.LIST ? (
+      <Button onClick={toggleView}>Toggle</Button>
+      {listView ? (
+        events ? (
+          <Grid className={classes.container}>
+            {events.length > 0 ? (
+              <>
+                <Grid className={classes.events}>
                   <EventsViewList events={events} />
-                ) : null}
-              </Grid>
+                </Grid>
 
-              <Grid
-                style={{ marginBottom: "1em" }}
-                container
-                alignItems="center"
-                justify="center"
-              >
-                {loadMore ? (
-                  <Button onClick={loadMoreEvents}>Load more</Button>
-                ) : (
-                  <Typography>All events loaded. </Typography>
-                )}
-              </Grid>
-            </>
-          ) : (
-            <Typography>No events found</Typography>
-          )}
-        </Grid>
+                <Grid
+                  style={{ marginBottom: "1em" }}
+                  container
+                  alignItems="center"
+                  justify="center"
+                >
+                  {loadMore ? (
+                    <Button onClick={loadMoreEvents}>Load more</Button>
+                  ) : (
+                    <Typography>All events loaded. </Typography>
+                  )}
+                </Grid>
+              </>
+            ) : (
+              <Typography>No events found</Typography>
+            )}
+          </Grid>
+        ) : (
+          <DashboardCard rootClass={classes.skeleton}>
+            <h3>Loading Events</h3>
+            <Skeleton count={5} />
+          </DashboardCard>
+        )
       ) : (
-        <DashboardCard rootClass={classes.skeleton}>
-          <h3>Loading Events</h3>
-          <Skeleton count={5} />
-        </DashboardCard>
+        <VendorEventsCalenderView />
       )}
 
       <Grid
