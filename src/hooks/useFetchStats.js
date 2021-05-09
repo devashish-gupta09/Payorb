@@ -21,7 +21,6 @@ function useFetchStats(startDate, endDate) {
         setLoading(false);
         setError(err.message || "Could not fetch stats.");
       });
-
   }, []);
 
   return {

@@ -17,16 +17,15 @@ function useFetchEvents(isVendor, filterParams) {
   const [moreEvents, setLoadMore] = React.useState(true);
 
   const handleLimitChange = (limit) => {
-    console.log(limit)
+    console.log(limit);
     setEventsParams({
       ...eventsParams,
-      limit
+      limit,
     });
-  }
+  };
 
   const loadMoreEvents = async () => {
     try {
-
       if (isVendor) {
         const res = await getEventsVendorDashboard({
           ...eventsParams,
@@ -53,8 +52,6 @@ function useFetchEvents(isVendor, filterParams) {
           setLoadMore(false);
         }
       }
-
-
     } catch (err) {
       console.log("error", err);
     }
@@ -98,7 +95,7 @@ function useFetchEvents(isVendor, filterParams) {
     error,
     moreEvents,
     loadMoreEvents,
-    changeLimit: handleLimitChange
+    changeLimit: handleLimitChange,
   };
 }
 

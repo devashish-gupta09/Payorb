@@ -3,5 +3,5 @@ export const END_POINTS = {
   EVENTS: "event",
   CUSTOMER: "customer",
   ORDER: "order",
-  STATS: "stats"
+  STATS: "stats",
 };

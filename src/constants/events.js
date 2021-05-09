@@ -16,8 +16,8 @@ export const EVENT_MODES = {
 export const EVENT_STATUS = {
   UPCOMING: "Upcoming",
   COMPLETED: "Completed",
-  ONGOING: "On Going"
-}
+  ONGOING: "On Going",
+};
 
 export const EVENT_DESCRIPTION = {
   [EVENT_TYPES.ONE_ON_ONE]:

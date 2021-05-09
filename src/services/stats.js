@@ -5,12 +5,10 @@ import { getAuthHeader } from "./api";
 
 export const getEventStats = async (params) => {
   try {
-    const res = await axios.get(
-      `${API_URL}/${END_POINTS.STATS}/events`,
-      {
-        headers: await getAuthHeader(), params
-      }
-    );
+    const res = await axios.get(`${API_URL}/${END_POINTS.STATS}/events`, {
+      headers: await getAuthHeader(),
+      params,
+    });
 
     return res.data;
   } catch (err) {

@@ -11,6 +11,7 @@ import { getUser } from "../../services/auth";
 import VendorDashboardHeader from "../DashboardHeader";
 import FallbackPage from "../FallbackPage";
 import Profile from "../Profile";
+import VendorCustomers from "../VendorCustomers";
 import VendorDashboardContainer from "../VendorDashboardContainer";
 import VendorEventCreationForm from "../VendorEventCreationForm";
 import VendorEvents from "../VendorEvents";
@@ -27,6 +28,8 @@ function VendorDashboard() {
         return <Profile profileData={profileData} />;
       case PAGE_PATHS.VENDOR_DASHBOARD_FINANCIALS:
         return <VendorFinancials />;
+      case PAGE_PATHS.VENDOR_DASHBOARD_CUSTOMERS:
+        return <VendorCustomers />;
       case PAGE_PATHS.VENDOR_DASHBOARD_CREATE_EVENT:
         return <VendorEventCreationForm />;
       case PAGE_PATHS.VENDOR_DASHBOARD_EVENTS:

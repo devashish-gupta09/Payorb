@@ -22,10 +22,8 @@ import {
 } from "@devexpress/dx-react-chart-material-ui";
 
 import { scaleLog, scaleTime } from "d3-scale";
-import { confidence as data } from "./data-vis";
 
 const format = () => (tick) => {
-  console.log("TICK", tick);
   return tick;
 };
 const legendStyles = () => ({
@@ -74,7 +72,6 @@ const demoStyles = () => ({
 
 const ValueLabel = (props) => {
   const { text } = props;
-  console.log("TSEFEJF :", text);
   return <ValueAxis.Label {...props} text={`${text}%`} />;
 };
 
@@ -92,8 +89,6 @@ function VendorSalesGraph() {
   const startDate = new Date();
   startDate.setDate(endDate.getDate() - 7);
   const { data: Test, loading, error } = useFetchStats(startDate, endDate);
-
-  const [chartData] = React.useState(data);
 
   const classes = styles();
   const globalClasses = globalStyles();
@@ -219,6 +214,7 @@ const transformChartDataRevenue = (data) => {
       revenue: data[dp].eventRevenue,
     }));
 
+  console.log(test);
   return test;
 };
 
