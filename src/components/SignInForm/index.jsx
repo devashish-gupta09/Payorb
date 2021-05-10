@@ -151,6 +151,7 @@ function SigninForm() {
                 onChange={handleUsernameChange}
                 onBlur={formik.handleBlur}
                 fullWidth
+                autoComplete={"off"}
                 value={formik.values.username}
                 error={
                   formik.touched.username && Boolean(formik.errors.username)
@@ -188,6 +189,7 @@ function SigninForm() {
                 variant="outlined"
                 type="password"
                 fullWidth
+                autoComplete={"off"}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.password}
@@ -214,6 +216,7 @@ function SigninForm() {
               id="otp"
               label="OTP"
               variant="outlined"
+              autoComplete={"off"}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.otp}
@@ -278,7 +281,7 @@ function SigninForm() {
             Sign in with Facebook
           </Button>
           <Typography align="center" className={classes.signupMessage}>
-            {`Don't have an account?`}
+            {`Don't have an account ? `}
             <Link href={PAGE_PATHS.SIGNUP}>Sign Up</Link>
           </Typography>
         </FormControl>

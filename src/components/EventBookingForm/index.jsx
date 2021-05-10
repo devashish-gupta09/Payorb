@@ -47,6 +47,8 @@ function EventBookingForm({ eventLink, price }) {
   });
   const [success, setSuccess] = React.useState(false);
   const [orderId, setOrderId] = React.useState();
+  const [paymentProgLoader, setPaymentProgLoader] = React.useState(false);
+
   const classes = styles();
   const formik = useFormik({
     initialValues: {
@@ -64,19 +66,21 @@ function EventBookingForm({ eventLink, price }) {
 
       // Potential Bug. :what if the user changes his phone number
       // after receiveing the OTP?
+      setPaymentProgLoader(true);
+
       user = await confirmationResult.confirm(values.otp);
 
       if (user) {
         // Let's create a customer in Firestore
         try {
+          setPaymentProgLoader(true);
+
           const customerCreationRes = await createCustomer({
             ...values,
             otp: undefined,
           });
 
-          console.log(customerCreationRes);
           if (customerCreationRes.data.customer) {
-            console.log("CUSTOMER:", customerCreationRes.data.customer);
             const order = await createOrder({
               order: {
                 amount: price,
@@ -86,9 +90,10 @@ function EventBookingForm({ eventLink, price }) {
             });
 
             displayRazorpay(order.rzpOrderId, values);
+            setPaymentProgLoader(false);
           }
         } catch (err) {
-          console.log(err);
+          setPaymentProgLoader(false);
 
           if (typeof err === "object") {
             if (err.success === false) {
@@ -102,6 +107,7 @@ function EventBookingForm({ eventLink, price }) {
           }
         }
       }
+      setPaymentProgLoader(false);
     },
   });
 
@@ -286,8 +292,10 @@ function EventBookingForm({ eventLink, price }) {
               error={formik.touched.otp && Boolean(formik.errors.otp)}
               helperText={formik.touched.otp && formik.errors.otp}
               fullWidth
+              autoComplete={"off"}
             />
             <ButtonCapsule
+              showLoader={paymentProgLoader}
               buttonStyle={classes.paybutton}
               disabled={!otpSent && !confirmationResult}
               text={`Pay Rs.${price}`}

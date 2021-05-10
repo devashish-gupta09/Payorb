@@ -230,6 +230,7 @@ function SignUpForm() {
                 name="password"
                 label="Password"
                 fullWidth
+                autoComplete={"off"}
                 variant="outlined"
                 type="password"
                 onChange={formik.handleChange}
@@ -254,6 +255,7 @@ function SignUpForm() {
                 label="Confirm Password"
                 fullWidth
                 variant="outlined"
+                autoComplete={"off"}
                 type="password"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -287,6 +289,7 @@ function SignUpForm() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.otp}
+              autoComplete={"off"}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
