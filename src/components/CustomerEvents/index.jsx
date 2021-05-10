@@ -75,7 +75,7 @@ function CustomerEvents() {
           {events && events.length > 0 ? (
             <>
               <Grid>
-                <CustomerEventsList events={events} />
+                <CustomerEventsList events={events} expand={true} />
               </Grid>
 
               <Grid
