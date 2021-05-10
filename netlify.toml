@@ -5,7 +5,7 @@
 [context.production]
   command = "yarn build"
   publish = "out"
-  environment = { NEXT_PUBLIC_CMS_URL="http://localhost:1337",NEXT_PUBLIC_API_URL="https://us-central1-payorb-92ef0.cloudfunctions.net",NEXT_PUBLIC_FIREBASE_API_KEY="AIzaSyBCqsdKA3kx8zn87k92gz4a04LFSQ82rr0",NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="payorb-92ef0.firebaseapp.com",NEXT_PUBLIC_FIREBASE_PROJECT_ID="payorb-92ef0",NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="payorb-92ef0.appspot.com",NEXT_PUBLIC_FIREBASE_MESSAGE_SENDER_ID="1087459324541",NEXT_PUBLIC_FIREBASE_APP_ID="1:1087459324541:web:0a6e0ad769ae109eaaf714",NEXT_PUBLIC_PAYMENT_GATEWAY_KEY="rzp_test_D2pGjvNmsPBl3o"}
+  environment = { NEXT_PUBLIC_CMS_URL="http://localhost:1337",NEXT_PUBLIC_API_URL="https://us-central1-payorb-92ef0.cloudfunctions.net",NEXT_PUBLIC_FIREBASE_API_KEY="AIzaSyBCqsdKA3kx8zn87k92gz4a04LFSQ82rr0",NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="payorb-92ef0.firebaseapp.com",NEXT_PUBLIC_FIREBASE_PROJECT_ID="payorb-92ef0",NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="payorb-92ef0.appspot.com",NEXT_PUBLIC_FIREBASE_MESSAGE_SENDER_ID="1087459324541",NEXT_PUBLIC_FIREBASE_APP_ID="1:1087459324541:web:0a6e0ad769ae109eaaf714",NEXT_PUBLIC_PAYMENT_GATEWAY_KEY="rzp_test_T5OjnqWU3YNBQK"}
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
