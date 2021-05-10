@@ -118,7 +118,7 @@ export const getMonthDate = (startDate, endDate) => {
 };
 
 export const delay = async (time) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve();
     }, time);

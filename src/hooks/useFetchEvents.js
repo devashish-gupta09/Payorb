@@ -39,6 +39,7 @@ function useFetchEvents(isVendor, filterParams) {
           setEvents([...events, ...res.data]);
         } else {
           setLoadMore(false);
+          setError("No events found")
         }
       } else {
         const res = await getEventsPublic(eventsParams);

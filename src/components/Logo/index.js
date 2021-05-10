@@ -1,6 +1,7 @@
 import React from "react";
 
-export default function Logo({ height, width, dark }) {
+/* eslint-disable-next-line react/prop-types */
+function Logo({ height, width, dark }) {
   return (
     <img
       style={{ height, width }}
@@ -8,3 +9,5 @@ export default function Logo({ height, width, dark }) {
     />
   );
 }
+
+export default Logo

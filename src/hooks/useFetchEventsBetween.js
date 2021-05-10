@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { getEventsBetween } from "../services/events";
-import { getEventStats } from "../services/stats";
 
 function useFetchEventsBetween(startDate, endDate) {
   const [loading, setLoading] = useState(true);
