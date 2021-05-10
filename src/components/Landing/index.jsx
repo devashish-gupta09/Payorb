@@ -12,6 +12,7 @@ function Landing({ content }) {
   return (
     <Grid>
       <LandingHeader />
+      <h1>Landing</h1>
       <HomeSection content={content.home} />
       <FeatureSection content={content.feature} />
       <UserRegistrationSection content={content.userRegistration} />
