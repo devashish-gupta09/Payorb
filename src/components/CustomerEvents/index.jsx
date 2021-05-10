@@ -9,10 +9,9 @@ import {
 } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import React from "react";
-import Skeleton from "react-loading-skeleton";
+
 import useFetchEvents from "../../hooks/useFetchEvents";
 import CustomerEventsList from "../CustomerEventList";
-import DashboardCard from "../DashboardCard";
 import SkeletonLoading from "../SkeletonLoading";
 
 function CustomerEvents() {

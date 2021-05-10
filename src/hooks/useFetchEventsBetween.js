@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+
 import { getEventsBetween } from "../services/events";
 
 function useFetchEventsBetween(startDate, endDate) {

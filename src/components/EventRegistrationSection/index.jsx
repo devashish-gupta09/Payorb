@@ -1,7 +1,8 @@
 import { Grid } from "@material-ui/core";
 import React from "react";
-import { styles } from "./styles";
+
 import LandingSectionContent from "../LandingSectionContent";
+import { styles } from "./styles";
 
 function EventRegistrationSection({ content }) {
   const classes = styles();

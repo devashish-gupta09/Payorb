@@ -1,14 +1,7 @@
-import {
-  Backdrop,
-  Button,
-  Dialog,
-  DialogContent,
-  Grid,
-  makeStyles,
-  Typography,
-} from "@material-ui/core";
+import { Button, Dialog, Grid, Typography } from "@material-ui/core";
 import { Share } from "@material-ui/icons";
 import React from "react";
+
 import { globalStyles } from "../../../styles/globalStyles";
 import { getEventDate, getEventMonth } from "../../utils/dateTime";
 import { formatEventType } from "../../utils/events";

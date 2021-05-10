@@ -1,5 +1,6 @@
 import { Card, Grid, Typography } from "@material-ui/core";
 import React from "react";
+
 import { styles } from "./styles";
 
 function LandingSectionCard({ image, title, description }) {

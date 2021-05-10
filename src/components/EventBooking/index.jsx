@@ -2,7 +2,6 @@ import { Grid, makeStyles, Typography } from "@material-ui/core";
 import {
   CalendarToday,
   ConfirmationNumber,
-  ContactSupportOutlined,
   LocationOn,
   Money,
   ViewModule,
@@ -10,6 +9,7 @@ import {
 
 import React from "react";
 import Skeleton from "react-loading-skeleton";
+
 import { globalStyles } from "../../../styles/globalStyles";
 import { getEventPublic } from "../../services/events";
 import DashboardCard from "../DashboardCard";
@@ -79,9 +79,9 @@ function EventBooking({ eventLink }) {
             <Grid item sm={12} className={classes.fullWidth}>
               <DashboardCard rootClass={classes.cardPadding}>
                 <Grid className={classes.eventDetails}>
-                  {eventRows.map((row) => {
+                  {eventRows.map((row, index) => {
                     return (
-                      <DetailRow classes={classes} icon={row.icon}>
+                      <DetailRow key={index} classes={classes} icon={row.icon}>
                         <Typography>{event[row.key]}</Typography>
                       </DetailRow>
                     );
@@ -90,9 +90,7 @@ function EventBooking({ eventLink }) {
               </DashboardCard>
             </Grid>
             <Grid item sm={12} className={classes.fullWidth}>
-              <DashboardCard
-                rootClass={`${classes.posterRoot}`}
-              >
+              <DashboardCard rootClass={`${classes.posterRoot}`}>
                 <img
                   src="https://i.pinimg.com/736x/59/59/88/5959880ca0cb6b30926091b7bc251812.jpg"
                   className={classes.eventPoster}
@@ -114,9 +112,7 @@ function EventBooking({ eventLink }) {
           </Grid>
           <Grid item container sm={3} spacing={3}>
             <Grid item sm={12}>
-              <DashboardCard
-                rootClass={`${classes.formContainer}`}
-              >
+              <DashboardCard rootClass={`${classes.formContainer}`}>
                 <Typography
                   className={globalClasses.bold}
                   variant="h5"
@@ -129,9 +125,7 @@ function EventBooking({ eventLink }) {
             </Grid>
 
             <Grid item sm={12} className={`${classes.vendorCardContainer}`}>
-              <DashboardCard
-                rootClass={`${classes.vendorCard}`}
-              >
+              <DashboardCard rootClass={`${classes.vendorCard}`}>
                 <EventBookingVendorCard vendorId={event.userUID} />
               </DashboardCard>
             </Grid>

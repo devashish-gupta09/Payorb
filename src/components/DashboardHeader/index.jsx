@@ -6,16 +6,16 @@ import {
   Tabs,
   Toolbar,
   Typography,
-  Link as materialLink,
 } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
+
 import { PAGE_PATHS } from "../../constants/paths";
 import Logo from "../Logo";
 import ProfileSectionHeader from "../ProfileSectionHeader";
 import { styles } from "./styles";
-import Link from "next/link";
-import { useRouter } from "next/router";
 
 function VendorDashboardHeader({ profileData }) {
   const classes = styles();

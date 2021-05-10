@@ -1,15 +1,16 @@
 import { Button, Grid, makeStyles, Typography } from "@material-ui/core";
 import { useRouter } from "next/router";
 import React from "react";
-import { EVENT_VIEWS } from "../../constants/events";
+
+import Skeleton from "react-loading-skeleton";
+
 import { PAGE_PATHS } from "../../constants/paths";
 import { getEventsVendorDashboard } from "../../services/events";
+import { delay } from "../../utils/dateTime";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
 import EventsViewList from "../EventsViewList";
 
-import Skeleton from "react-loading-skeleton";
-import { delay } from "../../utils/dateTime";
 import VendorEventsCalenderView from "../VendorEventsCalenderView";
 
 function VendorEvents() {

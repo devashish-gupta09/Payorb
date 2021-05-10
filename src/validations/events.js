@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+
 import { EVENT_TYPES } from "../constants/events";
 
 export const createEventValidationSchema = Yup.object({

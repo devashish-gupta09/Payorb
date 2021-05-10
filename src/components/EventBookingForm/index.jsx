@@ -9,8 +9,6 @@ import {
 } from "@material-ui/core";
 import { useFormik } from "formik";
 import React from "react";
-import ButtonCapsule from "../ButtonCapsule";
-import app from "../../utils/firebase";
 
 import { createCustomer } from "../../services/customers";
 import {
@@ -18,8 +16,10 @@ import {
   failOrder,
   submitSuccessOrder,
 } from "../../services/orders";
-import { getRzpAmountFormat } from "../../utils/payments";
 import { delay } from "../../utils/dateTime";
+import app from "../../utils/firebase";
+import { getRzpAmountFormat } from "../../utils/payments";
+import ButtonCapsule from "../ButtonCapsule";
 import PaymentSuccess from "../PaymentSuccess";
 
 const loadRazorPay = () => {

@@ -1,3 +1,4 @@
+import DateFnsUtils from "@date-io/date-fns";
 import {
   Button,
   FormControl,
@@ -15,8 +16,17 @@ import {
   Dialog,
   DialogContent,
 } from "@material-ui/core";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
 import { useFormik } from "formik";
+import { useRouter } from "next/router";
 import React from "react";
+
+import { appColors } from "../../../styles/colors";
+import { globalStyles } from "../../../styles/globalStyles";
 import {
   EVENT_CATEGORY,
   EVENT_DESCRIPTION,
@@ -24,21 +34,13 @@ import {
   EVENT_TYPES,
 } from "../../constants/events";
 
-import DateFnsUtils from "@date-io/date-fns";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
-import { styles } from "./styles";
-import { globalStyles } from "../../../styles/globalStyles";
-import { appColors } from "../../../styles/colors";
+import { PAGE_PATHS } from "../../constants/paths";
+import { createEvent, editEvent } from "../../services/events";
 import { createEventValidationSchema } from "../../validations/events";
 import ButtonCapsule from "../ButtonCapsule";
-import { PAGE_PATHS } from "../../constants/paths";
-import { useRouter } from "next/router";
-import { createEvent, editEvent } from "../../services/events";
+
 import PostEventCreationDialog from "../PostEventCreationDialog";
+import { styles } from "./styles";
 
 function getCreationFormInitialState() {
   return {

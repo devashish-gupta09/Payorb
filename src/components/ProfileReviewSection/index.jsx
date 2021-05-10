@@ -1,10 +1,12 @@
 import { Avatar, Grid, makeStyles, Typography } from "@material-ui/core";
-import DashboardCard from "../DashboardCard";
-import React from "react";
+
 import { AccountCircle } from "@material-ui/icons";
-import { globalStyles } from "../../../styles/globalStyles";
+import React from "react";
+
 import { appColors } from "../../../styles/colors";
+import { globalStyles } from "../../../styles/globalStyles";
 import { getTimeDiff } from "../../utils/dateTime";
+import DashboardCard from "../DashboardCard";
 
 function ProfileReviewSection({ reviews }) {
   const classes = styles();
@@ -14,9 +16,9 @@ function ProfileReviewSection({ reviews }) {
     <DashboardCard rootClass={classes.root}>
       <Grid container>
         {reviews && reviews.length > 0 ? (
-          reviews.map((review) => {
+          reviews.map((review, index) => {
             return (
-              <Grid container className={classes.infoRow}>
+              <Grid container className={classes.infoRow} key={index}>
                 <Grid container item xs={10}>
                   <Avatar>
                     <AccountCircle></AccountCircle>

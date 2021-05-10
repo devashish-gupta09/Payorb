@@ -6,11 +6,12 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import React from "react";
-import { styles } from "./styles";
-import Link from "next/link";
 import { Close, Home } from "@material-ui/icons";
+import Link from "next/link";
+import React from "react";
+
 import Logo from "../Logo";
+import { styles } from "./styles";
 
 function CustomerViewHeader() {
   const classes = styles();

@@ -1,5 +1,6 @@
 import { Button } from "@material-ui/core";
 import React from "react";
+
 import { styles } from "./styles";
 
 function ButtonCapsule({ disabled = false, type, text, onClick, buttonStyle }) {
@@ -17,4 +18,3 @@ function ButtonCapsule({ disabled = false, type, text, onClick, buttonStyle }) {
 }
 
 export default ButtonCapsule;
-

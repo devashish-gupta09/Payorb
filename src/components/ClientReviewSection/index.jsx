@@ -1,6 +1,7 @@
 import { Grid, Typography } from "@material-ui/core";
 import React from "react";
 import Carousel from "react-material-ui-carousel";
+
 import { globalStyles } from "../../../styles/globalStyles";
 import LandingSectionContent from "../LandingSectionContent";
 import { styles } from "./styles";
@@ -61,7 +62,6 @@ function ClientReviewSection({ content }) {
         activeIndicatorIconButtonProps={{
           className: `${classes.activeIndicator}`,
         }}
-        
       >
         {content.clients.map((client, index) => {
           return (

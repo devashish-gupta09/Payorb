@@ -2,7 +2,7 @@ import app from "../../utils/firebase";
 import React from "react";
 
 export class FirebaseAuth {
-  static firebaseInstance;
+  firebaseInstance;
 
   constructor() {
     this.googleProvider = new app.auth.GoogleAuthProvider();

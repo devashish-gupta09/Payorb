@@ -1,17 +1,4 @@
-import { Grid, makeStyles, Typography, withStyles } from "@material-ui/core";
-import React from "react";
-import { globalStyles } from "../../../styles/globalStyles";
-import useFetchStats from "../../hooks/useFetchStats";
-
-import DashboardCard from "../DashboardCard";
-import SkeletonLoading from "../SkeletonLoading";
-
-import {
-  ArgumentScale,
-  ValueScale,
-  Animation,
-} from "@devexpress/dx-react-chart";
-
+import { ArgumentScale, Animation } from "@devexpress/dx-react-chart";
 import {
   Chart,
   ArgumentAxis,
@@ -20,8 +7,15 @@ import {
   Title,
   Legend,
 } from "@devexpress/dx-react-chart-material-ui";
+import { Grid, makeStyles, Typography, withStyles } from "@material-ui/core";
+import { scaleTime } from "d3-scale";
+import React from "react";
 
-import { scaleLog, scaleTime } from "d3-scale";
+import { globalStyles } from "../../../styles/globalStyles";
+import useFetchStats from "../../hooks/useFetchStats";
+
+import DashboardCard from "../DashboardCard";
+import SkeletonLoading from "../SkeletonLoading";
 
 const format = () => (tick) => {
   return tick;
@@ -106,17 +100,7 @@ function VendorSalesGraph() {
     );
   }
 
-  const modifyDomain = () => [0, 1000];
-
   const superscript = "⁰¹²³⁴⁵⁶⁷⁸⁹";
-  const formatPower = (d) =>
-    `${d}`
-      .split("")
-      .map((c) => superscript[c])
-      .join("");
-  const format = (scale) => {
-    return scale.tickFormat(4, (d) => d);
-  };
 
   if (Test) {
     return (

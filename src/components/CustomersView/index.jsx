@@ -1,5 +1,7 @@
 import { Grid } from "@material-ui/core";
 import { useRouter } from "next/router";
+import React from "react";
+
 import { PAGE_PATHS } from "../../constants/paths";
 import CustomerEvents from "../CustomerEvents";
 import CustomerVendorProfile from "../CustomerVendorProlile";

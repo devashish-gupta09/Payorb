@@ -1,5 +1,6 @@
 import { Grid, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
+
 import { globalStyles } from "../../../styles/globalStyles";
 
 function PaymentSuccess({ orderId }) {

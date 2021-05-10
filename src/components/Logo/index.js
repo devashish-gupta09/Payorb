@@ -10,4 +10,4 @@ function Logo({ height, width, dark }) {
   );
 }
 
-export default Logo
+export default Logo;

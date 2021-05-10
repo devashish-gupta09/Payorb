@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import { ViewState } from "@devexpress/dx-react-scheduler";
 import {
   Scheduler,
@@ -10,10 +8,11 @@ import {
   ViewSwitcher,
   AllDayPanel,
 } from "@devexpress/dx-react-scheduler-material-ui";
+import * as React from "react";
 
-import SkeletonLoading from "../SkeletonLoading";
 import useFetchEventsBetween from "../../hooks/useFetchEventsBetween";
 import DashboardCard from "../DashboardCard";
+import SkeletonLoading from "../SkeletonLoading";
 
 const transformEvents = (events) => {
   return events.map((event) => {

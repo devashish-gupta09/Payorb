@@ -1,6 +1,7 @@
 import { makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 import Skeleton from "react-loading-skeleton";
+
 import DashboardCard from "../DashboardCard";
 
 function SkeletonLoading({ message }) {

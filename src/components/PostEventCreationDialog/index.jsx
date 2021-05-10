@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   Grid,
   InputAdornment,
@@ -9,12 +8,12 @@ import {
   Typography,
 } from "@material-ui/core";
 import { FilterNone, OpenInBrowser } from "@material-ui/icons";
+import copy from "clipboard-copy";
 import React from "react";
+
 import { PAGE_PATHS } from "../../constants/paths";
 import DashboardCard from "../DashboardCard";
 import DateMonth from "../DateMonth";
-
-import copy from "clipboard-copy";
 
 function PostEventCreationDialog(props) {
   const { event } = props;

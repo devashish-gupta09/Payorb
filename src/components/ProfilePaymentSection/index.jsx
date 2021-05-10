@@ -1,18 +1,15 @@
-import {
-  FormControl,
-  Grid,
-  makeStyles,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import DashboardCard from "../DashboardCard";
-import React from "react";
-import { globalStyles } from "../../../styles/globalStyles";
-import { appColors } from "../../../styles/colors";
+import { Grid, makeStyles, TextField, Typography } from "@material-ui/core";
+
 import { useFormik } from "formik";
-import ButtonCapsule from "../ButtonCapsule";
-import { updateUser } from "../../services/auth";
 import { useRouter } from "next/router";
+import React from "react";
+
+import { appColors } from "../../../styles/colors";
+import { globalStyles } from "../../../styles/globalStyles";
+import { updateUser } from "../../services/auth";
+import ButtonCapsule from "../ButtonCapsule";
+
+import DashboardCard from "../DashboardCard";
 
 function getPaymentSectionValues(paymentDetails) {
   return {

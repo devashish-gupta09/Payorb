@@ -6,20 +6,17 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
   Typography,
 } from "@material-ui/core";
 import React from "react";
+
 import { globalStyles } from "../../../styles/globalStyles";
-import DashboardCard from "../DashboardCard";
-import numeral from "numeral";
-import SkeletonLoading from "../SkeletonLoading";
-import useFetchEvents from "../../hooks/useFetchEvents";
-import { getMonthDate } from "../../utils/dateTime";
 import { EVENT_STATUS } from "../../constants/events";
-import { date } from "yup/lib/locale";
 import useFetchVendorCustomers from "../../hooks/useFetchCustomers";
+import { getMonthDate } from "../../utils/dateTime";
+import DashboardCard from "../DashboardCard";
+import SkeletonLoading from "../SkeletonLoading";
 
 const getEventStatus = (startDate, endDate) => {
   if (new Date(endDate) <= Date.now()) {
@@ -94,23 +91,22 @@ function VendorCustomers() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows
-                  .map((row, index) => {
-                    return (
-                      <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                        {columns.map((column) => {
-                          const value = row[column.id];
-                          return (
-                            <TableCell key={column.id} align={column.align}>
-                              {column.format && typeof value === "number"
-                                ? column.format(value)
-                                : value}
-                            </TableCell>
-                          );
-                        })}
-                      </TableRow>
-                    );
-                  })}
+                {rows.map((row, index) => {
+                  return (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                      {columns.map((column) => {
+                        const value = row[column.id];
+                        return (
+                          <TableCell key={column.id} align={column.align}>
+                            {column.format && typeof value === "number"
+                              ? column.format(value)
+                              : value}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </TableContainer>

@@ -1,6 +1,7 @@
 import { Grid, makeStyles, Typography } from "@material-ui/core";
 import { useRouter } from "next/router";
 import React from "react";
+
 import { globalStyles } from "../../../styles/globalStyles";
 import { PAGE_PATHS } from "../../constants/paths";
 import { getVendorPublic } from "../../services/vendor";

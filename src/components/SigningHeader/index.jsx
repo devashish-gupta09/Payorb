@@ -1,9 +1,10 @@
-import { AppBar, Button, Drawer, Grid, Toolbar } from "@material-ui/core";
-import React from "react";
-import { styles } from "./styles";
+import { AppBar, Button, Grid, Toolbar } from "@material-ui/core";
 import { HomeRounded } from "@material-ui/icons";
-import Logo from "../Logo";
 import Link from "next/link";
+import React from "react";
+
+import Logo from "../Logo";
+import { styles } from "./styles";
 
 function SigningHeader() {
   const classes = styles();

@@ -1,5 +1,6 @@
-import { Grid, Tab, Tabs, Typography } from "@material-ui/core";
+import { Grid, Tab, Tabs } from "@material-ui/core";
 import React from "react";
+
 import ProfileAboutCard from "../ProfileAboutCard";
 import ProfileReviewSection from "../ProfileReviewSection";
 import TabPanel from "../TabPanel";
@@ -27,7 +28,7 @@ function ProfileDetailsSection({ profileData, vendor }) {
         <Tab classes={{ root: classes.tabRoot }} label="Review"></Tab>
       </Tabs>
       <TabPanel value={value} index={0} boxClasses={classes.box}>
-        <ProfileAboutCard profileData={profileData} vendor={vendor}/>
+        <ProfileAboutCard profileData={profileData} vendor={vendor} />
       </TabPanel>
 
       <TabPanel value={value} index={1} boxClasses={classes.box}>

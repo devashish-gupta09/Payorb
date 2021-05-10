@@ -1,4 +1,5 @@
 import React from "react";
+
 import { getEventsPublic, getEventsVendorDashboard } from "../services/events";
 import { delay } from "../utils/dateTime";
 
@@ -39,7 +40,7 @@ function useFetchEvents(isVendor, filterParams) {
           setEvents([...events, ...res.data]);
         } else {
           setLoadMore(false);
-          setError("No events found")
+          setError("No events found");
         }
       } else {
         const res = await getEventsPublic(eventsParams);

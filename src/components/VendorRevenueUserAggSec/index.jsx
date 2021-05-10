@@ -5,9 +5,10 @@ import {
   useMediaQuery,
   useTheme,
 } from "@material-ui/core";
-import React from "react";
-import { globalStyles } from "../../../styles/globalStyles";
 import numeral from "numeral";
+import React from "react";
+
+import { globalStyles } from "../../../styles/globalStyles";
 import ValueCard from "../ValueCard";
 
 function VendorRevenueUserAggSec({ stats }) {

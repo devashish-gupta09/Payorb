@@ -1,13 +1,15 @@
-import { Button, FormControl, Grid, Grow, Typography } from "@material-ui/core";
+import { Button, Grid, Typography } from "@material-ui/core";
 import { useFormik } from "formik";
+
+import { useRouter } from "next/router";
+import React from "react";
+
 import { globalStyles } from "../../../styles/globalStyles";
+import { updateUser } from "../../services/auth";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
 import EditableTextField from "../EditableTextfield";
 import { styles } from "./styles";
-import React from "react";
-import { updateUser } from "../../services/auth";
-import { useRouter } from "next/router";
 
 function ProfileInfoCard({ profileData, vendor }) {
   const classes = styles();
