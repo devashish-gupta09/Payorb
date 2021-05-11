@@ -6,7 +6,7 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import { Close, Home } from "@material-ui/icons";
+import { Close, Home, Menu } from "@material-ui/icons";
 import Link from "next/link";
 import React from "react";
 
@@ -30,7 +30,7 @@ function CustomerViewHeader() {
             justify={"space-between"}
             className={classes.drawerTitleContainer}
           >
-            <Logo dark={true} width={"35%"} />
+            <Logo dark={true} />
             <Typography className={classes.drawerClose} onClick={toggleDrawer}>
               <Close />
             </Typography>
@@ -49,10 +49,7 @@ function CustomerViewHeader() {
 
       <Toolbar>
         <Grid container justify="space-between" alignItems="center">
-          <Grid>
-            {/* Will be replaced with logo */}
-            <Logo dark={true} width={"70%"}></Logo>
-          </Grid>
+          <Logo dark={true} />
 
           <Grid
             className={classes.buttonContainer}
@@ -75,7 +72,7 @@ function CustomerViewHeader() {
             container
             justify="space-evenly"
           >
-            <img src={"../assets/menu.png"} onClick={toggleDrawer} />
+            <Menu style={{ color: "black" }} onClick={toggleDrawer} />
           </Grid>
         </Grid>
       </Toolbar>

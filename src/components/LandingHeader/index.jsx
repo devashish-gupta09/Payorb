@@ -6,7 +6,7 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import { Close } from "@material-ui/icons";
+import { Close, Menu } from "@material-ui/icons";
 import Link from "next/link";
 import React from "react";
 
@@ -55,10 +55,8 @@ function LandingHeader() {
 
       <Toolbar>
         <Grid container justify="space-between" alignItems="center">
-          <Grid>
-            {/* Will be replaced with logo */}
-            <Logo dark={true} width={"70%"}></Logo>
-          </Grid>
+          {/* Will be replaced with logo */}
+          <Logo dark={true} className={classes.logo}></Logo>
 
           <Grid
             className={classes.buttonContainer}
@@ -80,12 +78,8 @@ function LandingHeader() {
               </Button>
             </Link>
           </Grid>
-          <Grid
-            className={classes.menuButtonContainer}
-            container
-            justify="space-evenly"
-          >
-            <img src={"../assets/menu.png"} onClick={toggleDrawer} />
+          <Grid className={classes.menuButtonContainer}>
+            <Menu style={{ color: "black" }} onClick={toggleDrawer} />
           </Grid>
         </Grid>
       </Toolbar>

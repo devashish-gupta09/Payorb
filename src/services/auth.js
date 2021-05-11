@@ -18,7 +18,7 @@ export const getUser = async () => {
     });
     return response.data;
   } catch (err) {
-    return {};
+    return err.response || err;
   }
 };
 

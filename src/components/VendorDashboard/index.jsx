@@ -6,9 +6,12 @@ import {
 } from "@material-ui/core";
 import { useRouter } from "next/router";
 import React from "react";
+import { ALERT_TYPES } from "../../constants/alerts";
 
 import { PAGE_PATHS } from "../../constants/paths";
+import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { getUser } from "../../services/auth";
+import { delay } from "../../utils/dateTime";
 import VendorDashboardHeader from "../DashboardHeader";
 import FallbackPage from "../FallbackPage";
 import Profile from "../Profile";
@@ -22,6 +25,7 @@ function VendorDashboard() {
   const router = useRouter();
   const [loading, setLoading] = React.useState(true);
   const [profileData, setProfileData] = React.useState(null);
+  const { Alert, showAlert } = useAlertSnackbar();
 
   const getComponent = (route, profileData) => {
     switch (route) {
@@ -47,21 +51,27 @@ function VendorDashboard() {
 
   React.useEffect(() => {
     getUser()
-      .then((res) => {
-        if (res.data) {
+      .then(async (res) => {
+        console.log(res);
+        if (res.success) {
           // allowing a user to head to the profile section even if no data exists in the firestore
           if (Object.keys(res.data).length > 0) {
+            console.log(res.data);
             setProfileData(res.data);
             setLoading(false);
           } else {
             router.push(`${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`);
           }
         } else {
-          router.push("/signup");
+          if (res.data.error) {
+            showAlert("User doesn't exist. Please sign up.", ALERT_TYPES.ERROR);
+            await delay(750);
+            router.push("/signup");
+          }
         }
       })
       .catch((err) => {
-        console.error("Error getting profile data", err.message);
+        console.error("Error getting profile data", err);
         router.back();
       });
   }, []);
@@ -69,12 +79,14 @@ function VendorDashboard() {
   return (
     <>
       {loading ? (
-        <Backdrop open>
+        <Backdrop style={{ background: "#BDF5F2" }} open>
+          {Alert()}
           <Grid>
-            <Typography variant="h3" style={{ color: "white" }}>
-              {"Loading"}
-            </Typography>
-            <CircularProgress size="3rem" variant="indeterminate" />
+            <CircularProgress
+              size="3rem"
+              variant="indeterminate"
+              style={{ color: "white" }}
+            />
           </Grid>
         </Backdrop>
       ) : (

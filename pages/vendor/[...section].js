@@ -12,7 +12,6 @@ export default function Vendor() {
     React.useState(() => {
         if (!user && router.isReady) {
             console.log("Why is this being called", user, router)
-            // router.push("/")
         }
     }, [])
 
