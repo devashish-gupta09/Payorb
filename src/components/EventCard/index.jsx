@@ -1,4 +1,4 @@
-import { Button, Dialog, Grid, Typography } from "@material-ui/core";
+import { Button, Dialog, Grid, Tooltip, Typography } from "@material-ui/core";
 import { Share } from "@material-ui/icons";
 import React from "react";
 
@@ -175,9 +175,11 @@ function EventCard({ event }) {
                   text="Edit"
                   onClick={handleEdit}
                 ></ButtonCapsule>
-                <Button onClick={handleShareDialog}>
-                  <Share />
-                </Button>
+                <Tooltip title="Share">
+                  <Button onClick={handleShareDialog}>
+                    <Share />
+                  </Button>
+                </Tooltip>
               </Grid>
             </Grid>
           </Grid>

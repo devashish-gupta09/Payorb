@@ -25,6 +25,14 @@ export const createEventValidationSchema = Yup.object({
     .lessThan(100000, "You can't book more than 100000 tickets")
     .min(0, "Total ticket's can't be less than 0"),
   type: Yup.string()
-    .equals([EVENT_TYPES.ONE_ON_ONE, EVENT_TYPES.ONE_TIME])
+    .oneOf([EVENT_TYPES.ONE_ON_ONE, EVENT_TYPES.ONE_TIME])
     .required(),
+  slotDuration: Yup.number().moreThan(0, "Slot Duration greater that 0 hours").when('type', {
+    is: (value) => value === EVENT_TYPES.ONE_ON_ONE,
+    then: Yup.number().required(),
+  }),
+  slotCount: Yup.number().moreThan(0, "Slot Count greater that 0 hours").lessThan(1000, "Slot count must be less than 1000").when('type', {
+    is: (value) => value === EVENT_TYPES.ONE_ON_ONE,
+    then: Yup.number().required(),
+  })
 });

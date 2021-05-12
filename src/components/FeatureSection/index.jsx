@@ -13,7 +13,7 @@ function FeatureSection({ content }) {
   return (
     <Grid className={classes.container} container alignItems={"stretch"}>
       <Grid container>
-        <Grid item sm={4}>
+        <Grid item sm={4} >
           <SectionContent
             sectionLogo={content.sectionLogo}
             sectionTitle={content.sectionTitle}
@@ -40,7 +40,7 @@ function FeatureSection({ content }) {
                 return (
                   <Grid
                     container
-                    justify="center"
+                    // justify="center"
                     style={{ width: "100%" }}
                     key={index}
                   >

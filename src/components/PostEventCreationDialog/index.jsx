@@ -5,6 +5,7 @@ import {
   Link,
   makeStyles,
   TextField,
+  Tooltip,
   Typography,
 } from "@material-ui/core";
 import { FilterNone, OpenInBrowser } from "@material-ui/icons";
@@ -91,13 +92,17 @@ function PostEventCreationDialog(props) {
                   justify="space-evenly"
                   className={classes.iconContainer}
                 >
-                  <FilterNone onClick={handleCopy}></FilterNone>
+                  <Tooltip title="Copy link">
+                    <FilterNone onClick={handleCopy}></FilterNone>
+                  </Tooltip>
 
                   <Link
                     target="_blank"
                     href={`${PAGE_PATHS.CUSTOMER_EVENTS_REGISTER}?event=${event.link}`}
                   >
-                    <OpenInBrowser />
+                    <Tooltip title="Open in browser">
+                      <OpenInBrowser />
+                    </Tooltip>
                   </Link>
                 </Grid>
               </Grid>

@@ -15,6 +15,7 @@ import {
   FormHelperText,
   Dialog,
   DialogContent,
+  Tooltip,
 } from "@material-ui/core";
 import {
   MuiPickersUtilsProvider,
@@ -56,6 +57,8 @@ function getCreationFormInitialState() {
     type: "",
     startDate: new Date().toISOString(),
     endDate: new Date().toISOString(),
+    slotDuration: 0,
+    slotCount: 1,
   };
 }
 
@@ -64,6 +67,13 @@ function getEventTypeDescription(type) {
     return EVENT_DESCRIPTION[type];
   }
   return "";
+}
+
+function getTimeAfter(hours) {
+  const cleanUpHours = parseFloat(hours.toFixed(1));
+  const currTime = new Date();
+  currTime.setHours(currTime.getHours() + cleanUpHours + 1);
+  return currTime;
 }
 
 function VendorEventCreationForm({ event, edit, handleClose }) {
@@ -96,12 +106,24 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
   const formik = useFormik({
     initialValues: event || getCreationFormInitialState(),
     validationSchema: createEventValidationSchema,
-
-    onSubmit: async (values) => {
+    validateOnBlur: true,
+    onSubmit: async (values, formikHelpers) => {
+      console.log(formikHelpers);
       if (values) {
         try {
+          console.log("Values", values);
+          alert("Hey");
+
           if (!edit) {
-            await createEvent({ event: values });
+            await createEvent({
+              event: {
+                ...values,
+                totalTickets:
+                  values.type === EVENT_TYPES.ONE_ON_ONE
+                    ? values.slotCount
+                    : values.totalTickets,
+              },
+            });
             setPostEventDialog(true);
           } else {
             await editEvent({
@@ -117,6 +139,8 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
     },
   });
 
+  console.log(formik.errors);
+
   const handleCancel = () => {
     if (edit) {
       handleClose();
@@ -125,13 +149,35 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
     }
   };
 
-  const handleDialogClose = () => {
+  const handleDialogClose = React.useCallback(() => {
     setDialog({ display: false, text: "" });
-  };
+  }, []);
 
   const checkDisabled = () => {
-    if (edit && event?.customers && event?.customers?.length > 0) {
+    if (edit && event?.orders && event?.orders?.length > 0) {
       return true;
+    }
+  };
+
+  const handleSlotCountChange = (event) => {
+    // 1. Calculate a rational hour duration number to one decimal place
+    // 2. Update the endDate accordingly
+    const slotCount = Math.round(parseInt(event.target.value));
+    const minimumTime = formik.values.slotDuration;
+
+    formik.setFieldValue("slotCount", slotCount);
+    if (slotCount) {
+      const preferredEndDate = getTimeAfter(minimumTime * slotCount);
+      handleEndDate(preferredEndDate);
+    }
+  };
+
+  const handleSlotDurationChange = (event) => {
+    const hours = parseFloat(parseFloat(event.target.value).toFixed(1));
+    formik.setFieldValue("slotDuration", hours);
+    if (hours) {
+      const preferredEndDate = getTimeAfter(hours * formik.values.slotCount);
+      handleEndDate(preferredEndDate);
     }
   };
 
@@ -204,13 +250,14 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
               </Grid>
 
               {/* EVENT TYPE FIELD */}
-              <Grid container item sm={12} spacing={3}>
+              <Grid container item sm={12} spacing={3} alignItems="center">
                 <Grid
                   item
-                  sm={6}
+                  sm={7}
                   style={{ width: "100%", marginBottom: "0.5em" }}
                 >
                   <FormLabel>Event Type</FormLabel>
+
                   <Select
                     displayEmpty
                     variant="outlined"
@@ -236,9 +283,66 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                   >
                     {formik.touched.type && formik.errors.type}
                   </FormHelperText>
+
+                  {formik.values.type === EVENT_TYPES.ONE_ON_ONE && (
+                    <Grid container spacing={3}>
+                      <Grid item sm={6}>
+                        <Tooltip
+                          title={
+                            "Please choose a valid slot duration for your event. [Eg: 1, 2, 1.5 etc]. Clients would be able book these slots."
+                          }
+                        >
+                          <TextField
+                            fullWidth
+                            className={classes.textInput}
+                            type="number"
+                            id="slotDuration"
+                            label={"Slot duration (in hrs)"}
+                            variant="outlined"
+                            onChange={handleSlotDurationChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.slotDuration}
+                            error={
+                              formik.touched.slotDuration &&
+                              Boolean(formik.errors.slotDuration)
+                            }
+                            helperText={
+                              formik.touched.slotDuration &&
+                              formik.errors.slotDuration
+                            }
+                          />
+                        </Tooltip>
+                      </Grid>
+                      <Grid item sm={6}>
+                        <Tooltip
+                          title={"How many slots would you like to open up?"}
+                        >
+                          <TextField
+                            fullWidth
+                            className={classes.textInput}
+                            type="number"
+                            id="slotCount"
+                            label={"No. of slots"}
+                            variant="outlined"
+                            onChange={handleSlotCountChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.slotCount}
+                            error={
+                              formik.touched.slotCount &&
+                              Boolean(formik.errors.slotCount)
+                            }
+                            helperText={
+                              formik.touched.slotCount &&
+                              formik.errors.slotCount
+                            }
+                          />
+                        </Tooltip>
+                      </Grid>
+                    </Grid>
+                  )}
                 </Grid>
-                <Grid item sm={6}>
-                  <Typography className={globalClasses.bold500}>
+                <Grid item sm={5}>
+                  <Typography className={globalClasses.bold500} gutterBottom>
                     {formik.values.type
                       .toLocaleUpperCase()
                       .split("_")
@@ -529,25 +633,27 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                 ></img>
               </FormControl>
 
-              <TextField
-                fullWidth
-                className={classes.textInput}
-                id="totalTickets"
-                type="number"
-                label={"Number of tickets"}
-                variant="outlined"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.totalTickets}
-                error={
-                  formik.touched.totalTickets &&
-                  Boolean(formik.errors.totalTickets)
-                }
-                helperText={
-                  formik.touched.totalTickets && formik.errors.totalTickets
-                }
-                disabled={checkDisabled()}
-              />
+              {formik.values.type !== EVENT_TYPES.ONE_ON_ONE && (
+                <TextField
+                  fullWidth
+                  className={classes.textInput}
+                  id="totalTickets"
+                  type="number"
+                  label={"Number of tickets"}
+                  variant="outlined"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.totalTickets}
+                  error={
+                    formik.touched.totalTickets &&
+                    Boolean(formik.errors.totalTickets)
+                  }
+                  helperText={
+                    formik.touched.totalTickets && formik.errors.totalTickets
+                  }
+                  disabled={checkDisabled()}
+                />
+              )}
 
               <TextField
                 fullWidth
@@ -556,16 +662,16 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                 label={"Event Link"}
                 variant="outlined"
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.link}
+                error={formik.touched.link && Boolean(formik.errors.link)}
+                helperText={formik.touched.link && formik.errors.link}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">payorb/</InputAdornment>
                   ),
                 }}
                 disabled={edit}
-                onBlur={formik.handleBlur}
-                value={formik.values.link}
-                error={formik.touched.link && Boolean(formik.errors.link)}
-                helperText={formik.touched.link && formik.errors.link}
               />
 
               <ButtonCapsule

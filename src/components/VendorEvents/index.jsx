@@ -84,7 +84,7 @@ function VendorEvents() {
           {!listView ? <List /> : <DateRange />}
         </Button>
         {desktop && (
-          <Button onClick={handleCreateEvent}>
+          <Button title={"Add event"} onClick={handleCreateEvent}>
             <Add />
           </Button>
         )}

@@ -9,12 +9,16 @@ export const styles = makeStyles((theme) => ({
     padding: "2em 1em 1em 1em",
     boxShadow: "0px 1em 2em rgba(0, 0, 0, 0.1)",
     [theme.breakpoints.down("sm")]: {
-      width: "80vw",
-      height: "50vh",
+      padding:"2em"
+      // width: "80vw",
+      // height: "max-content",
     },
   },
   logo: {
     padding: "4em 0",
+    [theme.breakpoints.down("sm")]: {
+      padding: "1em 0"
+    }
   },
   sectionTitle: {
     paddingTop: "1.5em",
@@ -32,5 +36,7 @@ export const styles = makeStyles((theme) => ({
     textAlign: "center",
     padding: "0.5em 3em 1em 3em",
     color: appColors.grey,
-  },
+  }, image: {
+    height: "40%"
+  }
 }));
