@@ -108,12 +108,8 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
     validationSchema: createEventValidationSchema,
     validateOnBlur: true,
     onSubmit: async (values, formikHelpers) => {
-      console.log(formikHelpers);
       if (values) {
         try {
-          console.log("Values", values);
-          alert("Hey");
-
           if (!edit) {
             await createEvent({
               event: {
