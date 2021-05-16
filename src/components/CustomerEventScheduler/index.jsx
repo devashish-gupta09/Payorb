@@ -242,7 +242,7 @@ const useStyles = makeStyles((theme) => ({
     border: "1.5px grey solid",
   },
   activeTimeButton: {
-    fontWeight:"600",
+    fontWeight: "600",
     color: "#71c3de",
     border: "1.5px solid",
     borderColor: "#71c3de",

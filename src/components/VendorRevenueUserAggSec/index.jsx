@@ -59,7 +59,7 @@ function VendorRevenueUserAggSec() {
             </Grid>
             <Grid item xs={6} className={classes.rightContainer}>
               <ValueCard
-                title={ `${numeral(stats.totalCustomers).format("0,0")}`}
+                title={`${numeral(stats.totalCustomers).format("0,0")}`}
                 subTitle={"Total Customers"}
               />
             </Grid>
