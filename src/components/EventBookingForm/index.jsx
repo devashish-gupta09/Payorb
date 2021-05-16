@@ -3,14 +3,13 @@ import {
   Grid,
   InputAdornment,
   makeStyles,
-  Snackbar,
   TextField,
-  Typography,
 } from "@material-ui/core";
 import { useFormik } from "formik";
 import React from "react";
-import ButtonCapsule from "../ButtonCapsule";
-import app from "../../utils/firebase";
+
+import { ALERT_TYPES } from "../../constants/alerts";
+import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 
 import { createCustomer } from "../../services/customers";
 import {
@@ -18,8 +17,10 @@ import {
   failOrder,
   submitSuccessOrder,
 } from "../../services/orders";
-import { getRzpAmountFormat } from "../../utils/payments";
 import { delay } from "../../utils/dateTime";
+import app from "../../utils/firebase";
+import { getRzpAmountFormat } from "../../utils/payments";
+import ButtonCapsule from "../ButtonCapsule";
 import PaymentSuccess from "../PaymentSuccess";
 
 const loadRazorPay = () => {
@@ -38,15 +39,20 @@ const loadRazorPay = () => {
   });
 };
 
-function EventBookingForm({ eventLink, price }) {
+function EventBookingForm({
+  eventLink,
+  price,
+  type,
+  oneOnOneBooking: { startDate },
+}) {
   const [otpSent, setOtpSent] = React.useState(false);
   const [confirmationResult, setConfirmationResult] = React.useState();
-  const [snackbar, setSnackbar] = React.useState({
-    display: false,
-    text: "",
-  });
+
+  const { Alert, showAlert } = useAlertSnackbar();
   const [success, setSuccess] = React.useState(false);
   const [orderId, setOrderId] = React.useState();
+  const [paymentProgLoader, setPaymentProgLoader] = React.useState(false);
+
   const classes = styles();
   const formik = useFormik({
     initialValues: {
@@ -64,44 +70,46 @@ function EventBookingForm({ eventLink, price }) {
 
       // Potential Bug. :what if the user changes his phone number
       // after receiveing the OTP?
+      setPaymentProgLoader(true);
+
       user = await confirmationResult.confirm(values.otp);
 
       if (user) {
         // Let's create a customer in Firestore
         try {
+          setPaymentProgLoader(true);
+
           const customerCreationRes = await createCustomer({
             ...values,
             otp: undefined,
           });
 
-          console.log(customerCreationRes);
           if (customerCreationRes.data.customer) {
-            console.log("CUSTOMER:", customerCreationRes.data.customer);
             const order = await createOrder({
               order: {
                 amount: price,
                 customerId: customerCreationRes.data.customer.customerId,
               },
               eventId: eventLink,
+              type: type,
+              slotTime: new Date(parseInt(startDate)).toISOString(),
             });
 
             displayRazorpay(order.rzpOrderId, values);
+            setPaymentProgLoader(false);
           }
         } catch (err) {
-          console.log(err);
+          setPaymentProgLoader(false);
 
           if (typeof err === "object") {
             if (err.success === false) {
-              setSnackbar({
-                display: true,
-                text: err.error || err.message,
-              });
-
+              showAlert(err.error || err.message, ALERT_TYPES.ERROR);
               return;
             }
           }
         }
       }
+      setPaymentProgLoader(false);
     },
   });
 
@@ -121,18 +129,15 @@ function EventBookingForm({ eventLink, price }) {
           .auth()
           .signInWithPhoneNumber(phoneNumber, appVerifier);
 
-        setSnackbar({ display: true, text: "OTP sent" });
+        setOtpSent(true);
+        showAlert("OTP Sent");
         setConfirmationResult(response);
       } else {
         formik.setFieldError("phoneNumber", "Please enter phone number");
       }
     } catch (err) {
-      setSnackbar({ display: true, text: err.message });
+      showAlert(err.error || err.message, ALERT_TYPES.ERROR);
     }
-  };
-
-  const handleSnackbarClose = () => {
-    setSnackbar({ display: false, text: "" });
   };
 
   const displayRazorpay = async (orderId, orderData) => {
@@ -150,10 +155,7 @@ function EventBookingForm({ eventLink, price }) {
       description: `Payment made for ${eventLink}`,
       order_id: orderId,
       handler: async function (response) {
-        setSnackbar({
-          display: true,
-          text: "Don't redirect... Order Booking in progress",
-        });
+        showAlert("Don't redirect... Order Booking in progress");
 
         try {
           await delay(50);
@@ -165,23 +167,17 @@ function EventBookingForm({ eventLink, price }) {
 
           console.log(res);
           if (res.success) {
-            setSnackbar({
-              display: true,
-              text: `Your order id: ${response.razorpay_order_id} `,
-            });
+            showAlert(`Your order id: ${response.razorpay_order_id} `);
             setOrderId(response.razorpay_order_id);
             setSuccess(true);
           } else {
-            setSnackbar({
-              display: true,
-              text: "Error booking your event. Please contact suport",
-            });
+            throw new Error("Could not make payment");
           }
         } catch (err) {
-          setSnackbar({
-            display: true,
-            text: "Error booking your event. Please contact suport",
-          });
+          showAlert(
+            "Error booking your event. Please contact suport",
+            ALERT_TYPES.ERROR
+          );
         }
       },
       prefill: {
@@ -204,16 +200,13 @@ function EventBookingForm({ eventLink, price }) {
         const res = await failOrder(response.error.metadata.order_id);
 
         if (res.success) {
-          setSnackbar({
-            display: true,
-            text: `Payment failed `,
-          });
+          showAlert("ayment failed.", ALERT_TYPES.ERROR);
         }
       } catch (err) {
-        setSnackbar({
-          display: true,
-          text: "Error booking your event. Please contact suport",
-        });
+        showAlert(
+          "Error booking your event. Please contact suport",
+          ALERT_TYPES.ERROR
+        );
       }
     });
 
@@ -285,9 +278,12 @@ function EventBookingForm({ eventLink, price }) {
               value={formik.values.otp}
               error={formik.touched.otp && Boolean(formik.errors.otp)}
               helperText={formik.touched.otp && formik.errors.otp}
+              disabled={!otpSent && !confirmationResult}
               fullWidth
+              autoComplete={"off"}
             />
             <ButtonCapsule
+              showLoader={paymentProgLoader}
               buttonStyle={classes.paybutton}
               disabled={!otpSent && !confirmationResult}
               text={`Pay Rs.${price}`}
@@ -295,14 +291,7 @@ function EventBookingForm({ eventLink, price }) {
             />
           </Grid>
 
-          <Snackbar
-            className={classes.snackbar}
-            open={snackbar.display}
-            autoHideDuration={2000}
-            onClose={handleSnackbarClose}
-          >
-            <Typography>{snackbar.text}</Typography>
-          </Snackbar>
+          {Alert()}
         </form>
       )}
     </>

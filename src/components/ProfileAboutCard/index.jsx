@@ -3,6 +3,7 @@ import { MailOutline, Phone, Place } from "@material-ui/icons";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
 import React from "react";
+
 import { appColors } from "../../../styles/colors";
 import { globalStyles } from "../../../styles/globalStyles";
 import { updateUser } from "../../services/auth";

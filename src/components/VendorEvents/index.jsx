@@ -1,19 +1,30 @@
-import { Button, Grid, makeStyles, Typography } from "@material-ui/core";
+import {
+  Button,
+  Grid,
+  makeStyles,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@material-ui/core";
+import { Add, DateRange, List } from "@material-ui/icons";
 import { useRouter } from "next/router";
 import React from "react";
-import { EVENT_VIEWS } from "../../constants/events";
+
+import Skeleton from "react-loading-skeleton";
+
 import { PAGE_PATHS } from "../../constants/paths";
 import { getEventsVendorDashboard } from "../../services/events";
+import { delay } from "../../utils/dateTime";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
 import EventsViewList from "../EventsViewList";
 
-import Skeleton from "react-loading-skeleton";
-import { delay } from "../../utils/dateTime";
 import VendorEventsCalenderView from "../VendorEventsCalenderView";
 
 function VendorEvents() {
   const classes = styles();
+  const theme = useTheme();
+  const desktop = useMediaQuery(theme.breakpoints.up("sm"));
   const [listView, setListView] = React.useState(true);
   const [events, setEvents] = React.useState();
   const [eventsParams, setEventsParams] = React.useState({
@@ -68,7 +79,16 @@ function VendorEvents() {
 
   return (
     <Grid className={classes.root}>
-      <Button onClick={toggleView}>Toggle</Button>
+      <Grid container justify="flex-end" style={{ padding: "1em" }}>
+        <Button onClick={toggleView}>
+          {!listView ? <List /> : <DateRange />}
+        </Button>
+        {desktop && (
+          <Button title={"Add event"} onClick={handleCreateEvent}>
+            <Add />
+          </Button>
+        )}
+      </Grid>
       {listView ? (
         events ? (
           <Grid className={classes.container}>
@@ -105,22 +125,19 @@ function VendorEvents() {
         <VendorEventsCalenderView />
       )}
 
-      <Grid
-        container
-        justify="center"
-        alignItems="center"
-        // className={classes.createEventCardContainer}
-      >
-        <DashboardCard rootClass={classes.createEventCard}>
-          <Grid container justify="center" alignItems="center">
-            <ButtonCapsule
-              text="Create New Event"
-              buttonStyle={classes.createEventButton}
-              onClick={handleCreateEvent}
-            />
-          </Grid>
-        </DashboardCard>
-      </Grid>
+      {!desktop && (
+        <Grid container justify="center" alignItems="center">
+          <DashboardCard rootClass={classes.createEventCard}>
+            <Grid container justify="center" alignItems="center">
+              <ButtonCapsule
+                text="Create New Event"
+                buttonStyle={classes.createEventButton}
+                onClick={handleCreateEvent}
+              />
+            </Grid>
+          </DashboardCard>
+        </Grid>
+      )}
     </Grid>
   );
 }
@@ -130,6 +147,9 @@ const styles = makeStyles((theme) => ({
     padding: "1em 0",
     minHeight: "80vh",
     maxHeight: "max-content",
+    [theme.breakpoints.down("sm")]: {
+      padding: 0,
+    },
   },
   events: {
     minHeight: "70vh",

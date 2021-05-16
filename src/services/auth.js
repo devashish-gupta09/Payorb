@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { API_URL } from "../config/urls";
 import { END_POINTS } from "../constants/api";
 import { getAuthHeader } from "./api";
@@ -17,7 +18,7 @@ export const getUser = async () => {
     });
     return response.data;
   } catch (err) {
-    return {};
+    return err.response || err;
   }
 };
 

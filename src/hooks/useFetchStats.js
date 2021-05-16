@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+
 import { getEventStats } from "../services/stats";
 
 function useFetchStats(startDate, endDate) {

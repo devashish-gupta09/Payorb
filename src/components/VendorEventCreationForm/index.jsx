@@ -14,9 +14,15 @@ import {
   FormHelperText,
   Dialog,
   DialogContent,
+  Tooltip,
 } from "@material-ui/core";
+
 import { useFormik } from "formik";
+import { useRouter } from "next/router";
 import React from "react";
+
+import { appColors } from "../../../styles/colors";
+import { globalStyles } from "../../../styles/globalStyles";
 import {
   EVENT_CATEGORY,
   EVENT_DESCRIPTION,
@@ -24,21 +30,16 @@ import {
   EVENT_TYPES,
 } from "../../constants/events";
 
-import DateFnsUtils from "@date-io/date-fns";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
-import { styles } from "./styles";
-import { globalStyles } from "../../../styles/globalStyles";
-import { appColors } from "../../../styles/colors";
+import { PAGE_PATHS } from "../../constants/paths";
+import { createEvent, editEvent } from "../../services/events";
+import { getDateForTime } from "../../utils/dateTime";
 import { createEventValidationSchema } from "../../validations/events";
 import ButtonCapsule from "../ButtonCapsule";
-import { PAGE_PATHS } from "../../constants/paths";
-import { useRouter } from "next/router";
-import { createEvent, editEvent } from "../../services/events";
+import OneOnOneDateSelector from "../OneOnOneDateSelector";
+import OneTimeDateSelector from "../OneTimeDateSelector";
+
 import PostEventCreationDialog from "../PostEventCreationDialog";
+import { styles } from "./styles";
 
 function getCreationFormInitialState() {
   return {
@@ -53,7 +54,10 @@ function getCreationFormInitialState() {
     link: "",
     type: "",
     startDate: new Date().toISOString(),
-    endDate: new Date().toISOString(),
+    endDate: getDateForTime(new Date().getHours() + 1),
+    slotDuration: 0,
+    slotStartTimePerDay: getDateForTime(9),
+    slotEndTimePerDay: getDateForTime(17),
   };
 }
 
@@ -62,6 +66,13 @@ function getEventTypeDescription(type) {
     return EVENT_DESCRIPTION[type];
   }
   return "";
+}
+
+function getTimeAfter(hours) {
+  const cleandUpHours = parseFloat(hours.toFixed(1));
+  const currTime = new Date();
+  currTime.setHours(currTime.getHours() + cleandUpHours + 1);
+  return currTime;
 }
 
 function VendorEventCreationForm({ event, edit, handleClose }) {
@@ -75,14 +86,6 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
     router.push(PAGE_PATHS.VENDOR_DASHBOARD_EVENTS);
   };
 
-  const handleStartDate = (date) => {
-    formik.setFieldValue("startDate", date.toISOString());
-  };
-
-  const handleEndDate = (date) => {
-    formik.setFieldValue("endDate", date.toISOString());
-  };
-
   const handleEventTypeChange = (event) => {
     formik.setFieldValue("type", event.target.value);
   };
@@ -94,12 +97,16 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
   const formik = useFormik({
     initialValues: event || getCreationFormInitialState(),
     validationSchema: createEventValidationSchema,
-
+    validateOnBlur: true,
     onSubmit: async (values) => {
       if (values) {
         try {
           if (!edit) {
-            await createEvent({ event: values });
+            await createEvent({
+              event: {
+                ...values,
+              },
+            });
             setPostEventDialog(true);
           } else {
             await editEvent({
@@ -123,14 +130,19 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
     }
   };
 
-  const handleDialogClose = () => {
+  const handleDialogClose = React.useCallback(() => {
     setDialog({ display: false, text: "" });
-  };
+  }, []);
 
   const checkDisabled = () => {
-    if (edit && event?.customers && event?.customers?.length > 0) {
+    if (edit && event?.orders && event?.orders?.length > 0) {
       return true;
     }
+  };
+
+  const handleSlotDurationChange = (event) => {
+    const hours = parseFloat(parseFloat(event.target.value).toFixed(1));
+    formik.setFieldValue("slotDuration", hours);
   };
 
   return (
@@ -202,13 +214,14 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
               </Grid>
 
               {/* EVENT TYPE FIELD */}
-              <Grid container item sm={12} spacing={3}>
+              <Grid container item sm={12} spacing={3} alignItems="center">
                 <Grid
                   item
-                  sm={6}
+                  sm={7}
                   style={{ width: "100%", marginBottom: "0.5em" }}
                 >
                   <FormLabel>Event Type</FormLabel>
+
                   <Select
                     displayEmpty
                     variant="outlined"
@@ -234,9 +247,39 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                   >
                     {formik.touched.type && formik.errors.type}
                   </FormHelperText>
+
+                  {formik.values.type === EVENT_TYPES.ONE_ON_ONE && (
+                    <Grid>
+                      <Tooltip
+                        title={
+                          "Please choose a valid slot duration for your event. [Eg: 1, 2, 1.5 etc]. Clients would be able book these slots."
+                        }
+                      >
+                        <TextField
+                          fullWidth
+                          className={classes.textInput}
+                          type="number"
+                          id="slotDuration"
+                          label={"Slot duration (in hrs)"}
+                          variant="outlined"
+                          onChange={handleSlotDurationChange}
+                          onBlur={formik.handleBlur}
+                          value={formik.values.slotDuration}
+                          error={
+                            formik.touched.slotDuration &&
+                            Boolean(formik.errors.slotDuration)
+                          }
+                          helperText={
+                            formik.touched.slotDuration &&
+                            formik.errors.slotDuration
+                          }
+                        />
+                      </Tooltip>
+                    </Grid>
+                  )}
                 </Grid>
-                <Grid item sm={6}>
-                  <Typography className={globalClasses.bold500}>
+                <Grid item sm={5}>
+                  <Typography className={globalClasses.bold500} gutterBottom>
                     {formik.values.type
                       .toLocaleUpperCase()
                       .split("_")
@@ -257,123 +300,17 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                 style={{ width: "100%" }}
                 spacing={1}
               >
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  {/* Start Date and time*/}
-                  <Grid item sm={6} container spacing={1}>
-                    <Grid item xs={6}>
-                      <KeyboardDatePicker
-                        KeyboardButtonProps={{
-                          style: {
-                            paddingLeft: "0.2em",
-                            paddingRight: "0.4em",
-                          },
-                        }}
-                        InputProps={{
-                          style: {
-                            padding: 0,
-                          },
-                        }}
-                        inputVariant="outlined"
-                        margin="normal"
-                        id="startDate"
-                        label="Start Date"
-                        format="dd/MM/yyyy"
-                        value={formik.values.startDate}
-                        onChange={handleStartDate}
-                        disabled={checkDisabled()}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <KeyboardTimePicker
-                        KeyboardButtonProps={{
-                          style: {
-                            paddingLeft: "0.2em",
-                            paddingRight: "0.4em",
-                          },
-                        }}
-                        InputProps={{
-                          style: {
-                            padding: 0,
-                          },
-                        }}
-                        inputVariant="outlined"
-                        margin="normal"
-                        id="time-picker"
-                        label="Start Time"
-                        value={formik.values.startDate}
-                        onChange={handleStartDate}
-                        disabled={checkDisabled()}
-                      />
-                    </Grid>
-                  </Grid>
-
-                  {/* End Date and Time */}
-
-                  <Grid item sm={6} container spacing={1}>
-                    <Grid item xs={6}>
-                      {/* <FormControl variant="outlined" fullWidth> */}
-                      <KeyboardDatePicker
-                        KeyboardButtonProps={{
-                          style: {
-                            paddingLeft: "0.2em",
-                            paddingRight: "0.4em",
-                          },
-                        }}
-                        InputProps={{
-                          style: {
-                            padding: 0,
-                          },
-                        }}
-                        inputVariant="outlined"
-                        margin="normal"
-                        id="endDate"
-                        label="End Date"
-                        format="dd/MM/yyyy"
-                        value={formik.values.endDate}
-                        onChange={handleEndDate}
-                        helperText={
-                          formik.touched.endDate && formik.errors.endDate
-                        }
-                        error={
-                          formik.touched.endDate &&
-                          Boolean(formik.errors.endDate)
-                        }
-                        disabled={checkDisabled()}
-                      />
-
-                      {/* </FormControl> */}
-                    </Grid>
-                    <Grid item xs={6}>
-                      <KeyboardTimePicker
-                        KeyboardButtonProps={{
-                          style: {
-                            paddingLeft: "0.2em",
-                            paddingRight: "0.4em",
-                          },
-                        }}
-                        InputProps={{
-                          style: {
-                            padding: 0,
-                          },
-                        }}
-                        inputVariant="outlined"
-                        margin="normal"
-                        id="time-picker"
-                        label="End Time"
-                        value={formik.values.endDate}
-                        onChange={handleEndDate}
-                        helperText={
-                          formik.touched.endDate && formik.errors.endDate
-                        }
-                        error={
-                          formik.touched.endDate &&
-                          Boolean(formik.errors.endDate)
-                        }
-                        disabled={checkDisabled()}
-                      />
-                    </Grid>
-                  </Grid>
-                </MuiPickersUtilsProvider>
+                {formik.values.type === EVENT_TYPES.ONE_TIME ? (
+                  <OneTimeDateSelector
+                    formik={formik}
+                    checkDisabled={checkDisabled}
+                  />
+                ) : (
+                  <OneOnOneDateSelector
+                    formik={formik}
+                    checkDisabled={checkDisabled}
+                  />
+                )}
               </Grid>
 
               {/* LOCATION AND CATEGORY */}
@@ -527,25 +464,27 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                 ></img>
               </FormControl>
 
-              <TextField
-                fullWidth
-                className={classes.textInput}
-                id="totalTickets"
-                type="number"
-                label={"Number of tickets"}
-                variant="outlined"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.totalTickets}
-                error={
-                  formik.touched.totalTickets &&
-                  Boolean(formik.errors.totalTickets)
-                }
-                helperText={
-                  formik.touched.totalTickets && formik.errors.totalTickets
-                }
-                disabled={checkDisabled()}
-              />
+              {formik.values.type !== EVENT_TYPES.ONE_ON_ONE && (
+                <TextField
+                  fullWidth
+                  className={classes.textInput}
+                  id="totalTickets"
+                  type="number"
+                  label={"Number of tickets"}
+                  variant="outlined"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.totalTickets}
+                  error={
+                    formik.touched.totalTickets &&
+                    Boolean(formik.errors.totalTickets)
+                  }
+                  helperText={
+                    formik.touched.totalTickets && formik.errors.totalTickets
+                  }
+                  disabled={checkDisabled()}
+                />
+              )}
 
               <TextField
                 fullWidth
@@ -554,16 +493,16 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                 label={"Event Link"}
                 variant="outlined"
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.link}
+                error={formik.touched.link && Boolean(formik.errors.link)}
+                helperText={formik.touched.link && formik.errors.link}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">payorb/</InputAdornment>
                   ),
                 }}
                 disabled={edit}
-                onBlur={formik.handleBlur}
-                value={formik.values.link}
-                error={formik.touched.link && Boolean(formik.errors.link)}
-                helperText={formik.touched.link && formik.errors.link}
               />
 
               <ButtonCapsule

@@ -1,7 +1,7 @@
 import { Button, Grid, Typography } from "@material-ui/core";
 import Link from "next/link";
 import React from "react";
-import ButtonCapsule from "../ButtonCapsule";
+
 import LandingCarousel from "../LandingCarousel";
 import { styles } from "./styles";
 

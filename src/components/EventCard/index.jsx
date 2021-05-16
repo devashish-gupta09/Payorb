@@ -1,14 +1,7 @@
-import {
-  Backdrop,
-  Button,
-  Dialog,
-  DialogContent,
-  Grid,
-  makeStyles,
-  Typography,
-} from "@material-ui/core";
+import { Button, Dialog, Grid, Tooltip, Typography } from "@material-ui/core";
 import { Share } from "@material-ui/icons";
 import React from "react";
+
 import { globalStyles } from "../../../styles/globalStyles";
 import { getEventDate, getEventMonth } from "../../utils/dateTime";
 import { formatEventType } from "../../utils/events";
@@ -176,15 +169,17 @@ function EventCard({ event }) {
               alignItems="flex-end"
               className={classes.editButtonContainer}
             >
-              <Grid spacing="2">
+              <Grid spacing={2}>
                 <ButtonCapsule
                   buttonStyle={`${globalClasses.bold} ${classes.editButton}`}
                   text="Edit"
                   onClick={handleEdit}
                 ></ButtonCapsule>
-                <Button onClick={handleShareDialog}>
-                  <Share />
-                </Button>
+                <Tooltip title="Share">
+                  <Button onClick={handleShareDialog}>
+                    <Share />
+                  </Button>
+                </Tooltip>
               </Grid>
             </Grid>
           </Grid>

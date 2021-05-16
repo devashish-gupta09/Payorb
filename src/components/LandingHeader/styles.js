@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core";
+
 import { appColors } from "../../../styles/colors";
 
 export const styles = makeStyles((theme) => ({
@@ -11,6 +12,12 @@ export const styles = makeStyles((theme) => ({
   },
   buttonSpacing: {
     padding: "0 1.5em",
+  },
+  logo: {
+    width: "5% !important",
+    [theme.breakpoints.down("sm")]: {
+      width: "25% !important",
+    },
   },
   signupButton: {
     background: "linear-gradient(115.52deg, #BDF5F2 0%, #79DFDF 100%)",

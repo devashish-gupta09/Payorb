@@ -1,27 +1,28 @@
 import {
-  Button,
   Dialog,
   Grid,
   InputAdornment,
   Link,
   makeStyles,
   TextField,
+  Tooltip,
   Typography,
 } from "@material-ui/core";
 import { FilterNone, OpenInBrowser } from "@material-ui/icons";
+import copy from "clipboard-copy";
 import React from "react";
+
 import { PAGE_PATHS } from "../../constants/paths";
 import DashboardCard from "../DashboardCard";
 import DateMonth from "../DateMonth";
 
-import copy from "clipboard-copy";
-
 function PostEventCreationDialog(props) {
   const { event } = props;
+  const eventLink = `${PAGE_PATHS.CUSTOMER_EVENTS_REGISTER}?event=${event.link}&type=${event.type}`;
+
   const handleCopy = () => {
-    copy(
-      `${document.domain}${PAGE_PATHS.CUSTOMER_EVENTS_REGISTER}?event=${event.link}`
-    );
+    // can use window.location.host -> If we need port number as well.
+    copy(`${document.domain}${eventLink}`);
   };
   const classes = styles();
   return (
@@ -92,13 +93,14 @@ function PostEventCreationDialog(props) {
                   justify="space-evenly"
                   className={classes.iconContainer}
                 >
-                  <FilterNone onClick={handleCopy}></FilterNone>
+                  <Tooltip title="Copy link">
+                    <FilterNone onClick={handleCopy}></FilterNone>
+                  </Tooltip>
 
-                  <Link
-                    target="_blank"
-                    href={`${PAGE_PATHS.CUSTOMER_EVENTS_REGISTER}?event=${event.link}`}
-                  >
-                    <OpenInBrowser />
+                  <Link target="_blank" href={eventLink}>
+                    <Tooltip title="Open in browser">
+                      <OpenInBrowser />
+                    </Tooltip>
                   </Link>
                 </Grid>
               </Grid>

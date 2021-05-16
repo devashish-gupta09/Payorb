@@ -8,26 +8,23 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { styles } from "./styles";
-import React, { useRef } from "react";
-import {
-  AccountCircle,
-  AlternateEmail,
-  Lock,
-  Maximize,
-  MoreHoriz,
-} from "@material-ui/icons";
+
+import { AccountCircle, Lock, Maximize, MoreHoriz } from "@material-ui/icons";
 import { useFormik } from "formik";
-import { phoneRegExp, signInValidation } from "../../validations/signup";
-import { AUTH_PROVIDERS, USERNAME_TYPE } from "../../constants/auth";
-import { getUserNameFieldLabel, handleUserAddition } from "../SignupForm";
+
+import Link from "next/link";
 import { useRouter } from "next/router";
+import React from "react";
+
+import { AUTH_PROVIDERS, USERNAME_TYPE } from "../../constants/auth";
+import { PAGE_PATHS } from "../../constants/paths";
 import useFederatedAuth from "../../hooks/useFederatedAuth";
+import app from "../../utils/firebase";
+import { phoneRegExp } from "../../validations/signup";
 import { FirebaseAuth } from "../AuthenticationContext";
 import ButtonCapsule from "../ButtonCapsule";
-import Link from "next/link";
-import app from "../../utils/firebase";
-import { PAGE_PATHS } from "../../constants/paths";
+import { getUserNameFieldLabel } from "../SignupForm";
+import { styles } from "./styles";
 
 function SigninForm() {
   const classes = styles();
@@ -62,9 +59,7 @@ function SigninForm() {
           return;
         }
 
-        router.push(
-          `${PAGE_PATHS.VENDOR_DASHBOARD_EVENTS}`
-        );
+        router.push(`${PAGE_PATHS.VENDOR_DASHBOARD_EVENTS}`);
       } catch (err) {
         const firebaseInstance = FirebaseAuth.Singleton();
         await firebaseInstance.signOut();
@@ -83,9 +78,7 @@ function SigninForm() {
       console.log(idToken);
 
       if (userInfo && idToken) {
-        router.push(
-          `${PAGE_PATHS.VENDOR_DASHBOARD_EVENTS}`
-        );
+        router.push(`${PAGE_PATHS.VENDOR_DASHBOARD_EVENTS}`);
       } else {
         throw "Not able to sign in the user using a federated source.";
       }
@@ -158,6 +151,7 @@ function SigninForm() {
                 onChange={handleUsernameChange}
                 onBlur={formik.handleBlur}
                 fullWidth
+                autoComplete={"off"}
                 value={formik.values.username}
                 error={
                   formik.touched.username && Boolean(formik.errors.username)
@@ -195,6 +189,7 @@ function SigninForm() {
                 variant="outlined"
                 type="password"
                 fullWidth
+                autoComplete={"off"}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.password}
@@ -221,6 +216,7 @@ function SigninForm() {
               id="otp"
               label="OTP"
               variant="outlined"
+              autoComplete={"off"}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.otp}
@@ -285,7 +281,8 @@ function SigninForm() {
             Sign in with Facebook
           </Button>
           <Typography align="center" className={classes.signupMessage}>
-            Don't have an account? <Link href={PAGE_PATHS.SIGNUP}>Sign Up</Link>
+            {`Don't have an account ? `}
+            <Link href={PAGE_PATHS.SIGNUP}>Sign Up</Link>
           </Typography>
         </FormControl>
       </form>

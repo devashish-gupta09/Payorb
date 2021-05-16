@@ -1,6 +1,5 @@
 import { Card, makeStyles } from "@material-ui/core";
 import React from "react";
-import theme from "../../theme";
 
 const styles = makeStyles((theme) => ({
   root: {

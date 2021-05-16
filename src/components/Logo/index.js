@@ -1,10 +1,26 @@
+import { makeStyles } from "@material-ui/core";
 import React from "react";
 
-export default function Logo({ height, width, dark }) {
+/* eslint-disable-next-line react/prop-types */
+function Logo({ height, width, dark, className }) {
+  const classes = styles();
+
   return (
     <img
-      style={{ height, width }}
-      src={dark ? "../assets/logoBlack.png" : "../assets/logo.png"}
+      className={`${className} ${classes.logo}`}
+      style={{ height, width: width }}
+      src={dark ? "/assets/logoSvg.svg" : "/assets/logo.png"}
     />
   );
 }
+
+export const styles = makeStyles((theme) => ({
+  logo: {
+    width: "5%",
+    [theme.breakpoints.down("sm")]: {
+      width: "35%",
+    },
+  },
+}));
+
+export default Logo;

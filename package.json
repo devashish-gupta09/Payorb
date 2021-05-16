@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "format": "prettier --write 'src/**/*.{js, jsx}'",
-    "lint:fix": "eslint --fix 'src/**/*.{js, jsx}'"
+    "lint:fix": "eslint --fix --ext .jsx --ext .js 'src/**/*'",
+    "lint": "eslint --ext .jsx --ext .js 'src/**/*'"
   },
   "dependencies": {
     "@date-io/date-fns": "^1.3.13",
@@ -16,7 +17,7 @@
     "@devexpress/dx-react-core": "^2.7.5",
     "@devexpress/dx-react-scheduler": "^2.7.5",
     "@devexpress/dx-react-scheduler-material-ui": "^2.7.5",
-    "@material-ui/core": "^4.11.3",
+    "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/pickers": "^3.3.10",
     "axios": "^0.21.1",
@@ -36,6 +37,7 @@
     "react-device-detect": "^1.17.0",
     "react-dom": "17.0.1",
     "react-loading-skeleton": "^2.2.0",
+    "react-material-ui-calendar": "^0.2.3",
     "react-material-ui-carousel": "^2.2.1",
     "yup": "^0.32.9"
   },
@@ -43,9 +45,11 @@
     "@netlify/plugin-nextjs": "^3.0.3",
     "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-autofix": "^1.0.4",
+    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-unused-imports": "^1.1.1",
     "file-loader": "^6.2.0",
     "prettier": "^2.2.1"
   }

@@ -2,49 +2,44 @@ import {
   Button,
   Dialog,
   DialogContent,
-  FormControl,
   Grid,
   InputAdornment,
   TextField,
   Typography,
 } from "@material-ui/core";
 import { Maximize, AccountCircle, Lock, MoreHoriz } from "@material-ui/icons";
+import { useFormik } from "formik";
 import Link from "next/link";
 
-import ButtonCapsule from "../ButtonCapsule";
-
-import { styles } from "./styles";
-
-import app from "../../utils/firebase";
-import { FirebaseAuth } from "../AuthenticationContext";
 import { useRouter } from "next/router";
-import { addUser } from "../../services/auth";
-import { AUTH_PROVIDERS, USERNAME_TYPE } from "../../constants/auth";
-import useFederatedAuth from "../../hooks/useFederatedAuth";
-import { PAGE_PATHS } from "../../constants/paths";
-import { useFormik } from "formik";
+
 import React from "react";
 
+import { AUTH_PROVIDERS, USERNAME_TYPE } from "../../constants/auth";
+import { PAGE_PATHS } from "../../constants/paths";
+import useFederatedAuth from "../../hooks/useFederatedAuth";
+import { addUser } from "../../services/auth";
+import app from "../../utils/firebase";
+
 import { signUpValidation, phoneRegExp } from "../../validations/signup";
+import { FirebaseAuth } from "../AuthenticationContext";
+import ButtonCapsule from "../ButtonCapsule";
+import { styles } from "./styles";
 
 export const handleUserAddition = async (userRes, idToken) => {
-  try {
-    if (userRes && idToken) {
-      const addUserRes = await addUser({
-        name: userRes.user.displayName
-          ? userRes.user.displayName
-          : userRes.user.name,
-        email: userRes.user.email,
-        phoneNumber: userRes.user.phoneNumber
-          ? userRes.user.phoneNumber
-          : undefined,
-        location: userRes.location,
-      });
+  if (userRes && idToken) {
+    const addUserRes = await addUser({
+      name: userRes.user.displayName
+        ? userRes.user.displayName
+        : userRes.user.name,
+      email: userRes.user.email,
+      phoneNumber: userRes.user.phoneNumber
+        ? userRes.user.phoneNumber
+        : undefined,
+      location: userRes.location,
+    });
 
-      return addUserRes;
-    }
-  } catch (error) {
-    throw error;
+    return addUserRes;
   }
 };
 
@@ -100,9 +95,7 @@ function SignUpForm() {
             await FirebaseAuth.Singleton().getIdToken()
           );
 
-          router.push(
-            `${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`
-          );
+          router.push(`${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`);
         }
       } catch (err) {
         const firebaseInstance = FirebaseAuth.Singleton();
@@ -127,9 +120,7 @@ function SignUpForm() {
       if (userInfo && idToken) {
         const res = await handleUserAddition(userInfo, idToken);
         if (res) {
-          router.push(
-            `${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`
-          );
+          router.push(`${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`);
         } else {
           const firebaseInstance = FirebaseAuth.Singleton();
           await firebaseInstance.signOut();
@@ -239,6 +230,7 @@ function SignUpForm() {
                 name="password"
                 label="Password"
                 fullWidth
+                autoComplete={"off"}
                 variant="outlined"
                 type="password"
                 onChange={formik.handleChange}
@@ -263,6 +255,7 @@ function SignUpForm() {
                 label="Confirm Password"
                 fullWidth
                 variant="outlined"
+                autoComplete={"off"}
                 type="password"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -296,6 +289,7 @@ function SignUpForm() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.otp}
+              autoComplete={"off"}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">

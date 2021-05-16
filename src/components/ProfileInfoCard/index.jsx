@@ -1,19 +1,30 @@
-import { Button, FormControl, Grid, Grow, Typography } from "@material-ui/core";
+import {
+  Button,
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@material-ui/core";
 import { useFormik } from "formik";
+
+import { useRouter } from "next/router";
+import React from "react";
+
 import { globalStyles } from "../../../styles/globalStyles";
+import { updateUser } from "../../services/auth";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
 import EditableTextField from "../EditableTextfield";
+import Logout from "../LogoutButton";
 import { styles } from "./styles";
-import React from "react";
-import { updateUser } from "../../services/auth";
-import { useRouter } from "next/router";
 
 function ProfileInfoCard({ profileData, vendor }) {
   const classes = styles();
   const globalClasses = globalStyles();
   const router = useRouter();
   const [edit, setEdit] = React.useState(false);
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
 
   const formik = useFormik({
     initialValues: {
@@ -83,7 +94,7 @@ function ProfileInfoCard({ profileData, vendor }) {
                   typographyProps={{ className: classes.grey }}
                 />
               </Grid>
-              <Grid>
+              {/* <Grid>
                 <EditableTextField
                   edit={edit}
                   value={
@@ -107,12 +118,12 @@ function ProfileInfoCard({ profileData, vendor }) {
                   }}
                   typographyProps={{ className: classes.grey }}
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
           </Grid>
-          <Grid>
+          <Grid style={{ paddingTop: `${matches ? "1.5em" : 0}` }}>
             {vendor && (
-              <Grid>
+              <>
                 {edit ? (
                   <>
                     <Button className={classes.saveButton} type="submit">
@@ -125,12 +136,15 @@ function ProfileInfoCard({ profileData, vendor }) {
                     ></ButtonCapsule>
                   </>
                 ) : (
-                  <ButtonCapsule
-                    text="Edit Profile"
-                    onClick={handleEditProfile}
-                  ></ButtonCapsule>
+                  <Grid container alignItems="center">
+                    <ButtonCapsule
+                      text="Edit Profile"
+                      onClick={handleEditProfile}
+                    ></ButtonCapsule>
+                    <Logout />
+                  </Grid>
                 )}
-              </Grid>
+              </>
             )}
           </Grid>
         </Grid>

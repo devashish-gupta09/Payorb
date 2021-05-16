@@ -1,9 +1,11 @@
 import { Grid } from "@material-ui/core";
 import React from "react";
+
+import Carousel from "react-material-ui-carousel";
+
 import SectionCard from "../LandingSectionCard";
 import SectionContent from "../LandingSectionContent";
 import { styles } from "./styles";
-import Carousel from "react-material-ui-carousel";
 
 function FeatureSection({ content }) {
   const classes = styles();
@@ -38,7 +40,7 @@ function FeatureSection({ content }) {
                 return (
                   <Grid
                     container
-                    justify="center"
+                    // justify="center"
                     style={{ width: "100%" }}
                     key={index}
                   >

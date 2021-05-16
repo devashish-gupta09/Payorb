@@ -1,5 +1,6 @@
 import { Grid, makeStyles } from "@material-ui/core";
 import React from "react";
+
 import useFetchVendor from "../../hooks/useFetchVendor";
 import CustomerVendorProfileEvents from "../CustomerVendorProfileEvents";
 import ProfileDetailsSection from "../ProfileDetailsSection";

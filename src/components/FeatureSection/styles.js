@@ -6,7 +6,7 @@ export const styles = makeStyles((theme) => ({
     maxHeight: "fit-content",
     padding: "12em 2em 8em 8em",
     [theme.breakpoints.down("sm")]: {
-      height: "fit-content",
+      minHeight: "fit-content",
       padding: "2em 1em",
     },
   },
@@ -43,5 +43,8 @@ export const styles = makeStyles((theme) => ({
   indicatorButtonContainer: {
     marginTop: "-4em",
     padding: "1em 1em 1em 0",
+    [theme.breakpoints.down("sm")]: {
+      background: "pink",
+    },
   },
 }));

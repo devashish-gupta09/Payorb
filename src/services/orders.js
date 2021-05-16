@@ -1,11 +1,12 @@
 import axios from "axios";
+
 import { API_URL } from "../config/urls";
 import { END_POINTS } from "../constants/api";
 import { getAuthHeader } from "./api";
 
-export const createOrder = async (customer) => {
+export const createOrder = async (order) => {
   try {
-    const res = await axios.post(`${API_URL}/${END_POINTS.ORDER}`, customer, {
+    const res = await axios.post(`${API_URL}/${END_POINTS.ORDER}`, order, {
       headers: await getAuthHeader(),
     });
     return res.data;

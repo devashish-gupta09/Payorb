@@ -1,4 +1,5 @@
 import React from "react";
+
 import EventsViewList from "../EventsViewList";
 
 function VendorEventsList({ events }) {

@@ -10,7 +10,7 @@ export const styles = makeStyles((theme) => ({
     minHeight: "90vh",
     maxHeight: "max-content",
     [theme.breakpoints.down("sm")]: {
-      padding: "2em 1em",
+      padding: "1em 1em",
     },
     [theme.breakpoints.between("sm", "md")]: {
       padding: "2em 2em",

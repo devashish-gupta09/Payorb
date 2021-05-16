@@ -1,10 +1,11 @@
 import { Grid, makeStyles } from "@material-ui/core";
 import React from "react";
+
 import useFetchStats from "../../hooks/useFetchStats";
+import SkeletonLoading from "../SkeletonLoading";
 import VendorEventsStats from "../VendorEventStats";
 import VendorRevenueUserAggSec from "../VendorRevenueUserAggSec";
 import VendorSalesGraph from "../VendorSalesGraph";
-import SkeletonLoading from "../SkeletonLoading";
 
 function VendorFinancials() {
   const endDate = new Date();

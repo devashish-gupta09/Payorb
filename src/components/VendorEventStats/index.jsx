@@ -10,15 +10,15 @@ import {
   TableRow,
   Typography,
 } from "@material-ui/core";
-import React from "react";
-import { globalStyles } from "../../../styles/globalStyles";
-import DashboardCard from "../DashboardCard";
 import numeral from "numeral";
-import SkeletonLoading from "../SkeletonLoading";
+import React from "react";
+
+import { globalStyles } from "../../../styles/globalStyles";
+import { EVENT_STATUS } from "../../constants/events";
 import useFetchEvents from "../../hooks/useFetchEvents";
 import { getMonthDate } from "../../utils/dateTime";
-import { EVENT_STATUS } from "../../constants/events";
-import { date } from "yup/lib/locale";
+import DashboardCard from "../DashboardCard";
+import SkeletonLoading from "../SkeletonLoading";
 
 const styles = makeStyles((theme) => ({
   root: {

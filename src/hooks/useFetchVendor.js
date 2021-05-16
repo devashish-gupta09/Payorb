@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+
 import { getUser } from "../services/auth";
 import { getVendorPublic } from "../services/vendor";
-import { delay } from "../utils/dateTime";
 
 function useFetchVendor(userUID, vendor = true) {
   const [loading, setLoading] = useState(true);

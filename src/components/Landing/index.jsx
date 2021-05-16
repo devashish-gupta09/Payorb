@@ -1,12 +1,14 @@
-import { Grid, Typography } from "@material-ui/core";
-import LandingHeader from "../LandingHeader";
-import HomeSection from "../HomeSection";
-import FeatureSection from "../FeatureSection";
-import EventRegistrationSection from "../EventRegistrationSection";
-import UserRegistrationSection from "../UserRegistrationSection";
+import { Grid } from "@material-ui/core";
+import React from "react";
+
 import ClientReviewSection from "../ClientReviewSection";
+import EventRegistrationSection from "../EventRegistrationSection";
+import FeatureSection from "../FeatureSection";
 import GrowthSection from "../GrowthSection";
+import HomeSection from "../HomeSection";
 import Footer from "../LandingFooter";
+import LandingHeader from "../LandingHeader";
+import UserRegistrationSection from "../UserRegistrationSection";
 
 function Landing({ content }) {
   return (

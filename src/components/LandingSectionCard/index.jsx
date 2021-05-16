@@ -1,5 +1,6 @@
 import { Card, Grid, Typography } from "@material-ui/core";
 import React from "react";
+
 import { styles } from "./styles";
 
 function LandingSectionCard({ image, title, description }) {
@@ -7,7 +8,7 @@ function LandingSectionCard({ image, title, description }) {
   return (
     <Card className={classes.container}>
       <Grid className={classes.logo} container justify="center">
-        <img src={image}></img>
+        <img className={classes.sectionImage} src={image}></img>
       </Grid>
 
       <Typography variant="h6" align="center">

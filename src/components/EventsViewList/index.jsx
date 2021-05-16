@@ -1,5 +1,6 @@
 import { Grid, makeStyles } from "@material-ui/core";
 import React from "react";
+
 import EventCard from "../EventCard";
 
 function EventsViewList({ events }) {

@@ -1,6 +1,7 @@
 import { Grid } from "@material-ui/core";
 import React from "react";
 import Carousel from "react-material-ui-carousel";
+
 import { styles } from "./styles";
 
 function LandingCarousel({ urls }) {

@@ -1,6 +1,7 @@
 import { Grid, Typography } from "@material-ui/core";
 import { useRouter } from "next/router";
 import React from "react";
+
 import { globalStyles } from "../../../styles/globalStyles";
 import { PAGE_PATHS } from "../../constants/paths";
 import { formatEventType } from "../../utils/events";
@@ -9,7 +10,7 @@ import DashboardCard from "../DashboardCard";
 import { EventCardDate } from "../EventCard";
 import { styles } from "./styles";
 
-function CustomerEventCard({ event, expand }) {
+function CustomerEventCard({ event, expand, onBook }) {
   const classes = styles();
   const globalClasses = globalStyles();
   const router = useRouter();
@@ -26,7 +27,7 @@ function CustomerEventCard({ event, expand }) {
   return (
     <DashboardCard rootClass={classes.root}>
       <Grid container alignItems={"stretch"}>
-        <Grid item sm={ expand ? 3 : 2} className={classes.imageContainer}>
+        <Grid item sm={expand ? 3 : 2} className={classes.imageContainer}>
           <img
             className={classes.eventImage}
             src={
@@ -36,7 +37,11 @@ function CustomerEventCard({ event, expand }) {
           />
         </Grid>
 
-        <Grid className={classes.eventDetailContainer} item sm={expand ? 9 : 10}>
+        <Grid
+          className={classes.eventDetailContainer}
+          item
+          sm={expand ? 9 : 10}
+        >
           <Grid container>
             {/* First Row - Event name and Booking Dates */}
             <Grid item sm={10}>
@@ -115,7 +120,7 @@ function CustomerEventCard({ event, expand }) {
               >
                 <ButtonCapsule
                   buttonStyle={`${globalClasses.boldSixHundred} ${classes.editButton}`}
-                  onClick={handleEdit}
+                  onClick={onBook || handleEdit}
                   text="Book now"
                 ></ButtonCapsule>
               </Grid>

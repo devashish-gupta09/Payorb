@@ -1,5 +1,6 @@
 import { Grid } from "@material-ui/core";
 import React from "react";
+
 import SigningBanner from "../SigningBanner";
 import SignUpForm from "../SignupForm";
 import { styles } from "./styles";

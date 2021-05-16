@@ -1,4 +1,5 @@
 import moment from "moment";
+
 export const getTimeDiff = (isoTimeString) => {
   const date = moment(new Date(isoTimeString));
   const now = moment(new Date());
@@ -118,9 +119,19 @@ export const getMonthDate = (startDate, endDate) => {
 };
 
 export const delay = async (time) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve();
     }, time);
   });
+};
+
+export const getDateForTime = (hour) => {
+  hour = Math.round(hour);
+
+  const currDate = new Date();
+  currDate.setHours(hour);
+  currDate.setMinutes(0);
+  currDate.setMilliseconds(0);
+  return currDate;
 };
