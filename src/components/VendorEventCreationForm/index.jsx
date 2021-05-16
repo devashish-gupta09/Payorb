@@ -21,6 +21,8 @@ import { useFormik } from "formik";
 import { useRouter } from "next/router";
 import React from "react";
 
+import { v4 } from "uuid";
+
 import { appColors } from "../../../styles/colors";
 import { globalStyles } from "../../../styles/globalStyles";
 import {
@@ -51,7 +53,7 @@ function getCreationFormInitialState() {
     price: 0,
     mode: EVENT_MODES.ONLINE,
     totalTickets: 0,
-    link: "",
+    link: v4(),
     type: "",
     startDate: new Date().toISOString(),
     endDate: getDateForTime(new Date().getHours() + 1),
