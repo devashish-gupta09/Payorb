@@ -19,6 +19,7 @@ import {
   useTheme,
 } from "@material-ui/core";
 
+import createHash from "create-hash";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
 import React from "react";
@@ -45,6 +46,9 @@ import OneTimeDateSelector from "../OneTimeDateSelector";
 import PostEventCreationDialog from "../PostEventCreationDialog";
 import { styles } from "./styles";
 
+const hash = createHash("sha256");
+hash.update(v4());
+
 function getCreationFormInitialState() {
   return {
     name: "",
@@ -55,7 +59,7 @@ function getCreationFormInitialState() {
     price: 0,
     mode: EVENT_MODES.ONLINE,
     totalTickets: 0,
-    link: v4(),
+    link: hash.digest("hex").substr(0, 6),
     type: "",
     startDate: new Date().toISOString(),
     endDate: getDateForTime(new Date().getHours() + 1),

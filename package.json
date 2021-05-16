@@ -23,6 +23,7 @@
     "axios": "^0.21.1",
     "chart.js": "^3.0.2",
     "clipboard-copy": "^4.0.1",
+    "create-hash": "^1.2.0",
     "currency.js": "^2.0.3",
     "d3-scale": "^3.3.0",
     "date-fns": "^2.21.1",
