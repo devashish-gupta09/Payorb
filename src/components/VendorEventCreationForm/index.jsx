@@ -15,6 +15,8 @@ import {
   Dialog,
   DialogContent,
   Tooltip,
+  useMediaQuery,
+  useTheme,
 } from "@material-ui/core";
 
 import { useFormik } from "formik";
@@ -83,6 +85,8 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
   const router = useRouter();
   const [dialog, setDialog] = React.useState({ display: false, text: "" });
   const [postEventDialog, setPostEventDialog] = React.useState(false);
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handlePostCreationDialogClose = () => {
     router.push(PAGE_PATHS.VENDOR_DASHBOARD_EVENTS);
@@ -512,6 +516,12 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                 type={"submit"}
                 text={"Save & Live"}
               ></ButtonCapsule>
+
+              {matches && (
+                <Button fullWidth onClick={handleCancel}>
+                  Cancel
+                </Button>
+              )}
             </Grid>
           </Grid>
         </Grid>
