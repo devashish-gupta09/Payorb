@@ -86,7 +86,6 @@ function VendorEventsCalenderView() {
   };
 
   const handleViewChange = (currentView) => {
-    console.log(currentView);
     setCalendarView(currentView);
 
     if (currentView === "Month") {
