@@ -49,7 +49,7 @@ function CustomerViewHeader() {
 
       <Toolbar>
         <Grid container justify="space-between" alignItems="center">
-          <Logo dark={true} />
+          <Logo dark={true} width="5em" />
 
           <Grid
             className={classes.buttonContainer}

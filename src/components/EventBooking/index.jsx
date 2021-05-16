@@ -6,6 +6,7 @@ import {
   Money,
   ViewModule,
 } from "@material-ui/icons";
+import moment from "moment";
 import { useRouter } from "next/router";
 
 import React from "react";
@@ -25,12 +26,12 @@ const getEventslotDuration = (startDate, endDate) => {
     startDate = new Date(startDate);
     endDate = new Date(endDate);
 
-    console.log("HEY", startDate, endDate);
-
     return `${getMonthDate(
       startDate,
       endDate
-    )} , ${startDate.getFullYear()} | at ${startDate.toLocaleTimeString()} to ${endDate.toLocaleTimeString()}`;
+    )} , ${startDate.getFullYear()} | at ${moment(startDate).format(
+      "LT"
+    )} to ${moment(endDate).format("LT")}`;
   }
 
   return "";
@@ -43,9 +44,13 @@ const eventRows = (event, oneOnOneSlot) => [
     value: `Rs. ${event.price}`,
   },
   {
-    icon: <ConfirmationNumber />,
-    key: "bookedSeats",
-    value: `${event.orders.length}/${event.totalTickets}`,
+    ...(event.type === EVENT_TYPES.ONE_TIME && {
+      icon: <ConfirmationNumber />,
+      key: "bookedSeats",
+      value: `${event.orders.length} ${
+        event.type === EVENT_TYPES.ONE_TIME ? `/${event.totalTickets}` : ""
+      }`,
+    }),
   },
   {
     icon: <ViewModule />,

@@ -9,63 +9,85 @@ import numeral from "numeral";
 import React from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
+import useFetchStats from "../../hooks/useFetchStats";
+import SkeletonLoading from "../SkeletonLoading";
 import ValueCard from "../ValueCard";
 
-function VendorRevenueUserAggSec({ stats }) {
+function VendorRevenueUserAggSec() {
   const classes = styles();
   const globalClasses = globalStyles();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
 
-  if (!stats) {
-    return <h1>{stats}</h1>;
+  const endDate = new Date();
+  const startDate = new Date();
+  startDate.setDate(endDate.getDate() - 7);
+
+  const { data: stats, loading, error } = useFetchStats(startDate, endDate);
+  console.log(stats);
+
+  if (loading) {
+    return <SkeletonLoading message="Loading dashboard stats" />;
   }
 
-  return (
-    <Grid style={{ width: "100%" }}>
-      <Typography
-        variant={"h6"}
-        className={`${globalClasses.boldSixHundred} ${classes.title}`}
-      >
-        Dashboard
-      </Typography>
+  if (error) {
+    return (
+      <>
+        <h2>Something went wrong</h2>
+        <h5>{error}</h5>
+      </>
+    );
+  }
 
-      <Grid container className={classes.fix} spacing={2}>
-        <Grid item sm={6} container spacing={matches ? 0 : 3}>
-          <Grid item xs={6} className={classes.leftContainer}>
-            <ValueCard
-              title={`Rs. ${numeral(stats.totalRevenue).format("0,0")}`}
-              subTitle={"Total Revenue"}
-            />
+  if (stats) {
+    return (
+      <Grid style={{ width: "100%" }}>
+        <Typography
+          variant={"h6"}
+          className={`${globalClasses.boldSixHundred} ${classes.title}`}
+        >
+          Dashboard
+        </Typography>
+
+        <Grid container className={classes.fix} spacing={2}>
+          <Grid item sm={6} container spacing={matches ? 0 : 3}>
+            <Grid item xs={6} className={classes.leftContainer}>
+              <ValueCard
+                title={`Rs. ${numeral(stats.totalRevenue).format("0,0")}`}
+                subTitle={"Total Revenue"}
+              />
+            </Grid>
+            <Grid item xs={6} className={classes.rightContainer}>
+              <ValueCard
+                title={ `${numeral(stats.totalCustomers).format("0,0")}`}
+                subTitle={"Total Customers"}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={6} className={classes.rightContainer}>
-            <ValueCard
-              title={`${numeral(stats.totalCustomers).format("0,0")}`}
-              subTitle={"Total Customers"}
-            />
-          </Grid>
-        </Grid>
-        <Grid container item sm={6} spacing={matches ? 0 : 3}>
-          <Grid item xs={6} className={classes.leftContainer}>
-            <ValueCard
-              title={`Rs. ${numeral(stats.lastMonthSummary.revenue).format(
-                "0,0"
-              )}`}
-              subTitle={`Total Revenue last month`}
-            />
-          </Grid>
-          <Grid item xs={6} className={classes.rightContainer}>
-            <ValueCard
-              title={`${numeral(stats.lastMonthSummary.customers).format(
-                "0,0"
-              )}`}
-              subTitle={"Total customers last month"}
-            />
+          <Grid container item sm={6} spacing={matches ? 0 : 3}>
+            <Grid item xs={6} className={classes.leftContainer}>
+              <ValueCard
+                title={`Rs. ${numeral(stats.lastMonthSummary.revenue).format(
+                  "0,0"
+                )}`}
+                subTitle={`Total Revenue last month`}
+              />
+            </Grid>
+            <Grid item xs={6} className={classes.rightContainer}>
+              <ValueCard
+                title={`${numeral(stats.lastMonthSummary.customers).format(
+                  "0,0"
+                )}`}
+                subTitle={"Total customers last month"}
+              />
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
-    </Grid>
-  );
+    );
+  }
+
+  return <h1>Something went wrong</h1>;
 }
 
 const styles = makeStyles((theme) => ({

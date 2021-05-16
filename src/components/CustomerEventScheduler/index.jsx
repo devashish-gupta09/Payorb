@@ -5,6 +5,8 @@ import {
   Grid,
   makeStyles,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@material-ui/core";
 
 import { Calendar, MuiPickersUtilsProvider } from "@material-ui/pickers";
@@ -29,7 +31,12 @@ function generateOneOnOneEventSlots(event) {
   const slotEndTime = new Date(event.slotEndTimePerDay);
 
   startDate.setHours(slotStartTime.getHours());
+  startDate.setMinutes(slotStartTime.getMinutes());
+  startDate.setMilliseconds(slotStartTime.getMilliseconds());
+
   endDate.setHours(slotEndTime.getHours());
+  endDate.setMinutes(slotEndTime.getMinutes());
+  endDate.setMilliseconds(slotEndTime.getMilliseconds());
 
   for (
     var startTime = startDate;
@@ -85,8 +92,11 @@ function CustomerEventScheduler({ eventLink }) {
   });
   const router = useRouter();
 
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+  const classes = useStyles();
+
   const handleTimeClick = (time) => {
-    console.log("TIME CHANGE");
     setTimeChosen({
       selected: true,
       time,
@@ -102,7 +112,6 @@ function CustomerEventScheduler({ eventLink }) {
   }
 
   const handleChange = (data) => {
-    console.log(data);
     setWeek(new Date(data));
   };
 
@@ -126,7 +135,6 @@ function CustomerEventScheduler({ eventLink }) {
     const startDate = week || new Date(event.startDate);
 
     const calenderViewEvents = generateOneOnOneEventSlots(event);
-    console.log(calenderViewEvents);
     if (event.type === EVENT_TYPES.ONE_ON_ONE) {
       return (
         <Grid>
@@ -145,7 +153,7 @@ function CustomerEventScheduler({ eventLink }) {
               <Grid item sm={12}>
                 <Typography
                   style={{
-                    paddingLeft: "1.5em",
+                    paddingLeft: "1em",
                     paddingTop: "1em",
                     fontSize: "1.2em",
                     fontWeight: "500",
@@ -155,7 +163,7 @@ function CustomerEventScheduler({ eventLink }) {
                 </Typography>
               </Grid>
               <Divider />
-              <Grid item sm={5}>
+              <Grid item sm={5} style={{ width: "100%" }}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <Calendar
                     date={startDate}
@@ -171,7 +179,7 @@ function CustomerEventScheduler({ eventLink }) {
                 item
                 sm={7}
                 spacing={2}
-                style={{ height: "fit-content" }}
+                style={{ height: "fit-content", padding: "0 2em" }}
               >
                 <Grid item xs={12}>
                   <Typography
@@ -185,26 +193,27 @@ function CustomerEventScheduler({ eventLink }) {
                     {`${moment(new Date(week || startDate)).format("LL")}`}
                   </Typography>
                 </Grid>
-                {calenderViewEvents[startDate.toLocaleDateString()].map(
-                  (slot) => (
-                    <Grid item xs={3}>
-                      <Button
-                        fullWidth
-                        color={
-                          timeChosen.time &&
-                          timeChosen.time.toISOString() ===
-                            slot.startDate.toISOString()
-                            ? "primary"
-                            : "secondary"
-                        }
-                        variant={"outlined"}
-                        onClick={() => handleTimeClick(slot.startDate)}
-                      >
-                        {slot.startDate.toLocaleTimeString()}
-                      </Button>
-                    </Grid>
-                  )
-                )}
+                {calenderViewEvents[startDate.toLocaleDateString()] &&
+                  calenderViewEvents[startDate.toLocaleDateString()].map(
+                    (slot) => (
+                      <Grid item xs={matches ? 4 : 3}>
+                        <Button
+                          fullWidth
+                          className={`${classes.timeButton} ${
+                            timeChosen.time &&
+                            timeChosen.time.toISOString() ===
+                              slot.startDate.toISOString()
+                              ? classes.activeTimeButton
+                              : classes.inActiveTimeButton
+                          }`}
+                          variant={"outlined"}
+                          onClick={() => handleTimeClick(slot.startDate)}
+                        >
+                          {moment(slot.startDate).format("LT")}
+                        </Button>
+                      </Grid>
+                    )
+                  )}
               </Grid>
             </Grid>
           </DashboardCard>
@@ -218,9 +227,25 @@ function CustomerEventScheduler({ eventLink }) {
   return <h1>Something went wrong. Please contact support</h1>;
 }
 
-const useAppointmentTooltipHeaderStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   button: {
     height: "fit-content",
+  },
+  timeButton: {
+    fontWeight: "400",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.75em",
+    },
+  },
+  inActiveTimeButton: {
+    color: "grey",
+    border: "1.5px grey solid",
+  },
+  activeTimeButton: {
+    fontWeight:"600",
+    color: "#71c3de",
+    border: "1.5px solid",
+    borderColor: "#71c3de",
   },
 }));
 

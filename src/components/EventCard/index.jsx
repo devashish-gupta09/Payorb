@@ -3,6 +3,7 @@ import { Share } from "@material-ui/icons";
 import React from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
+import { EVENT_TYPES } from "../../constants/events";
 import { getEventDate, getEventMonth } from "../../utils/dateTime";
 import { formatEventType } from "../../utils/events";
 import ButtonCapsule from "../ButtonCapsule";
@@ -147,8 +148,9 @@ function EventCard({ event }) {
               </Grid>
 
               <Typography className={`${classes.greyFont} ${classes.seats}`}>
-                Sold out seats: {event.orders ? event.orders.length : 0}/
-                {event.totalTickets}
+                Sold out seats: {event.orders ? event.orders.length : 0}
+                {event.type === EVENT_TYPES.ONE_TIME &&
+                  `/${event.totalTickets}`}
               </Typography>
             </Grid>
 
