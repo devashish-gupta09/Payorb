@@ -6,63 +6,84 @@ import {
   Money,
   ViewModule,
 } from "@material-ui/icons";
+import { useRouter } from "next/router";
 
 import React from "react";
-import Skeleton from "react-loading-skeleton";
 
 import { globalStyles } from "../../../styles/globalStyles";
-import { getEventPublic } from "../../services/events";
+import { EVENT_TYPES } from "../../constants/events";
+import useFetchEvents from "../../hooks/useFetchEvents";
+import { getMonthDate } from "../../utils/dateTime";
 import DashboardCard from "../DashboardCard";
 import DetailRow from "../DetailRow";
 import EventBookingForm from "../EventBookingForm";
 import EventBookingVendorCard from "../EventBookingVendorCard";
+import SkeletonLoading from "../SkeletonLoading";
 
-const eventRows = [
+const getEventslotDuration = (startDate, endDate) => {
+  if (startDate || endDate) {
+    startDate = new Date(startDate);
+    endDate = new Date(endDate);
+
+    console.log("HEY", startDate, endDate);
+
+    return `${getMonthDate(
+      startDate,
+      endDate
+    )} , ${startDate.getFullYear()} | at ${startDate.toLocaleTimeString()} to ${endDate.toLocaleTimeString()}`;
+  }
+
+  return "";
+};
+
+const eventRows = (event, oneOnOneSlot) => [
   {
     icon: <Money />,
     key: "price",
+    value: `Rs. ${event.price}`,
   },
   {
     icon: <ConfirmationNumber />,
     key: "bookedSeats",
+    value: `${event.orders.length}/${event.totalTickets}`,
   },
   {
     icon: <ViewModule />,
     key: "category",
+    value: event.category,
   },
   {
     icon: <CalendarToday />,
-    key: "startDate",
+    key: "type",
+    value:
+      event.type === EVENT_TYPES.ONE_TIME
+        ? getEventslotDuration(event.startDate, event.endDate)
+        : getEventslotDuration(oneOnOneSlot.startDate, oneOnOneSlot.endDate),
   },
   {
     icon: <LocationOn />,
     key: "location",
+    value: event.location,
   },
 ];
 
 function EventBooking({ eventLink }) {
   const classes = styles();
   const globalClasses = globalStyles();
-  const [event, setEvent] = React.useState();
+  const router = useRouter();
+  const { to, from } = router.query;
 
-  React.useEffect(() => {
-    // API call to get event details
-    getEventPublic(eventLink)
-      .then((res) => {
-        if (res.data.event) {
-          setEvent(res.data.event);
-        } else {
-          throw new Error("Error fetching event");
-        }
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
-  }, []);
+  const { loading, events } = useFetchEvents(false, { link: eventLink });
 
-  return (
-    <Grid style={{ width: "100%" }}>
-      {event ? (
+  if (loading) {
+    return <SkeletonLoading message={"Loading Event Booking Page"} />;
+  }
+
+  if (events && events.length > 0) {
+    const event = events[0];
+
+    return (
+      <Grid style={{ width: "100%" }}>
         <Grid
           container
           className={classes.root}
@@ -79,10 +100,13 @@ function EventBooking({ eventLink }) {
             <Grid item sm={12} className={classes.fullWidth}>
               <DashboardCard rootClass={classes.cardPadding}>
                 <Grid className={classes.eventDetails}>
-                  {eventRows.map((row, index) => {
+                  {eventRows(event, {
+                    startDate: parseInt(from),
+                    endDate: parseInt(to),
+                  }).map((row, index) => {
                     return (
                       <DetailRow key={index} classes={classes} icon={row.icon}>
-                        <Typography>{event[row.key]}</Typography>
+                        <Typography>{row.value}</Typography>
                       </DetailRow>
                     );
                   })}
@@ -120,7 +144,12 @@ function EventBooking({ eventLink }) {
                 >
                   Register
                 </Typography>
-                <EventBookingForm eventLink={event.link} price={event.price} />
+                <EventBookingForm
+                  eventLink={event.link}
+                  price={event.price}
+                  type={event.type}
+                  oneOnOneBooking={{ startDate: from }}
+                />
               </DashboardCard>
             </Grid>
 
@@ -129,29 +158,13 @@ function EventBooking({ eventLink }) {
                 <EventBookingVendorCard vendorId={event.userUID} />
               </DashboardCard>
             </Grid>
-            {/* <EventBookVendorSection vendor={vendor} /> */}
           </Grid>
         </Grid>
-      ) : (
-        <Grid container className={classes.root}>
-          <Grid item container sm={9}>
-            <Grid item sm={12}>
-              <Skeleton count={4} />
-            </Grid>
-            <Grid item sm={12}>
-              <Skeleton count={6} />
-            </Grid>
-            <Grid item={12}>
-              <Skeleton count={5} />
-            </Grid>
-          </Grid>
-          <Grid item container sm={3}>
-            <Skeleton count={5} />
-          </Grid>
-        </Grid>
-      )}
-    </Grid>
-  );
+      </Grid>
+    );
+  }
+
+  return <h1>Something went wrong.</h1>;
 }
 
 const styles = makeStyles((theme) => ({
@@ -165,7 +178,7 @@ const styles = makeStyles((theme) => ({
     color: "rgba(121, 223, 223, 1)",
   },
   eventDetails: {
-    width: "50%",
+    width: "60%",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
@@ -203,6 +216,13 @@ const styles = makeStyles((theme) => ({
     borderRadius: "5px",
     [theme.breakpoints.down("sm")]: {
       padding: "1em 0.5em 1em 0.5em",
+    },
+  },
+  infoRow: {
+    padding: "0.2em",
+    "& > div > p": {
+      fontWeight: "bold",
+      paddingLeft: "0.2em",
     },
   },
 }));

@@ -18,10 +18,11 @@ import DateMonth from "../DateMonth";
 
 function PostEventCreationDialog(props) {
   const { event } = props;
+  const eventLink = `${PAGE_PATHS.CUSTOMER_EVENTS_REGISTER}?event=${event.link}&type=${event.type}`;
+
   const handleCopy = () => {
-    copy(
-      `${document.domain}${PAGE_PATHS.CUSTOMER_EVENTS_REGISTER}?event=${event.link}`
-    );
+    // can use window.location.host -> If we need port number as well.
+    copy(`${document.domain}${eventLink}`);
   };
   const classes = styles();
   return (
@@ -96,10 +97,7 @@ function PostEventCreationDialog(props) {
                     <FilterNone onClick={handleCopy}></FilterNone>
                   </Tooltip>
 
-                  <Link
-                    target="_blank"
-                    href={`${PAGE_PATHS.CUSTOMER_EVENTS_REGISTER}?event=${event.link}`}
-                  >
+                  <Link target="_blank" href={eventLink}>
                     <Tooltip title="Open in browser">
                       <OpenInBrowser />
                     </Tooltip>

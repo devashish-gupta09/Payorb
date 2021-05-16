@@ -10,7 +10,7 @@ import DashboardCard from "../DashboardCard";
 import { EventCardDate } from "../EventCard";
 import { styles } from "./styles";
 
-function CustomerEventCard({ event, expand }) {
+function CustomerEventCard({ event, expand, onBook }) {
   const classes = styles();
   const globalClasses = globalStyles();
   const router = useRouter();
@@ -120,7 +120,7 @@ function CustomerEventCard({ event, expand }) {
               >
                 <ButtonCapsule
                   buttonStyle={`${globalClasses.boldSixHundred} ${classes.editButton}`}
-                  onClick={handleEdit}
+                  onClick={onBook || handleEdit}
                   text="Book now"
                 ></ButtonCapsule>
               </Grid>

@@ -18,7 +18,6 @@ function useFetchEvents(isVendor, filterParams) {
   const [moreEvents, setLoadMore] = React.useState(true);
 
   const handleLimitChange = (limit) => {
-    console.log(limit);
     setEventsParams({
       ...eventsParams,
       limit,
@@ -44,6 +43,7 @@ function useFetchEvents(isVendor, filterParams) {
         }
       } else {
         const res = await getEventsPublic(eventsParams);
+        // if events array returned
         if (res.data.events.length > 0) {
           setEventsParams({
             ...eventsParams,
@@ -75,13 +75,14 @@ function useFetchEvents(isVendor, filterParams) {
         });
     } else {
       //   Fetch events of category selected in TAB
-      console.log("Events Params : ", eventsParams);
       getEventsPublic(eventsParams)
         .then(async (res) => {
           if (res.data) {
             await delay(50);
             setLoading(false);
-            setEvents(res.data.events);
+            // We recieve an object instead of array when fetching a single
+            // event
+            setEvents(res.data.events || [res.data.event]);
             setEventsParams({ ...eventsParams, startFrom: res.data.lastEvent });
           }
         })

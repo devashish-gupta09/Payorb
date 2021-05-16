@@ -23,7 +23,7 @@ function useFetchEventsBetween(startDate, endDate) {
         setLoading(false);
         setError(err.message || "Could not fetch event.");
       });
-  }, []);
+  }, [startDate, endDate]);
 
   return {
     loading,

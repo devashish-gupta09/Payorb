@@ -22,17 +22,20 @@ export const createEventValidationSchema = Yup.object({
     .min(0, "Price of a ticket must be greater than 0")
     .max(999999, "Price of a ticket must be less than 999999"),
   totalTickets: Yup.number()
-    .lessThan(100000, "You can't book more than 100000 tickets")
-    .min(0, "Total ticket's can't be less than 0"),
+    .lessThan(100000, "You can't book more than 100000 tickets"),
   type: Yup.string()
     .oneOf([EVENT_TYPES.ONE_ON_ONE, EVENT_TYPES.ONE_TIME])
     .required(),
-  slotDuration: Yup.number().moreThan(0, "Slot Duration greater that 0 hours").when('type', {
+  slotDuration: Yup.number().when('type', {
     is: (value) => value === EVENT_TYPES.ONE_ON_ONE,
-    then: Yup.number().required(),
+    then: Yup.number().moreThan(0, "Slot Duration greater that 0 hours").required(),
   }),
-  slotCount: Yup.number().moreThan(0, "Slot Count greater that 0 hours").lessThan(1000, "Slot count must be less than 1000").when('type', {
+  slotStartTimePerDay: Yup.date().when('type', {
     is: (value) => value === EVENT_TYPES.ONE_ON_ONE,
-    then: Yup.number().required(),
-  })
+    then: Yup.date().required()
+  }),
+  slotEndTimePerDay: Yup.date().when('type', {
+    is: (value) => value === EVENT_TYPES.ONE_ON_ONE,
+    then: Yup.date().min(Yup.ref("slotStartTimePerDay"), "End time can't be before start Date").required()
+  }),
 });

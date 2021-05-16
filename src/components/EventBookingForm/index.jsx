@@ -40,7 +40,12 @@ const loadRazorPay = () => {
   });
 };
 
-function EventBookingForm({ eventLink, price }) {
+function EventBookingForm({
+  eventLink,
+  price,
+  type,
+  oneOnOneBooking: { startDate },
+}) {
   const [otpSent, setOtpSent] = React.useState(false);
   const [confirmationResult, setConfirmationResult] = React.useState();
 
@@ -87,6 +92,8 @@ function EventBookingForm({ eventLink, price }) {
                 customerId: customerCreationRes.data.customer.customerId,
               },
               eventId: eventLink,
+              type: type,
+              slotTime: new Date(parseInt(startDate)).toISOString(),
             });
 
             displayRazorpay(order.rzpOrderId, values);

@@ -17,11 +17,7 @@ import {
   DialogContent,
   Tooltip,
 } from "@material-ui/core";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
+
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
 import React from "react";
@@ -37,8 +33,11 @@ import {
 
 import { PAGE_PATHS } from "../../constants/paths";
 import { createEvent, editEvent } from "../../services/events";
+import { getDateForTime } from "../../utils/dateTime";
 import { createEventValidationSchema } from "../../validations/events";
 import ButtonCapsule from "../ButtonCapsule";
+import OneOnOneDateSelector from "../OneOnOneDateSelector";
+import OneTimeDateSelector from "../OneTimeDateSelector";
 
 import PostEventCreationDialog from "../PostEventCreationDialog";
 import { styles } from "./styles";
@@ -56,9 +55,10 @@ function getCreationFormInitialState() {
     link: "",
     type: "",
     startDate: new Date().toISOString(),
-    endDate: new Date().toISOString(),
+    endDate: getDateForTime(new Date().getHours() + 1),
     slotDuration: 0,
-    slotCount: 1,
+    slotStartTimePerDay: getDateForTime(9),
+    slotEndTimePerDay: getDateForTime(17),
   };
 }
 
@@ -70,9 +70,9 @@ function getEventTypeDescription(type) {
 }
 
 function getTimeAfter(hours) {
-  const cleanUpHours = parseFloat(hours.toFixed(1));
+  const cleandUpHours = parseFloat(hours.toFixed(1));
   const currTime = new Date();
-  currTime.setHours(currTime.getHours() + cleanUpHours + 1);
+  currTime.setHours(currTime.getHours() + cleandUpHours + 1);
   return currTime;
 }
 
@@ -87,14 +87,6 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
     router.push(PAGE_PATHS.VENDOR_DASHBOARD_EVENTS);
   };
 
-  const handleStartDate = (date) => {
-    formik.setFieldValue("startDate", date.toISOString());
-  };
-
-  const handleEndDate = (date) => {
-    formik.setFieldValue("endDate", date.toISOString());
-  };
-
   const handleEventTypeChange = (event) => {
     formik.setFieldValue("type", event.target.value);
   };
@@ -107,17 +99,13 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
     initialValues: event || getCreationFormInitialState(),
     validationSchema: createEventValidationSchema,
     validateOnBlur: true,
-    onSubmit: async (values, formikHelpers) => {
+    onSubmit: async (values) => {
       if (values) {
         try {
           if (!edit) {
             await createEvent({
               event: {
                 ...values,
-                totalTickets:
-                  values.type === EVENT_TYPES.ONE_ON_ONE
-                    ? values.slotCount
-                    : values.totalTickets,
               },
             });
             setPostEventDialog(true);
@@ -134,8 +122,6 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
       }
     },
   });
-
-  console.log(formik.errors);
 
   const handleCancel = () => {
     if (edit) {
@@ -155,26 +141,9 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
     }
   };
 
-  const handleSlotCountChange = (event) => {
-    // 1. Calculate a rational hour duration number to one decimal place
-    // 2. Update the endDate accordingly
-    const slotCount = Math.round(parseInt(event.target.value));
-    const minimumTime = formik.values.slotDuration;
-
-    formik.setFieldValue("slotCount", slotCount);
-    if (slotCount) {
-      const preferredEndDate = getTimeAfter(minimumTime * slotCount);
-      handleEndDate(preferredEndDate);
-    }
-  };
-
   const handleSlotDurationChange = (event) => {
     const hours = parseFloat(parseFloat(event.target.value).toFixed(1));
     formik.setFieldValue("slotDuration", hours);
-    if (hours) {
-      const preferredEndDate = getTimeAfter(hours * formik.values.slotCount);
-      handleEndDate(preferredEndDate);
-    }
   };
 
   return (
@@ -281,59 +250,32 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                   </FormHelperText>
 
                   {formik.values.type === EVENT_TYPES.ONE_ON_ONE && (
-                    <Grid container spacing={3}>
-                      <Grid item sm={6}>
-                        <Tooltip
-                          title={
-                            "Please choose a valid slot duration for your event. [Eg: 1, 2, 1.5 etc]. Clients would be able book these slots."
+                    <Grid>
+                      <Tooltip
+                        title={
+                          "Please choose a valid slot duration for your event. [Eg: 1, 2, 1.5 etc]. Clients would be able book these slots."
+                        }
+                      >
+                        <TextField
+                          fullWidth
+                          className={classes.textInput}
+                          type="number"
+                          id="slotDuration"
+                          label={"Slot duration (in hrs)"}
+                          variant="outlined"
+                          onChange={handleSlotDurationChange}
+                          onBlur={formik.handleBlur}
+                          value={formik.values.slotDuration}
+                          error={
+                            formik.touched.slotDuration &&
+                            Boolean(formik.errors.slotDuration)
                           }
-                        >
-                          <TextField
-                            fullWidth
-                            className={classes.textInput}
-                            type="number"
-                            id="slotDuration"
-                            label={"Slot duration (in hrs)"}
-                            variant="outlined"
-                            onChange={handleSlotDurationChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.slotDuration}
-                            error={
-                              formik.touched.slotDuration &&
-                              Boolean(formik.errors.slotDuration)
-                            }
-                            helperText={
-                              formik.touched.slotDuration &&
-                              formik.errors.slotDuration
-                            }
-                          />
-                        </Tooltip>
-                      </Grid>
-                      <Grid item sm={6}>
-                        <Tooltip
-                          title={"How many slots would you like to open up?"}
-                        >
-                          <TextField
-                            fullWidth
-                            className={classes.textInput}
-                            type="number"
-                            id="slotCount"
-                            label={"No. of slots"}
-                            variant="outlined"
-                            onChange={handleSlotCountChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.slotCount}
-                            error={
-                              formik.touched.slotCount &&
-                              Boolean(formik.errors.slotCount)
-                            }
-                            helperText={
-                              formik.touched.slotCount &&
-                              formik.errors.slotCount
-                            }
-                          />
-                        </Tooltip>
-                      </Grid>
+                          helperText={
+                            formik.touched.slotDuration &&
+                            formik.errors.slotDuration
+                          }
+                        />
+                      </Tooltip>
                     </Grid>
                   )}
                 </Grid>
@@ -359,123 +301,17 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                 style={{ width: "100%" }}
                 spacing={1}
               >
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  {/* Start Date and time*/}
-                  <Grid item sm={6} container spacing={1}>
-                    <Grid item xs={6}>
-                      <KeyboardDatePicker
-                        KeyboardButtonProps={{
-                          style: {
-                            paddingLeft: "0.2em",
-                            paddingRight: "0.4em",
-                          },
-                        }}
-                        InputProps={{
-                          style: {
-                            padding: 0,
-                          },
-                        }}
-                        inputVariant="outlined"
-                        margin="normal"
-                        id="startDate"
-                        label="Start Date"
-                        format="dd/MM/yyyy"
-                        value={formik.values.startDate}
-                        onChange={handleStartDate}
-                        disabled={checkDisabled()}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <KeyboardTimePicker
-                        KeyboardButtonProps={{
-                          style: {
-                            paddingLeft: "0.2em",
-                            paddingRight: "0.4em",
-                          },
-                        }}
-                        InputProps={{
-                          style: {
-                            padding: 0,
-                          },
-                        }}
-                        inputVariant="outlined"
-                        margin="normal"
-                        id="time-picker"
-                        label="Start Time"
-                        value={formik.values.startDate}
-                        onChange={handleStartDate}
-                        disabled={checkDisabled()}
-                      />
-                    </Grid>
-                  </Grid>
-
-                  {/* End Date and Time */}
-
-                  <Grid item sm={6} container spacing={1}>
-                    <Grid item xs={6}>
-                      {/* <FormControl variant="outlined" fullWidth> */}
-                      <KeyboardDatePicker
-                        KeyboardButtonProps={{
-                          style: {
-                            paddingLeft: "0.2em",
-                            paddingRight: "0.4em",
-                          },
-                        }}
-                        InputProps={{
-                          style: {
-                            padding: 0,
-                          },
-                        }}
-                        inputVariant="outlined"
-                        margin="normal"
-                        id="endDate"
-                        label="End Date"
-                        format="dd/MM/yyyy"
-                        value={formik.values.endDate}
-                        onChange={handleEndDate}
-                        helperText={
-                          formik.touched.endDate && formik.errors.endDate
-                        }
-                        error={
-                          formik.touched.endDate &&
-                          Boolean(formik.errors.endDate)
-                        }
-                        disabled={checkDisabled()}
-                      />
-
-                      {/* </FormControl> */}
-                    </Grid>
-                    <Grid item xs={6}>
-                      <KeyboardTimePicker
-                        KeyboardButtonProps={{
-                          style: {
-                            paddingLeft: "0.2em",
-                            paddingRight: "0.4em",
-                          },
-                        }}
-                        InputProps={{
-                          style: {
-                            padding: 0,
-                          },
-                        }}
-                        inputVariant="outlined"
-                        margin="normal"
-                        id="time-picker"
-                        label="End Time"
-                        value={formik.values.endDate}
-                        onChange={handleEndDate}
-                        helperText={
-                          formik.touched.endDate && formik.errors.endDate
-                        }
-                        error={
-                          formik.touched.endDate &&
-                          Boolean(formik.errors.endDate)
-                        }
-                        disabled={checkDisabled()}
-                      />
-                    </Grid>
-                  </Grid>
-                </MuiPickersUtilsProvider>
+                {formik.values.type === EVENT_TYPES.ONE_TIME ? (
+                  <OneTimeDateSelector
+                    formik={formik}
+                    checkDisabled={checkDisabled}
+                  />
+                ) : (
+                  <OneOnOneDateSelector
+                    formik={formik}
+                    checkDisabled={checkDisabled}
+                  />
+                )}
               </Grid>
 
               {/* LOCATION AND CATEGORY */}
