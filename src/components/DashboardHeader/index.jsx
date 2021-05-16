@@ -115,7 +115,7 @@ function VendorDashboardHeader({ profileData }) {
               <Logo dark={true} width={"65%"}></Logo>
             </Grid>
             <Grid className={classes.menuButtonContainer}>
-              <Menu style={{color : "black"}} onClick={toggleDrawer} />
+              <Menu style={{ color: "black" }} onClick={toggleDrawer} />
             </Grid>
           </Grid>
 

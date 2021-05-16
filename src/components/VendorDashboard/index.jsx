@@ -1,11 +1,7 @@
-import {
-  Backdrop,
-  CircularProgress,
-  Grid,
-  Typography,
-} from "@material-ui/core";
+import { Backdrop, CircularProgress, Grid } from "@material-ui/core";
 import { useRouter } from "next/router";
 import React from "react";
+
 import { ALERT_TYPES } from "../../constants/alerts";
 
 import { PAGE_PATHS } from "../../constants/paths";

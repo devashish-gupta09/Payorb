@@ -16,8 +16,8 @@ export const styles = makeStyles((theme) => ({
   logo: {
     width: "5% !important",
     [theme.breakpoints.down("sm")]: {
-      width: "25% !important"
-    }
+      width: "25% !important",
+    },
   },
   signupButton: {
     background: "linear-gradient(115.52deg, #BDF5F2 0%, #79DFDF 100%)",

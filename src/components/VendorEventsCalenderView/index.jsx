@@ -21,6 +21,7 @@ import {
 import { Close, Edit } from "@material-ui/icons";
 import moment from "moment";
 import * as React from "react";
+
 import { EVENT_TYPES } from "../../constants/events";
 
 import useFetchEventsBetween from "../../hooks/useFetchEventsBetween";

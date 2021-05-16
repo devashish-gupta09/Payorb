@@ -1,10 +1,4 @@
-import React from "react";
-import SkeletonLoading from "../SkeletonLoading";
-import useFetchEvents from "../../hooks/useFetchEvents";
-import { EVENT_TYPES } from "../../constants/events";
-
-import DashboardCard from "../DashboardCard";
-
+import DateFnsUtils from "@date-io/date-fns";
 import {
   Button,
   Divider,
@@ -12,15 +6,20 @@ import {
   makeStyles,
   Typography,
 } from "@material-ui/core";
-import CustomerEventCard from "../CustomerEventCard";
-import DateFnsUtils from "@date-io/date-fns";
 
 import { Calendar, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import moment from "moment";
-import { common } from "@material-ui/core/colors";
-import useAlertSnackbar from "../../hooks/useAlertSnackbar";
+
 import { useRouter } from "next/router";
+import React from "react";
+
+import { EVENT_TYPES } from "../../constants/events";
 import { PAGE_PATHS } from "../../constants/paths";
+import useAlertSnackbar from "../../hooks/useAlertSnackbar";
+import useFetchEvents from "../../hooks/useFetchEvents";
+import CustomerEventCard from "../CustomerEventCard";
+import DashboardCard from "../DashboardCard";
+import SkeletonLoading from "../SkeletonLoading";
 
 function generateOneOnOneEventSlots(event) {
   const result = {};

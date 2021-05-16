@@ -126,13 +126,12 @@ export const delay = async (time) => {
   });
 };
 
-
 export const getDateForTime = (hour) => {
-  hour = Math.round(hour)
+  hour = Math.round(hour);
 
-  const currDate = new Date()
-  currDate.setHours(hour)
-  currDate.setMinutes(0)
-  currDate.setMilliseconds(0)
-  return currDate
-}
+  const currDate = new Date();
+  currDate.setHours(hour);
+  currDate.setMinutes(0);
+  currDate.setMilliseconds(0);
+  return currDate;
+};

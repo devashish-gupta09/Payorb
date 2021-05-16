@@ -6,7 +6,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@material-ui/core";
-import { Add, CalendarViewDay, DateRange, List } from "@material-ui/icons";
+import { Add, DateRange, List } from "@material-ui/icons";
 import { useRouter } from "next/router";
 import React from "react";
 

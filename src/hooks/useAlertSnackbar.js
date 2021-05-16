@@ -1,5 +1,6 @@
-import AlertSnackbar from "../components/AlertSnackbar"
 import { useState } from "react";
+
+import AlertSnackbar from "../components/AlertSnackbar";
 import { ALERT_TYPES } from "../constants/alerts";
 
 function useAlertSnackbar() {
@@ -7,18 +8,28 @@ function useAlertSnackbar() {
   const [alertConfig, setAlertConfig] = useState({
     message: "message",
     type: ALERT_TYPES.MESSAGE,
-    display: false
-  })
+    display: false,
+  });
 
   const showAlert = (message, type = ALERT_TYPES.MESSAGE, display = true) => {
-    setAlertConfig({ message, type, display })
-  }
+    setAlertConfig({ message, type, display });
+  };
 
   const hideAlert = () => {
-    setAlertConfig({ ...alertConfig, display: false })
-  }
+    setAlertConfig({ ...alertConfig, display: false });
+  };
 
-  return { Alert: () => <AlertSnackbar showSnackbar={alertConfig.display} message={alertConfig.message} type={alertConfig.type} handleClose={hideAlert} />, showAlert }
+  return {
+    Alert: () => (
+      <AlertSnackbar
+        showSnackbar={alertConfig.display}
+        message={alertConfig.message}
+        type={alertConfig.type}
+        handleClose={hideAlert}
+      />
+    ),
+    showAlert,
+  };
 }
 
-export default useAlertSnackbar
+export default useAlertSnackbar;

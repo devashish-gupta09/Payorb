@@ -1,5 +1,6 @@
 import { makeStyles, Snackbar, Typography } from "@material-ui/core";
 import React from "react";
+
 import { ALERT_TYPES } from "../../constants/alerts";
 
 function AlertSnackbar({
@@ -8,7 +9,7 @@ function AlertSnackbar({
   handleClose,
   type = ALERT_TYPES.MESSAGE,
 }) {
-  const classes = styles({type});
+  const classes = styles({ type });
   return (
     <Snackbar
       className={classes.snackbar}

@@ -21,21 +21,30 @@ export const createEventValidationSchema = Yup.object({
   price: Yup.number()
     .min(0, "Price of a ticket must be greater than 0")
     .max(999999, "Price of a ticket must be less than 999999"),
-  totalTickets: Yup.number()
-    .lessThan(100000, "You can't book more than 100000 tickets"),
+  totalTickets: Yup.number().lessThan(
+    100000,
+    "You can't book more than 100000 tickets"
+  ),
   type: Yup.string()
     .oneOf([EVENT_TYPES.ONE_ON_ONE, EVENT_TYPES.ONE_TIME])
     .required(),
-  slotDuration: Yup.number().when('type', {
+  slotDuration: Yup.number().when("type", {
     is: (value) => value === EVENT_TYPES.ONE_ON_ONE,
-    then: Yup.number().moreThan(0, "Slot Duration greater that 0 hours").required(),
+    then: Yup.number()
+      .moreThan(0, "Slot Duration greater that 0 hours")
+      .required(),
   }),
-  slotStartTimePerDay: Yup.date().when('type', {
+  slotStartTimePerDay: Yup.date().when("type", {
     is: (value) => value === EVENT_TYPES.ONE_ON_ONE,
-    then: Yup.date().required()
+    then: Yup.date().required(),
   }),
-  slotEndTimePerDay: Yup.date().when('type', {
+  slotEndTimePerDay: Yup.date().when("type", {
     is: (value) => value === EVENT_TYPES.ONE_ON_ONE,
-    then: Yup.date().min(Yup.ref("slotStartTimePerDay"), "End time can't be before start Date").required()
+    then: Yup.date()
+      .min(
+        Yup.ref("slotStartTimePerDay"),
+        "End time can't be before start Date"
+      )
+      .required(),
   }),
 });

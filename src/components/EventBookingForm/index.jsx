@@ -3,12 +3,11 @@ import {
   Grid,
   InputAdornment,
   makeStyles,
-  Snackbar,
   TextField,
-  Typography,
 } from "@material-ui/core";
 import { useFormik } from "formik";
 import React from "react";
+
 import { ALERT_TYPES } from "../../constants/alerts";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 

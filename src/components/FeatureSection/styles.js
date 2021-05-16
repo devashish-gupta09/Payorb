@@ -44,7 +44,7 @@ export const styles = makeStyles((theme) => ({
     marginTop: "-4em",
     padding: "1em 1em 1em 0",
     [theme.breakpoints.down("sm")]: {
-      background: "pink"
-    }
+      background: "pink",
+    },
   },
 }));
