@@ -54,8 +54,6 @@ function VendorCustomers() {
     );
   }
 
-  console.log(customers);
-
   if (customers) {
     const rows = customers.map((customer) =>
       createData(

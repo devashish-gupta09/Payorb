@@ -91,7 +91,7 @@ function VendorEventsStats() {
   if (loading) {
     return (
       <Grid className={classes.root}>
-        <SkeletonLoading message={"Loading Event"} />
+        <SkeletonLoading message={"Loading Events"} />
       </Grid>
     );
   }
@@ -182,7 +182,7 @@ const columns = [
   },
   {
     id: "users",
-    label: "Users",
+    label: "Bookings",
     minWidth: 100,
     align: "center",
   },

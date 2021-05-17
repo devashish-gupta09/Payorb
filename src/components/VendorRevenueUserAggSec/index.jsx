@@ -60,7 +60,7 @@ function VendorRevenueUserAggSec() {
             <Grid item xs={6} className={classes.rightContainer}>
               <ValueCard
                 title={`${numeral(stats.totalCustomers).format("0,0")}`}
-                subTitle={"Total Customers"}
+                subTitle={"Total Bookings"}
               />
             </Grid>
           </Grid>
@@ -70,7 +70,7 @@ function VendorRevenueUserAggSec() {
                 title={`Rs. ${numeral(stats.lastMonthSummary.revenue).format(
                   "0,0"
                 )}`}
-                subTitle={`Total Revenue last month`}
+                subTitle={`Total Revenue (last month)`}
               />
             </Grid>
             <Grid item xs={6} className={classes.rightContainer}>
@@ -78,7 +78,7 @@ function VendorRevenueUserAggSec() {
                 title={`${numeral(stats.lastMonthSummary.customers).format(
                   "0,0"
                 )}`}
-                subTitle={"Total customers last month"}
+                subTitle={"Total bookings (last month)"}
               />
             </Grid>
           </Grid>
