@@ -1,20 +1,24 @@
 import {
   Grid,
   makeStyles,
+  MenuItem,
+  Select,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
   Typography,
 } from "@material-ui/core";
 import React from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
-import { EVENT_STATUS } from "../../constants/events";
+import { EVENT_STATUS, EVENT_TYPES } from "../../constants/events";
 import useFetchVendorCustomers from "../../hooks/useFetchCustomers";
 import { getMonthDate } from "../../utils/dateTime";
+import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
 import SkeletonLoading from "../SkeletonLoading";
 
@@ -31,12 +35,13 @@ const getEventStatus = (startDate, endDate) => {
   }
 };
 
-function createData(name, phoneNumber, email, date) {
+function createData(name, phoneNumber, email, date, events) {
   return {
     name,
     phoneNumber,
     email,
     date,
+    events,
   };
 }
 
@@ -60,7 +65,8 @@ function VendorCustomers() {
         customer.name,
         customer.phoneNumber,
         customer.email,
-        getMonthDate(customer.createdAt, customer.createdAt)
+        getMonthDate(customer.createdAt, customer.createdAt),
+        customer.events
       )
     );
 
@@ -94,6 +100,37 @@ function VendorCustomers() {
                     <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                       {columns.map((column) => {
                         const value = row[column.id];
+
+                        if (column.id === "events") {
+                          return (
+                            <TableCell key={column.id} align={column.align}>
+                              <Select
+                                id="type"
+                                style={{ width: "100%" }}
+                                variant="outlined"
+                                value={value[0].link}
+                              >
+                                {value.map((event) => (
+                                  <MenuItem value={event.link}>
+                                    {event.link}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                            </TableCell>
+                          );
+                        }
+
+                        if (column.id === "notification") {
+                          return (
+                            <TableCell key={column.id} align={column.align}>
+                              <ButtonCapsule
+                                text="Send"
+                                buttonStyle={classes.sendButton}
+                              ></ButtonCapsule>
+                            </TableCell>
+                          );
+                        }
+
                         return (
                           <TableCell key={column.id} align={column.align}>
                             {column.format && typeof value === "number"
@@ -136,6 +173,18 @@ const columns = [
     minWidth: 100,
     align: "center",
   },
+  {
+    id: "events",
+    label: "Events",
+    minWidth: 100,
+    align: "center",
+  },
+  {
+    id: "notification",
+    label: "Notification",
+    minWidth: 100,
+    align: "center",
+  },
 ];
 
 const styles = makeStyles((theme) => ({
@@ -152,6 +201,9 @@ const styles = makeStyles((theme) => ({
   title: {
     fontSize: "1.2em",
     paddingBottom: "1em",
+  },
+  sendButton: {
+    padding: "0.5em 2em",
   },
 }));
 
