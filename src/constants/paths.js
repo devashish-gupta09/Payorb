@@ -17,5 +17,5 @@ export const PAGE_PATHS = {
   POLICY_PRIVACY: "/policies/privacy",
   POLICY_WEB_DISCLAMER: "/policies/web-disclaimer",
   POLICY_USER_AGREE: "/policies/user-agreement",
-  POLICIES: "/policies"
+  POLICIES: "/policies",
 };

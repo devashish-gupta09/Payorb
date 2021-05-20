@@ -254,7 +254,7 @@ THIS PAYORB MARKETPLACE VENDOR AGREEMENT (“AGREEMENT”) IS AN AGREEMENT BETWE
 `}
         </Typography>
         <Typography paragraph className={classes.listTitle}>
-          9. Confedentiality
+          9. Confidentiality
         </Typography>
         <Typography paragraph>
           {`As part of your participation in as a vendor with Payorb, you may be given access to certain non-public information, which is confidential and proprietary to Payorb. You may use such Confidential Information only as necessary in exercising your rights granted in this Agreement. You agree not to disclose the Confidential Information without our prior written consent. You agree that you will protect the Confidential Information from unauthorized use, access, or disclosure in the same manner that you would protect your own confidential and proprietary information of a similar nature and in any event with no less than a reasonable degree of care. 

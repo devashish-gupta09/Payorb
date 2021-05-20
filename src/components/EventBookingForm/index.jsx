@@ -1,14 +1,19 @@
 import {
   Button,
+  Checkbox,
   Grid,
   InputAdornment,
+  Link,
   makeStyles,
   TextField,
+  Tooltip,
+  Typography,
 } from "@material-ui/core";
 import { useFormik } from "formik";
 import React from "react";
 
 import { ALERT_TYPES } from "../../constants/alerts";
+import { PAGE_PATHS } from "../../constants/paths";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 
 import { createCustomer } from "../../services/customers";
@@ -52,6 +57,11 @@ function EventBookingForm({
   const [success, setSuccess] = React.useState(false);
   const [orderId, setOrderId] = React.useState();
   const [paymentProgLoader, setPaymentProgLoader] = React.useState(false);
+  const [tAndC, setTAndC] = React.useState(false);
+
+  const handleTAndCChange = () => {
+    setTAndC(!tAndC);
+  };
 
   const classes = styles();
   const formik = useFormik({
@@ -282,13 +292,40 @@ function EventBookingForm({
               fullWidth
               autoComplete={"off"}
             />
-            <ButtonCapsule
-              showLoader={paymentProgLoader}
-              buttonStyle={classes.paybutton}
-              disabled={!otpSent && !confirmationResult}
-              text={`Pay Rs.${price}`}
-              type={"submit"}
-            />
+
+            <Grid container style={{ width: "100%" }} justify="center">
+              <Grid item xs={1}>
+                <Checkbox
+                  checked={tAndC}
+                  onChange={handleTAndCChange}
+                  name=""
+                  color="primary"
+                />
+              </Grid>
+              <Grid item xs={11} style={{ paddingLeft: "1em" }}>
+                <Typography>
+                  I have read and agree to the{" "}
+                  <Link
+                    target="_blank"
+                    href={PAGE_PATHS.POLICY_TERMS_AND_CONDS}
+                  >
+                    Terms and Conditions
+                  </Link>
+                </Typography>
+              </Grid>
+            </Grid>
+
+            <Tooltip title="Make sure you have agreed to the terms and conditions">
+              <div style={{ width: "100%" }}>
+                <ButtonCapsule
+                  showLoader={paymentProgLoader}
+                  buttonStyle={classes.paybutton}
+                  disabled={(!otpSent && !confirmationResult) || !tAndC}
+                  text={`Pay Rs.${price}`}
+                  type={"submit"}
+                />
+              </div>
+            </Tooltip>
           </Grid>
 
           {Alert()}

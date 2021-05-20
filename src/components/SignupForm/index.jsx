@@ -1,11 +1,14 @@
 import {
   Button,
+  Checkbox,
   Dialog,
   DialogContent,
   Grid,
   InputAdornment,
   TextField,
   Typography,
+  Link as ALink,
+  Tooltip,
 } from "@material-ui/core";
 import { Maximize, AccountCircle, Lock, MoreHoriz } from "@material-ui/icons";
 import { useFormik } from "formik";
@@ -60,6 +63,11 @@ function SignUpForm() {
   const [usernameType, setUsernameType] = React.useState();
   const [confirmationResult, setConfirmationResult] = React.useState();
   const [otpModal, setOtpModal] = React.useState({ display: false, text: "" });
+  const [tAndC, setTAndC] = React.useState(false);
+
+  const handleTAndCChange = () => {
+    setTAndC(!tAndC);
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -344,56 +352,93 @@ function SignUpForm() {
               ),
             }}
           />
-          <Button
-            disabled={
-              !formik.values.name ||
-              !formik.values.username ||
-              (usernameType === USERNAME_TYPE.EMAIL &&
-                (!formik.values.password || !formik.values.confirmPassword)) ||
-              formik.errors.password ||
-              formik.errors.confirmPassword ||
-              (usernameType === USERNAME_TYPE.PHONE_NUMBER &&
-                !formik.values.otp) ||
-              formik.errors.name ||
-              formik.errors.username
-            }
-            fullWidth
-            className={classes.signupButton}
-            type="submit"
-          >
-            Sign Up
-          </Button>
+
+          <Grid container style={{ width: "100%" }} justify="center">
+            <Grid item xs={1}>
+              <Checkbox
+                checked={tAndC}
+                onChange={handleTAndCChange}
+                name=""
+                color="primary"
+              />
+            </Grid>
+            <Grid item xs={11} style={{ paddingLeft: "1em" }}>
+              <Typography>
+                I have read and agree to the{" "}
+                <ALink target="_blank" href={PAGE_PATHS.POLICY_USER_AGREE}>
+                  Marketplace Vendor Agreement.
+                </ALink>
+              </Typography>
+            </Grid>
+          </Grid>
+
+          <Tooltip title="Make sure you have agreed to the marketplace vendor agreement">
+            <div>
+              <Button
+                disabled={
+                  !formik.values.name ||
+                  !formik.values.username ||
+                  (usernameType === USERNAME_TYPE.EMAIL &&
+                    (!formik.values.password ||
+                      !formik.values.confirmPassword)) ||
+                  formik.errors.password ||
+                  formik.errors.confirmPassword ||
+                  (usernameType === USERNAME_TYPE.PHONE_NUMBER &&
+                    !formik.values.otp) ||
+                  formik.errors.name ||
+                  formik.errors.username ||
+                  !tAndC
+                }
+                fullWidth
+                className={classes.signupButton}
+                type="submit"
+              >
+                Sign Up
+              </Button>
+            </div>
+          </Tooltip>
           <Typography align="center" className={classes.orText}>
             OR
           </Typography>
 
-          <Button
-            fullWidth
-            className={classes.socialMediaButtons}
-            startIcon={
-              <img
-                src={"../assets/googleSignup.png"}
-                style={{ padding: "0 0.5em" }}
-              />
-            }
-            onClick={() => handleFederatedSignUp(AUTH_PROVIDERS.GOOGLE)}
-          >
-            Connect with google
-          </Button>
+          <Tooltip title="Make sure you have agreed to the marketplace vendor agreement">
+            <div>
+              <Button
+                fullWidth
+                disabled={!tAndC}
+                className={classes.socialMediaButtons}
+                startIcon={
+                  <img
+                    src={"../assets/googleSignup.png"}
+                    style={{ padding: "0 0.5em" }}
+                  />
+                }
+                onClick={() => handleFederatedSignUp(AUTH_PROVIDERS.GOOGLE)}
+              >
+                Connect with google
+              </Button>
+            </div>
+          </Tooltip>
 
-          <Button
-            fullWidth
-            className={classes.socialMediaButtons}
-            startIcon={
-              <img
-                src={"../assets/facebookSignup.png"}
-                style={{ padding: "0 0.5em" }}
-              />
-            }
-            onClick={() => handleFederatedSignUp(AUTH_PROVIDERS.FACEBOOK)}
-          >
-            Sign in with Facebook
-          </Button>
+          <Tooltip title="Make sure you have agreed to the marketplace vendor agreement">
+            <div>
+              <Button
+                fullWidth
+                disabled={!tAndC}
+                className={classes.socialMediaButtons}
+                startIcon={
+                  <img
+                    src={"../assets/facebookSignup.png"}
+                    style={{ padding: "0 0.5em" }}
+                  />
+                }
+                onClick={() => handleFederatedSignUp(AUTH_PROVIDERS.FACEBOOK)}
+              >
+                Sign in with Facebook
+              </Button>
+            </div>
+          </Tooltip>
+
           <Typography align="center" className={classes.signupMessage}>
             Already have an account?{" "}
             <Link href={PAGE_PATHS.SIGNIN}>Sign In</Link>
