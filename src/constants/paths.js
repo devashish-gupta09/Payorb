@@ -13,4 +13,9 @@ export const PAGE_PATHS = {
   CUSTOMER_EVENTS_REGISTER: "/customers/events/register",
   CUSTOMER_EVENTS_REVIEW: "/customers/events/review",
   CUSTOMER_VENDOR_VIEW: "/customers/vendor",
+  POLICY_TERMS_AND_CONDS: "/policies/terms-conditions",
+  POLICY_PRIVACY: "/policies/privacy",
+  POLICY_WEB_DISCLAMER: "/policies/web-disclaimer",
+  POLICY_USER_AGREE: "/policies/user-agreement",
+  POLICIES: "/policies"
 };
