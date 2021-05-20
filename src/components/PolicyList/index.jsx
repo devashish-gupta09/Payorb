@@ -12,17 +12,17 @@ function PolicyList() {
       </Typography>
 
       <li>
+        <Link href={PAGE_PATHS.POLICY_USER_AGREE}>
+          Marketplace Vendor Agreement
+        </Link>
+      </li>
+      <li>
         <Link href={PAGE_PATHS.POLICY_TERMS_AND_CONDS}>
           Terms and Conditions
         </Link>
       </li>
       <li>
         <Link href={PAGE_PATHS.POLICY_PRIVACY}>Privacy</Link>
-      </li>
-      <li>
-        <Link href={PAGE_PATHS.POLICY_USER_AGREE}>
-          Marketplace Vendor Agreement
-        </Link>
       </li>
     </Grid>
   );
