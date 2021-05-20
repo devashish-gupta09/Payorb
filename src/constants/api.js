@@ -4,4 +4,5 @@ export const END_POINTS = {
   CUSTOMER: "customer",
   ORDER: "order",
   STATS: "stats",
+  NOTIFICATION: "sendNotification",
 };

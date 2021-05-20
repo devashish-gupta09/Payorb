@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import AlertSnackbar from "../components/AlertSnackbar";
 import { ALERT_TYPES } from "../constants/alerts";
@@ -20,6 +20,7 @@ function useAlertSnackbar() {
   };
 
   return {
+    // eslint-disable-next-line
     Alert: () => (
       <AlertSnackbar
         showSnackbar={alertConfig.display}

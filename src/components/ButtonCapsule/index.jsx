@@ -10,12 +10,15 @@ function ButtonCapsule({
   onClick,
   buttonStyle,
   showLoader,
+  rootStyle,
+  icon,
 }) {
   const classes = styles();
   return (
     <Button
       type={type}
       onClick={onClick}
+      classes={{ root: `${rootStyle && ""}` }}
       className={`${classes.signupButton} ${buttonStyle}`}
       disabled={disabled}
     >
@@ -26,7 +29,7 @@ function ButtonCapsule({
           style={{ marginRight: "1em" }}
         />
       )}
-      {text}
+      {text} {icon ? icon : null}
     </Button>
   );
 }

@@ -48,19 +48,11 @@ export const getEvent = async (eventLink) => {
   }
 };
 
-export const getEventsVendorDashboard = async ({
-  limit,
-  orderBy,
-  startFrom,
-}) => {
+export const getEventsVendorDashboard = async (params) => {
   try {
     const res = await axios.get(`${API_URL}/${END_POINTS.EVENTS}`, {
       headers: await getAuthHeader(),
-      params: {
-        limit,
-        orderBy,
-        startFrom,
-      },
+      params,
     });
     return res.data;
   } catch (err) {

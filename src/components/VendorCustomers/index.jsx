@@ -1,4 +1,5 @@
 import {
+  CircularProgress,
   Grid,
   makeStyles,
   MenuItem,
@@ -9,47 +10,70 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Tooltip,
   Typography,
 } from "@material-ui/core";
+import { Send } from "@material-ui/icons";
 import React from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
-import { EVENT_STATUS, EVENT_TYPES } from "../../constants/events";
+import { ALERT_TYPES } from "../../constants/alerts";
+import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import useFetchVendorCustomers from "../../hooks/useFetchCustomers";
+import useFetchEvents from "../../hooks/useFetchEvents";
+import { sendNotificationToCustomers } from "../../services/notification";
 import { getMonthDate } from "../../utils/dateTime";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
 import SkeletonLoading from "../SkeletonLoading";
 
-const getEventStatus = (startDate, endDate) => {
-  if (new Date(endDate) <= Date.now()) {
-    return EVENT_STATUS.COMPLETED;
-  } else if (new Date(startDate) > Date.now()) {
-    return EVENT_STATUS.UPCOMING;
-  } else if (
-    new Date(endDate) > Date.now() &&
-    new Date(startDate) <= Date.now()
-  ) {
-    return EVENT_STATUS.ONGOING;
-  }
-};
-
-function createData(name, phoneNumber, email, date, events) {
+function createData(name, phoneNumber, email, date) {
   return {
     name,
     phoneNumber,
     email,
     date,
-    events,
   };
 }
 
 function VendorCustomers() {
   const classes = styles();
   const globalClasses = globalStyles();
+  const [selectedValue, setSelectedValue] = React.useState("");
+  // const [sendBtnLoading, setSendBtnLoading] = React.useState(false);
+  const { Alert, showAlert } = useAlertSnackbar();
 
-  const { customers, loading, error } = useFetchVendorCustomers();
+  const { customers, loading } = useFetchVendorCustomers();
+  const { events, loading: eventLoading } = useFetchEvents(true, {
+    limit: 400,
+    keys: ["name", "link"],
+  });
+
+  const handleEventTypeChange = (event) => {
+    console.log(event);
+    setSelectedValue(event.target.value);
+  };
+
+  const sendNotification = async () => {
+    try {
+      if (!selectedValue) {
+        throw new Error("Please select an event from the drop down");
+      }
+
+      const res = await sendNotificationToCustomers({ eventId: selectedValue });
+
+      if (res) {
+        showAlert("Notification sent");
+      }
+    } catch (err) {
+      if (err.message) {
+        showAlert(err.message, ALERT_TYPES.ERROR);
+        return;
+      } else if (err.error) {
+        showAlert(err.error, ALERT_TYPES.ERROR);
+        return;
+      }
+    }
+  };
 
   if (loading) {
     return (
@@ -72,12 +96,61 @@ function VendorCustomers() {
 
     return (
       <Grid className={classes.root}>
-        <Typography
-          variant={"h6"}
-          className={`${globalClasses.boldSixHundred} ${classes.title}`}
+        {Alert()}
+        <Grid
+          className={`${classes.title}`}
+          container
+          justify="space-between"
+          alignItems="center"
         >
-          Customers
-        </Typography>
+          <Typography
+            variant={"h6"}
+            className={`${globalClasses.boldSixHundred} `}
+          >
+            Customers
+          </Typography>
+
+          <Grid>
+            {eventLoading ? (
+              <CircularProgress />
+            ) : (
+              events && (
+                <Grid container alignItems={"center"}>
+                  <Select
+                    style={{ margin: "0.5em 0.5em" }}
+                    variant="outlined"
+                    value={selectedValue}
+                    onChange={handleEventTypeChange}
+                    SelectDisplayProps={{
+                      style: {
+                        width: "10em",
+                        background: "white",
+                        paddingTop: "0.75em",
+                        paddingBottom: "0.75em",
+                      },
+                    }}
+                    MenuProps={{
+                      style: {},
+                    }}
+                  >
+                    {events &&
+                      events.map((event) => (
+                        <MenuItem key={event.link} value={event.link}>
+                          {event.name}
+                        </MenuItem>
+                      ))}
+                  </Select>
+                  <ButtonCapsule
+                    buttonStyle={classes.sendButton}
+                    text={`Send`}
+                    icon={<Send />}
+                    onClick={sendNotification}
+                  ></ButtonCapsule>
+                </Grid>
+              )
+            )}
+          </Grid>
+        </Grid>
         <DashboardCard>
           <TableContainer className={classes.container}>
             <Table stickyHeader aria-label="sticky table">
@@ -100,36 +173,6 @@ function VendorCustomers() {
                     <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                       {columns.map((column) => {
                         const value = row[column.id];
-
-                        if (column.id === "events") {
-                          return (
-                            <TableCell key={column.id} align={column.align}>
-                              <Select
-                                id="type"
-                                style={{ width: "100%" }}
-                                variant="outlined"
-                                value={value[0].link}
-                              >
-                                {value.map((event) => (
-                                  <MenuItem value={event.link}>
-                                    {event.link}
-                                  </MenuItem>
-                                ))}
-                              </Select>
-                            </TableCell>
-                          );
-                        }
-
-                        if (column.id === "notification") {
-                          return (
-                            <TableCell key={column.id} align={column.align}>
-                              <ButtonCapsule
-                                text="Send"
-                                buttonStyle={classes.sendButton}
-                              ></ButtonCapsule>
-                            </TableCell>
-                          );
-                        }
 
                         return (
                           <TableCell key={column.id} align={column.align}>
@@ -173,18 +216,6 @@ const columns = [
     minWidth: 100,
     align: "center",
   },
-  {
-    id: "events",
-    label: "Events",
-    minWidth: 100,
-    align: "center",
-  },
-  {
-    id: "notification",
-    label: "Notification",
-    minWidth: 100,
-    align: "center",
-  },
 ];
 
 const styles = makeStyles((theme) => ({
@@ -203,7 +234,15 @@ const styles = makeStyles((theme) => ({
     paddingBottom: "1em",
   },
   sendButton: {
+    background: "white",
     padding: "0.5em 2em",
+    height: "fit-content",
+    "& > span > svg": {
+      marginLeft: "0.5em",
+    },
+    "&:hover": {
+      background: "#dedede",
+    },
   },
 }));
 

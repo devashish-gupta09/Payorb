@@ -66,13 +66,7 @@ function VendorEventsStats() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const {
-    loading,
-    events,
-    moreEvents,
-    loadMoreEvents,
-    changeLimit,
-  } = useFetchEvents(true, {
+  const { loading, events, changeLimit } = useFetchEvents(true, {
     limit: rowsPerPage,
   });
 
