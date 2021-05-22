@@ -14,7 +14,11 @@ function Logo({ height, width, dark, className, redirectToHome }) {
   return (
     <img
       className={`${className} ${classes.logo}`}
-      style={{ height, width: width }}
+      style={{
+        height,
+        width: width,
+        cursor: redirectToHome ? "pointer" : "auto",
+      }}
       src={dark ? "/assets/logoSvg.svg" : "/assets/logo.png"}
       onClick={redirectToHome ? handleClick : null}
     />
