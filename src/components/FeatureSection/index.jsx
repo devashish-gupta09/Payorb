@@ -18,6 +18,7 @@ function FeatureSection({ content }) {
             sectionLogo={content.sectionLogo}
             sectionTitle={content.sectionTitle}
             title={content.title}
+            description={content.description}
           />
         </Grid>
         <Grid container item sm={8} justify={"center"}>

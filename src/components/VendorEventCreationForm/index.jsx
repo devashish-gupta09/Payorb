@@ -183,9 +183,6 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
             </Typography>
           ) : (
             <Grid>
-              <Typography style={{ color: appColors.grey }}>
-                START FOR FREE
-              </Typography>
               <Typography className={`${globalStyles.bold}`} variant={"h3"}>
                 Create Event
               </Typography>

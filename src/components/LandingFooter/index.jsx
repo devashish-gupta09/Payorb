@@ -51,7 +51,7 @@ function Footer() {
         </Grid>
         <Grid item sm={12}>
           <Typography className={classes.bottomLabel}>
-            @ 2021 All Rights Reserved. Powered by Vanikel Labs |{" "}
+            @ 2021 All Rights Reserved. Powered by Vanickel Labs |{" "}
             <Link
               className={classes.policyLink}
               href={PAGE_PATHS.POLICY_TERMS_AND_CONDS}

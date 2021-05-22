@@ -51,14 +51,15 @@ export const getFeaturesContent = async () => {
   } catch (err) {
     console.error(err.message);
     return {
-      title: "What payorb can offer you",
+      title: "What Payorb Offers You",
       sectionLogo:
         "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
       sectionTitle: "FEATURES",
+      description: "Your complete business suite",
       features: [
         {
           title: "Event Creation or One-on-one service Booking",
-          description: "As many as you want",
+          // description: "As many as you want",
           image:
             "https://storage.googleapis.com/bucket_icon_assets/assets/Group.png",
         },
@@ -113,9 +114,9 @@ export const getEventRegistrationContent = async () => {
       sectionLogo:
         "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
       sectionTitle: "Event Registration",
-      title: "Add you Event",
+      title: "Complete Business Dashboard",
       description:
-        "All details & analytics you would need of your Events, Users and Financials",
+        "Track every penny flowing in and each customer joining your network, in real time",
       image:
         "https://storage.googleapis.com/bucket_icon_assets/assets/Rectangle%2035.png",
     };
@@ -139,9 +140,9 @@ export const getUserRegistrationContent = async () => {
       sectionLogo:
         "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
       sectionTitle: "User Registration",
-      title: "Create Your Profile",
+      title: "Unlimited Events",
       description:
-        "Space to add an engaging intro video, so that your clients get to know you better",
+        "Create Group events and One-on-one services, Monetize all your business ideas.",
       image:
         "https://storage.googleapis.com/bucket_icon_assets/assets/Rectangle%2035.png",
     };
