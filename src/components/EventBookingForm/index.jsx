@@ -13,6 +13,7 @@ import { useFormik } from "formik";
 import React from "react";
 
 import { ALERT_TYPES } from "../../constants/alerts";
+import { EVENT_TYPES } from "../../constants/events";
 import { PAGE_PATHS } from "../../constants/paths";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 
@@ -102,7 +103,10 @@ function EventBookingForm({
               },
               eventId: eventLink,
               type: type,
-              slotTime: new Date(parseInt(startDate)).toISOString(),
+              slotTime:
+                type === EVENT_TYPES.ONE_ON_ONE
+                  ? new Date(parseInt(startDate)).toISOString()
+                  : "",
             });
 
             displayRazorpay(order.rzpOrderId, values);
@@ -113,7 +117,12 @@ function EventBookingForm({
 
           if (typeof err === "object") {
             if (err.success === false) {
-              showAlert(err.error || err.message, ALERT_TYPES.ERROR);
+              showAlert(err.error, ALERT_TYPES.ERROR);
+              return;
+            }
+
+            if (err.message) {
+              showAlert(err.message, ALERT_TYPES.ERROR);
               return;
             }
           }
