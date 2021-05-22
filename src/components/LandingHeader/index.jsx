@@ -30,7 +30,7 @@ function LandingHeader() {
             justify={"space-between"}
             className={classes.drawerTitleContainer}
           >
-            <Logo dark={true} width={"35%"} />
+            <Logo redirectToHome={true} dark={true} width={"35%"} />
             <Typography className={classes.drawerClose} onClick={toggleDrawer}>
               <Close />
             </Typography>
@@ -56,7 +56,11 @@ function LandingHeader() {
       <Toolbar>
         <Grid container justify="space-between" alignItems="center">
           {/* Will be replaced with logo */}
-          <Logo dark={true} className={classes.logo}></Logo>
+          <Logo
+            redirectToHome={true}
+            dark={true}
+            className={classes.logo}
+          ></Logo>
 
           <Grid
             className={classes.buttonContainer}

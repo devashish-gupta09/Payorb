@@ -18,7 +18,7 @@ function Landing({ content }) {
       <FeatureSection content={content.feature} />
       <UserRegistrationSection content={content.userRegistration} />
       <EventRegistrationSection content={content.eventRegistration} />
-      <ClientReviewSection content={content.clientReview} />
+      {/* <ClientReviewSection content={content.clientReview} /> */}
       <GrowthSection content={content.growth} />
       <Footer />
     </Grid>

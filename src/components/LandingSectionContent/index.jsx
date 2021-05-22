@@ -12,7 +12,7 @@ function LandingSectionContent({
   const classes = styles();
   return (
     <Grid className={classes.container}>
-      <img src={sectionLogo} />
+      {/* <img src={sectionLogo} /> */}
       <Typography className={classes.sectionTitle}>{sectionTitle}</Typography>
       <Typography className={classes.title} variant="h2">
         {title}

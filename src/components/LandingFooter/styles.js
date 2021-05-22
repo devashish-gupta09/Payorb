@@ -35,6 +35,7 @@ export const styles = makeStyles((theme) => ({
   companyContainer: {
     [theme.breakpoints.down("sm")]: {
       width: "100%",
+      paddingBottom: "1em",
     },
   },
   bottomLabel: {
@@ -53,6 +54,23 @@ export const styles = makeStyles((theme) => ({
   socialLinksContainer: {
     "& > img": {
       padding: "0.5em",
+    },
+  },
+  policyLink: {
+    color: "#71c3de",
+  },
+  disclaimer: {
+    padding: "0.75em 0",
+    fontSize: "0.65em",
+    textAlign: "justify",
+  },
+  readMore: {
+    color: "#71c3de",
+    textAlign: "justify",
+  },
+  logoContainer: {
+    [theme.breakpoints.down("sm")]: {
+      paddingBottom: "1em",
     },
   },
 }));

@@ -1,15 +1,22 @@
 import { makeStyles } from "@material-ui/core";
+import { useRouter } from "next/router";
 import React from "react";
 
 /* eslint-disable-next-line react/prop-types */
-function Logo({ height, width, dark, className }) {
+function Logo({ height, width, dark, className, redirectToHome }) {
   const classes = styles();
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push("/");
+  };
 
   return (
     <img
       className={`${className} ${classes.logo}`}
       style={{ height, width: width }}
       src={dark ? "/assets/logoSvg.svg" : "/assets/logo.png"}
+      onClick={redirectToHome ? handleClick : null}
     />
   );
 }
