@@ -25,7 +25,10 @@ export const getHomeContent = async () => {
       titleSection3: "Infinite Opportunities",
       description: "A place to start & grow all your business ideas",
       urls: [
-        "https://storage.googleapis.com/bucket_icon_assets/assets/erik-brolin-ZARfCYDaVg0-unsplash%201.png",
+        "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2Flanding-carousel4.jpg?alt=media&token=4f5c9789-9a19-4f7b-ab9e-7d1e61c27d7a",
+        "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2Flanding-caraousel1.jpg?alt=media&token=ef9ce365-6109-4a08-ad59-6e910bd15f89",
+        "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2Flanding-caraousel2.jpg?alt=media&token=e620258a-6971-4257-a13c-79138d54982c",
+        "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2Flanding-carousel3.jpg?alt=media&token=3abb2f45-e52c-47a0-9cd9-4279ab817f8b",
       ],
     };
   }
@@ -110,7 +113,7 @@ export const getEventRegistrationContent = async () => {
       sectionLogo:
         "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
       sectionTitle: "Event Registration",
-      title: "Event Registration",
+      title: "Add you Event",
       description:
         "All details & analytics you would need of your Events, Users and Financials",
       image:
@@ -135,8 +138,8 @@ export const getUserRegistrationContent = async () => {
     return {
       sectionLogo:
         "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
-      sectionTitle: "Event Registration",
-      title: "Event Registration",
+      sectionTitle: "User Registration",
+      title: "Create Your Profile",
       description:
         "Space to add an engaging intro video, so that your clients get to know you better",
       image:

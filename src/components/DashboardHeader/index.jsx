@@ -128,7 +128,7 @@ function VendorDashboardHeader({ profileData }) {
             <Grid container item sm={8}>
               <Grid
                 style={{
-                  height: "30px",
+                  // height: "30px",
                   width: "100%",
                   flexGrow: 1,
                 }}
@@ -163,7 +163,7 @@ function VendorDashboardHeader({ profileData }) {
             <Grid item sm={2}>
               <Grid
                 style={{
-                  cursor: "point",
+                  cursor: "pointer",
                   "&:hover": {
                     backgroundColor: "grey",
                   },

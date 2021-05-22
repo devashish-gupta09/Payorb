@@ -17,7 +17,7 @@ function Footer() {
     <Grid className={classes.container}>
       <Grid container>
         <Grid item sm={4} className={classes.logoContainer}>
-          <Logo width="7.5em" />
+          <Logo width="6em" />
         </Grid>
         <Grid item sm={4} className={classes.companyContainer}>
           <Typography

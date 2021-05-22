@@ -17,6 +17,8 @@ import {
   Grid,
   IconButton,
   makeStyles,
+  useMediaQuery,
+  useTheme,
 } from "@material-ui/core";
 import { Close, Edit } from "@material-ui/icons";
 import moment from "moment";
@@ -67,6 +69,9 @@ function VendorEventsCalenderView() {
     today.endOf("week").toISOString()
   );
 
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+
   const { data: events, loading, error } = useFetchEventsBetween(
     startDate,
     endDate
@@ -109,7 +114,7 @@ function VendorEventsCalenderView() {
     const transformedEvents = transformEvents(events);
     return (
       <DashboardCard>
-        <Scheduler data={transformedEvents} height={660}>
+        <Scheduler data={transformedEvents}>
           <ViewState
             currentDate={startDate}
             onCurrentDateChange={handleDateChange}

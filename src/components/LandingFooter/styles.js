@@ -60,9 +60,12 @@ export const styles = makeStyles((theme) => ({
     color: "#71c3de",
   },
   disclaimer: {
-    padding: "0.75em 0",
+    padding: "0.8em 0",
     fontSize: "0.65em",
     textAlign: "justify",
+    [theme.breakpoints.down("sm")]: {
+      padding: "1.5em 0"
+    }
   },
   readMore: {
     color: "#71c3de",

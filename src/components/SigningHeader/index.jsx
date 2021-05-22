@@ -15,7 +15,7 @@ function SigningHeader() {
         <Grid container justify="space-between" alignItems="center">
           <Grid>
             {/* Will be replaced with logo */}
-            <Logo dark={true} width={"70%"}></Logo>
+            <Logo dark={true} width={"4.5em"}></Logo>
           </Grid>
           <Grid className={classes.backButtonContainer}>
             <Link href="/">

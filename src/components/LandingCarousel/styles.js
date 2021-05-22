@@ -2,9 +2,12 @@ import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
   container: {
-    height: "90vh",
+    height: "93vh",
+    [theme.breakpoints.up("xl")]: {
+      height: "95vh",
+    },
     [theme.breakpoints.down("sm")]: {
-      height: "15em",
+      height: "18em",
     },
   },
   navButtons: {
@@ -33,11 +36,14 @@ export const styles = makeStyles((theme) => ({
     },
   },
   carouselImage: {
-    height: "90vh",
+    height: "93vh",
     width: "100vw",
     backgroundSize: "cover !important",
+    [theme.breakpoints.up("xl")]: {
+      height: "95vh",
+    },
     [theme.breakpoints.down("sm")]: {
-      height: "15em",
+      height: "18em",
       backgroundSize: "contain",
     },
   },

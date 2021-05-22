@@ -6,5 +6,6 @@ export const styles = makeStyles(() => ({
     borderRadius: "2em",
     padding: "0.75em 1em",
     textTransform: "capitalize",
+    boxShadow: "0px 4px 17px 0px rgb(89 207 165 / 75%)",
   },
 }));
