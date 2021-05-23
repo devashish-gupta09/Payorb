@@ -158,6 +158,7 @@ function SignUpForm() {
         .auth()
         .signInWithPhoneNumber(phoneNumber, appVerifier);
 
+      showAlert("OTP Sent");
       setConfirmationResult(response);
     } catch (err) {
       if (
