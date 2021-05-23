@@ -124,7 +124,7 @@ function SigninForm() {
       ) {
         showAlert("OTP Sent");
       } else {
-        showAlert("OTP could not be sent.", ALERT_TYPES.ERROR);
+        showAlert(`OTP could not be sent. ${err.message}`, ALERT_TYPES.ERROR);
       }
     }
   };
