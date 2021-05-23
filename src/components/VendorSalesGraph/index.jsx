@@ -234,7 +234,6 @@ const styles = makeStyles((theme) => ({
   },
   errorCard: {
     padding: "2em",
-    width: "96%",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
