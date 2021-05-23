@@ -12,6 +12,6 @@ import PolicyView from "../src/components/PolicyView";
  *  /policy/website-disclaimer
  */
 
-export default function Vendor() {
+export default function Policies() {
   return <PolicyView />;
 }
