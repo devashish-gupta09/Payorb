@@ -88,19 +88,23 @@ function VendorSalesGraph() {
   const globalClasses = globalStyles();
 
   if (loading) {
-    return <SkeletonLoading />;
+    return (
+      <Grid className={classes.root}>
+        <SkeletonLoading message="Loading weekly revenue charts" />
+      </Grid>
+    );
   }
 
   if (error) {
     return (
-      <>
-        <h2>Something went wrong</h2>
-        <h5>error</h5>
-      </>
+      <Grid className={classes.root}>
+        <DashboardCard rootClass={classes.errorCard}>
+          <h2>Weekly charts not available.</h2>
+          <h5>Stats will be generated when you have some bookings.</h5>
+        </DashboardCard>
+      </Grid>
     );
   }
-
-  const superscript = "⁰¹²³⁴⁵⁶⁷⁸⁹";
 
   if (Test) {
     return (
