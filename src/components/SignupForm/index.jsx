@@ -1,8 +1,6 @@
 import {
   Button,
   Checkbox,
-  Dialog,
-  DialogContent,
   Grid,
   InputAdornment,
   TextField,
@@ -18,8 +16,11 @@ import { useRouter } from "next/router";
 
 import React from "react";
 
+import { ALERT_TYPES } from "../../constants/alerts";
+
 import { AUTH_PROVIDERS, USERNAME_TYPE } from "../../constants/auth";
 import { PAGE_PATHS } from "../../constants/paths";
+import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import useFederatedAuth from "../../hooks/useFederatedAuth";
 import { addUser } from "../../services/auth";
 import app from "../../utils/firebase";
@@ -62,8 +63,8 @@ function SignUpForm() {
   const { fedSignUp } = useFederatedAuth();
   const [usernameType, setUsernameType] = React.useState();
   const [confirmationResult, setConfirmationResult] = React.useState();
-  const [otpModal, setOtpModal] = React.useState({ display: false, text: "" });
   const [tAndC, setTAndC] = React.useState(false);
+  const { Alert, showAlert } = useAlertSnackbar();
 
   const handleTAndCChange = () => {
     setTAndC(!tAndC);
@@ -108,14 +109,10 @@ function SignUpForm() {
       } catch (err) {
         const firebaseInstance = FirebaseAuth.Singleton();
         await firebaseInstance.signOut();
-        setOtpModal({ display: true, text: err.message });
+        showAlert(err.message, ALERT_TYPES.ERROR);
       }
     },
   });
-
-  const handleModalClose = () => {
-    setOtpModal({ display: false, text: "" });
-  };
 
   // In case of fedrated sign up we are going to
   // sign in a user using a social platform but
@@ -138,7 +135,7 @@ function SignUpForm() {
         throw "Not able to sign in the user using a federated source.";
       }
     } catch (err) {
-      setOtpModal({ display: true, text: err.message });
+      showAlert(err.message, ALERT_TYPES.ERROR);
     }
   };
 
@@ -157,10 +154,19 @@ function SignUpForm() {
         .auth()
         .signInWithPhoneNumber(phoneNumber, appVerifier);
 
-      setOtpModal({ display: true, test: "OTP Sent" });
       setConfirmationResult(response);
     } catch (err) {
-      setOtpModal({ display: true, text: err.message });
+      if (
+        err &&
+        err.message &&
+        err.message.includes(
+          "reCAPTCHA has already been rendered in this element"
+        )
+      ) {
+        showAlert("OTP Sent");
+      } else {
+        showAlert("OTP could not be sent.", ALERT_TYPES.ERROR);
+      }
     }
   };
 
@@ -178,11 +184,7 @@ function SignUpForm() {
 
   return (
     <Grid className={classes.container}>
-      <Dialog open={otpModal.display} onClose={handleModalClose}>
-        <DialogContent>
-          <Typography variant={"h6"}>{otpModal.text}</Typography>
-        </DialogContent>
-      </Dialog>
+      {Alert()}
       <Typography className={classes.sectionTitle}>SIGN UP</Typography>
       <Typography variant={"h4"} className={classes.title}>
         Get Started

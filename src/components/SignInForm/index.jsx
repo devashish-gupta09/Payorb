@@ -1,7 +1,5 @@
 import {
   Button,
-  Dialog,
-  DialogContent,
   FormControl,
   Grid,
   InputAdornment,
@@ -16,8 +14,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
+import { ALERT_TYPES } from "../../constants/alerts";
+
 import { AUTH_PROVIDERS, USERNAME_TYPE } from "../../constants/auth";
 import { PAGE_PATHS } from "../../constants/paths";
+import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import useFederatedAuth from "../../hooks/useFederatedAuth";
 import app from "../../utils/firebase";
 import { phoneRegExp } from "../../validations/signup";
@@ -32,7 +33,7 @@ function SigninForm() {
   const router = useRouter();
   const [usernameType, setUsernameType] = React.useState();
   const [confirmationResult, setConfirmationResult] = React.useState();
-  const [otpModal, setOtpModal] = React.useState({ display: false, text: "" });
+  const { Alert, showAlert } = useAlertSnackbar();
 
   const formik = useFormik({
     initialValues: {
@@ -63,7 +64,7 @@ function SigninForm() {
       } catch (err) {
         const firebaseInstance = FirebaseAuth.Singleton();
         await firebaseInstance.signOut();
-        setOtpModal({ display: true, text: err.message });
+        showAlert(err.message, ALERT_TYPES.ERROR);
       }
     },
   });
@@ -75,15 +76,13 @@ function SigninForm() {
   const handleFederatedSignUp = async (provider) => {
     try {
       const { userInfo, idToken } = await fedSignUp(provider);
-      console.log(idToken);
-
       if (userInfo && idToken) {
         router.push(`${PAGE_PATHS.VENDOR_DASHBOARD_EVENTS}`);
       } else {
         throw "Not able to sign in the user using a federated source.";
       }
     } catch (err) {
-      setOtpModal({ display: true, text: err.message });
+      showAlert(err.message, ALERT_TYPES.ERROR);
     }
   };
 
@@ -106,32 +105,33 @@ function SigninForm() {
         size: "invisible",
       }
     );
-
-    const phoneNumber = `+91${formik.values.username}`;
     const appVerifier = window.recaptchaVerifier;
+    const phoneNumber = `+91${formik.values.username}`;
 
     try {
       const response = await app
         .auth()
         .signInWithPhoneNumber(phoneNumber, appVerifier);
-      setOtpModal({ display: true, text: "OTP sent" });
+      showAlert("OTP Sent");
       setConfirmationResult(response);
     } catch (err) {
-      setOtpModal({ display: true, text: "OTP sent" });
+      if (
+        err &&
+        err.message &&
+        err.message.includes(
+          "reCAPTCHA has already been rendered in this element"
+        )
+      ) {
+        showAlert("OTP Sent");
+      } else {
+        showAlert("OTP could not be sent.", ALERT_TYPES.ERROR);
+      }
     }
-  };
-
-  const handleModalClose = () => {
-    setOtpModal({ display: false, text: "" });
   };
 
   return (
     <Grid className={classes.container}>
-      <Dialog open={otpModal.display} onClose={handleModalClose}>
-        <DialogContent className={classes.otpModal}>
-          <Typography>{otpModal.text}</Typography>
-        </DialogContent>
-      </Dialog>
+      {Alert()}
       <Typography className={classes.sectionTitle}>SIGN IN</Typography>
       <Typography variant={"h4"} className={classes.title}>
         Welcome back
