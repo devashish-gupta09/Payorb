@@ -33,10 +33,8 @@ import { styles } from "./styles";
 export const handleUserAddition = async (userRes, idToken) => {
   if (userRes && idToken) {
     const addUserRes = await addUser({
-      name: userRes.user.displayName
-        ? userRes.user.displayName
-        : userRes.user.name,
-      email: userRes.user.email,
+      name: userRes.user.displayName ? userRes.user.displayName : userRes.name,
+      email: userRes.user.email || "",
       phoneNumber: userRes.user.phoneNumber
         ? userRes.user.phoneNumber
         : undefined,
@@ -81,6 +79,7 @@ function SignUpForm() {
     },
     validationSchema: signUpValidation,
     onSubmit: async (values) => {
+      console.log(values);
       try {
         let user;
 
@@ -98,9 +97,14 @@ function SignUpForm() {
             .auth()
             .createUserWithEmailAndPassword(values.username, values.password);
         }
+
         if (user) {
           await handleUserAddition(
-            { ...user, location: values.location },
+            {
+              ...user,
+              location: values.location,
+              name: values.name,
+            },
             await FirebaseAuth.Singleton().getIdToken()
           );
 

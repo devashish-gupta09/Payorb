@@ -61,7 +61,6 @@ const transformEvents = (events) => {
 const today = moment();
 
 function VendorEventsCalenderView() {
-  const [calendarView, setCalendarView] = React.useState("Week");
   const [startDate, setStartDate] = React.useState(
     today.startOf("week").toISOString()
   );
@@ -71,6 +70,9 @@ function VendorEventsCalenderView() {
 
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
+  const [calendarView, setCalendarView] = React.useState(
+    matches ? "Week" : "Day"
+  );
 
   const { data: events, loading, error } = useFetchEventsBetween(
     startDate,
@@ -114,7 +116,7 @@ function VendorEventsCalenderView() {
     const transformedEvents = transformEvents(events);
     return (
       <DashboardCard>
-        <Scheduler data={transformedEvents}>
+        <Scheduler height={matches ? 500 : 600} data={transformedEvents}>
           <ViewState
             currentDate={startDate}
             onCurrentDateChange={handleDateChange}

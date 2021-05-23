@@ -232,6 +232,13 @@ const styles = makeStyles((theme) => ({
     fontSize: "1.2em",
     paddingBottom: "1em",
   },
+  errorCard: {
+    padding: "2em",
+    width: "96%",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+    },
+  },
 }));
 
 export default VendorSalesGraph;
