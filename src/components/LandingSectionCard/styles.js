@@ -6,10 +6,11 @@ export const styles = makeStyles((theme) => ({
   container: {
     flex: 1,
     borderRadius: "0.75em",
-    padding: "2em 1em 1em 1em",
+    padding: "1em 1em 1em 1em",
     boxShadow: "0px 1em 2em rgba(0, 0, 0, 0.1)",
     [theme.breakpoints.down("sm")]: {
       padding: "2em",
+      width: "100%",
       // width: "80vw",
       // height: "max-content",
     },
@@ -27,7 +28,7 @@ export const styles = makeStyles((theme) => ({
     textTransform: "uppercase",
   },
   title: {
-    padding: "0.2em 1em 0 0",
+    padding: "0.2em 0em 0 0",
     fontWeight: "bold",
     color: "#333333",
   },
@@ -38,6 +39,6 @@ export const styles = makeStyles((theme) => ({
     color: appColors.grey,
   },
   image: {
-    height: "40%",
+    height: "5em",
   },
 }));

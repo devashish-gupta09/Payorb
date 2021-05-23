@@ -10,9 +10,18 @@ export const styles = makeStyles((theme) => ({
       padding: "2em 1em",
     },
   },
+  carousel: {
+    overflow: "visible",
+    width: "90vw",
+    height: "30vh",
+    background: "#ffffff",
+    borderRadius: "10px",
+  },
+
   mobile: {
     display: "None !important",
     [theme.breakpoints.down("sm")]: {
+      borderRadius: "10px",
       display: "flex !important",
     },
   },
@@ -43,8 +52,9 @@ export const styles = makeStyles((theme) => ({
   indicatorButtonContainer: {
     marginTop: "-4em",
     padding: "1em 1em 1em 0",
+    width: "105%",
     [theme.breakpoints.down("sm")]: {
-      background: "pink",
+      marginTop: "-3em",
     },
   },
 }));

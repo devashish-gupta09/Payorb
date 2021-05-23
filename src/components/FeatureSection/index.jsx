@@ -24,6 +24,7 @@ function FeatureSection({ content }) {
         <Grid container item sm={8} justify={"center"}>
           <Grid className={classes.mobile}>
             <Carousel
+              className={classes.carousel}
               navButtonsProps={{ className: `${classes.navButton}` }}
               autoPlay={false}
               IndicatorIcon={<Grid></Grid>}
@@ -41,8 +42,11 @@ function FeatureSection({ content }) {
                 return (
                   <Grid
                     container
-                    // justify="center"
-                    style={{ width: "100%" }}
+                    style={{
+                      width: "90vw",
+                      height: "30vh",
+                      borderRadius: "2em",
+                    }}
                     key={index}
                   >
                     <SectionCard
