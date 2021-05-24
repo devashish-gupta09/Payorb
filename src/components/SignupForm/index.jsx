@@ -31,13 +31,14 @@ import ButtonCapsule from "../ButtonCapsule";
 import { styles } from "./styles";
 
 export const handleUserAddition = async (userRes, idToken) => {
+  const name = userRes.displayName || userRes.user?.displayName || userRes.name;
+  const email = userRes.email || userRes.user?.email || "";
+  const phoneNumber = userRes.phoneNumber || userRes.user?.phoneNumber || "";
   if (userRes && idToken) {
     const addUserRes = await addUser({
-      name: userRes.user.displayName ? userRes.user.displayName : userRes.name,
-      email: userRes.user.email || "",
-      phoneNumber: userRes.user.phoneNumber
-        ? userRes.user.phoneNumber
-        : undefined,
+      name,
+      email,
+      phoneNumber,
       location: userRes.location,
     });
 
@@ -125,6 +126,8 @@ function SignUpForm() {
   const handleFederatedSignUp = async (provider) => {
     try {
       const { userInfo, idToken } = await fedSignUp(provider);
+
+      console.log("INSIGNUP :", userInfo);
 
       if (userInfo && idToken) {
         const res = await handleUserAddition(userInfo, idToken);

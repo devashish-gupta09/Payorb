@@ -6,7 +6,11 @@ function useFederatedAuth() {
 
   const googleSignIn = async () => {
     try {
-      const userInfo = await firebaseAuth.googleSignin();
+      let userInfo = firebaseAuth.getUser();
+      if (!userInfo) {
+        userInfo = await firebaseAuth.googleSignin();
+      }
+
       const idToken = await firebaseAuth.getIdToken();
       return { userInfo, idToken };
     } catch (err) {
@@ -17,7 +21,11 @@ function useFederatedAuth() {
 
   const facebookSignIn = async () => {
     try {
-      const userInfo = await firebaseAuth.facebookSignin();
+      let userInfo = firebaseAuth.getUser();
+      if (!userInfo) {
+        userInfo = await firebaseAuth.googleSignin();
+      }
+
       const idToken = await firebaseAuth.getIdToken();
       return { userInfo, idToken };
     } catch (err) {

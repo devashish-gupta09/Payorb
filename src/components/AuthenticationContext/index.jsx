@@ -34,6 +34,10 @@ export class FirebaseAuth {
   async signOut() {
     await app.auth().signOut();
   }
+
+  getUser() {
+    return app.auth().currentUser;
+  }
 }
 
 export const Context = React.createContext(null);

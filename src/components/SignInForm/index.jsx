@@ -73,7 +73,7 @@ function SigninForm() {
   // sign in a user using a social platform but
   // we would also need to persist the user's information
   // to the backend as well
-  const handleFederatedSignUp = async (provider) => {
+  const handleFederatedSignIn = async (provider) => {
     try {
       const { userInfo, idToken } = await fedSignUp(provider);
       if (userInfo && idToken) {
@@ -263,7 +263,7 @@ function SigninForm() {
                 style={{ padding: "0 0.5em" }}
               />
             }
-            onClick={() => handleFederatedSignUp(AUTH_PROVIDERS.GOOGLE)}
+            onClick={() => handleFederatedSignIn(AUTH_PROVIDERS.GOOGLE)}
           >
             Connect with google
           </Button>
@@ -276,7 +276,7 @@ function SigninForm() {
                 style={{ padding: "0 0.5em" }}
               />
             }
-            onClick={() => handleFederatedSignUp(AUTH_PROVIDERS.FACEBOOK)}
+            onClick={() => handleFederatedSignIn(AUTH_PROVIDERS.FACEBOOK)}
           >
             Sign in with Facebook
           </Button>

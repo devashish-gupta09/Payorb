@@ -60,7 +60,7 @@ function VendorDashboardHeader({ profileData }) {
       <Drawer anchor="left" open={appMenu} onClose={toggleDrawer}>
         <Grid className={classes.drawerItemContainer}>
           <Grid container justify="space-between" alignItems="center">
-            <Logo dark={true} height={"70%"} />
+            <Logo redirectToHome={true} dark={true} width={"5em"} />
             <Typography className={classes.drawerClose} onClick={toggleDrawer}>
               <Close />
             </Typography>
@@ -112,7 +112,7 @@ function VendorDashboardHeader({ profileData }) {
             className={classes.mobile}
           >
             <Grid item>
-              <Logo dark={true} width={"65%"}></Logo>
+              <Logo redirectToHome={true} dark={true} width={"5em"}></Logo>
             </Grid>
             <Grid className={classes.menuButtonContainer}>
               <Menu style={{ color: "black" }} onClick={toggleDrawer} />
@@ -123,7 +123,7 @@ function VendorDashboardHeader({ profileData }) {
 
           <Grid container alignItems="center" className={classes.wideScreen}>
             <Grid item sm={2}>
-              <Logo dark={true} width={"35%"}></Logo>
+              <Logo redirectToHome={true} dark={true} width={"4.5em"}></Logo>
             </Grid>
             <Grid container item sm={8}>
               <Grid

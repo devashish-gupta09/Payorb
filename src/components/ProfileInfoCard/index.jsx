@@ -23,7 +23,6 @@ import { styles } from "./styles";
 function ProfileInfoCard({ profileData, vendor, updateProfile }) {
   const classes = styles();
   const globalClasses = globalStyles();
-  const router = useRouter();
   const [edit, setEdit] = React.useState(false);
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
