@@ -4,7 +4,7 @@ export const styles = makeStyles((theme) => ({
   container: {
     minHeight: "100vh",
     maxHeight: "fit-content",
-    padding: "12em 2em 8em 8em",
+    padding: "8em 2em 10em 6em",
     [theme.breakpoints.down("sm")]: {
       minHeight: "fit-content",
       padding: "2em 1em",
