@@ -130,12 +130,16 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
             router.reload();
           }
         } catch (err) {
-          console.log(err);
-          setDialog({ display: true, text: err.error });
+          backendValidation(err.errors[0]);
+          // setDialog({ display: true, text: err.error });
         }
       }
     },
   });
+
+  const backendValidation = (err) => {
+    formik.setFieldError(err.details[0].context.key, err.details[0].message);
+  };
 
   const handleCancel = () => {
     if (edit) {

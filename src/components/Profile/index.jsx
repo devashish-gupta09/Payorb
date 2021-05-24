@@ -6,12 +6,27 @@ import ProfileInfoCard from "../ProfileInfoCard";
 import ProfilePaymentSection from "../ProfilePaymentSection";
 
 export default function Profile({ profileData }) {
+  const [profileInfo, setProfileInfo] = React.useState(profileData);
+  const updateProfileInfo = (data) => {
+    setProfileInfo(data);
+  };
   return (
     <Fade in={true} timeout={500}>
       <Grid>
-        <ProfileInfoCard profileData={profileData} vendor={true} />
-        <ProfileDetailsSection profileData={profileData} vendor={true} />
-        <ProfilePaymentSection profileData={profileData} />
+        <ProfileInfoCard
+          profileData={profileInfo}
+          updateProfile={updateProfileInfo}
+          vendor={true}
+        />
+        <ProfileDetailsSection
+          profileData={profileInfo}
+          updateProfile={updateProfileInfo}
+          vendor={true}
+        />
+        <ProfilePaymentSection
+          profileData={profileInfo}
+          updateProfile={updateProfileInfo}
+        />
       </Grid>
     </Fade>
   );

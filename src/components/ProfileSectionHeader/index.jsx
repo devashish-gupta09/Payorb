@@ -1,5 +1,4 @@
 import { Avatar, Grid, Tooltip, Typography } from "@material-ui/core";
-import { KeyboardArrowDown } from "@material-ui/icons";
 import React from "react";
 
 function ProfileSectionHeader({ image, name }) {
@@ -13,7 +12,6 @@ function ProfileSectionHeader({ image, name }) {
       >
         {image && <Avatar src={image} />}
         <Typography>{name ? name : "Welcome User"}</Typography>
-        <KeyboardArrowDown style={{ fontSize: "1em" }} />
       </Grid>
     </Tooltip>
   );
