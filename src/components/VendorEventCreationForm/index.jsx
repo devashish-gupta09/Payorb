@@ -26,7 +26,6 @@ import React from "react";
 
 import { v4 } from "uuid";
 
-import { appColors } from "../../../styles/colors";
 import { globalStyles } from "../../../styles/globalStyles";
 import {
   EVENT_CATEGORY,
@@ -44,6 +43,7 @@ import OneOnOneDateSelector from "../OneOnOneDateSelector";
 import OneTimeDateSelector from "../OneTimeDateSelector";
 
 import PostEventCreationDialog from "../PostEventCreationDialog";
+import EventCategoryField from "./EventCategoryField";
 import { styles } from "./styles";
 
 const hash = createHash("sha256");
@@ -66,6 +66,7 @@ function getCreationFormInitialState() {
     slotDuration: 0,
     slotStartTimePerDay: getDateForTime(9),
     slotEndTimePerDay: getDateForTime(17),
+    otherField: "",
   };
 }
 
@@ -111,16 +112,20 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
     onSubmit: async (values) => {
       if (values) {
         try {
+          const req = {
+            ...values,
+            category: values.otherField || values.category,
+          };
+
+          delete req["otherField"];
           if (!edit) {
             await createEvent({
-              event: {
-                ...values,
-              },
+              event: req,
             });
             setPostEventDialog(true);
           } else {
             await editEvent({
-              event: values,
+              event: req,
             });
             router.reload();
           }
@@ -322,14 +327,22 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
 
               {/* LOCATION AND CATEGORY */}
               <Grid item sm={12}>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} alignItems="flex-start">
+                  {/* CATEGORY */}
+                  <Grid item sm={6} style={{ width: "100%" }}>
+                    <EventCategoryField
+                      formik={formik}
+                      checkDisabled={checkDisabled}
+                    />
+                  </Grid>
                   {/* LOCATION */}
                   <Grid item sm={6} style={{ width: "100%" }}>
+                    <FormLabel>Location</FormLabel>
+
                     <TextField
                       fullWidth
                       className={classes.textInput}
                       id="location"
-                      label={"Location"}
                       variant="outlined"
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
@@ -340,28 +353,6 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                       }
                       helperText={
                         formik.touched.location && formik.errors.location
-                      }
-                      disabled={checkDisabled()}
-                    />
-                  </Grid>
-
-                  {/* CATEGORY */}
-                  <Grid item sm={6} style={{ width: "100%" }}>
-                    <TextField
-                      fullWidth
-                      className={classes.textInput}
-                      id="category"
-                      label={"Category"}
-                      variant="outlined"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.category}
-                      error={
-                        formik.touched.category &&
-                        Boolean(formik.errors.category)
-                      }
-                      helperText={
-                        formik.touched.category && formik.errors.category
                       }
                       disabled={checkDisabled()}
                     />
