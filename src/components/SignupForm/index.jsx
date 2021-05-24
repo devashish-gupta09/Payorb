@@ -80,7 +80,6 @@ function SignUpForm() {
     },
     validationSchema: signUpValidation,
     onSubmit: async (values) => {
-      console.log(values);
       try {
         let user;
 
@@ -109,7 +108,7 @@ function SignUpForm() {
             await FirebaseAuth.Singleton().getIdToken()
           );
 
-          router.push(`${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`);
+          router.replace(`${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`);
         }
       } catch (err) {
         const firebaseInstance = FirebaseAuth.Singleton();
@@ -126,8 +125,6 @@ function SignUpForm() {
   const handleFederatedSignUp = async (provider) => {
     try {
       const { userInfo, idToken } = await fedSignUp(provider);
-
-      console.log("INSIGNUP :", userInfo);
 
       if (userInfo && idToken) {
         const res = await handleUserAddition(userInfo, idToken);

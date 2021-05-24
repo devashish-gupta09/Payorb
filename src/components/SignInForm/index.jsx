@@ -77,7 +77,7 @@ function SigninForm() {
     try {
       const { userInfo, idToken } = await fedSignUp(provider);
       if (userInfo && idToken) {
-        router.push(`${PAGE_PATHS.VENDOR_DASHBOARD_EVENTS}`);
+        router.replace(`${PAGE_PATHS.VENDOR_DASHBOARD_EVENTS}`);
       } else {
         throw "Not able to sign in the user using a federated source.";
       }
