@@ -55,7 +55,7 @@ export const getFeaturesContent = async () => {
       sectionLogo:
         "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
       sectionTitle: "FEATURES",
-      description: "Your complete business suite",
+      description: "An easy to use online suite for all your business needs",
       features: [
         {
           title: "Event Creation or One-on-one service Booking",
@@ -70,13 +70,13 @@ export const getFeaturesContent = async () => {
             "https://storage.googleapis.com/bucket_icon_assets/assets/Group.png",
         },
         {
-          title: "Easy one-click event booking for your clients",
+          title: "Instant Payouts",
           description: null,
           image:
             "https://storage.googleapis.com/bucket_icon_assets/assets/Group.png",
         },
         {
-          title: "Instant Payouts",
+          title: "Easy one-click event booking for your clients",
           description: null,
           image:
             "https://storage.googleapis.com/bucket_icon_assets/assets/Group.png",

@@ -28,10 +28,7 @@ function Footer() {
             Company
           </Typography>
           <Grid className={classes.companyTabs}>
-            <Typography>Events</Typography>
-            <Typography>Partner</Typography>
-            <Typography>Team</Typography>
-            <Typography>Contact Us</Typography>
+            <Typography><a href="/"></a>About Us</Typography>
           </Grid>
         </Grid>
         <Grid item sm={4}>
@@ -40,7 +37,7 @@ function Footer() {
             variant={"h6"}
             gutterBottom
           >
-            Social Links
+            Social Media
           </Typography>
           <Grid className={classes.socialLinksContainer} container>
             <img src="/assets/facebook.png"></img>
@@ -63,7 +60,7 @@ function Footer() {
               className={classes.policyLink}
               href={PAGE_PATHS.POLICY_PRIVACY}
             >
-              Privacy Policies
+              Privacy Policy
             </Link>
           </Typography>
         </Grid>
