@@ -55,7 +55,7 @@ export const getFeaturesContent = async () => {
       sectionLogo:
         "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
       sectionTitle: "FEATURES",
-      description: "Your complete business suite",
+      description: "An easy to use online suite for all your business needs",
       features: [
         {
           title: "Event",
@@ -71,14 +71,24 @@ export const getFeaturesContent = async () => {
             "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/feature-section-assets%2FeventBooking.png?alt=media&token=9f8b612b-09b7-4b25-aced-2afdc09c0bec",
         },
         {
+<<<<<<< HEAD
           title: "Payment",
           description: "Instant Payouts",
+=======
+          title: "Instant Payouts",
+          description: null,
+>>>>>>> ccd91c465b8c58cc94508d362f4923352cb35811
           image:
             "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/feature-section-assets%2Fpayments.png?alt=media&token=9ffe8449-b327-4390-8692-7eaa4187b1d5",
         },
         {
+<<<<<<< HEAD
           title: "Review",
           description: "User reviews to boost profile credibility",
+=======
+          title: "Easy one-click event booking for your clients",
+          description: null,
+>>>>>>> ccd91c465b8c58cc94508d362f4923352cb35811
           image:
             "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/feature-section-assets%2Frating.png?alt=media&token=145cea29-0da9-4ac4-809d-377444133dc6",
         },
@@ -119,7 +129,7 @@ export const getEventRegistrationContent = async () => {
       description:
         "Track every penny flowing in and each customer joining your network, in real time",
       image:
-        "https://storage.googleapis.com/bucket_icon_assets/assets/Rectangle%2035.png",
+        "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2FDashboard.png?alt=media&token=a6e600cf-672f-4342-8785-ab97353dee22",
     };
   }
 };
@@ -144,8 +154,8 @@ export const getUserRegistrationContent = async () => {
       title: "Unlimited Events",
       description:
         "Create Group events and One-on-one services, Monetize all your business ideas.",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2Fsignup.png?alt=media&token=cd0f9b23-8f87-40fa-acea-8af667030fea",
+      image: "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2FEvent.png?alt=media&token=decc0f20-fdf4-46f4-8760-99cd27a6a721",
+
     };
   }
 };
