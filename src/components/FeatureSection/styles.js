@@ -23,6 +23,7 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       borderRadius: "10px",
       display: "flex !important",
+      paddingTop: "1em",
     },
   },
   desktop: {

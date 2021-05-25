@@ -16,7 +16,7 @@ export const styles = makeStyles((theme) => ({
     },
   },
   logo: {
-    padding: "4em 0",
+    padding: "3em 0",
     [theme.breakpoints.down("sm")]: {
       padding: "1em 0",
     },
@@ -28,17 +28,26 @@ export const styles = makeStyles((theme) => ({
     textTransform: "uppercase",
   },
   title: {
-    padding: "0.2em 0em 0 0",
+    padding: "0.2em 0.5em 0 0.5em",
     fontWeight: "bold",
     color: "#333333",
+    height: "max-content",
   },
   description: {
     fontSize: "1em",
     textAlign: "center",
-    padding: "0.5em 3em 1em 3em",
+    paddingTop: "7.5%",
+    paddingBottom: "5%",
     color: appColors.grey,
+    [theme.breakpoints.down("sm")]: {
+      paddingTop: "5%",
+      fontSize: "0.9em",
+    },
   },
   image: {
-    height: "5em",
+    height: "4.5em",
+    [theme.breakpoints.down("sm")]: {
+      height: "4em",
+    },
   },
 }));

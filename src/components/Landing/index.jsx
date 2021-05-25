@@ -1,7 +1,6 @@
 import { Grid } from "@material-ui/core";
 import React from "react";
 
-import ClientReviewSection from "../ClientReviewSection";
 import EventRegistrationSection from "../EventRegistrationSection";
 import FeatureSection from "../FeatureSection";
 import GrowthSection from "../GrowthSection";
