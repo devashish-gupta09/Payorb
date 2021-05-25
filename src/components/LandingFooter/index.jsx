@@ -18,6 +18,7 @@ function Footer() {
       <Grid container>
         <Grid item sm={4} className={classes.logoContainer}>
           <Logo width="6em" />
+          <Typography><p>Vanickel Labs, 2nd Floor, <br />Aparna Towers, Kondapur, <br /> Hyderabad - 500084</p></Typography>
         </Grid>
         <Grid item sm={4} className={classes.companyContainer}>
           <Typography
@@ -28,7 +29,7 @@ function Footer() {
             Company
           </Typography>
           <Grid className={classes.companyTabs}>
-            <Typography><a href="/"></a>About Us</Typography>
+            <Typography><a href="/">About Us</a></Typography>
           </Grid>
         </Grid>
         <Grid item sm={4}>
