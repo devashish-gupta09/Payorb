@@ -28,7 +28,14 @@ function AboutTeam() {
           </Typography>
         </Grid>
       </Grid>
-      <Grid container item sm={6} alignItems="center" justify="center">
+      <Grid
+        className={classes.teamContainer}
+        container
+        item
+        sm={6}
+        alignItems="center"
+        justify="center"
+      >
         <Grid className={classes.teamImageContainer}>
           <img
             className={classes.teamImage}
@@ -150,6 +157,9 @@ const styles = makeStyles((theme) => ({
       height: "fit-content",
       padding: "2em 6em",
     },
+  },
+  teamContainer: {
+    padding: "4em",
   },
 }));
 
