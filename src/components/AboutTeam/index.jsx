@@ -36,14 +36,14 @@ function AboutTeam() {
         alignItems="center"
         justify="center"
       >
-        <Grid className={classes.teamImageContainer}>
+        {/* <Grid className={classes.teamImageContainer}>
           <img
             className={classes.teamImage}
             src={
               "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/assets%2Fprofile.jpg?alt=media&token=eea58cd4-50ea-4525-93fb-e7fe83350b59"
             }
           />
-        </Grid>
+        </Grid> */}
         <Grid container alignItems="center" justify="center">
           <Grid>
             <Typography
@@ -65,14 +65,14 @@ function AboutTeam() {
         </Grid>
       </Grid>
       <Grid container item sm={6} alignItems="center" justify="center">
-        <Grid className={classes.teamImageContainer}>
+        {/* <Grid className={classes.teamImageContainer}>
           <img
             className={classes.teamImage}
             src={
               "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/assets%2Fprofile.jpg?alt=media&token=eea58cd4-50ea-4525-93fb-e7fe83350b59"
             }
           />
-        </Grid>
+        </Grid> */}
         <Grid container alignItems="center" justify="center">
           <Grid>
             <Typography

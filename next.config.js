@@ -14,4 +14,13 @@ module.exports = {
     domains: ["firebasestorage.googleapis.com"],
   },
   target: "serverless",
+  headers: {
+    source: "/about",
+    headers: [
+      {
+        key: "max-age",
+        value: 9999999999999,
+      },
+    ],
+  },
 };
