@@ -31,7 +31,10 @@ const styles = makeStyles((theme) => ({
   root: {
     padding: "8em",
     [theme.breakpoints.down("sm")]: {
-      padding: "2em 1em",
+      padding: "1em 1em",
+    },
+    [theme.breakpoints.up("xl")]: {
+      padding: "10em",
     },
   },
   detailContainer: {

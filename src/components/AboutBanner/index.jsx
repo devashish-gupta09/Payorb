@@ -47,15 +47,19 @@ function AboutBanner() {
 const styles = makeStyles((theme) => ({
   root: {
     background: "#ffffff",
-    padding: "4em 8em",
+    padding: "8em",
     [theme.breakpoints.down("sm")]: {
-      padding: "2em",
+      padding: "1em",
+    },
+    [theme.breakpoints.up("xl")]: {
+      padding: "10em",
     },
   },
   imageContainer: {
     padding: "4em 0 2em 0",
     [theme.breakpoints.down("sm")]: {
-      padding: "0 0 2em 0",
+      padding: "1em 0 0 0",
+      justifyContent: "flex-start !important",
     },
   },
   image: {

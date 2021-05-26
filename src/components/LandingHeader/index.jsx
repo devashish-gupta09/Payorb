@@ -50,7 +50,9 @@ function LandingHeader() {
           </Grid>
 
           <Grid className={classes.drawerList}>
-            <li>About Us</li>
+            <Link href={PAGE_PATHS.ABOUT}>
+              <li>About Us</li>
+            </Link>
 
             {/* <Link href={PAGE_PATHS.CUSTOMER_EVENTS}>
               <li>Events</li>
@@ -90,7 +92,9 @@ function LandingHeader() {
             justify="space-evenly"
           >
             {/* <Button className={classes.buttonSpacing}>Events</Button> */}
-            <Button className={classes.buttonSpacing}>About Us</Button>
+            <Link href={PAGE_PATHS.ABOUT}>
+              <Button className={classes.buttonSpacing}>About Us</Button>
+            </Link>
             {/* <Link href={PAGE_PATHS.CUSTOMER_EVENTS}>
               <Button className={classes.buttonSpacing}>Events</Button>
             </Link> */}

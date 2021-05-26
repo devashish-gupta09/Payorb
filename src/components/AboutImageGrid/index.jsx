@@ -4,12 +4,7 @@ import React from "react";
 function AboutImageGrid() {
   const classes = styles();
   return (
-    <Grid
-      container
-      className={classes.root}
-      spacing={2}
-      justify="space-between"
-    >
+    <Grid container className={classes.root} justify="space-between">
       {/* <Grid item sm={7}> */}
       <img
         className={classes.left}
@@ -35,9 +30,12 @@ function AboutImageGrid() {
 const styles = makeStyles((theme) => ({
   root: {
     padding: "4em 8em ",
-    width: "100vw",
+    width: "99vw",
     [theme.breakpoints.down("sm")]: {
       padding: "0 1em 2em 1em",
+    },
+    [theme.breakpoints.up("xl")]: {
+      padding: "10em",
     },
   },
   detailContainer: {
@@ -47,13 +45,13 @@ const styles = makeStyles((theme) => ({
     },
   },
   left: {
-    width: "inherit",
+    width: "54vw",
     [theme.breakpoints.down("sm")]: {
       width: "95vw",
     },
   },
   right: {
-    width: "inherit",
+    width: "25vw",
     [theme.breakpoints.down("sm")]: {
       marginTop: "1em",
       width: "95vw",
