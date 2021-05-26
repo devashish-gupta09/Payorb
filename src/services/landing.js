@@ -60,41 +60,34 @@ export const getFeaturesContent = async () => {
         {
           title: "Event",
           description: "Event creation or On-on-one service bookings",
-          image:
-            "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/feature-section-assets%2FeventCreation.png?alt=media&token=307c1eb6-6b7a-49fe-9a36-b01ee900b7c8",
+          image: "/assets/features/eventCreation.png",
         },
 
         {
           title: "Booking",
           description: "Easy one-click event booking for your clients",
-          image:
-            "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/feature-section-assets%2FeventBooking.png?alt=media&token=9f8b612b-09b7-4b25-aced-2afdc09c0bec",
+          image: "/assets/features/eventBooking.png",
         },
         {
           title: "Instant Payouts",
           description: null,
 
-          image:
-            "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/feature-section-assets%2Fpayments.png?alt=media&token=9ffe8449-b327-4390-8692-7eaa4187b1d5",
+          image: "/assets/features/payments.png",
         },
         {
           title: "Review",
           description: "User reviews to boost profile credibility",
-
-          image:
-            "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/feature-section-assets%2Frating.png?alt=media&token=145cea29-0da9-4ac4-809d-377444133dc6",
+          image: "/assets/features/rating.png",
         },
         {
           title: "Analytics",
           description: "Real-time analytics for your business",
-          image:
-            "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/feature-section-assets%2Fanalytics.png?alt=media&token=a7a30182-dfcf-4d1b-8e78-2db801395ff5",
+          image: "/assets/features/analytics.png",
         },
         {
           title: "Social Media Sharing",
           description: "Easy marketing of your events",
-          image:
-            "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/feature-section-assets%2Fsocial-media.png?alt=media&token=744007d7-54af-4a0f-8df2-38e7c0b10570",
+          image: "/assets/features/social-media.png",
         },
       ],
     };

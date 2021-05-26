@@ -44,6 +44,7 @@ function AboutTeam() {
             }
           />
         </Grid> */}
+
         <Grid container alignItems="center" justify="center">
           <Grid>
             <Typography
@@ -64,6 +65,7 @@ function AboutTeam() {
           </Grid>
         </Grid>
       </Grid>
+
       <Grid container item sm={6} alignItems="center" justify="center">
         {/* <Grid className={classes.teamImageContainer}>
           <img
@@ -132,6 +134,7 @@ const styles = makeStyles((theme) => ({
     height: "4em",
     [theme.breakpoints.down("sm")]: {
       height: "fit-content",
+      width: "90vw",
     },
   },
   teamTitle: {
