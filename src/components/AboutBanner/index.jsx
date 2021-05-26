@@ -47,7 +47,7 @@ function AboutBanner() {
 const styles = makeStyles((theme) => ({
   root: {
     background: "#ffffff",
-    padding: "5em",
+    padding: "4em 8em",
     [theme.breakpoints.down("sm")]: {
       padding: "2em",
     },
