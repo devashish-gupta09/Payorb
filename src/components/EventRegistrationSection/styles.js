@@ -9,7 +9,10 @@ export const styles = makeStyles((theme) => ({
     },
   },
   image: {
+    width: "50em",
+    border: "rgb(130, 130, 130) 2px solid",
     [theme.breakpoints.down("sm")]: {
+      paddingTop: "1em",
       width: "inherit",
     },
   },

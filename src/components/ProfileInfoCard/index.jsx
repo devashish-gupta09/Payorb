@@ -7,10 +7,11 @@ import {
 } from "@material-ui/core";
 import { useFormik } from "formik";
 
-import { useRouter } from "next/router";
 import React from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
+import { ALERT_TYPES } from "../../constants/alerts";
+import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { updateUser } from "../../services/auth";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
@@ -18,13 +19,13 @@ import EditableTextField from "../EditableTextfield";
 import Logout from "../LogoutButton";
 import { styles } from "./styles";
 
-function ProfileInfoCard({ profileData, vendor }) {
+function ProfileInfoCard({ profileData, vendor, updateProfile }) {
   const classes = styles();
   const globalClasses = globalStyles();
-  const router = useRouter();
   const [edit, setEdit] = React.useState(false);
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
+  const { Alert, showAlert } = useAlertSnackbar();
 
   const formik = useFormik({
     initialValues: {
@@ -35,13 +36,14 @@ function ProfileInfoCard({ profileData, vendor }) {
       try {
         const res = await updateUser(values);
         if (res?.success) {
-          alert("User updated.");
-          router.reload();
+          showAlert("User updated.");
+          updateProfile({ ...profileData, ...values });
+          setEdit(false);
         } else {
-          alert("User not updated.");
+          showAlert("User not updated.", ALERT_TYPES.ERROR);
         }
       } catch (err) {
-        console.error(err);
+        showAlert("User not updated");
       }
     },
   });
@@ -52,6 +54,7 @@ function ProfileInfoCard({ profileData, vendor }) {
 
   return (
     <DashboardCard>
+      {Alert()}
       <form onSubmit={formik.handleSubmit}>
         <Grid container justify="space-between" alignItems="center">
           <Grid
@@ -61,7 +64,10 @@ function ProfileInfoCard({ profileData, vendor }) {
           >
             <Grid>
               <img
-                src={profileData.profileImgUrl}
+                src={
+                  profileData.profileImgUrl ||
+                  "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/assets%2Fprofile.jpg?alt=media&token=eea58cd4-50ea-4525-93fb-e7fe83350b59"
+                }
                 className={classes.profileImage}
               />
             </Grid>

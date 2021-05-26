@@ -155,7 +155,18 @@ function EventBookingForm({
         formik.setFieldError("phoneNumber", "Please enter phone number");
       }
     } catch (err) {
-      showAlert(err.error || err.message, ALERT_TYPES.ERROR);
+      if (
+        err &&
+        err.message &&
+        err.message.includes(
+          "reCAPTCHA has already been rendered in this element"
+        )
+      ) {
+        showAlert("OTP Sent");
+        return;
+      }
+
+      showAlert(err.message, ALERT_TYPES.ERROR);
     }
   };
 

@@ -10,6 +10,7 @@ import React from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
 import useFetchStats from "../../hooks/useFetchStats";
+import DashboardCard from "../DashboardCard";
 import SkeletonLoading from "../SkeletonLoading";
 import ValueCard from "../ValueCard";
 
@@ -27,14 +28,20 @@ function VendorRevenueUserAggSec() {
   console.log(stats);
 
   if (loading) {
-    return <SkeletonLoading message="Loading dashboard stats" />;
+    return (
+      <Grid style={{ width: "96%" }}>
+        <SkeletonLoading message="Loading dashboard stats" />
+      </Grid>
+    );
   }
 
   if (error) {
     return (
       <>
-        <h2>Something went wrong</h2>
-        <h5>{error}</h5>
+        <DashboardCard rootClass={classes.errorCard}>
+          <h2>No Stats Generated.</h2>
+          <h5>Stats will be generated when you have some bookings.</h5>
+        </DashboardCard>
       </>
     );
   }
@@ -109,6 +116,13 @@ const styles = makeStyles((theme) => ({
   rightContainer: {
     [theme.breakpoints.down("sm")]: {
       paddingLeft: "0.5em",
+    },
+  },
+  errorCard: {
+    padding: "2em",
+    width: "96%",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
     },
   },
 }));

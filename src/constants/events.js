@@ -27,7 +27,26 @@ export const EVENT_DESCRIPTION = {
 };
 
 export const EVENT_CATEGORY = {
-  EDUCATION: "EDUCATION",
+  EDUCATION: "Education",
+  FITNESS: "Fitness",
+  COOKING: "Cooking/Baking",
+  MAKEUP_HAIRSTYLING: "Make up / hairstyling",
+  DIET_NUTRITION: "Diet / nutrition",
+  PRIVATE_TUTORING: "Private tutoring (any subject)",
+  HOBBY_CLASSES: "Hobby classes (any domain)",
+  PHOTOGRAPY: "Photography (any domain)",
+  VIDEOGRAPHY: "Videography",
+  DATA_ENTRY: "Data Entry",
+  GRAPHIC_DESIGN: "Graphic Design",
+  WEB_DEVELOPMENT: "Web Development",
+  MOBILE_APP_DEVELOPMENT: "Mobile app development",
+  CONTENT_WRITING: "Content Writing",
+  DIGITAL_MARKETING: "Digital Marketing",
+  TRANSLATION: "Translation",
+  FINANCIAL_SERVICES: "Financial Services",
+  VIRTUAL_ASSISTANT: "Virtual Assistant",
+  CONSULTING: "Consulting",
+  OTHER: "Other...",
 };
 
 export const defaultEvents = [

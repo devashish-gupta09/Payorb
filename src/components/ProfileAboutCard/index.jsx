@@ -1,11 +1,12 @@
 import { Button, Grid, makeStyles, Typography } from "@material-ui/core";
 import { MailOutline, Phone, Place } from "@material-ui/icons";
 import { useFormik } from "formik";
-import { useRouter } from "next/router";
 import React from "react";
 
 import { appColors } from "../../../styles/colors";
 import { globalStyles } from "../../../styles/globalStyles";
+import { ALERT_TYPES } from "../../constants/alerts";
+import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { updateUser } from "../../services/auth";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
@@ -14,9 +15,18 @@ import EditableTextField from "../EditableTextfield";
 
 function Details(props) {
   const globalClasses = globalStyles();
-  const { classes, about, email, phoneNumber, location, vendor } = props;
+  const {
+    classes,
+    about,
+    email,
+    phoneNumber,
+    location,
+    vendor,
+    updateProfile,
+    profileData,
+  } = props;
   const [edit, setEdit] = React.useState(false);
-  const router = useRouter();
+  const { Alert, showAlert } = useAlertSnackbar();
 
   const formik = useFormik({
     initialValues: {
@@ -29,13 +39,15 @@ function Details(props) {
       try {
         const res = await updateUser(values);
         if (res?.success) {
-          alert("User updated.");
-          router.reload();
+          showAlert("User updated.");
+          updateProfile({ ...profileData, ...values });
+          setEdit(false);
         } else {
-          alert("User not updated.");
+          showAlert("User not updated.", ALERT_TYPES.ERROR);
         }
       } catch (err) {
-        console.error(err);
+        console.log(err);
+        showAlert("User not updated", ALERT_TYPES.ERROR);
       }
     },
   });
@@ -46,6 +58,7 @@ function Details(props) {
 
   return (
     <>
+      {Alert()}
       <form onSubmit={formik.handleSubmit}>
         <Typography className={`${globalClasses.bold}`} gutterBottom>
           About
@@ -155,7 +168,7 @@ function Details(props) {
   );
 }
 
-function ProfileAboutCard({ profileData, vendor }) {
+function ProfileAboutCard({ profileData, vendor, updateProfile }) {
   const classes = styles();
 
   return (
@@ -171,6 +184,8 @@ function ProfileAboutCard({ profileData, vendor }) {
                 location={profileData.location}
                 classes={classes}
                 vendor={vendor}
+                profileData={profileData}
+                updateProfile={updateProfile}
               />
             </Grid>
           </Grid>
@@ -192,6 +207,8 @@ function ProfileAboutCard({ profileData, vendor }) {
               location={profileData.location}
               classes={classes}
               vendor={vendor}
+              profileData={profileData}
+              updateProfile={updateProfile}
             />
           </Grid>
         </Grid>

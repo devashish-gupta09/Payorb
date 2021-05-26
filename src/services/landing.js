@@ -51,46 +51,50 @@ export const getFeaturesContent = async () => {
   } catch (err) {
     console.error(err.message);
     return {
-      title: "What payorb can offer you",
+      title: "What Payorb Offers You",
       sectionLogo:
         "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
       sectionTitle: "FEATURES",
+      description: "An easy to use online suite for all your business needs",
       features: [
         {
-          title: "Event Creation or One-on-one service Booking",
-          description: "As many as you want",
+          title: "Event",
+          description: "Event creation or On-on-one service bookings",
           image:
-            "https://storage.googleapis.com/bucket_icon_assets/assets/Group.png",
+            "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/feature-section-assets%2FeventCreation.png?alt=media&token=307c1eb6-6b7a-49fe-9a36-b01ee900b7c8",
         },
+
         {
-          title: "One click to share & promote event",
-          description: null,
+          title: "Booking",
+          description: "Easy one-click event booking for your clients",
           image:
-            "https://storage.googleapis.com/bucket_icon_assets/assets/Group.png",
-        },
-        {
-          title: "Easy one-click event booking for your clients",
-          description: null,
-          image:
-            "https://storage.googleapis.com/bucket_icon_assets/assets/Group.png",
+            "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/feature-section-assets%2FeventBooking.png?alt=media&token=9f8b612b-09b7-4b25-aced-2afdc09c0bec",
         },
         {
           title: "Instant Payouts",
           description: null,
+
           image:
-            "https://storage.googleapis.com/bucket_icon_assets/assets/Group.png",
+            "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/feature-section-assets%2Fpayments.png?alt=media&token=9ffe8449-b327-4390-8692-7eaa4187b1d5",
         },
         {
-          title: "User reviews to boost profile credibility",
-          description: null,
+          title: "Review",
+          description: "User reviews to boost profile credibility",
+
           image:
-            "https://storage.googleapis.com/bucket_icon_assets/assets/Group.png",
+            "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/feature-section-assets%2Frating.png?alt=media&token=145cea29-0da9-4ac4-809d-377444133dc6",
         },
         {
-          title: "Real-time analytics for your business",
-          description: null,
+          title: "Analytics",
+          description: "Real-time analytics for your business",
           image:
-            "https://storage.googleapis.com/bucket_icon_assets/assets/Group.png",
+            "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/feature-section-assets%2Fanalytics.png?alt=media&token=a7a30182-dfcf-4d1b-8e78-2db801395ff5",
+        },
+        {
+          title: "Social Media Sharing",
+          description: "Easy marketing of your events",
+          image:
+            "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/feature-section-assets%2Fsocial-media.png?alt=media&token=744007d7-54af-4a0f-8df2-38e7c0b10570",
         },
       ],
     };
@@ -113,11 +117,11 @@ export const getEventRegistrationContent = async () => {
       sectionLogo:
         "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
       sectionTitle: "Event Registration",
-      title: "Add you Event",
+      title: "Complete Business Dashboard",
       description:
-        "All details & analytics you would need of your Events, Users and Financials",
+        "Track every penny flowing in and each customer joining your network, in real time",
       image:
-        "https://storage.googleapis.com/bucket_icon_assets/assets/Rectangle%2035.png",
+        "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2FDashboard.png?alt=media&token=a6e600cf-672f-4342-8785-ab97353dee22",
     };
   }
 };
@@ -139,11 +143,11 @@ export const getUserRegistrationContent = async () => {
       sectionLogo:
         "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
       sectionTitle: "User Registration",
-      title: "Create Your Profile",
+      title: "Unlimited Events",
       description:
-        "Space to add an engaging intro video, so that your clients get to know you better",
+        "Create Group events and One-on-one services, Monetize all your business ideas.",
       image:
-        "https://storage.googleapis.com/bucket_icon_assets/assets/Rectangle%2035.png",
+        "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2FEvent.png?alt=media&token=decc0f20-fdf4-46f4-8760-99cd27a6a721",
     };
   }
 };

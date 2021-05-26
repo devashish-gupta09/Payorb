@@ -37,7 +37,7 @@ function HomeSection({ content }) {
         </Typography>
         <Grid container>
           <Link href={"/signup"}>
-            <Button className={classes.capsuleButton}>Getting Started</Button>
+            <Button className={classes.capsuleButton}>Get Started</Button>
           </Link>
         </Grid>
       </Grid>

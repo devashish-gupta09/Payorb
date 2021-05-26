@@ -5,7 +5,7 @@ import { appColors } from "../../../styles/colors";
 export const styles = makeStyles((theme) => ({
   profileImage: {
     minHeight: "50%",
-    maxHeight: "70%",
+    maxHeight: "6em",
     borderRadius: "50%",
     [theme.breakpoints.down("sm")]: {
       height: "4em",

@@ -64,8 +64,8 @@ export const styles = makeStyles((theme) => ({
     fontSize: "0.65em",
     textAlign: "justify",
     [theme.breakpoints.down("sm")]: {
-      padding: "1.5em 0"
-    }
+      padding: "1.5em 0",
+    },
   },
   readMore: {
     color: "#71c3de",

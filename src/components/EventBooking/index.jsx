@@ -95,7 +95,13 @@ function EventBooking({ eventLink }) {
           spacing={3}
           alignItems={"flex-start"}
         >
-          <Grid item container sm={9} spacing={3}>
+          <Grid
+            item
+            container
+            sm={9}
+            spacing={3}
+            style={{ width: "100%", margin: 0 }}
+          >
             <Grid item sm={12} className={classes.fullWidth}>
               <DashboardCard rootClass={classes.cardPadding}>
                 <Typography variant={"h3"}>{event.name}</Typography>
@@ -139,7 +145,7 @@ function EventBooking({ eventLink }) {
               </DashboardCard>
             </Grid>
           </Grid>
-          <Grid item container sm={3} spacing={3}>
+          <Grid item container sm={3}>
             <Grid item sm={12}>
               <DashboardCard rootClass={`${classes.formContainer}`}>
                 <Typography
@@ -196,6 +202,7 @@ const styles = makeStyles((theme) => ({
     borderRadius: "5px",
   },
   fullWidth: {
+    width: "100%",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
@@ -212,6 +219,7 @@ const styles = makeStyles((theme) => ({
   },
   vendorCardContainer: {
     width: "100%",
+    paddingTop: "2em",
   },
   vendorCard: {
     padding: "1em",

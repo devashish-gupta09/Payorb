@@ -94,6 +94,17 @@ function VendorCustomers() {
       )
     );
 
+    if (!customers.length) {
+      return (
+        <DashboardCard>
+          <h2>No customer has booked a seat for your events</h2>
+          <Typography>
+            Share your events by heading over to the events section
+          </Typography>
+        </DashboardCard>
+      );
+    }
+
     return (
       <Grid className={classes.root}>
         {Alert()}
@@ -113,42 +124,41 @@ function VendorCustomers() {
           <Grid>
             {eventLoading ? (
               <CircularProgress />
-            ) : (
-              events && (
-                <Grid container alignItems={"center"}>
-                  <Select
-                    style={{ margin: "0.5em 0.5em" }}
-                    variant="outlined"
-                    value={selectedValue}
-                    onChange={handleEventTypeChange}
-                    SelectDisplayProps={{
-                      style: {
-                        width: "10em",
-                        background: "white",
-                        paddingTop: "0.75em",
-                        paddingBottom: "0.75em",
-                      },
-                    }}
-                    MenuProps={{
-                      style: {},
-                    }}
-                  >
-                    {events &&
-                      events.map((event) => (
-                        <MenuItem key={event.link} value={event.link}>
-                          {event.name}
-                        </MenuItem>
-                      ))}
-                  </Select>
-                  <ButtonCapsule
-                    buttonStyle={classes.sendButton}
-                    text={`Send`}
-                    icon={<Send />}
-                    onClick={sendNotification}
-                  ></ButtonCapsule>
-                </Grid>
-              )
-            )}
+            ) : events && events.length ? (
+              <Grid container alignItems={"center"}>
+                <Typography>Select event</Typography>
+                <Select
+                  style={{ margin: "0.5em 0.5em" }}
+                  variant="outlined"
+                  value={selectedValue}
+                  onChange={handleEventTypeChange}
+                  SelectDisplayProps={{
+                    style: {
+                      width: "10em",
+                      background: "white",
+                      paddingTop: "0.75em",
+                      paddingBottom: "0.75em",
+                    },
+                  }}
+                  MenuProps={{
+                    style: {},
+                  }}
+                >
+                  {events &&
+                    events.map((event) => (
+                      <MenuItem key={event.link} value={event.link}>
+                        {event.name}
+                      </MenuItem>
+                    ))}
+                </Select>
+                <ButtonCapsule
+                  buttonStyle={classes.sendButton}
+                  text={`Send`}
+                  icon={<Send />}
+                  onClick={sendNotification}
+                ></ButtonCapsule>
+              </Grid>
+            ) : null}
           </Grid>
         </Grid>
         <DashboardCard>

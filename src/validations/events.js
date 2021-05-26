@@ -25,6 +25,7 @@ export const createEventValidationSchema = Yup.object({
     100000,
     "You can't book more than 100000 tickets"
   ),
+  location: Yup.string().required(),
   type: Yup.string()
     .oneOf([EVENT_TYPES.ONE_ON_ONE, EVENT_TYPES.ONE_TIME])
     .required(),

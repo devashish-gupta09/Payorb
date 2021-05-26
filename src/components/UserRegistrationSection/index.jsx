@@ -13,7 +13,6 @@ function UserRegistrationSection({ content }) {
           <LandingSectionContent
             description={content.description}
             sectionLogo={content.sectionLogo}
-            sectionTitle={content.sectionTitle}
             title={content.title}
           />
         </Grid>

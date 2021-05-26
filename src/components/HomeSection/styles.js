@@ -5,7 +5,7 @@ export const styles = makeStyles((theme) => ({
     position: "absolute",
     top: "40%",
     left: "10%",
-  
+
     [theme.breakpoints.down("sm")]: {
       top: "15%",
       left: 0,

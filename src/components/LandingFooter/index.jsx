@@ -18,6 +18,7 @@ function Footer() {
       <Grid container>
         <Grid item sm={4} className={classes.logoContainer}>
           <Logo width="6em" />
+          <Typography><p>Vanickel Labs, 2nd Floor, <br />Aparna Towers, Kondapur, <br /> Hyderabad - 500084</p></Typography>
         </Grid>
         <Grid item sm={4} className={classes.companyContainer}>
           <Typography
@@ -28,10 +29,7 @@ function Footer() {
             Company
           </Typography>
           <Grid className={classes.companyTabs}>
-            <Typography>Events</Typography>
-            <Typography>Partner</Typography>
-            <Typography>Team</Typography>
-            <Typography>Contact Us</Typography>
+            <Typography><a href="/">About Us</a></Typography>
           </Grid>
         </Grid>
         <Grid item sm={4}>
@@ -40,7 +38,7 @@ function Footer() {
             variant={"h6"}
             gutterBottom
           >
-            Social Links
+            Social Media
           </Typography>
           <Grid className={classes.socialLinksContainer} container>
             <img src="/assets/facebook.png"></img>
@@ -51,7 +49,7 @@ function Footer() {
         </Grid>
         <Grid item sm={12}>
           <Typography className={classes.bottomLabel}>
-            @ 2021 All Rights Reserved. Powered by Vanikel Labs |{" "}
+            @ 2021 All Rights Reserved. Powered by Vanickel Labs |{" "}
             <Link
               className={classes.policyLink}
               href={PAGE_PATHS.POLICY_TERMS_AND_CONDS}
@@ -63,7 +61,7 @@ function Footer() {
               className={classes.policyLink}
               href={PAGE_PATHS.POLICY_PRIVACY}
             >
-              Privacy Policies
+              Privacy Policy
             </Link>
           </Typography>
         </Grid>
