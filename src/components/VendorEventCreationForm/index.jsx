@@ -521,7 +521,7 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                   handleCroppedImage={handleCroppedImage}
                   imageProps={{
                     src:
-                      formik.values.posterUrl ||
+                      formik.values.photoUrl ||
                       "https://i.pinimg.com/736x/59/59/88/5959880ca0cb6b30926091b7bc251812.jpg",
                     className: classes.eventImage,
                   }}

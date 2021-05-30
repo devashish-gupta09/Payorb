@@ -1,58 +1,38 @@
-import {
-  Grid,
-  makeStyles,
-  Tooltip,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@material-ui/core";
+import { Grid, makeStyles, Tooltip, Typography } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
-import React, { useRef } from "react";
+import React from "react";
 import "cropperjs/dist/cropper.css";
-import { Cropper } from "react-cropper";
 
 import { ALERT_TYPES } from "../../constants/alerts";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 
-function ImageSelectAndCrop({
-  imagePath,
-  handleDataUrl,
-  title = "Select image",
-  cropperAspectRatio = 1,
-}) {
+function VideoSelect({ videoSrcPath, handleDataUrl, title = "Select video" }) {
   const classes = styles();
-  const [imgSrc, setImgSrc] = React.useState(imagePath);
+  const [videoSrc, setVideoSrc] = React.useState();
   const { Alert, showAlert } = useAlertSnackbar();
-  const cropperRef = useRef();
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down("sm"));
 
   const onInputChange = (e) => {
     // Uploading a single file
     if (e.target.files.length === 1) {
-      if (e.target.files[0].size > 1000000) {
-        showAlert("Max image size < 1 MB", ALERT_TYPES.ERROR);
+      if (e.target.files[0].size > 5100000) {
+        showAlert("Max video size < 5 MB", ALERT_TYPES.ERROR);
         return;
       }
 
       const reader = new FileReader();
       reader.onloadstart = (e) => {
-        showAlert("Loading Image");
+        showAlert("Loading Video");
       };
       reader.onload = (e) => {
         if (e.target.result) {
-          setImgSrc(e.target.result);
+          setVideoSrc(e.target.result);
+          handleDataUrl(e.target.result);
         }
       };
       reader.readAsDataURL(e.target.files[0]);
     } else {
-      showAlert("Select max 1 image file.");
+      showAlert("Select max 1 video file.");
     }
-  };
-
-  const handleOnCrop = () => {
-    const imageEl = cropperRef.current.cropper.getCroppedCanvas().toDataURL();
-    handleDataUrl(imageEl);
   };
 
   return (
@@ -80,22 +60,23 @@ function ImageSelectAndCrop({
             </Tooltip>
             <input
               type="file"
-              className="image-upload"
-              accept="image/*"
+              className="video-upload"
               onChange={onInputChange}
+              accept={"video/*"}
             />
           </label>
         </div>
       </Grid>
 
-      <Cropper
-        src={imgSrc}
-        style={{ height: 300, width: matches ? 250 : 300 }}
-        guides={true}
-        ref={cropperRef}
-        crop={handleOnCrop}
-        aspectRatio={cropperAspectRatio}
-      />
+      {videoSrc ? (
+        <video className={classes.videoPreview} controls>
+          <source src={videoSrc} type={"video/mp4"}></source>
+          <source src={videoSrc} type={"video/ogg"}></source>
+          Your browser does not support the video tag.
+        </video>
+      ) : (
+        <div className={classes.videoPreviewPlaceholder}></div>
+      )}
     </div>
   );
 }
@@ -106,6 +87,21 @@ const styles = makeStyles((theme) => ({
     width: "fit-content",
     "& img ": {
       maxWidth: "100%",
+    },
+  },
+  videoPreview: {
+    width: "400px",
+    [theme.breakpoints.down("sm")]: {
+      width: "200px",
+    },
+  },
+  videoPreviewPlaceholder: {
+    width: "400px",
+    height: "300px",
+    border: "2px solid #BDBDBD",
+    borderRadius: "5px",
+    [theme.breakpoints.down("sm")]: {
+      width: "200px",
     },
   },
   "box-2": {
@@ -153,6 +149,6 @@ const styles = makeStyles((theme) => ({
   },
 }));
 
-export default React.memo(ImageSelectAndCrop, (next, prev) => {
+export default React.memo(VideoSelect, (next, prev) => {
   return next !== prev;
 });

@@ -6,8 +6,6 @@ import {
   Grid,
   makeStyles,
   Tooltip,
-  useMediaQuery,
-  useTheme,
 } from "@material-ui/core";
 import { CloudUpload, Edit } from "@material-ui/icons";
 import React from "react";
@@ -18,21 +16,19 @@ import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { delay } from "../../utils/dateTime";
 import firebase from "../../utils/firebase";
 import { FirebaseAuth } from "../AuthenticationContext";
-import ImageSelectAndCrop from "../ImageSelectAndCrop";
+import VideoSelect from "../VideoSelect";
 
-function ImageProfileUpload({ imageProps }) {
+function VideoUpload({ videoProps }) {
   const classes = styles();
   const [dialogOpen, setDialogOpen] = React.useState(false);
+  const [dataUrl, setDataUrl] = React.useState();
+  const [savedUrl, setSavedUrl] = React.useState();
   const { Alert, showAlert } = useAlertSnackbar();
   const [progressLoader, setProgress] = React.useState(false);
-  const [dataUrl, setDataUrl] = React.useState();
-  const [croppedImg, setCroppedImage] = React.useState();
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const handleDialog = (ds) => {
+  const handleDialog = React.useCallback((ds) => {
     if (typeof ds === "boolean") setDialogOpen(ds);
-  };
+  });
 
   // Expect a data url from the ImageSelectAndCrop component
   const handleDataUrl = React.useCallback((data) => {
@@ -40,6 +36,23 @@ function ImageProfileUpload({ imageProps }) {
   }, []);
 
   const handleSave = async () => {
+    // handleCroppedImage(dataUrl);
+
+    setProgress(true);
+    try {
+      await handleVideoUpload();
+      setProgress(false);
+      showAlert("Video uploaded");
+      await delay(1000);
+      setSavedUrl(dataUrl);
+      handleDialog(false);
+    } catch (err) {
+      setProgress(false);
+      showAlert(err.message, ALERT_TYPES.ERROR);
+    }
+  };
+
+  const handleVideoUpload = React.useCallback(async () => {
     const type = dataUrl.substring(
       dataUrl.indexOf(":") + 1,
       dataUrl.indexOf(";")
@@ -48,56 +61,25 @@ function ImageProfileUpload({ imageProps }) {
     const auth = FirebaseAuth.Singleton();
     const user = auth.getUser();
 
+    if (!user) {
+      showAlert("Not an authorized user");
+      return;
+    }
+
     const ref = firebase.storage().ref();
-    const childRef = ref.child(`/profile/${user.uid}.${type.split("/")[1]}`);
+    const childRef = ref.child(`/intros/${user.uid}.${type.split("/")[1]}`);
 
-    const task = childRef.putString(dataUrl, "data_url");
-
-    setProgress(true);
-    task.on(
-      "state_changed",
-      (snapshot) => {
-        switch (snapshot.state) {
-          case firebase.storage.TaskState.CANCELED:
-            showAlert("Image upload canceled", ALERT_TYPES.ERROR);
-            break;
-        }
-      },
-      (error) => {
-        let message = "Image cannot be saved";
-        switch (error.code) {
-          case "storage/unauthorized":
-            message = "Unauthorized User";
-            break;
-          case "storage/canceled":
-            message = "User cancelled file upload";
-            break;
-        }
-
-        setProgress(false);
-        showAlert(message, ALERT_TYPES.ERROR);
-      },
-      () => {
-        task.snapshot.ref.getDownloadURL().then(async () => {
-          showAlert("Image saved");
-          setProgress(false);
-          await delay(2000);
-          setCroppedImage(dataUrl);
-          handleDialog(false);
-        });
-      }
-    );
-  };
+    await childRef.putString(dataUrl, "data_url");
+  }, [dataUrl]);
 
   return (
     <div>
+      {Alert()}
       {dialogOpen && (
         <Dialog open={dialogOpen} onClose={() => handleDialog(false)}>
           <DialogContent className={classes.dialogContentContainer}>
-            {Alert()}
-            <ImageSelectAndCrop
-              title="Select profile image"
-              imagePath={croppedImg || imageProps.src}
+            <VideoSelect
+              videoSrcPath={videoProps.src}
               handleDataUrl={handleDataUrl}
             />
 
@@ -145,12 +127,16 @@ function ImageProfileUpload({ imageProps }) {
           }}
           className={classes.editDiv}
         >
-          <Tooltip title="Edit Profile">
-            <Edit style={{ fontSize: matches ? "1em" : "1.5em" }} />
+          <Tooltip title="Add introductory video">
+            <Edit />
           </Tooltip>
         </div>
 
-        <img {...imageProps} src={croppedImg || imageProps.src} />
+        <video
+          controls
+          className={classes.videoPreview}
+          src={savedUrl || videoProps.src}
+        ></video>
       </div>
     </div>
   );
@@ -174,32 +160,26 @@ const styles = makeStyles((theme) => ({
   imageContainer: {
     position: "relative",
     padding: "2em 0",
+    [theme.breakpoints.down("sm")]: {
+      padding: "0 0 0 0",
+    },
   },
   videoPreview: {
     width: "100%",
     [theme.breakpoints.down("sm")]: {
-      width: "200px",
+      width: "100%",
     },
   },
   editDiv: {
     position: "absolute",
     color: "#BDBDBD",
-    padding: "0.2em 0.4em",
+    padding: "0.2em",
     background: "white",
-    borderRadius: "2em",
     right: 5,
-    top: 30,
+    top: 40,
     cursor: "pointer",
     zIndex: "1",
-    boxShadow: "0px 0px 4px 1px grey",
-    "&:hover": {
-      boxShadow: "0px 0px 4px 2px #79DFDF",
-    },
-    [theme.breakpoints.down("sm")]: {
-      borderRadius: "1em",
-      right: "0",
-    },
   },
 }));
 
-export default ImageProfileUpload;
+export default VideoUpload;

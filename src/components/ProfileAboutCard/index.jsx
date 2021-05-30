@@ -12,7 +12,10 @@ import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
 import DetailRow from "../DetailRow";
 import EditableTextField from "../EditableTextfield";
+import VideoUpload from "../VideoUpload";
 
+const defaultVideo =
+  "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/defaults%2FSampleVideo_1280x720_2mb.mp4?alt=media&token=5515d343-06d3-46f5-9b60-8186d0aa4ef9";
 function Details(props) {
   const globalClasses = globalStyles();
   const {
@@ -191,13 +194,21 @@ function ProfileAboutCard({ profileData, vendor, updateProfile }) {
           </Grid>
           <Grid item sm={6}>
             {/* Need to include a video section over here. */}
-            <img style={{ width: "100%" }} src={"../assets/video.png"} />
+            <VideoUpload
+              videoProps={{
+                src: profileData.videoLink || defaultVideo,
+              }}
+            />
           </Grid>
         </Grid>
         <Grid className={classes.mobile}>
           <Grid>
             {/* Need to include a video section over here. */}
-            <img style={{ width: "100%" }} src={"../assets/video.png"} />
+            <VideoUpload
+              videoProps={{
+                src: profileData.videoLink || defaultVideo,
+              }}
+            />
           </Grid>
           <Grid className={classes.mobileDetailsContainer}>
             <Details
