@@ -76,7 +76,7 @@ function EventCard({ event }) {
           <img
             className={classes.eventImage}
             src={
-              event.image ||
+              event.photoUrl ||
               "https://i.pinimg.com/736x/59/59/88/5959880ca0cb6b30926091b7bc251812.jpg"
             }
           />

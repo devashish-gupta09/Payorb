@@ -17,7 +17,7 @@ import DashboardCard from "../DashboardCard";
 import DateMonth from "../DateMonth";
 
 function PostEventCreationDialog(props) {
-  const { event } = props;
+  const { event, eventImg } = props;
   const eventLink = `${PAGE_PATHS.CUSTOMER_EVENTS_REGISTER}?event=${event.link}&type=${event.type}`;
 
   const handleCopy = () => {
@@ -42,6 +42,7 @@ function PostEventCreationDialog(props) {
               <Grid>
                 <img
                   src={
+                    eventImg ||
                     event.photoUrl ||
                     "https://i.pinimg.com/736x/59/59/88/5959880ca0cb6b30926091b7bc251812.jpg"
                   }
@@ -140,7 +141,7 @@ const styles = makeStyles((theme) => ({
   eventPoster: {
     borderRadius: "5px",
     minWidth: "100%",
-    maxWidth: "400px",
+    maxWidth: "350px",
     [theme.breakpoints.up("xl")]: {
       minWidth: "100%",
       maxWidth: "500px",

@@ -4,9 +4,12 @@ import { appColors } from "../../../styles/colors";
 
 export const styles = makeStyles((theme) => ({
   profileImage: {
-    minHeight: "50%",
-    maxHeight: "6em",
+    height: "6em",
     borderRadius: "50%",
+    cursor: "pointer",
+    "&:hover": {
+      boxShadow: "0px 0px 17px 2px #79DFDF",
+    },
     [theme.breakpoints.down("sm")]: {
       height: "4em",
     },

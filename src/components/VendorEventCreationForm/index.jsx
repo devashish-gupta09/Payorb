@@ -27,6 +27,7 @@ import React from "react";
 import { v4 } from "uuid";
 
 import { globalStyles } from "../../../styles/globalStyles";
+import { ALERT_TYPES } from "../../constants/alerts";
 import {
   EVENT_CATEGORY,
   EVENT_DESCRIPTION,
@@ -35,15 +36,19 @@ import {
 } from "../../constants/events";
 
 import { PAGE_PATHS } from "../../constants/paths";
+import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { createEvent, editEvent } from "../../services/events";
-import { getDateForTime } from "../../utils/dateTime";
+import { delay, getDateForTime } from "../../utils/dateTime";
+import firebase from "../../utils/firebase";
 import { createEventValidationSchema } from "../../validations/events";
+import { FirebaseAuth } from "../AuthenticationContext";
 import ButtonCapsule from "../ButtonCapsule";
+import ImageEventUpload from "../ImageEventUpload";
 import OneOnOneDateSelector from "../OneOnOneDateSelector";
 import OneTimeDateSelector from "../OneTimeDateSelector";
 
 import PostEventCreationDialog from "../PostEventCreationDialog";
-import EventCategoryField from "./EventCategoryField";
+import { EventCategoryField } from "./EventCategoryField";
 import { styles } from "./styles";
 
 const hash = createHash("sha256");
@@ -77,21 +82,17 @@ function getEventTypeDescription(type) {
   return "";
 }
 
-function getTimeAfter(hours) {
-  const cleandUpHours = parseFloat(hours.toFixed(1));
-  const currTime = new Date();
-  currTime.setHours(currTime.getHours() + cleandUpHours + 1);
-  return currTime;
-}
-
 function VendorEventCreationForm({ event, edit, handleClose }) {
   const classes = styles();
   const globalClasses = globalStyles();
   const router = useRouter();
   const [dialog, setDialog] = React.useState({ display: false, text: "" });
   const [postEventDialog, setPostEventDialog] = React.useState(false);
+  const [croppedImg, setCroppedImage] = React.useState();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
+  const { Alert, showAlert } = useAlertSnackbar();
+  const [loader, setLoader] = React.useState(false);
 
   const handlePostCreationDialogClose = () => {
     router.push(PAGE_PATHS.VENDOR_DASHBOARD_EVENTS);
@@ -105,6 +106,10 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
     formik.setFieldValue("mode", event.target.value);
   };
 
+  const handleCroppedImage = React.useCallback((data) => {
+    setCroppedImage(data);
+  }, []);
+
   const formik = useFormik({
     initialValues: event || getCreationFormInitialState(),
     validationSchema: createEventValidationSchema,
@@ -117,29 +122,79 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
             category: values.otherField || values.category,
           };
 
+          setLoader(true);
           delete req["otherField"];
           if (!edit) {
             await createEvent({
               event: req,
             });
+
+            // Lets upload image
+            if (croppedImg) {
+              await handleImageUpload(req.link);
+            }
+
+            setLoader(false);
             setPostEventDialog(true);
           } else {
             await editEvent({
               event: req,
             });
+
+            if (croppedImg) {
+              await handleImageUpload(req.link);
+            }
+
+            setLoader(false);
+            showAlert("Event Updated");
+            await delay(500);
             router.reload();
           }
         } catch (err) {
-          backendValidation(err.errors[0]);
-          // setDialog({ display: true, text: err.error });
+          if (err.errors.length > 0) {
+            setLoader(false);
+
+            if (Object.keys(err.errors[0]).length) {
+              backendValidation(err.errors[0]);
+              return;
+            } else {
+              showAlert(err.error, ALERT_TYPES.ERROR);
+              return;
+            }
+          }
         }
       }
     },
   });
 
-  const backendValidation = (err) => {
+  const handleImageUpload = React.useCallback(
+    async (link) => {
+      const type = croppedImg.substring(
+        croppedImg.indexOf(":") + 1,
+        croppedImg.indexOf(";")
+      );
+
+      const auth = FirebaseAuth.Singleton();
+      const user = auth.getUser();
+
+      const ref = firebase.storage().ref();
+      const childRef = ref.child(
+        `/events/${user.uid}-${link}.${type.split("/")[1]}`
+      );
+
+      try {
+        await childRef.putString(croppedImg, "data_url");
+      } catch (err) {
+        // Don't do anything if an image upload is unsuccessful
+        return err;
+      }
+    },
+    [croppedImg]
+  );
+
+  const backendValidation = React.useCallback((err) => {
     formik.setFieldError(err.details[0].context.key, err.details[0].message);
-  };
+  }, []);
 
   const handleCancel = () => {
     if (edit) {
@@ -166,7 +221,9 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
 
   return (
     <Grid style={{ width: "100%" }}>
+      {Alert()}
       <PostEventCreationDialog
+        eventImg={croppedImg || formik.values.photoUrl}
         event={formik.values}
         open={postEventDialog}
         onClose={handlePostCreationDialogClose}
@@ -458,12 +515,17 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
             <Grid className={`${classes.container} ${classes.containerSave}`}>
               <FormControl variant="outlined">
                 <FormLabel>Upload Event Cover Photo</FormLabel>
-                <img
-                  src={
-                    "https://i.pinimg.com/736x/59/59/88/5959880ca0cb6b30926091b7bc251812.jpg"
-                  }
-                  style={{ width: "100%", padding: "2em 0" }}
-                ></img>
+
+                <ImageEventUpload
+                  croppedImg={croppedImg}
+                  handleCroppedImage={handleCroppedImage}
+                  imageProps={{
+                    src:
+                      formik.values.posterUrl ||
+                      "https://i.pinimg.com/736x/59/59/88/5959880ca0cb6b30926091b7bc251812.jpg",
+                    className: classes.eventImage,
+                  }}
+                />
               </FormControl>
 
               {formik.values.type !== EVENT_TYPES.ONE_ON_ONE && (
@@ -508,9 +570,11 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
               />
 
               <ButtonCapsule
+                disabled={loader}
                 buttonStyle={classes.saveButton}
                 type={"submit"}
                 text={"Save & Live"}
+                showLoader={loader}
               ></ButtonCapsule>
 
               {matches && (

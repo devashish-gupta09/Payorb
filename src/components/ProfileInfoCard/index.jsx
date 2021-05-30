@@ -16,6 +16,7 @@ import { updateUser } from "../../services/auth";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
 import EditableTextField from "../EditableTextfield";
+import ImageProfileUpload from "../ImageProfileUpload";
 import Logout from "../LogoutButton";
 import { styles } from "./styles";
 
@@ -63,12 +64,12 @@ function ProfileInfoCard({ profileData, vendor, updateProfile }) {
             className={classes.titleCardProfileContainer}
           >
             <Grid>
-              <img
-                src={
-                  profileData.profileImgUrl ||
-                  "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/assets%2Fprofile.jpg?alt=media&token=eea58cd4-50ea-4525-93fb-e7fe83350b59"
-                }
-                className={classes.profileImage}
+              <ImageProfileUpload
+                title={"Select profile picture"}
+                imageProps={{
+                  src: profileData.profileImgUrl || "/assets/profile.jpg",
+                  className: classes.profileImage,
+                }}
               />
             </Grid>
 
@@ -100,31 +101,6 @@ function ProfileInfoCard({ profileData, vendor, updateProfile }) {
                   typographyProps={{ className: classes.grey }}
                 />
               </Grid>
-              {/* <Grid>
-                <EditableTextField
-                  edit={edit}
-                  value={
-                    profileData.location ||
-                    !vendor ||
-                    "Please add your location"
-                  }
-                  textFieldProps={{
-                    id: "location",
-                    label: "Location",
-                    value: formik.values.location,
-                    variant: "outlined",
-                    margin: "normal",
-                    onChange: formik.handleChange,
-                    onBlur: formik.onBlur,
-                    InputProps: {
-                      style: {
-                        height: "min-content",
-                      },
-                    },
-                  }}
-                  typographyProps={{ className: classes.grey }}
-                />
-              </Grid> */}
             </Grid>
           </Grid>
           <Grid style={{ paddingTop: `${matches ? "1.5em" : 0}` }}>

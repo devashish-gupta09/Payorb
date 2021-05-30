@@ -58,4 +58,10 @@ export const styles = makeStyles((theme) => ({
       paddingLeft: "1em",
     },
   },
+  eventImage: {
+    width: "100%",
+    "&:hover": {
+      boxShadow: "0px 0px 7px 0px grey",
+    },
+  },
 }));
