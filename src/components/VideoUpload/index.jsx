@@ -179,6 +179,9 @@ const styles = makeStyles((theme) => ({
     top: 40,
     cursor: "pointer",
     zIndex: "1",
+    [theme.breakpoints.down("sm")]: {
+      top: 30,
+    },
   },
 }));
 
