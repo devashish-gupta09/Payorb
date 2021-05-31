@@ -48,8 +48,12 @@ function Footer() {
             Social Media
           </Typography>
           <Grid className={classes.socialLinksContainer} container>
-            <a href="https://www.facebook.com/Payorbsoftware"><img src="/assets/facebook.png"></img></a>
-            <a href="https://www.instagram.com/payorb.in/"><img src="/assets/instagram.png"></img></a>
+            <a href="https://www.facebook.com/Payorbsoftware">
+              <img src="/assets/facebook.png"></img>
+            </a>
+            <a href="https://www.instagram.com/payorb.in/">
+              <img src="/assets/instagram.png"></img>
+            </a>
           </Grid>
         </Grid>
         <Grid item sm={12}>

@@ -1,11 +1,4 @@
-import {
-  AppBar,
-  Button,
-  Drawer,
-  Grid,
-  Toolbar,
-  Typography,
-} from "@material-ui/core";
+import { Button, Drawer, Grid, Toolbar, Typography } from "@material-ui/core";
 import { Close, Menu } from "@material-ui/icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -14,6 +7,7 @@ import React from "react";
 import { PAGE_PATHS } from "../../constants/paths";
 
 import { FirebaseAuth } from "../AuthenticationContext";
+import CustomHeader from "../Header";
 
 import Logo from "../Logo";
 import ProfileSectionHeader from "../ProfileSectionHeader";
@@ -35,7 +29,7 @@ function LandingHeader() {
   };
 
   return (
-    <AppBar className={classes.root} position={"static"}>
+    <CustomHeader>
       <Drawer anchor={"left"} open={appMenu} onClose={toggleDrawer}>
         <Grid className={classes.drawerItemContainer}>
           <Grid
@@ -135,7 +129,7 @@ function LandingHeader() {
           </Grid>
         </Grid>
       </Toolbar>
-    </AppBar>
+    </CustomHeader>
   );
 }
 

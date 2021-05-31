@@ -1,14 +1,9 @@
-import {
-  AppBar,
-  Button,
-  Drawer,
-  Grid,
-  Toolbar,
-  Typography,
-} from "@material-ui/core";
-import { Close, Home, Menu } from "@material-ui/icons";
+import { Button, Drawer, Grid, Toolbar, Typography } from "@material-ui/core";
+import { Close, Menu } from "@material-ui/icons";
 import Link from "next/link";
 import React from "react";
+
+import CustomHeader from "../Header";
 
 import Logo from "../Logo";
 import { styles } from "./styles";
@@ -22,7 +17,7 @@ function CustomerViewHeader() {
   };
 
   return (
-    <AppBar className={classes.root} position={"static"}>
+    <CustomHeader>
       <Drawer anchor={"left"} open={appMenu} onClose={toggleDrawer}>
         <Grid className={classes.drawerItemContainer}>
           <Grid
@@ -30,7 +25,7 @@ function CustomerViewHeader() {
             justify={"space-between"}
             className={classes.drawerTitleContainer}
           >
-            <Logo dark={true} />
+            <Logo dark={true} redirectToHome={true} />
             <Typography className={classes.drawerClose} onClick={toggleDrawer}>
               <Close />
             </Typography>
@@ -49,18 +44,13 @@ function CustomerViewHeader() {
 
       <Toolbar>
         <Grid container justify="space-between" alignItems="center">
-          <Logo dark={true} width="5em" />
+          <Logo dark={true} width="5em" redirectToHome={true} />
 
           <Grid
             className={classes.buttonContainer}
             container
             justify="space-evenly"
           >
-            <Link href="/">
-              <Button>
-                <Home />
-              </Button>
-            </Link>
             <Link href="/signup">
               <Button className={classes.signupButton}>
                 Sign up for Vendor
@@ -76,7 +66,7 @@ function CustomerViewHeader() {
           </Grid>
         </Grid>
       </Toolbar>
-    </AppBar>
+    </CustomHeader>
   );
 }
 

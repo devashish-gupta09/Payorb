@@ -1,5 +1,4 @@
 import {
-  AppBar,
   Drawer,
   Grid,
   Tab,
@@ -13,6 +12,7 @@ import { useRouter } from "next/router";
 import React from "react";
 
 import { PAGE_PATHS } from "../../constants/paths";
+import CustomHeader from "../Header";
 import Logo from "../Logo";
 import ProfileSectionHeader from "../ProfileSectionHeader";
 import { styles } from "./styles";
@@ -56,7 +56,7 @@ function VendorDashboardHeader({ profileData }) {
   };
 
   return (
-    <AppBar className={classes.root} position={"static"}>
+    <CustomHeader>
       <Drawer anchor="left" open={appMenu} onClose={toggleDrawer}>
         <Grid className={classes.drawerItemContainer}>
           <Grid container justify="space-between" alignItems="center">
@@ -179,7 +179,7 @@ function VendorDashboardHeader({ profileData }) {
           </Grid>
         </Grid>
       </Toolbar>
-    </AppBar>
+    </CustomHeader>
   );
 }
 
