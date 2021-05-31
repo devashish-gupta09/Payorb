@@ -26,7 +26,7 @@ function LandingCarousel({ urls }) {
         indicatorContainerProps={{
           className: `${classes.indicatorButtonContainer}`,
         }}
-        autoPlay={false}
+        autoPlay={true}
         navButtonsProps={{
           className: `${classes.navButtons}`,
         }}

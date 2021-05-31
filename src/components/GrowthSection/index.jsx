@@ -1,6 +1,7 @@
 import { Grid } from "@material-ui/core";
-import { useRouter } from "next/router";
 import React from "react";
+
+import { PAGE_PATHS } from "../../constants/paths";
 
 import ButtonCapsule from "../ButtonCapsule";
 import LandingSectionContent from "../LandingSectionContent";
@@ -8,7 +9,6 @@ import { styles } from "./styles";
 
 function GrowthSection({ content }) {
   const classes = styles();
-  const router = useRouter();
 
   return (
     <Grid className={classes.container}>
@@ -34,9 +34,9 @@ function GrowthSection({ content }) {
         })}
       </Grid>
       <Grid container justify={"center"} className={classes.bottomButton}>
-        <ButtonCapsule text={"Get Started"} />
-        {/* <Link href={"/signup"}>
-        </Link> */}
+        <Link href={PAGE_PATHS.SIGNUP}>
+          <ButtonCapsule text={"Get Started"} />
+        </Link>
       </Grid>
     </Grid>
   );
