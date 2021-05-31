@@ -105,7 +105,8 @@ function EventBooking({ eventLink }) {
             <Grid item sm={12} className={classes.fullWidth}>
               <DashboardCard rootClass={classes.cardPadding}>
                 <Typography variant={"h3"}>{event.name}</Typography>
-                <Typography>{event.mode}</Typography>
+                <Typography gutterBottom="true">{event.description}</Typography>
+                <Typography color="textSecondary">{event.mode}</Typography>
               </DashboardCard>
             </Grid>
             <Grid item sm={12} className={classes.fullWidth}>
@@ -130,18 +131,6 @@ function EventBooking({ eventLink }) {
                   src="https://i.pinimg.com/736x/59/59/88/5959880ca0cb6b30926091b7bc251812.jpg"
                   className={classes.eventPoster}
                 />
-                <Grid container>
-                  <Grid className={classes.eventDescription}>
-                    <Typography
-                      className={globalClasses.bold}
-                      variant="h5"
-                      gutterBottom
-                    >
-                      Event Description
-                    </Typography>
-                    <Typography paragraph>{event.description}</Typography>
-                  </Grid>
-                </Grid>
               </DashboardCard>
             </Grid>
           </Grid>

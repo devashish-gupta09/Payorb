@@ -52,7 +52,7 @@ export const styles = makeStyles((theme) => ({
     },
   },
   socialLinksContainer: {
-    "& > img": {
+    "& > a": {
       padding: "0.5em",
     },
   },
