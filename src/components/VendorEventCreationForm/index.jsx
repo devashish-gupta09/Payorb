@@ -183,7 +183,12 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
       );
 
       try {
-        await childRef.putString(croppedImg, "data_url");
+        await childRef.putString(croppedImg, "data_url", {
+          cacheControl: "max-age=9999999999",
+          customMetadata: {
+            "Access-Control-Allow-Origin": "*",
+          },
+        });
       } catch (err) {
         // Don't do anything if an image upload is unsuccessful
         return err;
