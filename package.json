@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "format": "prettier --write --ext .jsx --ext .jx 'src/**/*' 'pages/**/*'",
+    "format": "prettier --write --ext .jsx --ext .js 'src/**/*' 'pages/**/*'",
     "lint:fix": "eslint --fix --ext .jsx --ext .js 'src/**/*'",
     "lint": "eslint --ext .jsx --ext .js 'src/**/*'"
   },
