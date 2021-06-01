@@ -51,7 +51,12 @@ function ImageProfileUpload({ imageProps }) {
     const ref = firebase.storage().ref();
     const childRef = ref.child(`/profile/${user.uid}.${type.split("/")[1]}`);
 
-    const task = childRef.putString(dataUrl, "data_url");
+    const task = childRef.putString(dataUrl, "data_url", {
+      cacheControl: "max-age=9999999999",
+      customMetadata: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    });
 
     setProgress(true);
     task.on(
@@ -150,7 +155,11 @@ function ImageProfileUpload({ imageProps }) {
           </Tooltip>
         </div>
 
-        <img {...imageProps} src={croppedImg || imageProps.src} />
+        <img
+          crossOrigin="anonymous"
+          {...imageProps}
+          src={croppedImg || imageProps.src}
+        />
       </div>
     </div>
   );
