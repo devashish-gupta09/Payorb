@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-import { EVENT_TYPES } from "../constants/events";
+import { EVENT_MODES, EVENT_TYPES } from "../constants/events";
 
 export const createEventValidationSchema = Yup.object({
   name: Yup.string().max(100, "Must be 100 characters or less").required(),
@@ -10,12 +10,16 @@ export const createEventValidationSchema = Yup.object({
     100,
     "Address can't be greater than 100 characters"
   ),
+  mode: Yup.string()
+    .oneOf([EVENT_MODES.OFFLINE, EVENT_MODES.ONLINE])
+    .required(),
   startDate: Yup.date().required(),
+  // .min(new Date(), "Can't create back dated event"),
   endDate: Yup.date()
     .min(Yup.ref("startDate"), "End date can't be before start Date")
     .required(),
   link: Yup.string()
-    .min(4, "Must be 4 characters or more.")
+    .min(6, "Must be 6 characters or more.")
     .max(40, "Must be 40 characters or less")
     .required(),
   price: Yup.number()
@@ -25,7 +29,11 @@ export const createEventValidationSchema = Yup.object({
     100000,
     "You can't book more than 100000 tickets"
   ),
-  location: Yup.string().required(),
+  location: Yup.string().when("mode", {
+    is: (value) => value === EVENT_MODES.ONLINE,
+    then: Yup.string().optional().max(100),
+    otherwise: Yup.string().required().max(100),
+  }),
   type: Yup.string()
     .oneOf([EVENT_TYPES.ONE_ON_ONE, EVENT_TYPES.ONE_TIME])
     .required(),

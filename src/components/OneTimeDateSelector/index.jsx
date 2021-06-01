@@ -38,9 +38,12 @@ function OneTimeDateSelector({ formik, checkDisabled }) {
             id="startDate"
             label="Start Date"
             format="dd/MM/yyyy"
+            // disablePast={true}
             value={formik.values.startDate}
             onChange={handleStartDate}
             disabled={checkDisabled()}
+            helperText={formik.touched.startDate && formik.errors.startDate}
+            error={formik.touched.startDate && Boolean(formik.errors.startDate)}
           />
         </Grid>
         <Grid item xs={6}>
@@ -73,6 +76,7 @@ function OneTimeDateSelector({ formik, checkDisabled }) {
         <Grid item xs={6}>
           {/* <FormControl variant="outlined" fullWidth> */}
           <KeyboardDatePicker
+            disablePast={true}
             KeyboardButtonProps={{
               style: {
                 paddingLeft: "0.2em",

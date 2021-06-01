@@ -30,6 +30,7 @@ function OneOnOneDateSelector({ formik, checkDisabled }) {
       <Grid item sm={6} container spacing={1}>
         <Grid item xs={6}>
           <KeyboardDatePicker
+            disablePast={true}
             KeyboardButtonProps={{
               style: {
                 paddingLeft: "0.2em",
@@ -54,6 +55,7 @@ function OneOnOneDateSelector({ formik, checkDisabled }) {
         <Grid item xs={6}>
           {/* <FormControl variant="outlined" fullWidth> */}
           <KeyboardDatePicker
+            disablePast={true}
             KeyboardButtonProps={{
               style: {
                 paddingLeft: "0.2em",

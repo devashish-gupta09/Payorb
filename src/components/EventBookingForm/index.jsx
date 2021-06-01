@@ -83,7 +83,13 @@ function EventBookingForm({
       // after receiveing the OTP?
       setPaymentProgLoader(true);
 
-      user = await confirmationResult.confirm(values.otp);
+      try {
+        user = await confirmationResult.confirm(values.otp);
+      } catch (err) {
+        setPaymentProgLoader(false);
+        showAlert(err.message);
+        return;
+      }
 
       if (user) {
         // Let's create a customer in Firestore
