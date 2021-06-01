@@ -155,11 +155,7 @@ function ImageProfileUpload({ imageProps }) {
           </Tooltip>
         </div>
 
-        <img
-          crossOrigin="anonymous"
-          {...imageProps}
-          src={croppedImg || imageProps.src}
-        />
+        <img {...imageProps} src={croppedImg || imageProps.src} />
       </div>
     </div>
   );
