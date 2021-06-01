@@ -89,6 +89,7 @@ function ImageSelectAndCrop({
       </Grid>
 
       <Cropper
+        checkCrossOrigin={false}
         src={imgSrc}
         style={{ height: 300, width: matches ? 250 : 300 }}
         guides={true}
