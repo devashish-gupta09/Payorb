@@ -14,8 +14,8 @@ import DetailRow from "../DetailRow";
 import EditableTextField from "../EditableTextfield";
 import VideoUpload from "../VideoUpload";
 
-const defaultVideo =
-  "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/defaults%2FSampleVideo_1280x720_2mb.mp4?alt=media&token=5515d343-06d3-46f5-9b60-8186d0aa4ef9";
+// const defaultVideo =
+//   "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/defaults%2FSampleVideo_1280x720_2mb.mp4?alt=media&token=5515d343-06d3-46f5-9b60-8186d0aa4ef9";
 function Details(props) {
   const globalClasses = globalStyles();
   const {
@@ -196,7 +196,7 @@ function ProfileAboutCard({ profileData, vendor, updateProfile }) {
             {/* Need to include a video section over here. */}
             <VideoUpload
               videoProps={{
-                src: profileData.videoLink || defaultVideo,
+                src: profileData.videoLink,
               }}
             />
           </Grid>
@@ -206,7 +206,7 @@ function ProfileAboutCard({ profileData, vendor, updateProfile }) {
             {/* Need to include a video section over here. */}
             <VideoUpload
               videoProps={{
-                src: profileData.videoLink || defaultVideo,
+                src: profileData.videoLink,
               }}
             />
           </Grid>
@@ -266,7 +266,7 @@ const styles = makeStyles((theme) => ({
     },
   },
   mobileDetailsContainer: {
-    padding: "1em",
+    padding: "2em 1em",
   },
   detailsContainer: {
     width: "75%",

@@ -1,13 +1,12 @@
 import {
-  Button,
-  CircularProgress,
   Dialog,
   DialogContent,
   Grid,
   makeStyles,
   Tooltip,
+  Typography,
 } from "@material-ui/core";
-import { CloudUpload, Edit } from "@material-ui/icons";
+import { CloudUpload, Edit, Movie } from "@material-ui/icons";
 import React from "react";
 import "cropperjs/dist/cropper.css";
 
@@ -16,6 +15,8 @@ import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { delay } from "../../utils/dateTime";
 import firebase from "../../utils/firebase";
 import { FirebaseAuth } from "../AuthenticationContext";
+import ButtonCapsule from "../ButtonCapsule";
+import Capsule from "../Capsule";
 import VideoSelect from "../VideoSelect";
 
 function VideoUpload({ videoProps }) {
@@ -73,10 +74,18 @@ function VideoUpload({ videoProps }) {
   }, [dataUrl]);
 
   return (
-    <div>
+    <div className={classes.root}>
       {Alert()}
       {dialogOpen && (
-        <Dialog open={dialogOpen} onClose={() => handleDialog(false)}>
+        <Dialog
+          PaperProps={{
+            style: {
+              margin: "1em",
+            },
+          }}
+          open={dialogOpen}
+          onClose={() => handleDialog(false)}
+        >
           <DialogContent className={classes.dialogContentContainer}>
             <VideoSelect
               videoSrcPath={videoProps.src}
@@ -88,33 +97,17 @@ function VideoUpload({ videoProps }) {
               justify="center"
               style={{
                 marginTop: "0.5em",
-                borderTop: "4px solid grey",
-                padding: "0.5em 0",
+                padding: "1em 0",
               }}
             >
-              <Button
+              <ButtonCapsule
+                buttonStyle={classes.saveButton}
+                disabled={!dataUrl}
+                text={"Save"}
                 onClick={handleSave}
-                style={{
-                  background: "#79DFDF",
-                  padding: "0.75em 1.5em",
-                  borderRadius: "25px",
-                  fontWeight: "bold",
-                  color: "white",
-                }}
-              >
-                {progressLoader ? (
-                  <CircularProgress
-                    size="1.5em"
-                    variant="indeterminate"
-                    style={{ color: "white", marginRight: "0.2em" }}
-                  />
-                ) : (
-                  <CloudUpload
-                    style={{ color: "white", marginRight: "0.2em" }}
-                  />
-                )}
-                &nbsp;Save
-              </Button>
+                icon={<CloudUpload className={classes.saveIconButton} />}
+                showLoader={progressLoader}
+              />
             </Grid>
           </DialogContent>
         </Dialog>
@@ -132,11 +125,38 @@ function VideoUpload({ videoProps }) {
           </Tooltip>
         </div>
 
-        <video
-          controls
-          className={classes.videoPreview}
-          src={savedUrl || videoProps.src}
-        ></video>
+        {savedUrl || videoProps.src ? (
+          <video
+            controls
+            className={classes.videoPreview}
+            src={savedUrl || videoProps.src}
+          ></video>
+        ) : (
+          <Grid className={classes.previewText}>
+            <Grid>
+              <Typography
+                variant="h6"
+                style={{ fontWeight: "bold" }}
+                gutterBottom
+              >
+                Introductory video
+              </Typography>
+              <Grid container className={classes.capsuleContainer}>
+                <Capsule>{"Max Size : 5 MB"}</Capsule>
+                <Capsule>{"Duration : 1:00 mins"}</Capsule>
+              </Grid>
+              <Typography align="center" style={{ paddingTop: "1em" }}>
+                <Movie style={{ height: "100px", width: "100px" }}></Movie>
+              </Typography>
+              <ul>
+                <li>Size of the video should be less than 5 MB</li>
+                <li>
+                  Make sure the duration of video is less than <b>1:00 mins</b>
+                </li>
+              </ul>
+            </Grid>
+          </Grid>
+        )}
       </div>
     </div>
   );
@@ -150,6 +170,16 @@ const styles = makeStyles((theme) => ({
       maxWidth: "100%",
     },
   },
+  saveButton: {
+    padding: "1em 2.5em",
+    "& > span": {
+      color: "white",
+      fontWeight: "bold",
+    },
+  },
+  saveIconButton: {
+    marginLeft: "0.4em",
+  },
   "box-2": {
     padding: "0.5em",
     width: "calc(100%/2 - 1em)",
@@ -159,9 +189,12 @@ const styles = makeStyles((theme) => ({
   },
   imageContainer: {
     position: "relative",
-    padding: "2em 0",
+    height: "100%",
+    border: "4px solid #b4b4b4",
+    borderRadius: "1em",
     [theme.breakpoints.down("sm")]: {
-      padding: "0 0 0 0",
+      border: 0,
+      borderRadius: 0,
     },
   },
   videoPreview: {
@@ -173,14 +206,49 @@ const styles = makeStyles((theme) => ({
   editDiv: {
     position: "absolute",
     color: "#BDBDBD",
-    padding: "0.2em",
+    padding: "0.2em 0.3em",
     background: "white",
-    right: 5,
-    top: 40,
+    top: 20,
     cursor: "pointer",
     zIndex: "1",
+    right: 20,
+    borderRadius: "50%",
+    boxShadow: "0px 0px 6px 2px #BDBDBD",
     [theme.breakpoints.down("sm")]: {
-      top: 30,
+      top: 20,
+      right: 10,
+    },
+  },
+  root: {
+    height: "100%",
+  },
+  previewText: {
+    padding: "2em 0",
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    color: "#BDBDBD",
+    boxShadow: "0px 0px 16px 2px #BDBDBD",
+    [theme.breakpoints.down("sm")]: {
+      padding: "2em 1em 2em 1em",
+      "& > div": {
+        width: "100%",
+      },
+      "& > div > ul": {
+        display: "none",
+      },
+      justifyContent: "flex-start",
+      boxShadow: "0",
+    },
+  },
+  capsuleContainer: {
+    [theme.breakpoints.down("sm")]: {
+      display: "block",
+      width: "100%",
+      "& > div": {
+        padding: "0.2em 0",
+      },
     },
   },
 }));
