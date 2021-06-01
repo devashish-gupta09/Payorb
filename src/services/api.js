@@ -7,6 +7,6 @@ export const getAuthHeader = async () => {
       authorization: `Bearer ${idToken}`,
     };
   } catch (err) {
-    return {};
+    return;
   }
 };

@@ -5,16 +5,28 @@ import { END_POINTS } from "../constants/api";
 import { getAuthHeader } from "./api";
 
 export const addUser = async (userDetails) => {
+  const authHeader = await getAuthHeader();
+
+  if (!authHeader) {
+    console.log("No auth header found");
+  }
+
   const res = await axios.post(`${API_URL}/${END_POINTS.VENDOR}`, userDetails, {
-    headers: await getAuthHeader(),
+    headers: authHeader,
   });
+
   return res.data;
 };
 
 export const getUser = async () => {
   try {
+    const authHeader = await getAuthHeader();
+
+    if (!authHeader) {
+      throw new Error("No auth header found");
+    }
     const response = await axios.get(`${API_URL}/${END_POINTS.VENDOR}`, {
-      headers: await getAuthHeader(),
+      headers: authHeader,
     });
     return response.data;
   } catch (err) {
@@ -23,12 +35,21 @@ export const getUser = async () => {
 };
 
 export const updateUser = async (userDetails) => {
-  const res = await axios.patch(
-    `${API_URL}/${END_POINTS.VENDOR}`,
-    userDetails,
-    {
-      headers: await getAuthHeader(),
+  try {
+    const authHeader = await getAuthHeader();
+
+    if (!authHeader) {
+      throw new Error("No auth header found");
     }
-  );
-  return res.data;
+    const res = await axios.patch(
+      `${API_URL}/${END_POINTS.VENDOR}`,
+      userDetails,
+      {
+        headers: authHeader,
+      }
+    );
+    return res.data;
+  } catch (err) {
+    return err.response || err;
+  }
 };

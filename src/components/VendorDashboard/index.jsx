@@ -8,6 +8,8 @@ import { PAGE_PATHS } from "../../constants/paths";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { getUser } from "../../services/auth";
 import { delay } from "../../utils/dateTime";
+import AuthAlertBanner from "../AuthAlertBanner";
+import AlertBanner from "../AuthAlertBanner";
 import VendorDashboardHeader from "../DashboardHeader";
 import FallbackPage from "../FallbackPage";
 import Profile from "../Profile";
@@ -88,6 +90,7 @@ function VendorDashboard() {
       ) : (
         <Grid>
           <VendorDashboardHeader profileData={profileData} />
+          <AuthAlertBanner />
           <VendorDashboardContainer>
             {getComponent(router.asPath, profileData)}
           </VendorDashboardContainer>
