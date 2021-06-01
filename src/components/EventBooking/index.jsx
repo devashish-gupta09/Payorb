@@ -13,6 +13,7 @@ import React from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
 import { EVENT_TYPES } from "../../constants/events";
+import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 import useFetchEvents from "../../hooks/useFetchEvents";
 import { getMonthDate } from "../../utils/dateTime";
 import DashboardCard from "../DashboardCard";
@@ -128,10 +129,7 @@ function EventBooking({ eventLink }) {
             <Grid item sm={12} className={classes.fullWidth}>
               <DashboardCard rootClass={`${classes.posterRoot}`}>
                 <img
-                  src={
-                    event.photoUrl ||
-                    "https://i.pinimg.com/736x/59/59/88/5959880ca0cb6b30926091b7bc251812.jpg"
-                  }
+                  src={event.photoUrl || DEFAULT_EVENT_IMAGE}
                   className={classes.eventPoster}
                 />
               </DashboardCard>

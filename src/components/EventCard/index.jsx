@@ -4,6 +4,7 @@ import React from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
 import { EVENT_TYPES } from "../../constants/events";
+import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 import { getEventDate, getEventMonth } from "../../utils/dateTime";
 import { formatEventType } from "../../utils/events";
 import ButtonCapsule from "../ButtonCapsule";
@@ -75,10 +76,7 @@ function EventCard({ event }) {
         <Grid item sm={3} className={classes.imageContainer}>
           <img
             className={classes.eventImage}
-            src={
-              event.photoUrl ||
-              "https://i.pinimg.com/736x/59/59/88/5959880ca0cb6b30926091b7bc251812.jpg"
-            }
+            src={event.photoUrl || DEFAULT_EVENT_IMAGE}
           />
         </Grid>
 

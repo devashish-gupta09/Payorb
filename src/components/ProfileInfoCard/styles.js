@@ -6,6 +6,7 @@ export const styles = makeStyles((theme) => ({
   profileImage: {
     height: "6em",
     borderRadius: "50%",
+    width: "6em",
 
     [theme.breakpoints.down("sm")]: {
       height: "4em",
