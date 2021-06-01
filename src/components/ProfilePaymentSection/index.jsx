@@ -1,13 +1,15 @@
 import { Grid, makeStyles, TextField, Typography } from "@material-ui/core";
 
 import { useFormik } from "formik";
-import { useRouter } from "next/router";
 import React from "react";
 
 import { appColors } from "../../../styles/colors";
 import { globalStyles } from "../../../styles/globalStyles";
+import { ALERT_TYPES } from "../../constants/alerts";
+import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { updateUser } from "../../services/auth";
 import ButtonCapsule from "../ButtonCapsule";
+import Capsule from "../Capsule";
 
 import DashboardCard from "../DashboardCard";
 
@@ -21,9 +23,31 @@ function getPaymentSectionValues(paymentDetails) {
   };
 }
 
-function ProfilePaymentSection({ profileData }) {
+function getPaymentDetailsStatus(paymentDetails) {
   const classes = styles();
-  const router = useRouter();
+  if (
+    !paymentDetails.accNumber ||
+    !paymentDetails.ifscCode ||
+    !paymentDetails.bankName ||
+    !paymentDetails.bankAddress
+  ) {
+    return (
+      <div className={classes.capsule}>
+        <Capsule>{"Incomplete"}</Capsule>
+      </div>
+    );
+  } else if (!paymentDetails.rzpLinkedAccId) {
+    return (
+      <div className={classes.capsule}>
+        <Capsule>{"Under Processing"}</Capsule>
+      </div>
+    );
+  }
+}
+
+function ProfilePaymentSection({ profileData, updateProfile }) {
+  const classes = styles();
+  const { Alert, showAlert } = useAlertSnackbar();
   const formik = useFormik({
     initialValues: getPaymentSectionValues(profileData.paymentDetails),
     onSubmit: async (values) => {
@@ -32,10 +56,10 @@ function ProfilePaymentSection({ profileData }) {
           paymentDetails: values,
         });
         if (res?.success) {
-          alert("User updated.");
-          router.reload();
+          showAlert("Payment Details updated.");
+          updateProfile({ ...profileData, paymentDetails: { ...values } });
         } else {
-          alert("User not updated.");
+          showAlert("Payment Details not updated.", ALERT_TYPES.ERROR);
         }
       } catch (err) {
         console.error(err);
@@ -47,9 +71,21 @@ function ProfilePaymentSection({ profileData }) {
 
   return (
     <DashboardCard rootClass={classes.root}>
-      <Typography className={`${globalClasses.bold} ${classes.sectionTitle}`}>
-        Payment Section
-      </Typography>
+      {Alert()}
+      <Grid
+        style={{
+          paddingBottom: "2em",
+        }}
+        container
+      >
+        <Typography
+          className={`${globalClasses.bold} ${classes.sectionTitle}`}
+          gutterBottom
+        >
+          Payment Section
+        </Typography>
+        {getPaymentDetailsStatus(profileData.paymentDetails)}
+      </Grid>
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={5}>
           <Grid container item sm={6} spacing={5}>
@@ -157,6 +193,9 @@ function ProfilePaymentSection({ profileData }) {
 }
 
 const styles = makeStyles((theme) => ({
+  capsule: {
+    marginLeft: "0.3em",
+  },
   root: {
     borderRadius: "0.8em",
     padding: "2em",
@@ -180,9 +219,7 @@ const styles = makeStyles((theme) => ({
   reviewTime: {
     color: appColors.grey,
   },
-  sectionTitle: {
-    paddingBottom: "2em",
-  },
+
   textInput: {
     color: "#BDBDBD",
     [theme.breakpoints.down("sm")]: {
@@ -198,6 +235,9 @@ const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
+  },
+  sectionTitle: {
+    width: "fit-content",
   },
 }));
 

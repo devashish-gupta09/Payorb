@@ -98,7 +98,7 @@ function EventBooking({ eventLink }) {
           <Grid
             item
             container
-            sm={9}
+            sm={8}
             spacing={3}
             style={{ width: "100%", margin: 0 }}
           >
@@ -128,13 +128,16 @@ function EventBooking({ eventLink }) {
             <Grid item sm={12} className={classes.fullWidth}>
               <DashboardCard rootClass={`${classes.posterRoot}`}>
                 <img
-                  src="https://i.pinimg.com/736x/59/59/88/5959880ca0cb6b30926091b7bc251812.jpg"
+                  src={
+                    event.photoUrl ||
+                    "https://i.pinimg.com/736x/59/59/88/5959880ca0cb6b30926091b7bc251812.jpg"
+                  }
                   className={classes.eventPoster}
                 />
               </DashboardCard>
             </Grid>
           </Grid>
-          <Grid item container sm={3}>
+          <Grid item container sm={4}>
             <Grid item sm={12}>
               <DashboardCard rootClass={`${classes.formContainer}`}>
                 <Typography
@@ -205,6 +208,7 @@ const styles = makeStyles((theme) => ({
   formContainer: {
     height: "fit-content",
     padding: "1em",
+    marginTop: "1em",
   },
   vendorCardContainer: {
     width: "100%",
