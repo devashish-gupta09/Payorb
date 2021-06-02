@@ -3,6 +3,9 @@ import React from "react";
 
 import useFetchVendorVerifiedDetails from "../../hooks/useFetchVendorAuth";
 
+const WARNING = "warning";
+const CONFIRMATION = "confirmation";
+
 const getMessageForDetails = (details) => {
   const paymentDetails = details.find(
     (detail) => detail.name === "paymentDetails"
@@ -10,9 +13,17 @@ const getMessageForDetails = (details) => {
 
   switch (paymentDetails.status) {
     case "MISSING":
-      return "Payment details are not complete. Please update.";
+      return {
+        msg:
+          "[Payment Section Incomplete] To create events and services, please add your Payment details.",
+        type: WARNING,
+      };
     case "RZP_PENDING":
-      return "Account under processing. Please contact support.";
+      return {
+        msg:
+          "[Account Under Processing] Thank you for submitting your Payment details. Your account will be activated soon.",
+        type: CONFIRMATION,
+      };
     default:
       return;
   }
@@ -23,12 +34,15 @@ function AuthAlertBanner() {
   const { loading, verifiedDetails } = useFetchVendorVerifiedDetails();
 
   if (!loading && verifiedDetails && verifiedDetails.length > 0) {
-    const message = getMessageForDetails(verifiedDetails);
+    const details = getMessageForDetails(verifiedDetails);
 
-    if (message) {
+    if (details) {
       return (
-        <AppBar className={classes.root} position={"fixed"}>
-          <Typography className={classes.message}>{message}</Typography>
+        <AppBar
+          className={`${classes.root} ${classes[details.type]}`}
+          position={"fixed"}
+        >
+          <Typography className={classes.message}>{details.msg}</Typography>
         </AppBar>
       );
     }
@@ -39,12 +53,18 @@ function AuthAlertBanner() {
 
 const styles = makeStyles((theme) => ({
   root: {
-    background: "#ffd84a",
     marginTop: "4.5em",
     padding: "1em 2em",
   },
+  [WARNING]: {
+    background: "#ffd84a",
+  },
+  [CONFIRMATION]: {
+    background: "#1ab986",
+  },
   message: {
     fontWeight: "bold",
+    color: "black",
   },
 }));
 

@@ -577,7 +577,7 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                 disabled={loader}
                 buttonStyle={classes.saveButton}
                 type={"submit"}
-                text={"Save & Live"}
+                text={"Host Event"}
                 showLoader={loader}
               ></ButtonCapsule>
 
