@@ -60,7 +60,7 @@ const styles = makeStyles((theme) => ({
     background: "#ffd84a",
   },
   [CONFIRMATION]: {
-    background: "#1ab986",
+    background: "#00DDBC",
   },
   message: {
     fontWeight: "bold",
