@@ -65,6 +65,7 @@ function ProfileInfoCard({ profileData, vendor, updateProfile }) {
           >
             <Grid>
               <ImageProfileUpload
+                vendor={vendor}
                 title={"Select profile picture"}
                 imageProps={{
                   src: profileData.profileImgUrl || "/assets/profile.jpg",

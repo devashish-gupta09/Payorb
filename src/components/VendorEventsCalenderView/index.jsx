@@ -71,7 +71,7 @@ function VendorEventsCalenderView() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
   const [calendarView, setCalendarView] = React.useState(
-    matches ? "Week" : "Day"
+    !matches ? "Week" : "Day"
   );
 
   const { data: events, loading, error } = useFetchEventsBetween(
@@ -82,6 +82,7 @@ function VendorEventsCalenderView() {
   const handleDateChange = (currentDate) => {
     const momentDate = moment(currentDate);
     if (calendarView === "Month") {
+      console.log(momentDate.startOf("month"));
       setStartDate(momentDate.startOf("month").toISOString());
       setEndDate(momentDate.endOf("month").toISOString());
     } else if (calendarView === "Week") {
@@ -95,18 +96,11 @@ function VendorEventsCalenderView() {
 
   const handleViewChange = (currentView) => {
     setCalendarView(currentView);
-
-    if (currentView === "Month") {
-      setStartDate(today.startOf("month").toISOString());
-      setEndDate(today.endOf("month").toISOString());
-    } else if (currentView === "Week") {
-      setStartDate(today.startOf("week").toISOString());
-      setEndDate(today.endOf("week").toISOString());
-    } else {
-      setStartDate(moment().toISOString());
-      setEndDate(moment().toISOString());
-    }
   };
+
+  React.useEffect(() => {
+    handleDateChange(Date.now());
+  }, [calendarView]);
 
   if (loading) {
     return <SkeletonLoading />;

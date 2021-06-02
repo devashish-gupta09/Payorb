@@ -20,7 +20,7 @@ import firebase from "../../utils/firebase";
 import { FirebaseAuth } from "../AuthenticationContext";
 import ImageSelectAndCrop from "../ImageSelectAndCrop";
 
-function ImageProfileUpload({ imageProps }) {
+function ImageProfileUpload({ imageProps, vendor }) {
   const classes = styles();
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const { Alert, showAlert } = useAlertSnackbar();
@@ -144,16 +144,18 @@ function ImageProfileUpload({ imageProps }) {
       )}
 
       <div className={classes.imageContainer}>
-        <div
-          onClick={() => {
-            handleDialog(true);
-          }}
-          className={classes.editDiv}
-        >
-          <Tooltip title="Edit Profile">
-            <Edit style={{ fontSize: "1rem" }} />
-          </Tooltip>
-        </div>
+        {vendor && (
+          <div
+            onClick={() => {
+              handleDialog(true);
+            }}
+            className={classes.editDiv}
+          >
+            <Tooltip title="Edit Profile">
+              <Edit style={{ fontSize: "1rem" }} />
+            </Tooltip>
+          </div>
+        )}
 
         <img {...imageProps} src={croppedImg || imageProps.src} />
       </div>

@@ -19,7 +19,7 @@ import ButtonCapsule from "../ButtonCapsule";
 import Capsule from "../Capsule";
 import VideoSelect from "../VideoSelect";
 
-function VideoUpload({ videoProps }) {
+function VideoUpload({ videoProps, vendor }) {
   const classes = styles();
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [dataUrl, setDataUrl] = React.useState();
@@ -114,16 +114,18 @@ function VideoUpload({ videoProps }) {
       )}
 
       <div className={classes.imageContainer}>
-        <div
-          onClick={() => {
-            handleDialog(true);
-          }}
-          className={classes.editDiv}
-        >
-          <Tooltip title="Add introductory video">
-            <Edit />
-          </Tooltip>
-        </div>
+        {vendor && (
+          <div
+            onClick={() => {
+              handleDialog(true);
+            }}
+            className={classes.editDiv}
+          >
+            <Tooltip title="Add introductory video">
+              <Edit />
+            </Tooltip>
+          </div>
+        )}
 
         {savedUrl || videoProps.src ? (
           <video
@@ -132,30 +134,33 @@ function VideoUpload({ videoProps }) {
             src={savedUrl || videoProps.src}
           ></video>
         ) : (
-          <Grid className={classes.previewText}>
-            <Grid>
-              <Typography
-                variant="h6"
-                style={{ fontWeight: "bold" }}
-                gutterBottom
-              >
-                Introductory video
-              </Typography>
-              <Grid container className={classes.capsuleContainer}>
-                <Capsule>{"Max Size : 5 MB"}</Capsule>
-                <Capsule>{"Duration : 1:00 mins"}</Capsule>
+          vendor && (
+            <Grid className={classes.previewText}>
+              <Grid>
+                <Typography
+                  variant="h6"
+                  style={{ fontWeight: "bold" }}
+                  gutterBottom
+                >
+                  Introductory video
+                </Typography>
+                <Grid container className={classes.capsuleContainer}>
+                  <Capsule>{"Max Size : 5 MB"}</Capsule>
+                  <Capsule>{"Duration : 1:00 mins"}</Capsule>
+                </Grid>
+                <Typography align="center" style={{ paddingTop: "1em" }}>
+                  <Movie style={{ height: "100px", width: "100px" }}></Movie>
+                </Typography>
+                <ul>
+                  <li>Size of the video should be less than 5 MB</li>
+                  <li>
+                    Make sure the duration of video is less than{" "}
+                    <b>1:00 mins</b>
+                  </li>
+                </ul>
               </Grid>
-              <Typography align="center" style={{ paddingTop: "1em" }}>
-                <Movie style={{ height: "100px", width: "100px" }}></Movie>
-              </Typography>
-              <ul>
-                <li>Size of the video should be less than 5 MB</li>
-                <li>
-                  Make sure the duration of video is less than <b>1:00 mins</b>
-                </li>
-              </ul>
             </Grid>
-          </Grid>
+          )
         )}
       </div>
     </div>

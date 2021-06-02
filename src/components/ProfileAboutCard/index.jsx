@@ -195,6 +195,7 @@ function ProfileAboutCard({ profileData, vendor, updateProfile }) {
           <Grid item sm={6}>
             {/* Need to include a video section over here. */}
             <VideoUpload
+              vendor={vendor}
               videoProps={{
                 src: profileData.videoLink,
               }}
@@ -205,6 +206,7 @@ function ProfileAboutCard({ profileData, vendor, updateProfile }) {
           <Grid>
             {/* Need to include a video section over here. */}
             <VideoUpload
+              vendor={vendor}
               videoProps={{
                 src: profileData.videoLink,
               }}

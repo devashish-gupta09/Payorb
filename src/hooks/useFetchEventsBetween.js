@@ -8,11 +8,11 @@ function useFetchEventsBetween(startDate, endDate) {
   const [error, setError] = useState();
 
   useEffect(() => {
+    // setLoading(true)
     getEventsBetween({ startDate, endDate })
       .then((res) => {
         if (res.data) {
           setLoading(false);
-          console.log("RES : ", res);
           setData(res.data.events);
         } else {
           setLoading(false);
