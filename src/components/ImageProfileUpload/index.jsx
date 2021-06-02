@@ -52,7 +52,7 @@ function ImageProfileUpload({ imageProps }) {
     const childRef = ref.child(`/profile/${user.uid}.${type.split("/")[1]}`);
 
     const task = childRef.putString(dataUrl, "data_url", {
-      cacheControl: "max-age=9999999999",
+      cacheControl: "max-age=1654999999999",
       customMetadata: {
         "Access-Control-Allow-Origin": "*",
       },
@@ -151,7 +151,7 @@ function ImageProfileUpload({ imageProps }) {
           className={classes.editDiv}
         >
           <Tooltip title="Edit Profile">
-            <Edit style={{ fontSize: matches ? "1em" : "1.5em" }} />
+            <Edit style={{ fontSize: "1rem" }} />
           </Tooltip>
         </div>
 
@@ -179,30 +179,28 @@ const styles = makeStyles((theme) => ({
   imageContainer: {
     position: "relative",
     padding: "2em 0",
-  },
-  videoPreview: {
-    width: "100%",
     [theme.breakpoints.down("sm")]: {
-      width: "200px",
+      padding: "1em 0",
     },
   },
   editDiv: {
     position: "absolute",
     color: "#BDBDBD",
-    padding: "0.2em 0.4em",
+    padding: "0.2em 0.3em",
     background: "white",
-    borderRadius: "2em",
+    borderRadius: "50%",
     right: 5,
     top: 30,
     cursor: "pointer",
     zIndex: "1",
     boxShadow: "0px 0px 4px 1px grey",
     "&:hover": {
-      boxShadow: "0px 0px 4px 2px #79DFDF",
+      boxShadow: "0px 0px 6px 4px #79DFDF",
     },
     [theme.breakpoints.down("sm")]: {
       borderRadius: "1em",
-      right: "0",
+      top: 5,
+      right: 0,
     },
   },
 }));

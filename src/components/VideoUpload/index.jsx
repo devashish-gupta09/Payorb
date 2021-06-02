@@ -190,7 +190,6 @@ const styles = makeStyles((theme) => ({
   imageContainer: {
     position: "relative",
     height: "100%",
-
     [theme.breakpoints.down("sm")]: {
       border: 0,
       borderRadius: 0,

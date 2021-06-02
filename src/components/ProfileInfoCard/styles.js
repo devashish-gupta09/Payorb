@@ -9,7 +9,8 @@ export const styles = makeStyles((theme) => ({
     width: "6em",
 
     [theme.breakpoints.down("sm")]: {
-      height: "4em",
+      width: "3.5em",
+      height: "3.5em",
     },
   },
   titleCardProfileContainer: {
