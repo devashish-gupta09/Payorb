@@ -51,8 +51,13 @@ function ImageSelectAndCrop({
   };
 
   const handleOnCrop = () => {
-    const imageEl = cropperRef.current.cropper.getCroppedCanvas().toDataURL();
-    handleDataUrl(imageEl);
+    console.log("Handle");
+    try {
+      const imageEl = cropperRef.current.cropper.getCroppedCanvas().toDataURL();
+      handleDataUrl(imageEl);
+    } catch (err) {
+      return;
+    }
   };
 
   return (

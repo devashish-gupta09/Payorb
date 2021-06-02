@@ -34,6 +34,7 @@ import {
   EVENT_MODES,
   EVENT_TYPES,
 } from "../../constants/events";
+import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 
 import { PAGE_PATHS } from "../../constants/paths";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
@@ -525,9 +526,7 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                   croppedImg={croppedImg}
                   handleCroppedImage={handleCroppedImage}
                   imageProps={{
-                    src:
-                      formik.values.photoUrl ||
-                      "https://i.pinimg.com/736x/59/59/88/5959880ca0cb6b30926091b7bc251812.jpg",
+                    src: formik.values.photoUrl || DEFAULT_EVENT_IMAGE,
                     className: classes.eventImage,
                   }}
                 />

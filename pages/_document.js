@@ -11,6 +11,7 @@ export default class MyDocument extends Document {
         <Head>
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />
+          <meta name="referrer" content="origin"></meta>
         </Head>
         <body>
           <Main />
