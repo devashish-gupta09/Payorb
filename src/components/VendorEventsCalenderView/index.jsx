@@ -82,7 +82,6 @@ function VendorEventsCalenderView() {
   const handleDateChange = (currentDate) => {
     const momentDate = moment(currentDate);
     if (calendarView === "Month") {
-      console.log(momentDate.startOf("month"));
       setStartDate(momentDate.startOf("month").toISOString());
       setEndDate(momentDate.endOf("month").toISOString());
     } else if (calendarView === "Week") {
