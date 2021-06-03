@@ -56,13 +56,11 @@ const AuthenticationContext = (props) => {
 
   React.useEffect(() => {
     authObserver = app.auth().onAuthStateChanged((authenticatedUser) => {
-      console.log("Did we observe an auth change", authenticatedUser);
       handleAuthChange(authenticatedUser);
     });
 
     return () => {
       if (authObserver) {
-        console.log("Component Unmount Function");
         authObserver();
       }
     };

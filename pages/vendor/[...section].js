@@ -5,8 +5,10 @@ import {
   Typography,
 } from "@material-ui/core";
 import { useRouter } from "next/router";
-import { Context } from "../../src/components/AuthenticationContext";
+
 import React from "react";
+
+import { Context } from "../../src/components/AuthenticationContext";
 import VendorDashboard from "../../src/components/VendorDashboard";
 
 export default function Vendor() {

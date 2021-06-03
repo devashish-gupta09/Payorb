@@ -12,9 +12,9 @@ function useFetchVendor(userUID, vendor = true) {
     if (vendor) {
       getUser()
         .then((res) => {
-          if (res.data.vendor) {
+          if (res.data) {
             setLoading(false);
-            setData(res.data.vendor);
+            setData(res.data);
           } else {
             setLoading(false);
             setError("Could not fetch vendor");
