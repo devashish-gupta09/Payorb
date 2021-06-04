@@ -30,7 +30,6 @@ function PostEventCreationDialog(props) {
       {...props}
       PaperProps={{
         style: {
-          overflow: "hidden",
           background: "transparent",
         },
       }}
@@ -56,8 +55,8 @@ function PostEventCreationDialog(props) {
                 justify="space-between"
                 className={classes.descriptionInfoContainer}
               >
-                <Typography variant={"h5"} className={classes.titleContainer}>
-                  {event.description}
+                <Typography variant={"h6"} className={classes.titleContainer}>
+                  {event.name}
                 </Typography>
                 <DateMonth
                   startDate={event.startDate}

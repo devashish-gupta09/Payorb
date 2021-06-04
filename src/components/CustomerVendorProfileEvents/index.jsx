@@ -48,7 +48,9 @@ function CustomerVendorProfileEvents({ userUID }) {
             </Grid>
           </>
         ) : (
-          <Typography>No events found</Typography>
+          <Typography variant="h5">
+            No past events found. Start creating new events...
+          </Typography>
         )}
       </>
     );
