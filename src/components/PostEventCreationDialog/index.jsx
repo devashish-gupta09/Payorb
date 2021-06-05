@@ -72,7 +72,6 @@ function PostEventCreationDialog(props) {
                     id="link"
                     label={"Event Link"}
                     variant="outlined"
-                    fullWidth
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -92,12 +91,15 @@ function PostEventCreationDialog(props) {
                   className={classes.iconContainer}
                 >
                   <Tooltip title="Copy link">
-                    <FilterNone onClick={handleCopy}></FilterNone>
+                    <FilterNone
+                      className={classes.icon}
+                      onClick={handleCopy}
+                    ></FilterNone>
                   </Tooltip>
 
                   <Link target="_blank" href={eventLink}>
                     <Tooltip title="Open in browser">
-                      <OpenInBrowser />
+                      <OpenInBrowser className={classes.icon} />
                     </Tooltip>
                   </Link>
                 </Grid>
@@ -160,6 +162,10 @@ const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       padding: "2em 1em",
     },
+  },
+  icon: {
+    width: "1.5em",
+    height: "1.5em",
   },
 }));
 
