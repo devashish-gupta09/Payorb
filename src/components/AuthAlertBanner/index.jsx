@@ -1,7 +1,10 @@
 import { AppBar, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 
-import useFetchVendorVerifiedDetails from "../../hooks/useFetchVendorAuth";
+import {
+  useFetchUserAuthDetails,
+  useUserAuthDetails,
+} from "../../context/UserAuthDetailContext";
 
 const WARNING = "warning";
 const CONFIRMATION = "confirmation";
@@ -31,10 +34,22 @@ const getMessageForDetails = (details) => {
 
 function AuthAlertBanner() {
   const classes = styles();
-  const { loading, verifiedDetails } = useFetchVendorVerifiedDetails();
 
-  if (!loading && verifiedDetails && verifiedDetails.length > 0) {
-    const details = getMessageForDetails(verifiedDetails);
+  const { state, dispatch } = useUserAuthDetails();
+
+  // console.log(useUserAuthDetails());
+  // Might mess up.
+  React.useEffect(() => {
+    if (!state) {
+      useFetchUserAuthDetails(dispatch);
+    }
+  }, []);
+
+  // const { loading, verifiedDetails } = useFetchVendorVerifiedDetails();
+
+  // if (!loading && verifiedDetails && verifiedDetails.length > 0) {
+  if (state && state.details) {
+    const details = getMessageForDetails(state.details);
 
     if (details) {
       return (

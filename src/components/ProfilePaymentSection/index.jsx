@@ -6,6 +6,10 @@ import React from "react";
 import { appColors } from "../../../styles/colors";
 import { globalStyles } from "../../../styles/globalStyles";
 import { ALERT_TYPES } from "../../constants/alerts";
+import {
+  useUserAuthDetails,
+  useFetchUserAuthDetails,
+} from "../../context/UserAuthDetailContext";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { updateUser } from "../../services/auth";
 import ButtonCapsule from "../ButtonCapsule";
@@ -47,6 +51,7 @@ function getPaymentDetailsStatus(paymentDetails) {
 
 function ProfilePaymentSection({ profileData, updateProfile }) {
   const classes = styles();
+  const { dispatch } = useUserAuthDetails();
   const { Alert, showAlert } = useAlertSnackbar();
   const formik = useFormik({
     initialValues: getPaymentSectionValues(profileData.paymentDetails),
@@ -58,6 +63,7 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
         if (res?.success) {
           showAlert("Payment Details updated.");
           updateProfile({ ...profileData, paymentDetails: { ...values } });
+          await useFetchUserAuthDetails(dispatch);
         } else {
           showAlert("Payment Details not updated.", ALERT_TYPES.ERROR);
         }
