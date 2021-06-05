@@ -77,6 +77,7 @@ function useFetchEvents(isVendor, filterParams) {
       //   Fetch events of category selected in TAB
       getEventsPublic(eventsParams)
         .then(async (res) => {
+          console.log(res);
           if (res.data) {
             await delay(50);
             setLoading(false);

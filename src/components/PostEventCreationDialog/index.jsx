@@ -12,6 +12,8 @@ import { FilterNone, OpenInBrowser } from "@material-ui/icons";
 import copy from "clipboard-copy";
 import React from "react";
 
+import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
+
 import { PAGE_PATHS } from "../../constants/paths";
 import DashboardCard from "../DashboardCard";
 import DateMonth from "../DateMonth";
@@ -40,11 +42,7 @@ function PostEventCreationDialog(props) {
             <DashboardCard rootClass={`${classes.posterRoot}`}>
               <Grid>
                 <img
-                  src={
-                    eventImg ||
-                    event.photoUrl ||
-                    "https://i.pinimg.com/736x/59/59/88/5959880ca0cb6b30926091b7bc251812.jpg"
-                  }
+                  src={eventImg || event.photoUrl || DEFAULT_EVENT_IMAGE}
                   className={classes.eventPoster}
                 />
               </Grid>

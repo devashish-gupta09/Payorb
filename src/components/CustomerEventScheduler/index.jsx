@@ -25,44 +25,46 @@ import SkeletonLoading from "../SkeletonLoading";
 
 function generateOneOnOneEventSlots(event) {
   const result = {};
-  const startDate = new Date(event.startDate);
-  const endDate = new Date(event.endDate);
-  const slotStartTime = new Date(event.slotStartTimePerDay);
-  const slotEndTime = new Date(event.slotEndTimePerDay);
+  const startDate = moment(new Date(event.startDate));
+  const endDate = moment(new Date(event.endDate));
+  const slotStartTime = moment(new Date(event.slotStartTimePerDay));
+  const slotEndTime = moment(new Date(event.slotEndTimePerDay));
 
-  startDate.setHours(slotStartTime.getHours());
-  startDate.setMinutes(slotStartTime.getMinutes());
-  startDate.setMilliseconds(slotStartTime.getMilliseconds());
+  startDate
+    .set("hour", slotStartTime.get("hour"))
+    .set("minute", slotStartTime.get("minute"))
+    .set("second", slotStartTime.get("second"));
 
-  endDate.setHours(slotEndTime.getHours());
-  endDate.setMinutes(slotEndTime.getMinutes());
-  endDate.setMilliseconds(slotEndTime.getMilliseconds());
+  endDate
+    .set("hour", slotEndTime.get("hour"))
+    .set("minute", slotEndTime.get("minute"))
+    .set("second", slotEndTime.get("second"));
 
   for (
     var startTime = startDate;
     startTime <= endDate;
-    startTime.setHours(startTime.getHours() + event.slotDuration)
+    startTime.add(event.slotDuration, "hour")
   ) {
     if (
-      startTime.getHours() >= slotStartTime.getHours() &&
-      startTime.getHours() < slotEndTime.getHours()
+      startTime.get("hour") >= slotStartTime.get("hour") &&
+      startTime.get("hour") < slotEndTime.get("hour")
     ) {
-      const endSlot = new Date(startTime);
-      endSlot.setHours(startTime.getHours() + event.slotDuration);
+      const endSlot = moment(startTime);
+      endSlot.set("hour", event.slotDuration);
 
       if (!event.bookedSlots.includes(startTime.toISOString())) {
-        if (result[startDate.toLocaleDateString()]) {
-          result[startDate.toLocaleDateString()].push({
+        if (result[startDate.format("YYYY-MM-DD")]) {
+          result[startDate.format("YYYY-MM-DD")].push({
             title: event.name,
-            startDate: new Date(startTime),
+            startDate: startTime.toDate(),
             link: event.link,
             type: event.type,
           });
         } else {
-          result[startDate.toLocaleDateString()] = [
+          result[startDate.format("YYYY-MM-DD")] = [
             {
               title: event.name,
-              startDate: new Date(startTime),
+              startDate: startTime.toDate(),
               link: event.link,
               type: event.type,
             },
@@ -73,14 +75,6 @@ function generateOneOnOneEventSlots(event) {
   }
 
   return result;
-}
-
-function FlexibleSpaceComponent() {
-  return (
-    <Grid style={{ padding: "0 1em " }}>
-      <h3>Select Event Slot</h3>
-    </Grid>
-  );
 }
 
 function CustomerEventScheduler({ eventLink }) {
@@ -104,7 +98,7 @@ function CustomerEventScheduler({ eventLink }) {
   };
 
   if (loading) {
-    return <SkeletonLoading />;
+    return <SkeletonLoading message="Loading One On One event" />;
   }
 
   if (error) {
@@ -112,29 +106,32 @@ function CustomerEventScheduler({ eventLink }) {
   }
 
   const handleChange = (data) => {
-    setWeek(new Date(data));
+    setWeek(moment(new Date(data)));
   };
 
   const handleBookButton = (startTime, slotDuration) => {
-    if (!startTime) {
+    const momentStartTime = moment(startTime);
+    if (!momentStartTime.toDate()) {
       showAlert("Please select a suitable time slot");
       return;
     }
 
-    const endTime = new Date(startTime);
-    endTime.setHours(endTime.getHours() + parseInt(slotDuration));
+    const endTime = moment(momentStartTime);
+    endTime.add(slotDuration, "hours");
     router.push(
       `${PAGE_PATHS.CUSTOMER_EVENTS_REGISTER}?event=${eventLink}&type=${
         EVENT_TYPES.ONE_ON_ONE
-      }&from=${startTime.getTime()}&to=${endTime.getTime()}`
+      }&from=${momentStartTime
+        .toDate()
+        .getTime()}&to=${endTime.toDate().getTime()}`
     );
   };
 
   if (events && Object.keys(events).length > 0) {
     const event = events[0];
-    const startDate = week || new Date(event.startDate);
-
+    const startDate = week || moment(new Date(event.startDate));
     const calenderViewEvents = generateOneOnOneEventSlots(event);
+
     if (event.type === EVENT_TYPES.ONE_ON_ONE) {
       return (
         <Grid>
@@ -166,7 +163,7 @@ function CustomerEventScheduler({ eventLink }) {
               <Grid item sm={5} style={{ width: "100%" }}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <Calendar
-                    date={startDate}
+                    date={startDate.toDate()}
                     onChange={handleChange}
                     minDate={new Date(event.startDate)}
                     maxDate={new Date(event.endDate)}
@@ -193,26 +190,28 @@ function CustomerEventScheduler({ eventLink }) {
                     {`${moment(new Date(week || startDate)).format("LL")}`}
                   </Typography>
                 </Grid>
-                {calenderViewEvents[startDate.toLocaleDateString()] &&
-                  calenderViewEvents[startDate.toLocaleDateString()].map(
-                    (slot) => (
-                      <Grid item xs={matches ? 4 : 3}>
-                        <Button
-                          fullWidth
-                          className={`${classes.timeButton} ${
-                            timeChosen.time &&
-                            timeChosen.time.toISOString() ===
-                              slot.startDate.toISOString()
-                              ? classes.activeTimeButton
-                              : classes.inActiveTimeButton
-                          }`}
-                          variant={"outlined"}
-                          onClick={() => handleTimeClick(slot.startDate)}
-                        >
-                          {moment(slot.startDate).format("LT")}
-                        </Button>
-                      </Grid>
-                    )
+                {calenderViewEvents[startDate.format("YYYY-MM-DD")] &&
+                  calenderViewEvents[startDate.format("YYYY-MM-DD")].map(
+                    (slot, index) => {
+                      return (
+                        <Grid item key={index} xs={matches ? 4 : 3}>
+                          <Button
+                            fullWidth
+                            className={`${classes.timeButton} ${
+                              timeChosen.time &&
+                              timeChosen.time.toISOString() ===
+                                slot.startDate.toISOString()
+                                ? classes.activeTimeButton
+                                : classes.inActiveTimeButton
+                            }`}
+                            variant={"outlined"}
+                            onClick={() => handleTimeClick(slot.startDate)}
+                          >
+                            {moment(slot.startDate).format("LT")}
+                          </Button>
+                        </Grid>
+                      );
+                    }
                   )}
               </Grid>
             </Grid>

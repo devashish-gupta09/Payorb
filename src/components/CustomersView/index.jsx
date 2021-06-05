@@ -33,7 +33,6 @@ function CustomersView() {
   const getComponent = () => {
     if (router.asPath.includes(PAGE_PATHS.CUSTOMER_EVENTS_REGISTER)) {
       if (router.query.event && router.query.type) {
-        console.log(router.query.to);
         if (
           router.query.type === EVENT_TYPES.ONE_TIME ||
           (router.query.type === EVENT_TYPES.ONE_ON_ONE &&
