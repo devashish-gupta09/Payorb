@@ -5,6 +5,7 @@ import React from "react";
 import { ALERT_TYPES } from "../../constants/alerts";
 
 import { PAGE_PATHS } from "../../constants/paths";
+import { UserAuthDetailsProvider } from "../../context/UserAuthDetailContext";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { getUser } from "../../services/auth";
 import { delay } from "../../utils/dateTime";
@@ -87,13 +88,15 @@ function VendorDashboard() {
           </Grid>
         </Backdrop>
       ) : (
-        <Grid>
-          <VendorDashboardHeader profileData={profileData} />
-          <AuthAlertBanner />
-          <VendorDashboardContainer>
-            {getComponent(router.asPath, profileData)}
-          </VendorDashboardContainer>
-        </Grid>
+        <UserAuthDetailsProvider>
+          <Grid>
+            <VendorDashboardHeader profileData={profileData} />
+            <AuthAlertBanner />
+            <VendorDashboardContainer>
+              {getComponent(router.asPath, profileData)}
+            </VendorDashboardContainer>
+          </Grid>
+        </UserAuthDetailsProvider>
       )}
     </>
   );
