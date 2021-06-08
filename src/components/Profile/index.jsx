@@ -1,6 +1,5 @@
 import { Fade, Grid } from "@material-ui/core";
 import React from "react";
-import { UserAuthDetailsProvider } from "../../context/UserAuthDetailContext";
 
 import ProfileDetailsSection from "../ProfileDetailsSection";
 import ProfileInfoCard from "../ProfileInfoCard";

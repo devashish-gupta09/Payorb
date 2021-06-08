@@ -55,7 +55,7 @@ function useFetchEvents(isVendor, filterParams) {
         }
       }
     } catch (err) {
-      console.log("error", err);
+      setError(err.message);
     }
   };
 

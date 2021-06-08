@@ -1,7 +1,13 @@
-import { Grid, makeStyles, TextField, Typography } from "@material-ui/core";
+import {
+  Button,
+  Grid,
+  makeStyles,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 
 import { useFormik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 
 import { appColors } from "../../../styles/colors";
 import { globalStyles } from "../../../styles/globalStyles";
@@ -53,6 +59,7 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
   const classes = styles();
   const { dispatch } = useUserAuthDetails();
   const { Alert, showAlert } = useAlertSnackbar();
+  const [edit, setEdit] = useState();
   const formik = useFormik({
     initialValues: getPaymentSectionValues(profileData.paymentDetails),
     onSubmit: async (values) => {
@@ -64,6 +71,7 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
           showAlert("Payment Details updated.");
           updateProfile({ ...profileData, paymentDetails: { ...values } });
           await useFetchUserAuthDetails(dispatch);
+          setEdit(false);
         } else {
           showAlert("Payment Details not updated.", ALERT_TYPES.ERROR);
         }
@@ -72,6 +80,10 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
       }
     },
   });
+
+  const handleEdit = () => {
+    setEdit(!edit);
+  };
 
   const globalClasses = globalStyles();
 
@@ -97,6 +109,7 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
           <Grid container item sm={6} spacing={5}>
             <Grid container item sm={6}>
               <TextField
+                disabled={!edit}
                 fullWidth
                 className={classes.textInput}
                 id="name"
@@ -111,6 +124,7 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
             </Grid>
             <Grid container item sm={6}>
               <TextField
+                disabled={!edit}
                 fullWidth
                 className={classes.textInput}
                 id="bankName"
@@ -128,6 +142,7 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
             <Grid container item sm={6}>
               <TextField
                 fullWidth
+                disabled={!edit}
                 className={classes.textInput}
                 id="accNumber"
                 label="Account Number"
@@ -143,6 +158,7 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
             </Grid>
             <Grid container item sm={6}>
               <TextField
+                disabled={!edit}
                 className={classes.textInput}
                 id="ifscCode"
                 label="IFSC Code"
@@ -160,6 +176,7 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
           </Grid>
           <Grid container item sm={6}>
             <TextField
+              disabled={!edit}
               multiline
               fullWidth
               className={classes.textInput}
@@ -178,6 +195,7 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
               rows={6}
             />
           </Grid>
+
           <Grid
             container
             item
@@ -186,11 +204,24 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
             alignItems="center"
             className={classes.saveButtonContainer}
           >
-            <ButtonCapsule
-              text="Save"
-              type="submit"
-              buttonStyle={classes.saveButton}
-            ></ButtonCapsule>
+            {edit ? (
+              <Grid container justify="center" alignItems="center">
+                <ButtonCapsule
+                  text="Save"
+                  type="submit"
+                  buttonStyle={classes.saveButton}
+                ></ButtonCapsule>
+                <Button onClick={handleEdit} className={classes.cancelButton}>
+                  Cancel
+                </Button>
+              </Grid>
+            ) : (
+              <ButtonCapsule
+                buttonStyle={classes.saveButton}
+                text="Edit"
+                onClick={handleEdit}
+              ></ButtonCapsule>
+            )}
           </Grid>
         </Grid>
       </form>
@@ -244,6 +275,11 @@ const styles = makeStyles((theme) => ({
   },
   sectionTitle: {
     width: "fit-content",
+  },
+  cancelButton: {
+    [theme.breakpoints.down("sm")]: {
+      margin: "1.5em 0 0.5em 0",
+    },
   },
 }));
 

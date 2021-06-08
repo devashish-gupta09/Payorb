@@ -39,7 +39,6 @@ function LandingHeader() {
               <li>About Us</li>
             </Link>
 
-
             <LandingHeaderProfile />
           </Grid>
         </Grid>
