@@ -55,7 +55,7 @@ function PostEventCreationDialog(props) {
                 justify="space-between"
                 className={classes.descriptionInfoContainer}
               >
-                <Grid item sm={10}>
+                <Grid item sm={10} style={{ width: "100%" }}>
                   <Typography
                     variant={"h6"}
                     gutterBottom

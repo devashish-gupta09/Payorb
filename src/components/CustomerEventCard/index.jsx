@@ -37,7 +37,7 @@ function CustomerEventCard({ event, expand, onBook }) {
         >
           <Grid container>
             {/* First Row - Event name and Booking Dates */}
-            <Grid item sm={10}>
+            <Grid item sm={10} style={{ width: "100%" }}>
               <Typography className={`${globalClasses.bold} ${classes.title}`}>
                 {event.name}
               </Typography>
