@@ -10,6 +10,7 @@ import { formatEventType } from "../../utils/events";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
 import PostEventCreationDialog from "../PostEventCreationDialog";
+import ReadMore from "../ReadMore";
 import VendorEventCreationForm from "../VendorEventCreationForm";
 import { styles } from "./styles";
 
@@ -87,6 +88,9 @@ function EventCard({ event }) {
               <Typography className={`${globalClasses.bold} ${classes.title}`}>
                 {event.name}
               </Typography>
+              <Grid style={{ width: "95%" }}>
+                <ReadMore percent={10} text={event.description} />
+              </Grid>
             </Grid>
 
             {/* Date and month section */}

@@ -8,6 +8,7 @@ import { formatEventType } from "../../utils/events";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
 import { EventCardDate } from "../EventCard";
+import ReadMore from "../ReadMore";
 import { styles } from "./styles";
 
 function CustomerEventCard({ event, expand, onBook }) {
@@ -40,6 +41,9 @@ function CustomerEventCard({ event, expand, onBook }) {
               <Typography className={`${globalClasses.bold} ${classes.title}`}>
                 {event.name}
               </Typography>
+              <Grid style={{ width: "95%" }}>
+                <ReadMore percent={10} text={event.description} />
+              </Grid>
             </Grid>
 
             {/* Date and month section */}

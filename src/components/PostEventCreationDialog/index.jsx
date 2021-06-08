@@ -17,6 +17,7 @@ import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 // import { PAGE_PATHS } from "../../constants/paths";
 import DashboardCard from "../DashboardCard";
 import DateMonth from "../DateMonth";
+import ReadMore from "../ReadMore";
 
 function PostEventCreationDialog(props) {
   const { event, eventImg } = props;
@@ -54,13 +55,24 @@ function PostEventCreationDialog(props) {
                 justify="space-between"
                 className={classes.descriptionInfoContainer}
               >
-                <Typography variant={"h6"} className={classes.titleContainer}>
-                  {event.name}
-                </Typography>
-                <DateMonth
-                  startDate={event.startDate}
-                  endDate={event.endDate}
-                />
+                <Grid item sm={10}>
+                  <Typography
+                    variant={"h6"}
+                    gutterBottom
+                    className={classes.titleContainer}
+                  >
+                    {event.name}
+                  </Typography>
+                  <Grid style={{ width: "95%" }}>
+                    <ReadMore percent={11} text={event.description} />
+                  </Grid>
+                </Grid>
+                <Grid item sm={2} container justify="center">
+                  <DateMonth
+                    startDate={event.startDate}
+                    endDate={event.endDate}
+                  />
+                </Grid>
               </Grid>
             </DashboardCard>
           </Grid>

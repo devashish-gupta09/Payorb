@@ -16,10 +16,12 @@ import { EVENT_TYPES } from "../../constants/events";
 import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 import useFetchEvents from "../../hooks/useFetchEvents";
 import { getMonthDate } from "../../utils/dateTime";
+import Capsule from "../Capsule";
 import DashboardCard from "../DashboardCard";
 import DetailRow from "../DetailRow";
 import EventBookingForm from "../EventBookingForm";
 import EventBookingVendorCard from "../EventBookingVendorCard";
+import ReadMore from "../ReadMore";
 import SkeletonLoading from "../SkeletonLoading";
 
 const getEventslotDuration = (startDate, endDate) => {
@@ -105,9 +107,16 @@ function EventBooking({ eventLink }) {
           >
             <Grid item sm={12} className={classes.fullWidth}>
               <DashboardCard rootClass={classes.cardPadding}>
-                <Typography variant={"h3"}>{event.name}</Typography>
-                <Typography gutterBottom="true">{event.description}</Typography>
-                <Typography color="textSecondary">{event.mode}</Typography>
+                <Typography
+                  variant={"h3"}
+                  style={{ width: "95%", paddingBottom: "0.5em" }}
+                >
+                  {event.name}
+                </Typography>
+                <Grid style={{ width: "95%", paddingBottom: "1em" }}>
+                  <ReadMore percent={10} text={event.description} />
+                </Grid>
+                <Capsule>{`Mode : ${event.mode}`}</Capsule>
               </DashboardCard>
             </Grid>
             <Grid item sm={12} className={classes.fullWidth}>
