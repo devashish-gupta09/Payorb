@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import React from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
-import { PAGE_PATHS } from "../../constants/paths";
+import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 import { formatEventType } from "../../utils/events";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
@@ -16,12 +16,7 @@ function CustomerEventCard({ event, expand, onBook }) {
   const router = useRouter();
 
   const handleEdit = () => {
-    router.push({
-      pathname: PAGE_PATHS.CUSTOMER_EVENTS_REGISTER,
-      query: {
-        event: event.link,
-      },
-    });
+    router.push(`/event/${event.link}/register`);
   };
 
   return (
@@ -30,10 +25,7 @@ function CustomerEventCard({ event, expand, onBook }) {
         <Grid item sm={expand ? 3 : 2} className={classes.imageContainer}>
           <img
             className={classes.eventImage}
-            src={
-              event.image ||
-              "https://i.pinimg.com/736x/59/59/88/5959880ca0cb6b30926091b7bc251812.jpg"
-            }
+            src={event.photoUrl || DEFAULT_EVENT_IMAGE}
           />
         </Grid>
 

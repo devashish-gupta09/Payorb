@@ -14,13 +14,13 @@ import React from "react";
 
 import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 
-import { PAGE_PATHS } from "../../constants/paths";
+// import { PAGE_PATHS } from "../../constants/paths";
 import DashboardCard from "../DashboardCard";
 import DateMonth from "../DateMonth";
 
 function PostEventCreationDialog(props) {
   const { event, eventImg } = props;
-  const eventLink = `${PAGE_PATHS.CUSTOMER_EVENTS_REGISTER}?event=${event.link}&type=${event.type}`;
+  const eventLink = `/event/${event.link}/register`;
 
   const handleCopy = () => {
     // can use window.location.host -> If we need port number as well.
@@ -30,6 +30,7 @@ function PostEventCreationDialog(props) {
   return (
     <Dialog
       {...props}
+      scroll="body"
       PaperProps={{
         style: {
           background: "transparent",
@@ -115,6 +116,7 @@ function PostEventCreationDialog(props) {
 const styles = makeStyles((theme) => ({
   container: {
     borderRadius: "5px",
+    overflow: "hidden",
   },
   iconContainer: {
     "& > a, svg": {
@@ -164,8 +166,8 @@ const styles = makeStyles((theme) => ({
     },
   },
   icon: {
-    width: "1.5em",
-    height: "1.5em",
+    width: "1.25em",
+    height: "1.25em",
   },
 }));
 

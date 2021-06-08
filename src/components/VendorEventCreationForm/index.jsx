@@ -21,6 +21,7 @@ import {
 
 import createHash from "create-hash";
 import { useFormik } from "formik";
+import moment from "moment";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -67,7 +68,7 @@ function getCreationFormInitialState() {
     totalTickets: 0,
     link: hash.digest("hex").substr(0, 6),
     type: "",
-    startDate: new Date().toISOString(),
+    startDate: getDateForTime(new Date().getHours()),
     endDate: getDateForTime(new Date().getHours() + 1),
     slotDuration: 0,
     slotStartTimePerDay: getDateForTime(9),
@@ -118,6 +119,28 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
     onSubmit: async (values) => {
       if (values) {
         try {
+          if (values.type === EVENT_TYPES.ONE_ON_ONE) {
+            const momentEndDate = moment(values.endDate);
+            const momentSlotEndDate = moment(values.slotEndTimePerDay);
+
+            momentEndDate
+              .set("hour", momentSlotEndDate.get("hour"))
+              .set("minutes", momentSlotEndDate.get("minutes"))
+              .set("second", momentSlotEndDate.get("second"));
+
+            values.endDate = momentEndDate.toISOString();
+
+            const momentStartDate = moment(values.startDate);
+            const momentSlotStartDate = moment(values.slotStartTimePerDay);
+
+            momentStartDate
+              .set("hour", momentSlotStartDate.get("hour"))
+              .set("minutes", momentSlotStartDate.get("minutes"))
+              .set("second", momentSlotStartDate.get("second"));
+
+            values.startDate = momentStartDate.toISOString();
+          }
+
           const req = {
             ...values,
             category: values.otherField || values.category,

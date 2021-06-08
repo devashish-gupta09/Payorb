@@ -132,6 +132,7 @@ export const getDateForTime = (hour) => {
   const currDate = new Date();
   currDate.setHours(hour);
   currDate.setMinutes(0);
+  currDate.setSeconds(0);
   currDate.setMilliseconds(0);
   return currDate;
 };

@@ -50,11 +50,9 @@ function VendorDashboard() {
   React.useEffect(() => {
     getUser()
       .then(async (res) => {
-        console.log(res);
         if (res.success) {
           // allowing a user to head to the profile section even if no data exists in the firestore
           if (Object.keys(res.data).length > 0) {
-            console.log(res.data);
             setProfileData(res.data);
             setLoading(false);
           } else {

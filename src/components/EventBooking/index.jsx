@@ -186,15 +186,19 @@ const styles = makeStyles((theme) => ({
   },
   eventPoster: {
     width: "100%",
+    borderRadius: "6px",
   },
   posterRoot: {
-    padding: 0,
-    borderRadius: "5px",
+    display: "flex",
+    alignItems: "center",
+    padding: "0",
+    borderRadius: "6px",
   },
   fullWidth: {
     width: "100%",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
+      padding: "0.5em 0 !important",
     },
   },
   eventDescription: {

@@ -5,6 +5,7 @@ import {
   KeyboardTimePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
+import moment from "moment";
 import React from "react";
 
 function OneOnOneDateSelector({ formik, checkDisabled }) {
@@ -17,11 +18,35 @@ function OneOnOneDateSelector({ formik, checkDisabled }) {
   };
 
   const handleStartSlotTimeChange = (date) => {
-    formik.setFieldValue("slotStartTimePerDay", date.toISOString());
+    const momentDate = moment(date);
+    const momentStartDate = moment(formik.values.startDate);
+
+    momentDate.set({ second: 0, millisecond: 0 });
+
+    momentStartDate.set({
+      hours: momentDate.get("hours"),
+      minutes: momentDate.get("minutes"),
+      seconds: 0,
+    });
+
+    formik.setFieldValue("slotStartTimePerDay", momentDate.toISOString());
+    formik.setFieldVale("startDate", momentStartDate.toISOString());
   };
 
   const handleEndSlotTimeChange = (date) => {
-    formik.setFieldValue("slotEndTimePerDay", date.toISOString());
+    const momentDate = moment(date);
+    const momentEndDate = moment(formik.values.endDate);
+
+    momentDate.set({ second: 0, millisecond: 0 });
+
+    momentEndDate.set({
+      hours: momentDate.get("hours"),
+      minutes: momentDate.get("minutes"),
+      seconds: 0,
+    });
+
+    formik.setFieldValue("slotEndTimePerDay", momentDate.toISOString());
+    formik.setFieldValue("endDate", momentEndDate.toISOString());
   };
 
   return (

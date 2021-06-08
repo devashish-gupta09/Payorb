@@ -16,7 +16,6 @@ import { useRouter } from "next/router";
 import React from "react";
 
 import { EVENT_TYPES } from "../../constants/events";
-import { PAGE_PATHS } from "../../constants/paths";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import useFetchEvents from "../../hooks/useFetchEvents";
 import CustomerEventCard from "../CustomerEventCard";
@@ -119,9 +118,7 @@ function CustomerEventScheduler({ eventLink }) {
     const endTime = moment(momentStartTime);
     endTime.add(slotDuration, "hours");
     router.push(
-      `${PAGE_PATHS.CUSTOMER_EVENTS_REGISTER}?event=${eventLink}&type=${
-        EVENT_TYPES.ONE_ON_ONE
-      }&from=${momentStartTime
+      `/event/${eventLink}/register?from=${momentStartTime
         .toDate()
         .getTime()}&to=${endTime.toDate().getTime()}`
     );
