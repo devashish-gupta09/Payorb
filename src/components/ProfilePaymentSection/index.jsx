@@ -69,7 +69,10 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
         });
         if (res?.success) {
           showAlert("Payment Details updated.");
-          updateProfile({ ...profileData, paymentDetails: { ...values } });
+          updateProfile({
+            ...profileData,
+            paymentDetails: { ...profileData.paymentDetails, ...values },
+          });
           await useFetchUserAuthDetails(dispatch);
           setEdit(false);
         } else {
