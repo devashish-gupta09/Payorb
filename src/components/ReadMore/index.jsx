@@ -7,6 +7,15 @@ function ReadMore({ percent, text, textProps }) {
   const handleReadMore = () => {
     setReadMore(!readMore);
   };
+
+  if (text.length < 100) {
+    return (
+      <Typography className={classes.disclaimer} {...textProps}>
+        {text}
+      </Typography>
+    );
+  }
+
   return (
     <Typography className={classes.disclaimer} {...textProps}>
       {text.substr(
