@@ -74,7 +74,7 @@ function LandingHeaderProfile() {
             <li className={classes.list}>Sign Up for Vendor</li>
           ) : (
             <ButtonCapsule
-              buttonStyle={classes.buttonSpacing}
+              buttonStyle={classes.btnCapSpacing}
               text="Sign Up"
             ></ButtonCapsule>
           )}
@@ -85,8 +85,15 @@ function LandingHeaderProfile() {
 }
 
 const styles = makeStyles((theme) => ({
+  btnCapSpacing: {
+    padding: "0.5em 2.25em",
+    fontWeight: "600",
+    textTransform: "uppercase",
+  },
   buttonSpacing: {
-    padding: "0 1.5em",
+    padding: "0.5em 2em",
+    textTransform: "uppercase",
+    marginRight: "0.5em",
   },
   list: {
     listStyleType: "None",

@@ -1,4 +1,4 @@
-import { Backdrop, CircularProgress, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -11,6 +11,7 @@ import { getUser } from "../../services/auth";
 import { delay } from "../../utils/dateTime";
 import AuthAlertBanner from "../AuthAlertBanner";
 import VendorDashboardHeader from "../DashboardHeader";
+import FallbackLoading from "../FallbackLoading";
 import FallbackPage from "../FallbackPage";
 import Profile from "../Profile";
 import VendorCustomers from "../VendorCustomers";
@@ -62,7 +63,7 @@ function VendorDashboard() {
           if (res.data.error) {
             showAlert("User doesn't exist. Please sign up.", ALERT_TYPES.ERROR);
             await delay(750);
-            router.push("/signup");
+            router.push(PAGE_PATHS.SIGNUP);
           }
         }
       })
@@ -75,16 +76,7 @@ function VendorDashboard() {
   return (
     <>
       {loading ? (
-        <Backdrop style={{ background: "#BDF5F2" }} open>
-          {Alert()}
-          <Grid>
-            <CircularProgress
-              size="3rem"
-              variant="indeterminate"
-              style={{ color: "white" }}
-            />
-          </Grid>
-        </Backdrop>
+        <FallbackLoading />
       ) : (
         <UserAuthDetailsProvider>
           <Grid>

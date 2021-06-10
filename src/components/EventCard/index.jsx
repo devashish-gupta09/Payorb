@@ -33,6 +33,7 @@ function EventCard({ event }) {
   const globalClasses = globalStyles();
   const [edit, setEdit] = React.useState(false);
   const [shareDialog, setShareDialog] = React.useState(false);
+  
   const handleEdit = () => {
     setEdit(true);
   };
@@ -166,26 +167,28 @@ function EventCard({ event }) {
               </Typography>
             </Grid>
 
-            <Grid
-              item
-              sm={4}
-              container
-              alignItems="flex-end"
-              className={classes.editButtonContainer}
-            >
-              <Grid>
-                <ButtonCapsule
-                  buttonStyle={`${globalClasses.bold} ${classes.editButton}`}
-                  text="Edit"
-                  onClick={handleEdit}
-                ></ButtonCapsule>
-                <Tooltip title="Share">
-                  <Button onClick={handleShareDialog}>
-                    <Share />
-                  </Button>
-                </Tooltip>
+            {event.status === "LIVE" ? (
+              <Grid
+                item
+                sm={4}
+                container
+                alignItems="flex-end"
+                className={classes.editButtonContainer}
+              >
+                <Grid>
+                  <ButtonCapsule
+                    buttonStyle={`${globalClasses.bold} ${classes.editButton}`}
+                    text="Edit"
+                    onClick={handleEdit}
+                  ></ButtonCapsule>
+                  <Tooltip title="Share">
+                    <Button onClick={handleShareDialog}>
+                      <Share />
+                    </Button>
+                  </Tooltip>
+                </Grid>
               </Grid>
-            </Grid>
+            ) : null}
           </Grid>
         </Grid>
       </Grid>

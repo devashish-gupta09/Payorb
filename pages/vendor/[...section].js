@@ -1,14 +1,9 @@
-import {
-  Backdrop,
-  CircularProgress,
-  Grid,
-  Typography,
-} from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { useRouter } from "next/router";
-
 import React from "react";
 
 import { Context } from "../../src/components/AuthenticationContext";
+import FallbackLoading from "../../src/components/FallbackLoading";
 import VendorDashboard from "../../src/components/VendorDashboard";
 
 export default function Vendor() {
@@ -23,18 +18,7 @@ export default function Vendor() {
 
   return (
     <Grid>
-      {user ? (
-        <VendorDashboard></VendorDashboard>
-      ) : (
-        <Backdrop open>
-          <Grid>
-            <Typography variant="h3" style={{ color: "white" }}>
-              {"Loading"}
-            </Typography>
-            <CircularProgress size="3rem" variant="indeterminate" />
-          </Grid>
-        </Backdrop>
-      )}
+      {user ? <VendorDashboard></VendorDashboard> : <FallbackLoading />}
     </Grid>
   );
 }

@@ -1,4 +1,4 @@
-import { Backdrop, CircularProgress, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
@@ -8,36 +8,44 @@ import { getEventPublic } from "../../services/events";
 import CustomerEventScheduler from "../CustomerEventScheduler";
 import CustomerViewHeader from "../CustomerViewHeader";
 import EventBooking from "../EventBooking";
+import FallbackLoading from "../FallbackLoading";
+import FallbackPage from "../FallbackPage";
 import VendorDashboardContainer from "../VendorDashboardContainer";
 
 function EventRegistration() {
   const router = useRouter();
   const [eventType, setEventType] = useState();
+  const [error, setError] = useState();
 
   React.useEffect(() => {
     if (router.query.eventId) {
-      getEventPublic(router.query.eventId).then((res) => {
-        if (res.success) {
-          const { event } = res.data;
-          if (event.type) {
-            setEventType(event.type);
+      getEventPublic(router.query.eventId)
+        .then((res) => {
+          if (res.success) {
+            const { event } = res.data;
+            if (event.type) {
+              setEventType(event.type);
+            }
           }
-        }
-      });
+        })
+        .catch((err) => {
+          setError(err.message);
+        });
     }
   }, [router]);
 
-  if (!eventType) {
+  if (!eventType && !error) {
+    return <FallbackLoading />;
+  }
+
+  if (error) {
     return (
-      <Backdrop style={{ background: "#BDF5F2" }} open>
-        <Grid>
-          <CircularProgress
-            size="3rem"
-            variant="indeterminate"
-            style={{ color: "white" }}
-          />
-        </Grid>
-      </Backdrop>
+      <Grid>
+        <CustomerViewHeader />
+        <VendorDashboardContainer>
+          <FallbackPage title={error}></FallbackPage>
+        </VendorDashboardContainer>
+      </Grid>
     );
   }
 
