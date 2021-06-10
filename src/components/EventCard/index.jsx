@@ -175,7 +175,7 @@ function EventCard({ event }) {
             {state &&
             state.details &&
             !isPaymentDetailsIncomplete(state.details) &&
-            new Date(event.endDate) < new Date() ? (
+            new Date(event.endDate) >= new Date() ? (
               <Grid
                 item
                 sm={4}
