@@ -3,7 +3,7 @@ import Head from "next/head";
 
 import theme from "../src/theme";
 import "../styles/globals.css";
-import AuthenticationContext from "../src/components/AuthenticationContext";
+import AuthenticationContextProvider from "../src/components/AuthenticationContext";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -11,11 +11,11 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <title>Payorb</title>
       </Head>
-      <AuthenticationContext>
+      <AuthenticationContextProvider>
         <ThemeProvider theme={theme}>
           <Component {...pageProps} />
         </ThemeProvider>
-      </AuthenticationContext>
+      </AuthenticationContextProvider>
     </>
   );
 }

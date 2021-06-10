@@ -5,8 +5,11 @@ import React from "react";
 import { globalStyles } from "../../../styles/globalStyles";
 import { EVENT_TYPES } from "../../constants/events";
 import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
+import { useUserAuthDetails } from "../../context/UserAuthDetailContext";
 import { getEventDate, getEventMonth } from "../../utils/dateTime";
 import { formatEventType } from "../../utils/events";
+import { isPaymentDetailsIncomplete } from "../../utils/vendor";
+import AuthAlertGrid from "../AuthAlertGrid";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
 import PostEventCreationDialog from "../PostEventCreationDialog";
@@ -33,7 +36,8 @@ function EventCard({ event }) {
   const globalClasses = globalStyles();
   const [edit, setEdit] = React.useState(false);
   const [shareDialog, setShareDialog] = React.useState(false);
-  
+  const { state } = useUserAuthDetails();
+
   const handleEdit = () => {
     setEdit(true);
   };
@@ -48,6 +52,7 @@ function EventCard({ event }) {
   const handleShareDialogClose = () => {
     setShareDialog(false);
   };
+
   return (
     <DashboardCard rootClass={classes.root}>
       {edit && (
@@ -167,7 +172,10 @@ function EventCard({ event }) {
               </Typography>
             </Grid>
 
-            {event.status === "LIVE" ? (
+            {(state &&
+              state.details &&
+              !isPaymentDetailsIncomplete(state.details)) ||
+            new Date(event.endDate) < new Date() ? (
               <Grid
                 item
                 sm={4}
@@ -188,6 +196,12 @@ function EventCard({ event }) {
                   </Tooltip>
                 </Grid>
               </Grid>
+            ) : null}
+          </Grid>
+
+          <Grid container item sm={12}>
+            {state && state.details ? (
+              <AuthAlertGrid details={state.details} />
             ) : null}
           </Grid>
         </Grid>

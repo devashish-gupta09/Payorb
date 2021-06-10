@@ -6,4 +6,5 @@ export const ALERT_TYPES = {
 export const ALERT_BANNER_TYPES = {
   WARNING: "WARNING",
   ERROR: "ERROR",
+  CONFIRMATION: "CONFIRMATION"
 };

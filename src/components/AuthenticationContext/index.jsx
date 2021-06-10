@@ -42,7 +42,7 @@ export class FirebaseAuth {
 
 export const Context = React.createContext(null);
 
-const AuthenticationContext = (props) => {
+const AuthenticationContextProvider = (props) => {
   const { children } = props;
   const [user, setUser] = React.useState(null);
 
@@ -69,4 +69,4 @@ const AuthenticationContext = (props) => {
   return <Context.Provider value={user}>{children}</Context.Provider>;
 };
 
-export default AuthenticationContext;
+export default AuthenticationContextProvider;
