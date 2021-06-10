@@ -172,9 +172,9 @@ function EventCard({ event }) {
               </Typography>
             </Grid>
 
-            {(state &&
-              state.details &&
-              !isPaymentDetailsIncomplete(state.details)) ||
+            {state &&
+            state.details &&
+            !isPaymentDetailsIncomplete(state.details) &&
             new Date(event.endDate) < new Date() ? (
               <Grid
                 item
