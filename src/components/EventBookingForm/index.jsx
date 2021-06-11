@@ -203,8 +203,8 @@ function EventBookingForm({
 
           console.log(res);
           if (res.success) {
-            showAlert(`Your order id: ${response.razorpay_order_id} `);
-            setOrderId(response.razorpay_order_id);
+            showAlert(`Your payment id: ${response.razorpay_payment_id} `);
+            setOrderId(response.razorpay_payment_id);
             setSuccess(true);
           } else {
             throw new Error("Could not make payment");
