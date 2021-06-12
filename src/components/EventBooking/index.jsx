@@ -15,6 +15,7 @@ import { EVENT_MODES, EVENT_TYPES } from "../../constants/events";
 import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 import useFetchEvents from "../../hooks/useFetchEvents";
 import { getMonthDate } from "../../utils/dateTime";
+import { getCategoryString } from "../../utils/events";
 import Capsule from "../Capsule";
 import DashboardCard from "../DashboardCard";
 import DetailRow from "../DetailRow";
@@ -57,7 +58,7 @@ const eventRows = (event, oneOnOneSlot) => [
   {
     icon: <ViewModule />,
     key: "category",
-    value: event.category,
+    value: getCategoryString(event.category),
   },
   {
     icon: <CalendarToday />,

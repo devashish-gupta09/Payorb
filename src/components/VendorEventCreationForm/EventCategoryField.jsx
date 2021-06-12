@@ -11,7 +11,7 @@ import { EVENT_CATEGORY } from "../../constants/events";
 
 export const EventCategoryField = ({ formik, checkDisabled }) => {
   const [other, setOther] = React.useState(false);
-  const [otherField, setOtherField] = React.useState(false);
+  // const [otherField, setOtherField] = React.useState(false);
 
   const handleEventCategoryChange = (event) => {
     if (event.target.value === "OTHER") {
@@ -25,13 +25,13 @@ export const EventCategoryField = ({ formik, checkDisabled }) => {
   };
 
   const handleOthersChange = (event) => {
-    setOtherField(event.target.value);
+    // setOtherField(event.target.value);
     formik.setFieldValue("otherField", event.target.value);
   };
 
   return (
     <>
-      <FormLabel>Event Type</FormLabel>
+      <FormLabel>Event Category</FormLabel>
 
       <Select
         displayEmpty
@@ -40,7 +40,8 @@ export const EventCategoryField = ({ formik, checkDisabled }) => {
         value={formik.values.category}
         onChange={handleEventCategoryChange}
         style={{ width: "100%", margin: "0.5em 0" }}
-        error={formik.touched.category && Boolean(formik.errors.typecategory)}
+        error={formik.touched.category && Boolean(formik.errors.category)}
+        helperText={formik.touched.name && formik.errors.name}
         disabled={checkDisabled()}
       >
         <MenuItem value={""}>
@@ -66,12 +67,13 @@ export const EventCategoryField = ({ formik, checkDisabled }) => {
           onChange={handleOthersChange}
           variant={"outlined"}
           fullWidth
+          label="Add Category"
         ></TextField>
       ) : null}
       <FormHelperText
-        error={formik.touched.type && Boolean(formik.errors.type)}
+        error={formik.touched.category && Boolean(formik.errors.category)}
       >
-        {formik.touched.type && formik.errors.type}
+        {formik.touched.category && formik.errors.category}
       </FormHelperText>
     </>
   );
