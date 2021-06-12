@@ -28,7 +28,6 @@ function CustomerVendorProfileEvents({ userUID }) {
           <>
             <Grid container justify="space-between">
               <Typography variant="h6">Events list</Typography>
-              <Button onClick={handleExpand}>Expand</Button>
             </Grid>
             <Grid>
               <CustomerEventsList events={events} expand={expand} />

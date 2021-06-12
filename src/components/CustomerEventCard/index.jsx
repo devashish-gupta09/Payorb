@@ -16,14 +16,14 @@ function CustomerEventCard({ event, expand, onBook }) {
   const globalClasses = globalStyles();
   const router = useRouter();
 
-  const handleEdit = () => {
+  const redirectToBook = () => {
     router.push(`/event/${event.link}/register`);
   };
 
   return (
     <DashboardCard rootClass={classes.root}>
       <Grid container alignItems={"stretch"}>
-        <Grid item sm={expand ? 3 : 2} className={classes.imageContainer}>
+        <Grid item sm={3} className={classes.imageContainer}>
           <img
             className={classes.eventImage}
             src={event.photoUrl || DEFAULT_EVENT_IMAGE}
@@ -33,7 +33,8 @@ function CustomerEventCard({ event, expand, onBook }) {
         <Grid
           className={classes.eventDetailContainer}
           item
-          sm={expand ? 9 : 10}
+          // sm={expand ? 9 : 10}
+          sm={9}
         >
           <Grid container>
             {/* First Row - Event name and Booking Dates */}
@@ -72,21 +73,21 @@ function CustomerEventCard({ event, expand, onBook }) {
           <Grid container>
             <Grid item sm={8} className={classes.generalInfoContainer}>
               <Grid container justify="space-between">
-                {expand && (
-                  <Grid>
-                    <Typography
-                      variant="body2"
-                      gutterBottom
-                      className={classes.greyFont}
-                    >
-                      {formatEventType(event.type)}
-                    </Typography>
-                    <Typography className={globalClasses.bold500} gutterBottom>
-                      {" "}
-                      &#8377; {event.price}
-                    </Typography>
-                  </Grid>
-                )}
+                {/* {expand && ( */}
+                <Grid>
+                  <Typography
+                    variant="body2"
+                    gutterBottom
+                    className={classes.greyFont}
+                  >
+                    {formatEventType(event.type)}
+                  </Typography>
+                  <Typography className={globalClasses.bold500} gutterBottom>
+                    {" "}
+                    &#8377; {event.price}
+                  </Typography>
+                </Grid>
+                {/* )} */}
 
                 {/* Date and month section */}
                 <Grid
@@ -106,21 +107,21 @@ function CustomerEventCard({ event, expand, onBook }) {
               </Grid>
             </Grid>
 
-            {expand && (
-              <Grid
-                item
-                sm={4}
-                container
-                alignItems="flex-end"
-                className={classes.editButtonContainer}
-              >
-                <ButtonCapsule
-                  buttonStyle={`${globalClasses.boldSixHundred} ${classes.editButton}`}
-                  onClick={onBook || handleEdit}
-                  text="Book now"
-                ></ButtonCapsule>
-              </Grid>
-            )}
+            {/* {expand && ( */}
+            <Grid
+              item
+              sm={4}
+              container
+              alignItems="flex-end"
+              className={classes.editButtonContainer}
+            >
+              <ButtonCapsule
+                buttonStyle={`${globalClasses.boldSixHundred} ${classes.editButton}`}
+                onClick={onBook || redirectToBook}
+                text="Book now"
+              ></ButtonCapsule>
+            </Grid>
+            {/* )} */}
           </Grid>
         </Grid>
       </Grid>
