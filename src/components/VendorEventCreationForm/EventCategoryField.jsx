@@ -14,7 +14,6 @@ export const EventCategoryField = ({ formik, checkDisabled }) => {
   const [otherField, setOtherField] = React.useState(false);
 
   const handleEventCategoryChange = (event) => {
-    console.log("VALUE : ", event.target.value);
     if (event.target.value === "OTHER") {
       setOther(true);
       formik.setFieldValue("category", "OTHER");
