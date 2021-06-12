@@ -1,10 +1,10 @@
-import { Grid, Typography } from "@material-ui/core";
+import { Button, Grid, Typography } from "@material-ui/core";
 import { useRouter } from "next/router";
 import React from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
 import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
-import { formatEventType } from "../../utils/events";
+import { formatEventType, isEventPastDate } from "../../utils/events";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
 import { EventCardDate } from "../EventCard";
@@ -115,11 +115,15 @@ function CustomerEventCard({ event, expand, onBook }) {
               alignItems="flex-end"
               className={classes.editButtonContainer}
             >
-              <ButtonCapsule
-                buttonStyle={`${globalClasses.boldSixHundred} ${classes.editButton}`}
-                onClick={onBook || redirectToBook}
-                text="Book now"
-              ></ButtonCapsule>
+              {isEventPastDate(event) ? (
+                <Button disabled>Bookings Closed</Button>
+              ) : (
+                <ButtonCapsule
+                  buttonStyle={`${globalClasses.boldSixHundred} ${classes.editButton}`}
+                  onClick={onBook || redirectToBook}
+                  text="Book now"
+                ></ButtonCapsule>
+              )}
             </Grid>
             {/* )} */}
           </Grid>

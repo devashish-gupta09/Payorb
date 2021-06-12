@@ -12,3 +12,9 @@ export const formatEventType = (type) => {
 
   return resultString;
 };
+
+export const isEventPastDate = (event) => {
+  if (event && event.endDate) {
+    return new Date() > new Date(event.endDate);
+  }
+};
