@@ -16,7 +16,7 @@ import { Context } from "../AuthenticationContext";
 import ButtonCapsule from "../ButtonCapsule";
 import ProfileSectionHeader from "../ProfileSectionHeader";
 
-function LandingHeaderProfile() {
+function LandingHeaderProfile({ handleLinkClick }) {
   const [vendor, setVendor] = React.useState();
   const [loading, setLoading] = React.useState(true);
   const theme = useTheme();
@@ -61,24 +61,35 @@ function LandingHeaderProfile() {
     return (
       <>
         {/* {matches ? } */}
-        <Link href={PAGE_PATHS.SIGNIN}>
-          {matches ? (
-            <li className={classes.list}>Sign In</li>
-          ) : (
-            <Button className={classes.buttonSpacing}>Sign In</Button>
-          )}
-        </Link>
 
-        <Link href={PAGE_PATHS.SIGNUP}>
-          {matches ? (
-            <li className={classes.list}>Sign Up for Vendor</li>
-          ) : (
-            <ButtonCapsule
-              buttonStyle={classes.btnCapSpacing}
-              text="Sign Up"
-            ></ButtonCapsule>
-          )}
-        </Link>
+        {matches ? (
+          <li
+            onClick={() => {
+              handleLinkClick(PAGE_PATHS.SIGNIN);
+            }}
+            className={classes.list}
+          >
+            Sign In
+          </li>
+        ) : (
+          <Button className={classes.buttonSpacing}>Sign In</Button>
+        )}
+
+        {matches ? (
+          <li
+            onClick={() => {
+              handleLinkClick(PAGE_PATHS.SIGNUP);
+            }}
+            className={classes.list}
+          >
+            Sign Up for Vendor
+          </li>
+        ) : (
+          <ButtonCapsule
+            buttonStyle={classes.btnCapSpacing}
+            text="Sign Up"
+          ></ButtonCapsule>
+        )}
       </>
     );
   }

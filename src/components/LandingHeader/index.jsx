@@ -1,6 +1,7 @@
 import { Button, Drawer, Grid, Toolbar, Typography } from "@material-ui/core";
 import { Close, Menu } from "@material-ui/icons";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 
 import { PAGE_PATHS } from "../../constants/paths";
@@ -13,10 +14,16 @@ import { styles } from "./styles";
 
 function LandingHeader() {
   const classes = styles();
+  const router = useRouter();
   const [appMenu, setAppMenu] = React.useState(false);
 
   const toggleDrawer = () => {
     setAppMenu(!appMenu);
+  };
+
+  const handleClick = (href) => {
+    toggleDrawer();
+    router.push(href);
   };
 
   return (
@@ -35,11 +42,15 @@ function LandingHeader() {
           </Grid>
 
           <Grid className={classes.drawerList}>
-            <Link href={PAGE_PATHS.ABOUT}>
-              <li>About Us</li>
-            </Link>
+            <li
+              onClick={() => {
+                handleClick(PAGE_PATHS.ABOUT);
+              }}
+            >
+              About Us
+            </li>
 
-            <LandingHeaderProfile />
+            <LandingHeaderProfile handleLinkClick={handleClick} />
           </Grid>
         </Grid>
       </Drawer>

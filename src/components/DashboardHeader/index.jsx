@@ -7,7 +7,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Close, Menu } from "@material-ui/icons";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -55,6 +54,11 @@ function VendorDashboardHeader({ profileData }) {
     router.push(PAGE_PATHS.VENDOR_DASHBOARD_PROFILE);
   };
 
+  const handleClick = (href) => {
+    toggleDrawer();
+    router.push(href);
+  };
+
   return (
     <CustomHeader>
       <Drawer anchor="left" open={appMenu} onClose={toggleDrawer}>
@@ -67,38 +71,35 @@ function VendorDashboardHeader({ profileData }) {
           </Grid>
 
           <Grid className={classes.drawerList}>
-            <Link
-              href={PAGE_PATHS.VENDOR_DASHBOARD_EVENTS}
-              onClick={toggleDrawer}
+            <li
+              className={isActive("event") && classes.activeLink}
+              onClick={() => handleClick(PAGE_PATHS.VENDOR_DASHBOARD_EVENTS)}
             >
-              <li className={isActive("event") && classes.activeLink}>
-                Events
-              </li>
-            </Link>
-            <Link
-              href={PAGE_PATHS.VENDOR_DASHBOARD_FINANCIALS}
-              onClick={toggleDrawer}
+              Events
+            </li>
+
+            <li
+              className={isActive("financials") && classes.activeLink}
+              onClick={() =>
+                handleClick(PAGE_PATHS.VENDOR_DASHBOARD_FINANCIALS)
+              }
             >
-              <li className={isActive("financials") && classes.activeLink}>
-                Financials
-              </li>
-            </Link>
-            <Link
-              href={PAGE_PATHS.VENDOR_DASHBOARD_CUSTOMERS}
-              onClick={toggleDrawer}
+              Financials
+            </li>
+
+            <li
+              onClick={() => handleClick(PAGE_PATHS.VENDOR_DASHBOARD_CUSTOMERS)}
+              className={isActive("customers") && classes.activeLink}
             >
-              <li className={isActive("customers") && classes.activeLink}>
-                Customers
-              </li>
-            </Link>
-            <Link
-              href={PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}
-              onClick={toggleDrawer}
+              Customers
+            </li>
+
+            <li
+              className={isActive("profile") && classes.activeLink}
+              onClick={() => handleClick(PAGE_PATHS.VENDOR_DASHBOARD_PROFILE)}
             >
-              <li className={isActive("profile") && classes.activeLink}>
-                Profile
-              </li>
-            </Link>
+              Profile
+            </li>
           </Grid>
         </Grid>
       </Drawer>
