@@ -172,17 +172,17 @@ function EventCard({ event }) {
               </Typography>
             </Grid>
 
-            {state &&
-            state.details &&
-            !isPaymentDetailsIncomplete(state.details) &&
-            !isEventPastDate(event) ? (
-              <Grid
-                item
-                sm={4}
-                container
-                alignItems="flex-end"
-                className={classes.editButtonContainer}
-              >
+            <Grid
+              item
+              sm={4}
+              container
+              alignItems="flex-end"
+              className={classes.editButtonContainer}
+            >
+              {state &&
+              state.details &&
+              !isPaymentDetailsIncomplete(state.details) &&
+              !isEventPastDate(event) ? (
                 <Grid>
                   <ButtonCapsule
                     buttonStyle={`${globalClasses.bold} ${classes.editButton}`}
@@ -195,8 +195,10 @@ function EventCard({ event }) {
                     </Button>
                   </Tooltip>
                 </Grid>
-              </Grid>
-            ) : null}
+              ) : (
+                <Button disabled>Event Completed</Button>
+              )}
+            </Grid>
           </Grid>
 
           <Grid container item sm={12}>
