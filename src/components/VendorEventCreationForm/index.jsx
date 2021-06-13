@@ -425,48 +425,53 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                       checkDisabled={checkDisabled}
                     />
                   </Grid>
-                  {/* LOCATION */}
-                  <Grid item sm={6} style={{ width: "100%" }}>
-                    <FormLabel>Location</FormLabel>
 
-                    <TextField
-                      fullWidth
-                      className={classes.textInput}
-                      id="location"
-                      variant="outlined"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.location}
-                      error={
-                        formik.touched.location &&
-                        Boolean(formik.errors.location)
-                      }
-                      helperText={
-                        formik.touched.location && formik.errors.location
-                      }
-                      disabled={checkDisabled()}
-                    />
-                  </Grid>
+                  {/* LOCATION */}
+                  {formik.values.mode !== EVENT_MODES.ONLINE ? (
+                    <Grid item sm={6} style={{ width: "100%" }}>
+                      <FormLabel>Location</FormLabel>
+
+                      <TextField
+                        fullWidth
+                        className={classes.textInput}
+                        id="location"
+                        variant="outlined"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.location}
+                        error={
+                          formik.touched.location &&
+                          Boolean(formik.errors.location)
+                        }
+                        helperText={
+                          formik.touched.location && formik.errors.location
+                        }
+                        disabled={checkDisabled()}
+                      />
+                    </Grid>
+                  ) : null}
                 </Grid>
               </Grid>
 
               {/* EVENT ADDRESS FIELD */}
-              <Grid item sm={12} container>
-                <TextField
-                  fullWidth
-                  className={classes.textInput}
-                  id="address"
-                  label={"Event Address"}
-                  variant="outlined"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.address}
-                  error={
-                    formik.touched.address && Boolean(formik.errors.address)
-                  }
-                  helperText={formik.touched.address && formik.errors.address}
-                />
-              </Grid>
+              {formik.values.mode !== EVENT_MODES.ONLINE ? (
+                <Grid item sm={12} container>
+                  <TextField
+                    fullWidth
+                    className={classes.textInput}
+                    id="address"
+                    label={"Event Address"}
+                    variant="outlined"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.address}
+                    error={
+                      formik.touched.address && Boolean(formik.errors.address)
+                    }
+                    helperText={formik.touched.address && formik.errors.address}
+                  />
+                </Grid>
+              ) : null}
 
               {/* EVENT DESCRIPTION FIELD */}
               <Grid item sm={12} style={{ width: "100%" }}>

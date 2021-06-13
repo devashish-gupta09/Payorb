@@ -1,7 +1,6 @@
 import { Grid, makeStyles, Typography } from "@material-ui/core";
 import {
   CalendarToday,
-  ConfirmationNumber,
   LocationOn,
   Money,
   ViewModule,
@@ -12,10 +11,11 @@ import { useRouter } from "next/router";
 import React from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
-import { EVENT_TYPES } from "../../constants/events";
+import { EVENT_MODES, EVENT_TYPES } from "../../constants/events";
 import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 import useFetchEvents from "../../hooks/useFetchEvents";
 import { getMonthDate } from "../../utils/dateTime";
+import { getCategoryString } from "../../utils/events";
 import Capsule from "../Capsule";
 import DashboardCard from "../DashboardCard";
 import DetailRow from "../DetailRow";
@@ -46,19 +46,19 @@ const eventRows = (event, oneOnOneSlot) => [
     key: "price",
     value: `Rs. ${event.price}`,
   },
-  {
-    ...(event.type === EVENT_TYPES.ONE_TIME && {
-      icon: <ConfirmationNumber />,
-      key: "bookedSeats",
-      value: `${event.orders.length} ${
-        event.type === EVENT_TYPES.ONE_TIME ? `/${event.totalTickets}` : ""
-      }`,
-    }),
-  },
+  // {
+  //   ...(event.type === EVENT_TYPES.ONE_TIME && {
+  //     icon: <ConfirmationNumber />,
+  //     key: "bookedSeats",
+  //     value: `${event.orders.length} ${
+  //       event.type === EVENT_TYPES.ONE_TIME ? `/${event.totalTickets}` : ""
+  //     }`,
+  //   }),
+  // },
   {
     icon: <ViewModule />,
     key: "category",
-    value: event.category,
+    value: getCategoryString(event.category),
   },
   {
     icon: <CalendarToday />,
@@ -68,7 +68,7 @@ const eventRows = (event, oneOnOneSlot) => [
         ? getEventslotDuration(event.startDate, event.endDate)
         : getEventslotDuration(oneOnOneSlot.startDate, oneOnOneSlot.endDate),
   },
-  {
+  event.mode === EVENT_MODES.OFFLINE && {
     icon: <LocationOn />,
     key: "location",
     value: event.location,
@@ -109,7 +109,7 @@ function EventBooking({ eventLink }) {
               <DashboardCard rootClass={classes.cardPadding}>
                 <Typography
                   variant={"h3"}
-                  style={{ width: "95%", paddingBottom: "0.5em" }}
+                  style={{ width: "95%", paddingBottom: "0.25em" }}
                 >
                   {event.name}
                 </Typography>
