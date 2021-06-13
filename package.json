@@ -40,6 +40,7 @@
     "react-cropper": "^2.1.7",
     "react-device-detect": "^1.17.0",
     "react-dom": "17.0.1",
+    "react-linkify": "^1.0.0-alpha",
     "react-loading-skeleton": "^2.2.0",
     "react-material-ui-calendar": "^0.2.3",
     "react-material-ui-carousel": "^2.2.1",
