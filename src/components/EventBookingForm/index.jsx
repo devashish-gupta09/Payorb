@@ -231,12 +231,17 @@ function EventBookingForm({
     };
 
     var rzp1 = new window.Razorpay(options);
+
     rzp1.on("payment.failed", async function (response) {
+      alert(response.error);
       try {
         const res = await failOrder(response.error.metadata.order_id);
 
         if (res.success) {
-          showAlert("ayment failed.", ALERT_TYPES.ERROR);
+          showAlert(
+            `Payment failed. ${response.error.message}`,
+            ALERT_TYPES.ERROR
+          );
         }
       } catch (err) {
         showAlert(
@@ -244,6 +249,10 @@ function EventBookingForm({
           ALERT_TYPES.ERROR
         );
       }
+    });
+
+    rzp1.on("payment.error", async function (response) {
+      showAlert("Error processing payment.", ALERT_TYPES.ERROR);
     });
 
     rzp1.open();

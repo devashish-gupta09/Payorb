@@ -72,7 +72,9 @@ function LandingHeaderProfile({ handleLinkClick }) {
             Sign In
           </li>
         ) : (
-          <Button className={classes.buttonSpacing}>Sign In</Button>
+          <Link href={PAGE_PATHS.SIGNIN}>
+            <Button className={classes.buttonSpacing}>Sign In</Button>
+          </Link>
         )}
 
         {matches ? (
@@ -85,10 +87,12 @@ function LandingHeaderProfile({ handleLinkClick }) {
             Sign Up for Vendor
           </li>
         ) : (
-          <ButtonCapsule
-            buttonStyle={classes.btnCapSpacing}
-            text="Sign Up"
-          ></ButtonCapsule>
+          <Link href={PAGE_PATHS.SIGNUP}>
+            <ButtonCapsule
+              buttonStyle={classes.btnCapSpacing}
+              text="Sign Up For Vendor"
+            ></ButtonCapsule>
+          </Link>
         )}
       </>
     );
