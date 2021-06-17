@@ -70,7 +70,7 @@ export const getFeaturesContent = async () => {
         },
         {
           title: "Instant Payouts",
-          description: null,
+          description: "Receive money in your account sooner than you think",
 
           image: "/assets/features/payments.png",
         },
@@ -136,7 +136,7 @@ export const getUserRegistrationContent = async () => {
       sectionLogo:
         "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
       sectionTitle: "User Registration",
-      title: "Unlimited Events",
+      title: "Unlimited Events Creation",
       description:
         "Create Group events and One-on-one services, Monetize all your business ideas.",
       image:
@@ -210,19 +210,20 @@ export const getGrowthContent = async () => {
         },
 
         {
+          description: "Platform Usage Charges 6% (+ taxes) on transactions",
+          image:
+            "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png",
+        },
+
+        {
           description: "No annual subscription charges",
           image:
             "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png",
         },
 
         {
-          description: "Platform Usage Chages 6%(plus taxes) on transactions",
-          image:
-            "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png",
-        },
-
-        {
-          description: "Instant Payouts",
+          description:
+            "Reduced to 4.5% (+ taxes) on monthly transactions above ₹20000",
           image:
             "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png",
         },

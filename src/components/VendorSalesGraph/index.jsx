@@ -100,7 +100,7 @@ function VendorSalesGraph() {
       <Grid className={classes.root}>
         <DashboardCard rootClass={classes.errorCard}>
           <h2>Weekly charts not available.</h2>
-          <h5>Stats will be generated when you have some bookings.</h5>
+          <h5>Stats will be generated when you have bookings to display.</h5>
         </DashboardCard>
       </Grid>
     );
