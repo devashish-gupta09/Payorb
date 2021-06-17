@@ -75,8 +75,8 @@ export const getFeaturesContent = async () => {
           image: "/assets/features/payments.png",
         },
         {
-          title: "Review",
-          description: "User reviews to boost profile credibility",
+          title: "Reviews",
+          description: "Verified user reviews to boost profile credibility",
           image: "/assets/features/rating.png",
         },
         {
