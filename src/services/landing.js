@@ -210,7 +210,8 @@ export const getGrowthContent = async () => {
         },
 
         {
-          description: "Platform Usage Charges 6% (+ taxes) on transactions",
+          description:
+            "Platform Usage Charges 6% (+ taxes), reduced to 4.5% (+ taxes) on monthly transactions above ₹20000",
           image:
             "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png",
         },
@@ -221,12 +222,12 @@ export const getGrowthContent = async () => {
             "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png",
         },
 
-        {
-          description:
-            "Reduced to 4.5% (+ taxes) on monthly transactions above ₹20000",
-          image:
-            "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png",
-        },
+        // {
+        //   description:
+        //     "Platform Usage Charges Reduced to 4.5% (+ taxes) on monthly transactions above ₹20000",
+        //   image:
+        //     "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png",
+        // },
       ],
     };
   }

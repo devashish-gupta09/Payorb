@@ -23,6 +23,7 @@ export const styles = makeStyles((theme) => ({
   },
   pointCheck: {
     paddingRight: "1em",
+    height: "100%",
   },
   pointLine: {
     [theme.breakpoints.up("sm")]: {
