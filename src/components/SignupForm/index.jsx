@@ -108,7 +108,7 @@ function SignUpForm() {
             await FirebaseAuth.Singleton().getIdToken()
           );
 
-          router.replace(`${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`);
+          router.replace(`/vendor/${user.user.uid}`);
         }
       } catch (err) {
         const firebaseInstance = FirebaseAuth.Singleton();
@@ -129,7 +129,8 @@ function SignUpForm() {
       if (userInfo && idToken) {
         const res = await handleUserAddition(userInfo, idToken);
         if (res) {
-          router.push(`${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`);
+          console.log(userInfo.user.uid, res.data);
+          router.push(`/vendor/${userInfo.user.uid}`);
         } else {
           const firebaseInstance = FirebaseAuth.Singleton();
           await firebaseInstance.signOut();

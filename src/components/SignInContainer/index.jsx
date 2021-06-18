@@ -2,8 +2,6 @@ import { Grid } from "@material-ui/core";
 import { useRouter } from "next/router";
 import React from "react";
 
-import { PAGE_PATHS } from "../../constants/paths";
-
 import { FirebaseAuth } from "../AuthenticationContext";
 
 import SignInForm from "../SignInForm";
@@ -17,7 +15,7 @@ function SignInContainer({ content }) {
   const auth = FirebaseAuth.Singleton();
 
   if (auth.getUser()) {
-    router.push(`${PAGE_PATHS.VENDOR_DASHBOARD_EVENTS}`);
+    router.push(`/vendor/${auth.getUser().uid}/events`);
     return null;
   }
 

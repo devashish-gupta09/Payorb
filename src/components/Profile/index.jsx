@@ -10,6 +10,7 @@ export default function Profile({ profileData }) {
   const updateProfileInfo = (data) => {
     setProfileInfo(data);
   };
+
   return (
     <Fade in={true} timeout={500}>
       <Grid>

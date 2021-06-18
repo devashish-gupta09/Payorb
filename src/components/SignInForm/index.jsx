@@ -33,6 +33,7 @@ function SigninForm() {
   const router = useRouter();
   const [usernameType, setUsernameType] = React.useState();
   const [confirmationResult, setConfirmationResult] = React.useState();
+  const auth = FirebaseAuth.Singleton();
   const { Alert, showAlert } = useAlertSnackbar();
 
   const formik = useFormik({
@@ -60,7 +61,12 @@ function SigninForm() {
           return;
         }
 
-        router.push(`${PAGE_PATHS.VENDOR_DASHBOARD_EVENTS}`);
+        if (auth.getUser()) {
+          console.log(auth.getUser());
+          router.push(`/vendor/${auth.getUser().uid}/events`);
+        }
+
+        return;
       } catch (err) {
         const firebaseInstance = FirebaseAuth.Singleton();
         await firebaseInstance.signOut();
@@ -77,7 +83,7 @@ function SigninForm() {
     try {
       const { userInfo, idToken } = await fedSignUp(provider);
       if (userInfo && idToken) {
-        router.replace(`${PAGE_PATHS.VENDOR_DASHBOARD_EVENTS}`);
+        router.replace(`/vendor/${userInfo.user.uid}/events`);
       } else {
         throw "Not able to sign in the user using a federated source.";
       }

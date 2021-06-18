@@ -26,29 +26,38 @@ function VendorDashboard() {
   const [profileData, setProfileData] = React.useState(null);
   const { Alert, showAlert } = useAlertSnackbar();
 
-  const getComponent = (route, profileData) => {
-    switch (route) {
-      case PAGE_PATHS.VENDOR_DASHBOARD_PROFILE:
+  const getComponent = (profileData) => {
+    console.log("Inside vendor component:", router.query.section);
+
+    if (router.query.vendorId) {
+      if (router.query.section) {
+        switch (router.query.section[0]) {
+          case "financials":
+            return <VendorFinancials />;
+          case "customers":
+            return <VendorCustomers />;
+          case PAGE_PATHS.VENDOR_DASHBOARD_CREATE_EVENT:
+            return <VendorEventCreationForm />;
+          case "events":
+            return <VendorEvents />;
+          default:
+            return (
+              <FallbackPage
+                title="Page Not Found"
+                subtitle="Try refreshing your page or return to home"
+              />
+            );
+        }
+      } else {
         return <Profile profileData={profileData} />;
-      case PAGE_PATHS.VENDOR_DASHBOARD_FINANCIALS:
-        return <VendorFinancials />;
-      case PAGE_PATHS.VENDOR_DASHBOARD_CUSTOMERS:
-        return <VendorCustomers />;
-      case PAGE_PATHS.VENDOR_DASHBOARD_CREATE_EVENT:
-        return <VendorEventCreationForm />;
-      case PAGE_PATHS.VENDOR_DASHBOARD_EVENTS:
-        return <VendorEvents />;
-      default:
-        return (
-          <FallbackPage
-            title="Page Not Found"
-            subtitle="Try refreshing your page or return to home"
-          />
-        );
+      }
     }
+
+    return null;
   };
 
   React.useEffect(() => {
+    
     getUser()
       .then(async (res) => {
         if (res.success) {
@@ -57,7 +66,7 @@ function VendorDashboard() {
             setProfileData(res.data);
             setLoading(false);
           } else {
-            router.push(`${PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}`);
+            router.push(`/vendor`);
           }
         } else {
           if (res.data.error) {
@@ -79,11 +88,12 @@ function VendorDashboard() {
         <FallbackLoading />
       ) : (
         <UserAuthDetailsProvider>
+          {Alert()}
           <Grid>
             <VendorDashboardHeader profileData={profileData} />
             <AuthAlertBanner />
             <VendorDashboardContainer>
-              {getComponent(router.asPath, profileData)}
+              {getComponent(profileData)}
             </VendorDashboardContainer>
           </Grid>
         </UserAuthDetailsProvider>

@@ -10,7 +10,6 @@ import { Close, Menu } from "@material-ui/icons";
 import { useRouter } from "next/router";
 import React from "react";
 
-import { PAGE_PATHS } from "../../constants/paths";
 import CustomHeader from "../Header";
 import Logo from "../Logo";
 import ProfileSectionHeader from "../ProfileSectionHeader";
@@ -32,13 +31,14 @@ function VendorDashboardHeader({ profileData }) {
     setCurrentTab(value);
     switch (value) {
       case 0:
-        router.push(PAGE_PATHS.VENDOR_DASHBOARD_EVENTS);
+        console.log("Tab Change", router);
+        router.push(`/vendor/${router.query.vendorId}/events`);
         return;
       case 1:
-        router.push(PAGE_PATHS.VENDOR_DASHBOARD_FINANCIALS);
+        router.push(`/vendor/${router.query.vendorId}/financials`);
         return;
       case 2:
-        router.push(PAGE_PATHS.VENDOR_DASHBOARD_CUSTOMERS);
+        router.push(`/vendor/${router.query.vendorId}/customers`);
         return;
       default:
         break;
@@ -51,12 +51,12 @@ function VendorDashboardHeader({ profileData }) {
 
   const handleProfileClick = () => {
     setCurrentTab(false);
-    router.push(PAGE_PATHS.VENDOR_DASHBOARD_PROFILE);
+    router.push(`/vendor/${router.query.vendorId}`);
   };
 
-  const handleClick = (href) => {
+  const handleClick = (endPoint) => {
     toggleDrawer();
-    router.push(href);
+    router.push(`/vendor/${router.query.vendorId}/${endPoint}`);
   };
 
   return (
@@ -73,22 +73,20 @@ function VendorDashboardHeader({ profileData }) {
           <Grid className={classes.drawerList}>
             <li
               className={isActive("event") && classes.activeLink}
-              onClick={() => handleClick(PAGE_PATHS.VENDOR_DASHBOARD_EVENTS)}
+              onClick={() => handleClick("events")}
             >
               Events
             </li>
 
             <li
               className={isActive("financials") && classes.activeLink}
-              onClick={() =>
-                handleClick(PAGE_PATHS.VENDOR_DASHBOARD_FINANCIALS)
-              }
+              onClick={() => handleClick("financials")}
             >
               Financials
             </li>
 
             <li
-              onClick={() => handleClick(PAGE_PATHS.VENDOR_DASHBOARD_CUSTOMERS)}
+              onClick={() => handleClick("customers")}
               className={isActive("customers") && classes.activeLink}
             >
               Customers
@@ -96,7 +94,7 @@ function VendorDashboardHeader({ profileData }) {
 
             <li
               className={isActive("profile") && classes.activeLink}
-              onClick={() => handleClick(PAGE_PATHS.VENDOR_DASHBOARD_PROFILE)}
+              onClick={() => handleClick("")}
             >
               Profile
             </li>
