@@ -97,9 +97,10 @@ function VendorCustomers() {
     if (!customers.length) {
       return (
         <DashboardCard>
-          <h2>No customer has booked a seat for your events</h2>
+          <h2>There are no customers to display</h2>
           <Typography>
-            Share your events by heading over to the events section
+            Create new events and start sharing by heading over to the events
+            section
           </Typography>
         </DashboardCard>
       );

@@ -40,7 +40,7 @@ function VendorRevenueUserAggSec() {
       <>
         <DashboardCard rootClass={classes.errorCard}>
           <h2>No Stats Generated.</h2>
-          <h5>Stats will be generated when you have some bookings.</h5>
+          <h5>Stats will be generated when you have bookings to display.</h5>
         </DashboardCard>
       </>
     );

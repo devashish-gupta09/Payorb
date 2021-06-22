@@ -136,7 +136,7 @@ function VideoUpload({ videoProps, vendor }) {
         ) : (
           vendor && (
             <Grid className={classes.previewText}>
-              <Grid>
+              <Grid style={{ padding: "0.5em" }}>
                 <Typography
                   variant="h6"
                   style={{ fontWeight: "bold" }}
@@ -146,7 +146,7 @@ function VideoUpload({ videoProps, vendor }) {
                 </Typography>
                 <Grid container className={classes.capsuleContainer}>
                   <Capsule>{"Max Size : 5 MB"}</Capsule>
-                  <Capsule>{"Duration : 1:00 mins"}</Capsule>
+                  <Capsule>{"Duration : 2:00 mins"}</Capsule>
                 </Grid>
                 <Typography align="center" style={{ paddingTop: "1em" }}>
                   <Movie style={{ height: "100px", width: "100px" }}></Movie>
@@ -154,8 +154,7 @@ function VideoUpload({ videoProps, vendor }) {
                 <ul>
                   <li>Size of the video should be less than 5 MB</li>
                   <li>
-                    Make sure the duration of video is less than{" "}
-                    <b>1:00 mins</b>
+                    Duration of video should be less than <b>1:00 mins</b>
                   </li>
                 </ul>
               </Grid>
