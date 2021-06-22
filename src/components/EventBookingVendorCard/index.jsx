@@ -21,7 +21,7 @@ function EventBookingVendorCard({ vendorId }) {
 
   React.useEffect(() => {
     // API call to get vendor details
-    getUser(vendorId)
+    getUser({ vendorId })
       .then((res) => {
         if (res.data.vendor) {
           setVendor(res.data.vendor);

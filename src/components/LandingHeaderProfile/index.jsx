@@ -33,7 +33,7 @@ function LandingHeaderProfile({ handleLinkClick }) {
       userContext.userState !== "UNAUTHENTICATED"
     ) {
       setLoading(true);
-      getUser(userContext.user.uid)
+      getUser({ vendorId: userContext.user.uid })
         .then((res) => {
           setLoading(false);
           setVendor(res.data.vendor);

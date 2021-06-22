@@ -59,7 +59,7 @@ function VendorDashboard() {
   React.useEffect(() => {
     if (router.isReady && userContext.user && userContext.user.uid) {
       const { vendorId } = router.query;
-      getUser(vendorId)
+      getUser({ vendorId })
         .then(async (res) => {
           if (res.success) {
             // allowing a user to head to the profile section even if no data exists in the firestore

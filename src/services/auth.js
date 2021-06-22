@@ -18,14 +18,12 @@ export const addUser = async (userDetails) => {
   return res.data;
 };
 
-export const getUser = async (vendorId) => {
+export const getUser = async (getUserParams = {}) => {
   try {
     const authHeader = await getAuthHeader();
     const response = await axios.get(`${API_URL}/${END_POINTS.VENDOR}`, {
       headers: authHeader,
-      params: {
-        vendorId,
-      },
+      params: getUserParams,
     });
     return response.data;
   } catch (err) {

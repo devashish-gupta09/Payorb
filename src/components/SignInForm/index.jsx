@@ -83,6 +83,8 @@ function SigninForm() {
     try {
       const { userInfo, idToken } = await fedSignUp(provider);
       if (userInfo && idToken) {
+
+
         router.replace(
           buildVendorDashboardUrl(userInfo.uid || userInfo.user.uid, "/events")
         );

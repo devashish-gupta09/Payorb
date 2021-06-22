@@ -14,7 +14,7 @@ function CustomerVendorProfile({ userUID }) {
   const [profileData, setProfileData] = React.useState();
 
   React.useEffect(() => {
-    getUser(router.query.vendorId)
+    getUser({ vendorId: router.query.vendorId })
       .then((res) => {
         if (res.data) {
           setLoading(false);

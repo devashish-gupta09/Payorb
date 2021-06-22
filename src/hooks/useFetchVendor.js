@@ -8,7 +8,7 @@ function useFetchVendor(userUID) {
   const [error, setError] = useState();
 
   useEffect(() => {
-    getUser(userUID)
+    getUser({ vendorId: userUID })
       .then((res) => {
         if (res.data) {
           setLoading(false);

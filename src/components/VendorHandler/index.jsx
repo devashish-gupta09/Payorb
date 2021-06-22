@@ -16,7 +16,7 @@ function VendorHandler() {
 
   React.useEffect(() => {
     if (router.isReady && !profileData) {
-      getUser(router.query.vendorId)
+      getUser({ vendorId: router.query.vendorId })
         .then(async (res) => {
           if (res.success) {
             if (res.data) {
