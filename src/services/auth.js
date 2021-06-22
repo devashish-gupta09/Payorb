@@ -18,15 +18,14 @@ export const addUser = async (userDetails) => {
   return res.data;
 };
 
-export const getUser = async () => {
+export const getUser = async (vendorId) => {
   try {
     const authHeader = await getAuthHeader();
-
-    if (!authHeader) {
-      throw new Error("No auth header found");
-    }
     const response = await axios.get(`${API_URL}/${END_POINTS.VENDOR}`, {
       headers: authHeader,
+      params: {
+        vendorId,
+      },
     });
     return response.data;
   } catch (err) {

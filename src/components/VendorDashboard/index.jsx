@@ -9,7 +9,9 @@ import { UserAuthDetailsProvider } from "../../context/UserAuthDetailContext";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { getUser } from "../../services/auth";
 import { delay } from "../../utils/dateTime";
+import { buildVendorDashboardUrl } from "../../utils/url";
 import AuthAlertBanner from "../AuthAlertBanner";
+import { Context } from "../AuthenticationContext";
 import VendorDashboardHeader from "../DashboardHeader";
 import FallbackLoading from "../FallbackLoading";
 import FallbackPage from "../FallbackPage";
@@ -22,23 +24,23 @@ import VendorFinancials from "../VendorFinancials";
 
 function VendorDashboard() {
   const router = useRouter();
+  const userContext = React.useContext(Context);
   const [loading, setLoading] = React.useState(true);
   const [profileData, setProfileData] = React.useState(null);
   const { Alert, showAlert } = useAlertSnackbar();
 
   const getComponent = (profileData) => {
-    console.log("Inside vendor component:", router.query.section);
-
-    if (router.query.vendorId) {
+    if (profileData && profileData.userUID) {
       if (router.query.section) {
-        switch (router.query.section[0]) {
-          case "financials":
+        const { vendorId } = router.query;
+        switch (router.asPath) {
+          case `/vendor/${vendorId}/financials`:
             return <VendorFinancials />;
-          case "customers":
+          case `/vendor/${vendorId}/customers`:
             return <VendorCustomers />;
-          case PAGE_PATHS.VENDOR_DASHBOARD_CREATE_EVENT:
+          case `/vendor/${vendorId}/events/create`:
             return <VendorEventCreationForm />;
-          case "events":
+          case `/vendor/${vendorId}/events`:
             return <VendorEvents />;
           default:
             return (
@@ -52,43 +54,49 @@ function VendorDashboard() {
         return <Profile profileData={profileData} />;
       }
     }
-
-    return null;
   };
 
   React.useEffect(() => {
-    
-    getUser()
-      .then(async (res) => {
-        if (res.success) {
-          // allowing a user to head to the profile section even if no data exists in the firestore
-          if (Object.keys(res.data).length > 0) {
-            setProfileData(res.data);
-            setLoading(false);
+    if (router.isReady && userContext.user && userContext.user.uid) {
+      const { vendorId } = router.query;
+      getUser(vendorId)
+        .then(async (res) => {
+          if (res.success) {
+            // allowing a user to head to the profile section even if no data exists in the firestore
+            if (Object.keys(res.data).length > 0) {
+              setProfileData(res.data.vendor);
+              setLoading(false);
+            } else {
+              router.replace(buildVendorDashboardUrl(vendorId));
+            }
           } else {
-            router.push(`/vendor`);
+            if (res.data.error) {
+              showAlert(
+                "User doesn't exist. Please sign up.",
+                ALERT_TYPES.ERROR
+              );
+              await delay(750);
+              router.replace(PAGE_PATHS.SIGNUP);
+            }
           }
-        } else {
-          if (res.data.error) {
-            showAlert("User doesn't exist. Please sign up.", ALERT_TYPES.ERROR);
-            await delay(750);
-            router.push(PAGE_PATHS.SIGNUP);
-          }
-        }
-      })
-      .catch((err) => {
-        console.error("Error getting profile data", err);
-        router.back();
-      });
-  }, []);
+        })
+        .catch(async (err) => {
+          showAlert("User doesn't exist. Please sign up.", ALERT_TYPES.ERROR);
+          await delay(750);
+          router.replace(PAGE_PATHS.SIGNUP);
+        });
+    } else if (userContext.userState === "UNAUTHENTICATED") {
+      router.replace(PAGE_PATHS.SIGNUP);
+    }
+  }, [router, userContext]);
 
   return (
     <>
+      {Alert()}
       {loading ? (
         <FallbackLoading />
       ) : (
         <UserAuthDetailsProvider>
-          {Alert()}
           <Grid>
             <VendorDashboardHeader profileData={profileData} />
             <AuthAlertBanner />

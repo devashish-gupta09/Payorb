@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import React from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
-import { PAGE_PATHS } from "../../constants/paths";
-import { getVendorPublic } from "../../services/vendor";
+import { getUser } from "../../services/auth";
+import { buildVendorDashboardUrl } from "../../utils/url";
 import ButtonCapsule from "../ButtonCapsule";
 
 function EventBookingVendorCard({ vendorId }) {
@@ -15,20 +15,14 @@ function EventBookingVendorCard({ vendorId }) {
 
   const handleViewProfile = () => {
     if (vendor.userUID) {
-      router.push({
-        pathname: PAGE_PATHS.CUSTOMER_VENDOR_VIEW,
-        query: {
-          userUID: vendor.userUID,
-        },
-      });
+      router.push(buildVendorDashboardUrl(vendor.userUID));
     }
   };
 
   React.useEffect(() => {
     // API call to get vendor details
-    getVendorPublic(vendorId)
+    getUser(vendorId)
       .then((res) => {
-        console.log(res);
         if (res.data.vendor) {
           setVendor(res.data.vendor);
         } else {

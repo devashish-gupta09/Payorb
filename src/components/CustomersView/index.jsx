@@ -50,14 +50,12 @@ function CustomersView() {
           return <CustomerEventScheduler eventLink={router.query.event} />;
         }
       }
-    } else if (router.asPath.includes(PAGE_PATHS.CUSTOMER_VENDOR_VIEW)) {
-      if (router.query.userUID) {
-        return (
-          <CustomerVendorProfile
-            userUID={router.query.userUID}
-          ></CustomerVendorProfile>
-        );
-      }
+    } else if (router.query.vendorId) {
+      return (
+        <CustomerVendorProfile
+          userUID={router.query.vendorId}
+        ></CustomerVendorProfile>
+      );
     } else if (router.asPath.includes(PAGE_PATHS.CUSTOMER_EVENTS)) {
       return <CustomerEvents />;
     }

@@ -10,6 +10,8 @@ import { Close, Menu } from "@material-ui/icons";
 import { useRouter } from "next/router";
 import React from "react";
 
+import { buildVendorDashboardUrl, getVendorIdFromUrl } from "../../utils/url";
+
 import CustomHeader from "../Header";
 import Logo from "../Logo";
 import ProfileSectionHeader from "../ProfileSectionHeader";
@@ -31,14 +33,19 @@ function VendorDashboardHeader({ profileData }) {
     setCurrentTab(value);
     switch (value) {
       case 0:
-        console.log("Tab Change", router);
-        router.push(`/vendor/${router.query.vendorId}/events`);
+        router.push(
+          buildVendorDashboardUrl(getVendorIdFromUrl(router), "/events")
+        );
         return;
       case 1:
-        router.push(`/vendor/${router.query.vendorId}/financials`);
+        router.push(
+          buildVendorDashboardUrl(getVendorIdFromUrl(router), "/financials")
+        );
         return;
       case 2:
-        router.push(`/vendor/${router.query.vendorId}/customers`);
+        router.push(
+          buildVendorDashboardUrl(getVendorIdFromUrl(router), "/customers")
+        );
         return;
       default:
         break;
@@ -51,12 +58,12 @@ function VendorDashboardHeader({ profileData }) {
 
   const handleProfileClick = () => {
     setCurrentTab(false);
-    router.push(`/vendor/${router.query.vendorId}`);
+    router.push(buildVendorDashboardUrl(getVendorIdFromUrl(router)));
   };
 
   const handleClick = (endPoint) => {
     toggleDrawer();
-    router.push(`/vendor/${router.query.vendorId}/${endPoint}`);
+    router.push(buildVendorDashboardUrl(getVendorIdFromUrl(router), endPoint));
   };
 
   return (
@@ -73,28 +80,28 @@ function VendorDashboardHeader({ profileData }) {
           <Grid className={classes.drawerList}>
             <li
               className={isActive("event") && classes.activeLink}
-              onClick={() => handleClick("events")}
+              onClick={() => handleClick("/events")}
             >
               Events
             </li>
 
             <li
               className={isActive("financials") && classes.activeLink}
-              onClick={() => handleClick("financials")}
+              onClick={() => handleClick("/financials")}
             >
               Financials
             </li>
 
             <li
               onClick={() => handleClick("customers")}
-              className={isActive("customers") && classes.activeLink}
+              className={isActive("/customers") && classes.activeLink}
             >
               Customers
             </li>
 
             <li
               className={isActive("profile") && classes.activeLink}
-              onClick={() => handleClick("")}
+              onClick={() => handleClick("/")}
             >
               Profile
             </li>

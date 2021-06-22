@@ -24,6 +24,7 @@ import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import useFederatedAuth from "../../hooks/useFederatedAuth";
 import { addUser } from "../../services/auth";
 import app from "../../utils/firebase";
+import { buildVendorDashboardUrl } from "../../utils/url";
 
 import { signUpValidation, phoneRegExp } from "../../validations/signup";
 import { FirebaseAuth } from "../AuthenticationContext";
@@ -108,7 +109,7 @@ function SignUpForm() {
             await FirebaseAuth.Singleton().getIdToken()
           );
 
-          router.replace(`/vendor/${user.user.uid}`);
+          router.replace(buildVendorDashboardUrl(user.user.uid));
         }
       } catch (err) {
         const firebaseInstance = FirebaseAuth.Singleton();
@@ -129,8 +130,7 @@ function SignUpForm() {
       if (userInfo && idToken) {
         const res = await handleUserAddition(userInfo, idToken);
         if (res) {
-          console.log(userInfo.user.uid, res.data);
-          router.push(`/vendor/${userInfo.user.uid}`);
+          router.push(buildVendorDashboardUrl(userInfo.user.uid));
         } else {
           const firebaseInstance = FirebaseAuth.Singleton();
           await firebaseInstance.signOut();

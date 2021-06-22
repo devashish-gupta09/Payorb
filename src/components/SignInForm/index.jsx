@@ -21,6 +21,7 @@ import { PAGE_PATHS } from "../../constants/paths";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import useFederatedAuth from "../../hooks/useFederatedAuth";
 import app from "../../utils/firebase";
+import { buildVendorDashboardUrl } from "../../utils/url";
 import { phoneRegExp } from "../../validations/signup";
 import { FirebaseAuth } from "../AuthenticationContext";
 import ButtonCapsule from "../ButtonCapsule";
@@ -62,8 +63,7 @@ function SigninForm() {
         }
 
         if (auth.getUser()) {
-          console.log(auth.getUser());
-          router.push(`/vendor/${auth.getUser().uid}/events`);
+          router.push(buildVendorDashboardUrl(auth.getUser().uid, "/events"));
         }
 
         return;
@@ -83,7 +83,9 @@ function SigninForm() {
     try {
       const { userInfo, idToken } = await fedSignUp(provider);
       if (userInfo && idToken) {
-        router.replace(`/vendor/${userInfo.user.uid}/events`);
+        router.replace(
+          buildVendorDashboardUrl(userInfo.uid || userInfo.user.uid, "/events")
+        );
       } else {
         throw "Not able to sign in the user using a federated source.";
       }

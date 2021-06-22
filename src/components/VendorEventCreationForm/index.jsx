@@ -37,11 +37,11 @@ import {
 } from "../../constants/events";
 import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 
-import { PAGE_PATHS } from "../../constants/paths";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { createEvent, editEvent } from "../../services/events";
 import { delay, getDateForTime } from "../../utils/dateTime";
 import firebase from "../../utils/firebase";
+import { buildVendorDashboardUrl, getVendorIdFromUrl } from "../../utils/url";
 import { createEventValidationSchema } from "../../validations/events";
 import { FirebaseAuth } from "../AuthenticationContext";
 import ButtonCapsule from "../ButtonCapsule";
@@ -97,7 +97,7 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
   const [loader, setLoader] = React.useState(false);
 
   const handlePostCreationDialogClose = () => {
-    router.push(PAGE_PATHS.VENDOR_DASHBOARD_EVENTS);
+    router.push(buildVendorDashboardUrl(getVendorIdFromUrl(router), "/events"));
   };
 
   const handleEventTypeChange = (event) => {
@@ -229,7 +229,9 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
     if (edit) {
       handleClose();
     } else {
-      router.push(PAGE_PATHS.VENDOR_DASHBOARD_EVENTS);
+      router.push(
+        buildVendorDashboardUrl(getVendorIdFromUrl(router), "/events")
+      );
     }
   };
 

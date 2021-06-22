@@ -12,9 +12,9 @@ import React from "react";
 
 import Skeleton from "react-loading-skeleton";
 
-import { PAGE_PATHS } from "../../constants/paths";
 import { getEventsVendorDashboard } from "../../services/events";
 import { delay } from "../../utils/dateTime";
+import { buildVendorDashboardUrl } from "../../utils/url";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
 import EventsViewList from "../EventsViewList";
@@ -37,7 +37,9 @@ function VendorEvents() {
   const router = useRouter();
 
   const handleCreateEvent = () => {
-    router.push(PAGE_PATHS.VENDOR_DASHBOARD_CREATE_EVENT);
+    router.push(
+      buildVendorDashboardUrl(router.query.vendorId, "/events/create")
+    );
   };
 
   const toggleView = () => {

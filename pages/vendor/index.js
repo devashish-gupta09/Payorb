@@ -1,32 +1,19 @@
-import { Grid } from "@material-ui/core";
 import { useRouter } from "next/router";
 import React from "react";
 
-import {
-  Context,
-  FirebaseAuth,
-} from "../../src/components/AuthenticationContext";
+import { Context } from "../../src/components/AuthenticationContext";
 
 export default function Vendor() {
-  const user = React.useContext(Context);
+  const userContext = React.useContext(Context);
   const router = useRouter();
 
-  const auth = FirebaseAuth.Singleton();
-
-  React.useState(() => {
+  React.useEffect(() => {
     if (router.isReady) {
-      console.log("Teer", auth.getUser());
-      if (auth.getUser()) {
-        console.log("We are here.", user);
-        router.replace(`/vendor/${user.uid}`);
+      if (userContext.userState === "AUTHENTICATED") {
+        router.replace(`/vendor/${userContext.user.uid}`);
       }
     }
-  }, [router, auth, user]);
+  }, [router, userContext.userState]);
 
-  return (
-    <Grid>
-      <h1>Hey</h1>
-      {/* {user ? <VendorDashboard></VendorDashboard> : <FallbackLoading />} */}
-    </Grid>
-  );
+  return null;
 }

@@ -181,23 +181,24 @@ function EventCard({ event }) {
             >
               {state &&
               state.details &&
-              !isPaymentDetailsIncomplete(state.details) &&
-              !isEventPastDate(event) ? (
-                <Grid>
-                  <ButtonCapsule
-                    buttonStyle={`${globalClasses.bold} ${classes.editButton}`}
-                    text="Edit"
-                    onClick={handleEdit}
-                  ></ButtonCapsule>
-                  <Tooltip title="Share">
-                    <Button onClick={handleShareDialog}>
-                      <Share />
-                    </Button>
-                  </Tooltip>
-                </Grid>
-              ) : (
-                <Button disabled>Event Completed</Button>
-              )}
+              !isPaymentDetailsIncomplete(state.details) ? (
+                !isEventPastDate(event) ? (
+                  <Grid>
+                    <ButtonCapsule
+                      buttonStyle={`${globalClasses.bold} ${classes.editButton}`}
+                      text="Edit"
+                      onClick={handleEdit}
+                    ></ButtonCapsule>
+                    <Tooltip title="Share">
+                      <Button onClick={handleShareDialog}>
+                        <Share />
+                      </Button>
+                    </Tooltip>
+                  </Grid>
+                ) : (
+                  <Button disabled>Event Completed</Button>
+                )
+              ) : null}
             </Grid>
           </Grid>
 

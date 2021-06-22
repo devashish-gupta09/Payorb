@@ -1,27 +1,42 @@
 import { Grid, makeStyles } from "@material-ui/core";
+import { useRouter } from "next/router";
 import React from "react";
 
-import useFetchVendor from "../../hooks/useFetchVendor";
+import { getUser } from "../../services/auth";
 import CustomerVendorProfileEvents from "../CustomerVendorProfileEvents";
 import ProfileDetailsSection from "../ProfileDetailsSection";
 import ProfileInfoCard from "../ProfileInfoCard";
 import SkeletonLoading from "../SkeletonLoading";
 
 function CustomerVendorProfile({ userUID }) {
-  const { data: vendor, loading: vendorLoading } = useFetchVendor(
-    userUID,
-    false
-  );
+  const router = useRouter();
+  const [loading, setLoading] = React.useState(true);
+  const [profileData, setProfileData] = React.useState();
 
-  if (vendorLoading) {
+  React.useEffect(() => {
+    getUser(router.query.vendorId)
+      .then((res) => {
+        if (res.data) {
+          setLoading(false);
+          setProfileData(res.data.vendor);
+        } else {
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
+  }, [router]);
+
+  if (loading) {
     return <SkeletonLoading />;
   }
 
-  if (vendor) {
+  if (profileData && profileData.userUID) {
     return (
       <Grid>
-        <ProfileInfoCard profileData={vendor} vendor={false} />
-        <ProfileDetailsSection profileData={vendor} vendor={false} />
+        <ProfileInfoCard profileData={profileData} vendor={false} />
+        <ProfileDetailsSection profileData={profileData} vendor={false} />
         <CustomerVendorProfileEvents userUID={userUID} />
       </Grid>
     );

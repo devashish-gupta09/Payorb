@@ -11,6 +11,7 @@ import { appColors } from "../../../styles/colors";
 
 import { PAGE_PATHS } from "../../constants/paths";
 import { getUser } from "../../services/auth";
+import { buildVendorDashboardUrl } from "../../utils/url";
 
 import { Context } from "../AuthenticationContext";
 import ButtonCapsule from "../ButtonCapsule";
@@ -23,29 +24,37 @@ function LandingHeaderProfile({ handleLinkClick }) {
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
   const classes = styles();
 
-  const user = useContext(Context);
+  const userContext = useContext(Context);
 
   React.useEffect(() => {
-    setLoading(true);
-    getUser()
-      .then((res) => {
-        setLoading(false);
-        setVendor(res.data);
-      })
-      .catch((err) => {})
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [user]);
+    if (
+      userContext.user &&
+      userContext.user.uid &&
+      userContext.userState !== "UNAUTHENTICATED"
+    ) {
+      setLoading(true);
+      getUser(userContext.user.uid)
+        .then((res) => {
+          setLoading(false);
+          setVendor(res.data.vendor);
+        })
+        .catch((err) => {
+          setLoading(false);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  }, [userContext]);
 
-  if (loading) {
+  if (loading && userContext.userState !== "UNAUTHENTICATED") {
     return null;
   }
 
-  if (vendor) {
+  if (vendor && vendor.userUID) {
     return (
       <>
-        <Link href={PAGE_PATHS.VENDOR_DASHBOARD_PROFILE}>
+        <Link href={buildVendorDashboardUrl(vendor.userUID)}>
           {matches ? (
             <li className={classes.list}>Profile</li>
           ) : (

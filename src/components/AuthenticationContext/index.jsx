@@ -45,10 +45,14 @@ export const Context = React.createContext(null);
 const AuthenticationContextProvider = (props) => {
   const { children } = props;
   const [user, setUser] = React.useState(null);
+  const [userState, setUserState] = React.useState("INITIAL");
 
   const handleAuthChange = async (newUser) => {
     if (newUser) {
       setUser(newUser);
+      setUserState("AUTHENTICATED");
+    } else {
+      setUserState("UNAUTHENTICATED");
     }
   };
 
@@ -64,9 +68,11 @@ const AuthenticationContextProvider = (props) => {
         authObserver();
       }
     };
-  }, [user]);
+  }, [user, userState]);
 
-  return <Context.Provider value={user}>{children}</Context.Provider>;
+  return (
+    <Context.Provider value={{ user, userState }}>{children}</Context.Provider>
+  );
 };
 
 export default AuthenticationContextProvider;

@@ -1,45 +1,27 @@
 import { useEffect, useState } from "react";
 
 import { getUser } from "../services/auth";
-import { getVendorPublic } from "../services/vendor";
 
-function useFetchVendor(userUID, vendor = true) {
+function useFetchVendor(userUID) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState();
   const [error, setError] = useState();
 
   useEffect(() => {
-    if (vendor) {
-      getUser()
-        .then((res) => {
-          if (res.data) {
-            setLoading(false);
-            setData(res.data);
-          } else {
-            setLoading(false);
-            setError("Could not fetch vendor");
-          }
-        })
-        .catch((err) => {
+    getUser(userUID)
+      .then((res) => {
+        if (res.data) {
           setLoading(false);
-          setError(err.message || "Could not fetch vendor.");
-        });
-    } else {
-      getVendorPublic(userUID)
-        .then((res) => {
-          if (res.data.vendor) {
-            setLoading(false);
-            setData(res.data.vendor);
-          } else {
-            setLoading(false);
-            setError("Could not fetch vendor");
-          }
-        })
-        .catch((err) => {
+          setData(res.data.vendor);
+        } else {
           setLoading(false);
-          setError(err.message || "Could not fetch vendor.");
-        });
-    }
+          setError("Could not fetch vendor");
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        setError(err.message || "Could not fetch vendor.");
+      });
   }, []);
 
   return {

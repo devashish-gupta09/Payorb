@@ -16,11 +16,12 @@ function Logout(props) {
       .signOut()
       .then(() => {
         showAlert("Logging out.");
-        router.replace(PAGE_PATHS.SIGNIN);
       })
       .catch((err) => {
         showAlert("Couldn't log you out. Please try again");
       });
+
+    router.replace(PAGE_PATHS.SIGNIN);
   };
 
   return (

@@ -14,10 +14,11 @@ function SignInContainer({ content }) {
 
   const auth = FirebaseAuth.Singleton();
 
-  if (auth.getUser()) {
-    router.push(`/vendor/${auth.getUser().uid}/events`);
-    return null;
-  }
+  // if (auth.getUser()) {
+  //   console.log("AUTH USER", auth.getUser().uid);
+  //   router.push(buildVendorDashboardUrl(auth.getUser().uid), "/events");
+  //   return null;
+  // }
 
   return (
     <Grid container className={classes.container} alignItems="stretch">
