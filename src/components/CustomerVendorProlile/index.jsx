@@ -37,7 +37,7 @@ function CustomerVendorProfile({ userUID }) {
       <Grid>
         <ProfileInfoCard profileData={profileData} vendor={false} />
         <ProfileDetailsSection profileData={profileData} vendor={false} />
-        <CustomerVendorProfileEvents userUID={userUID} />
+        <CustomerVendorProfileEvents userUID={profileData.userUID} />
       </Grid>
     );
   }

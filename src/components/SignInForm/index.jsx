@@ -20,6 +20,7 @@ import { AUTH_PROVIDERS, USERNAME_TYPE } from "../../constants/auth";
 import { PAGE_PATHS } from "../../constants/paths";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import useFederatedAuth from "../../hooks/useFederatedAuth";
+import { getUser } from "../../services/auth";
 import app from "../../utils/firebase";
 import { buildVendorDashboardUrl } from "../../utils/url";
 import { phoneRegExp } from "../../validations/signup";
@@ -83,10 +84,14 @@ function SigninForm() {
     try {
       const { userInfo, idToken } = await fedSignUp(provider);
       if (userInfo && idToken) {
+        const result = await getUser({
+          vendorId: userInfo.uid || userInfo.user.uid,
+        });
 
+        const { vendor } = result.data;
 
         router.replace(
-          buildVendorDashboardUrl(userInfo.uid || userInfo.user.uid, "/events")
+          buildVendorDashboardUrl(vendor.username || vendor.userUID, "/events")
         );
       } else {
         throw "Not able to sign in the user using a federated source.";

@@ -13,7 +13,6 @@ export const getEventStats = async (params) => {
 
     return res.data;
   } catch (err) {
-    console.log("In Customer", err);
     throw err.response.data || err.message;
   }
 };

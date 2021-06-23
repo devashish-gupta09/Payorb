@@ -25,7 +25,6 @@ function VendorRevenueUserAggSec() {
   startDate.setDate(endDate.getDate() - 7);
 
   const { data: stats, loading, error } = useFetchStats(startDate, endDate);
-  console.log(stats);
 
   if (loading) {
     return (

@@ -51,7 +51,6 @@ function ImageSelectAndCrop({
   };
 
   const handleOnCrop = () => {
-    console.log("Handle");
     try {
       const imageEl = cropperRef.current.cropper.getCroppedCanvas().toDataURL();
       handleDataUrl(imageEl);

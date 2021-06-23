@@ -200,8 +200,6 @@ function EventBookingForm({
             razorpaySignature: response.razorpay_signature,
             razorpayOrderId: response.razorpay_order_id,
           });
-
-          console.log(res);
           if (res.success) {
             showAlert(`Your payment id: ${response.razorpay_payment_id} `);
             setOrderId(response.razorpay_payment_id);

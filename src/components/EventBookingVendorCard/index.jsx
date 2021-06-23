@@ -15,7 +15,7 @@ function EventBookingVendorCard({ vendorId }) {
 
   const handleViewProfile = () => {
     if (vendor.userUID) {
-      router.push(buildVendorDashboardUrl(vendor.userUID));
+      router.push(buildVendorDashboardUrl(vendor.username || vendor.userUID));
     }
   };
 

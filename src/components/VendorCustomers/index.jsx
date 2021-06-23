@@ -49,7 +49,6 @@ function VendorCustomers() {
   });
 
   const handleEventTypeChange = (event) => {
-    console.log(event);
     setSelectedValue(event.target.value);
   };
 

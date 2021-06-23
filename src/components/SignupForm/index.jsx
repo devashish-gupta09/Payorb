@@ -100,7 +100,7 @@ function SignUpForm() {
         }
 
         if (user) {
-          await handleUserAddition(
+          const vendor = await handleUserAddition(
             {
               ...user,
               location: values.location,
@@ -109,7 +109,11 @@ function SignUpForm() {
             await FirebaseAuth.Singleton().getIdToken()
           );
 
-          router.replace(buildVendorDashboardUrl(user.user.uid));
+          router.replace(
+            buildVendorDashboardUrl(
+              vendor.data.username || user?.uid || user.user.uid
+            )
+          );
         }
       } catch (err) {
         const firebaseInstance = FirebaseAuth.Singleton();
@@ -130,7 +134,11 @@ function SignUpForm() {
       if (userInfo && idToken) {
         const res = await handleUserAddition(userInfo, idToken);
         if (res) {
-          router.push(buildVendorDashboardUrl(userInfo.user.uid));
+          router.push(
+            buildVendorDashboardUrl(
+              res.data.username || userInfo?.uid || userInfo.user.uid
+            )
+          );
         } else {
           const firebaseInstance = FirebaseAuth.Singleton();
           await firebaseInstance.signOut();

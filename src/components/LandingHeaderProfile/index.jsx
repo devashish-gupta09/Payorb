@@ -54,7 +54,7 @@ function LandingHeaderProfile({ handleLinkClick }) {
   if (vendor && vendor.userUID) {
     return (
       <>
-        <Link href={buildVendorDashboardUrl(vendor.userUID)}>
+        <Link href={buildVendorDashboardUrl(vendor.username || vendor.userUID)}>
           {matches ? (
             <li className={classes.list}>Profile</li>
           ) : (
