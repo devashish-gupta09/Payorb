@@ -1,4 +1,4 @@
-import { Grid } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import React from "react";
 
 import Carousel from "react-material-ui-carousel";
@@ -12,6 +12,14 @@ function FeatureSection({ content }) {
 
   return (
     <Grid className={classes.container} container alignItems={"stretch"}>
+      <Grid container className={classes.paragraphContainer}>
+        <Typography className={classes.description}>
+          {content.topPara}
+        </Typography>
+        <Typography className={classes.description}>
+          {content.bottomPara}
+        </Typography>
+      </Grid>
       <Grid container>
         <Grid item sm={4}>
           <SectionContent

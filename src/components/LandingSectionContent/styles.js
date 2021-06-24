@@ -28,5 +28,6 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       paddingBottom: "1em",
     },
+    textAlign: "justify",
   },
 }));
