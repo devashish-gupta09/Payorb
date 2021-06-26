@@ -63,7 +63,7 @@ function PostEventCreationDialog(props) {
                   >
                     {event.name}
                   </Typography>
-                  <Grid style={{ width: "95%" }}>
+                  <Grid style={{ width: "95%", whiteSpace: "pre-line" }}>
                     <ReadMore percent={11} text={event.description} />
                   </Grid>
                 </Grid>
