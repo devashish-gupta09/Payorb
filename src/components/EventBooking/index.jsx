@@ -113,7 +113,13 @@ function EventBooking({ eventLink }) {
                 >
                   {event.name}
                 </Typography>
-                <Grid style={{ width: "95%", paddingBottom: "1em" }}>
+                <Grid
+                  style={{
+                    width: "95%",
+                    paddingBottom: "1em",
+                    whiteSpace: "pre-line",
+                  }}
+                >
                   <ReadMore percent={10} text={event.description} />
                 </Grid>
                 <Capsule>{`Mode : ${event.mode}`}</Capsule>

@@ -52,7 +52,6 @@ import OneTimeDateSelector from "../OneTimeDateSelector";
 import PostEventCreationDialog from "../PostEventCreationDialog";
 import { EventCategoryField } from "./EventCategoryField";
 import { styles } from "./styles";
-
 const hash = createHash("sha256");
 hash.update(v4());
 
@@ -154,24 +153,30 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
             });
 
             // Lets upload image
+            let url;
             if (croppedImg) {
-              await handleImageUpload(req.link);
+              url = await handleImageUpload(req.link);
             }
+
+            await editEvent({
+              event: { ...req, photoUrl: url },
+            });
 
             setLoader(false);
             setPostEventDialog(true);
           } else {
-            await editEvent({
-              event: req,
-            });
-
+            let url = undefined;
             if (croppedImg) {
-              await handleImageUpload(req.link);
+              url = await handleImageUpload(req.link);
             }
+
+            await editEvent({
+              event: { ...req, photoUrl: url },
+            });
 
             setLoader(false);
             showAlert("Event Updated");
-            await delay(500);
+            await delay(1000);
             router.reload();
           }
         } catch (err) {
@@ -213,8 +218,11 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
             "Access-Control-Allow-Origin": "*",
           },
         });
+
+        return await childRef.getDownloadURL();
       } catch (err) {
         // Don't do anything if an image upload is unsuccessful
+        console.log("Error", err);
         return err;
       }
     },

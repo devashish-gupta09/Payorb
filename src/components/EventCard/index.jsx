@@ -94,7 +94,7 @@ function EventCard({ event }) {
               <Typography className={`${globalClasses.bold} ${classes.title}`}>
                 {event.name}
               </Typography>
-              <Grid style={{ width: "95%" }}>
+              <Grid style={{ width: "95%", whiteSpace: "pre-line" }}>
                 <ReadMore percent={10} text={event.description} />
               </Grid>
             </Grid>

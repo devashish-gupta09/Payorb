@@ -1,10 +1,12 @@
 import { makeStyles } from "@material-ui/core";
 
+import { appColors } from "../../../styles/colors";
+
 export const styles = makeStyles((theme) => ({
   container: {
     minHeight: "100vh",
     maxHeight: "fit-content",
-    padding: "8em 2em 10em 6em",
+    padding: "4em 2em 10em 6em",
     [theme.breakpoints.down("sm")]: {
       minHeight: "fit-content",
       padding: "2em 1em",
@@ -57,5 +59,14 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       marginTop: "-3em",
     },
+  },
+
+  description: {
+    color: appColors.grey,
+    paddingBottom: "1em",
+  },
+  paragraphContainer: {
+    paddingBottom: "4em",
+    textAlign: "justify",
   },
 }));

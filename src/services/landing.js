@@ -51,11 +51,15 @@ export const getFeaturesContent = async () => {
   } catch (err) {
     console.error(err.message);
     return {
+      topPara:
+        "The desire for having a more flexible and fulfilling career path has led to Freelancing & solo entrepreneurship supplementing and complementing existing 9-5 worklife. When people think of venturing out on their own, the thought of all the efforts required in 'managing the business' holds them back. Hours spent in planning your offering, client communications, promoting your offering, booking reminders, scheduling & rescheduling, managing payments, follow up for feedback & reviews, and the list goes on...",
+      bottomPara: "Don't let all these overwhelm & hold you back.",
       title: "What Payorb Offers You",
       sectionLogo:
         "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
       sectionTitle: "FEATURES",
-      description: "An easy to use online suite for all your business needs",
+      description:
+        "Our platform helps you transition into the freelance ecosystem at a faster pace by taking care of all basic operational barriers to starting something new: Online presence, bookings, payment, CRM all at one space.",
       features: [
         {
           title: "Event",
@@ -221,13 +225,6 @@ export const getGrowthContent = async () => {
           image:
             "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png",
         },
-
-        // {
-        //   description:
-        //     "Platform Usage Charges Reduced to 4.5% (+ taxes) on monthly transactions above ₹20000",
-        //   image:
-        //     "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png",
-        // },
       ],
     };
   }
