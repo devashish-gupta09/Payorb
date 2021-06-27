@@ -52,7 +52,11 @@ function ImageSelectAndCrop({
 
   const handleOnCrop = () => {
     try {
-      const imageEl = cropperRef.current.cropper.getCroppedCanvas().toDataURL();
+      const { height, width } = cropperRef.current.cropper.getData();
+
+      const imageEl = cropperRef.current.cropper
+        .getCroppedCanvas()
+        .toDataURL("image/jpeg", height * width > 1054000 ? 0.6 : 0.75);
       handleDataUrl(imageEl);
     } catch (err) {
       return;

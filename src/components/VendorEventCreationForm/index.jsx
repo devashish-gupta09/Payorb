@@ -52,7 +52,6 @@ import OneTimeDateSelector from "../OneTimeDateSelector";
 import PostEventCreationDialog from "../PostEventCreationDialog";
 import { EventCategoryField } from "./EventCategoryField";
 import { styles } from "./styles";
-
 const hash = createHash("sha256");
 hash.update(v4());
 
@@ -177,7 +176,7 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
 
             setLoader(false);
             showAlert("Event Updated");
-            await delay(500);
+            await delay(1000);
             router.reload();
           }
         } catch (err) {
