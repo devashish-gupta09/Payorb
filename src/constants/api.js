@@ -5,4 +5,5 @@ export const END_POINTS = {
   ORDER: "order",
   STATS: "stats",
   NOTIFICATION: "sendNotification",
+  REVIEW: "review"
 };

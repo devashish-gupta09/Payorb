@@ -32,3 +32,19 @@ export const getCustomersForVendor = async () => {
     throw err.response.data || err.message;
   }
 };
+
+export const getCustomerForReview = async (eventId, customerId) => {
+  try {
+    const res = await axios.get(`${API_URL}/${END_POINTS.CUSTOMER}`, {
+      params: {
+        eventId,
+        customerId,
+      },
+    });
+
+    console.log("REs", res);
+    return res;
+  } catch (err) {
+    throw err.response.data || err.message;
+  }
+};
