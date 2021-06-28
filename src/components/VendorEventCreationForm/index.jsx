@@ -52,6 +52,7 @@ import OneTimeDateSelector from "../OneTimeDateSelector";
 import PostEventCreationDialog from "../PostEventCreationDialog";
 import { EventCategoryField } from "./EventCategoryField";
 import { styles } from "./styles";
+
 const hash = createHash("sha256");
 hash.update(v4());
 
@@ -148,17 +149,13 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
           setLoader(true);
           delete req["otherField"];
           if (!edit) {
-            await createEvent({
-              event: req,
-            });
-
             // Lets upload image
             let url;
             if (croppedImg) {
               url = await handleImageUpload(req.link);
             }
 
-            await editEvent({
+            await createEvent({
               event: { ...req, photoUrl: url },
             });
 
@@ -190,6 +187,10 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
               showAlert(err.error, ALERT_TYPES.ERROR);
               return;
             }
+          } else if (err.error) {
+            showAlert(err.error), ALERT_TYPES.ERROR;
+          } else {
+            showAlert(err.message, ALERT_TYPES.ERROR);
           }
         }
       }
@@ -223,7 +224,7 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
       } catch (err) {
         // Don't do anything if an image upload is unsuccessful
         console.log("Error", err);
-        return err;
+        throw err;
       }
     },
     [croppedImg]

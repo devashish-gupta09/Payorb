@@ -1,51 +1,129 @@
-import { Avatar, Grid, makeStyles, Typography } from "@material-ui/core";
+import {
+  Avatar,
+  Button,
+  CircularProgress,
+  Grid,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
 
 import { AccountCircle } from "@material-ui/icons";
+import { useRouter } from "next/router";
 import React from "react";
 
 import { appColors } from "../../../styles/colors";
 import { globalStyles } from "../../../styles/globalStyles";
+import { ALERT_TYPES } from "../../constants/alerts";
+import useAlertSnackbar from "../../hooks/useAlertSnackbar";
+import { getReviewsForVendor } from "../../services/review";
 import { getTimeDiff } from "../../utils/dateTime";
 import DashboardCard from "../DashboardCard";
+import FallbackLoading from "../FallbackLoading";
+import ReadMore from "../ReadMore";
 
-function ProfileReviewSection({ reviews }) {
+function ProfileReviewSection(props) {
   const classes = styles();
   const globalClasses = globalStyles();
+  const [reviews, setReviews] = React.useState();
+  const [lastDoc, setLastDoc] = React.useState();
+  const [loadMore, setLoadMore] = React.useState();
+  const { Alert, showAlert } = useAlertSnackbar();
+  const router = useRouter();
 
-  return (
-    <DashboardCard rootClass={classes.root}>
-      <Grid container>
-        {reviews && reviews.length > 0 ? (
-          reviews.map((review, index) => {
-            return (
-              <Grid container className={classes.infoRow} key={index}>
-                <Grid container item xs={10}>
-                  <Avatar>
-                    <AccountCircle></AccountCircle>
-                  </Avatar>
-                  <Grid className={classes.infoRowRoot}>
-                    <Typography>{review.review}</Typography>
-                    <Typography
-                      className={`${globalClasses.bold500} ${classes.reviewerLabel}`}
-                    >
-                      {review.reviewer}
+  React.useEffect(() => {
+    if (router.isReady) {
+      getReviewsForVendor({ vendorId: router.query.vendorId, limit: "1" })
+        .then((res) => {
+          if (res.success) {
+            setReviews(res.data.reviews);
+            setLastDoc(res.data.lastReview);
+          } else {
+            showAlert(res.error);
+          }
+        })
+        .catch((err) => {
+          showAlert(err.error || err.message, ALERT_TYPES.ERROR);
+        });
+    }
+  }, [router]);
+
+  const handleLoadMore = async () => {
+    setLoadMore(true);
+    try {
+      if (lastDoc) {
+        const res = await getReviewsForVendor({
+          limit: "1",
+          startFrom: lastDoc,
+          vendorId: router.query.vendorId,
+        });
+        setReviews([...reviews, ...res.data.reviews]);
+        setLastDoc(res.data.lastReview);
+      } else {
+        showAlert("You are all caught up on reviews.");
+      }
+    } catch (err) {
+      showAlert(err.error || err.message, ALERT_TYPES.ERROR);
+    }
+    setLoadMore(false);
+  };
+
+  if (!reviews) {
+    return (
+      <>
+        {Alert()}
+        <FallbackLoading />
+      </>
+    );
+  }
+
+  if (reviews) {
+    return (
+      <DashboardCard rootClass={classes.root}>
+        {Alert()}
+        <Grid container style={{ maxHeight: "400px", overflowY: "auto" }}>
+          {reviews && reviews.length > 0 ? (
+            reviews.map((review, index) => {
+              return (
+                <Grid container className={classes.infoRow} key={index}>
+                  <Grid container item xs={10}>
+                    <Avatar>
+                      <AccountCircle></AccountCircle>
+                    </Avatar>
+                    <Grid className={classes.infoRowRoot}>
+                      <ReadMore percent={10} text={review.review}></ReadMore>
+                      <Typography
+                        className={`${globalClasses.bold500} ${classes.reviewerLabel}`}
+                      >
+                        {review.customerName} | {review.eventName}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Typography align="right" className={classes.reviewTime}>
+                      {getTimeDiff(review.createdAt)}
                     </Typography>
                   </Grid>
                 </Grid>
-                <Grid item xs={2}>
-                  <Typography align="right" className={classes.reviewTime}>
-                    {getTimeDiff(review.createdAt)}
-                  </Typography>
-                </Grid>
-              </Grid>
-            );
-          })
-        ) : (
-          <Typography>No Reviews</Typography>
-        )}
-      </Grid>
-    </DashboardCard>
-  );
+              );
+            })
+          ) : (
+            <Typography>No Reviews</Typography>
+          )}
+        </Grid>
+        <Grid container justify="flex-end">
+          <Button onClick={handleLoadMore} variant="outlined">
+            {loadMore ? (
+              <CircularProgress
+                size={"1.5em"}
+                style={{ marginRight: " 0.5em" }}
+              />
+            ) : null}{" "}
+            Load More
+          </Button>
+        </Grid>
+      </DashboardCard>
+    );
+  }
 }
 
 const styles = makeStyles((theme) => ({

@@ -30,7 +30,7 @@ function OneOnOneDateSelector({ formik, checkDisabled }) {
     });
 
     formik.setFieldValue("slotStartTimePerDay", momentDate.toISOString());
-    formik.setFieldVale("startDate", momentStartDate.toISOString());
+    formik.setFieldValue("startDate", momentStartDate.toISOString());
   };
 
   const handleEndSlotTimeChange = (date) => {
@@ -74,6 +74,8 @@ function OneOnOneDateSelector({ formik, checkDisabled }) {
             format="dd/MM/yyyy"
             value={formik.values.startDate}
             onChange={handleStartDate}
+            helperText={formik.touched.startDate && formik.errors.startDate}
+            error={formik.touched.startDate && Boolean(formik.errors.startDate)}
             disabled={checkDisabled()}
           />
         </Grid>

@@ -43,7 +43,7 @@ export const getCustomerForReview = async (eventId, customerId) => {
     });
 
     console.log("REs", res);
-    return res;
+    return res.data;
   } catch (err) {
     throw err.response.data || err.message;
   }

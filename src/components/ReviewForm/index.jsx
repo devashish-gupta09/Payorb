@@ -18,6 +18,7 @@ import { getCustomerForReview } from "../../services/customers";
 import { addReview } from "../../services/review";
 
 import { delay } from "../../utils/dateTime";
+import firebase from "../../utils/firebase";
 import { createReviewValidationSchema } from "../../validations/review";
 import ButtonCapsule from "../ButtonCapsule";
 
@@ -58,7 +59,18 @@ function ReviewForm() {
         delete tempObject.phoneNumber;
         delete tempObject.email;
 
-        const response = await addReview(tempObject);
+        let imageUrl = "";
+        if (croppedImg) {
+          imageUrl = await handleImageUpload(
+            tempObject.customerId,
+            tempObject.eventId
+          );
+        }
+
+        const response = await addReview({
+          ...tempObject,
+          imageUrl: imageUrl || "",
+        });
 
         if (response.success) {
           showAlert("Review Submitted");
@@ -70,11 +82,42 @@ function ReviewForm() {
           showAlert(response.error, ALERT_TYPES.ERROR);
         }
       } catch (err) {
-        showAlert(err.message);
+        console.log("Eror", err);
+        showAlert(err.error || err.message, ALERT_TYPES.ERROR);
       }
       setSubmitLoading(false);
     },
   });
+
+  const handleImageUpload = React.useCallback(
+    async (customerId, eventId) => {
+      const type = croppedImg.substring(
+        croppedImg.indexOf(":") + 1,
+        croppedImg.indexOf(";")
+      );
+
+      const ref = firebase.storage().ref();
+      const childRef = ref.child(
+        `/reviews/${eventId}-${customerId}.${type.split("/")[1]}`
+      );
+
+      try {
+        await childRef.putString(croppedImg, "data_url", {
+          cacheControl: "max-age=9999999999",
+          customMetadata: {
+            "Access-Control-Allow-Origin": "*",
+          },
+        });
+
+        return await childRef.getDownloadURL();
+      } catch (err) {
+        // Don't do anything if an image upload is unsuccessful
+        console.log("Error", err);
+        throw err;
+      }
+    },
+    [croppedImg]
+  );
 
   React.useEffect(() => {
     if (router.isReady) {
@@ -93,14 +136,12 @@ function ReviewForm() {
 
       getCustomerForReview(eventId, customerId)
         .then((res) => {
-          console.log("Tada", res);
           if (res.success) {
             formik.setValues({
               ...formik.values,
               ...res.data,
             });
           } else {
-            console.log(res);
             showAlert(res.error, ALERT_TYPES.ERROR);
             delay(1000).then(() => {
               router.push(PAGE_PATHS.LANDING);
@@ -109,8 +150,9 @@ function ReviewForm() {
           }
         })
         .catch(async (err) => {
+          console.log("Eror", err);
           showAlert(err.error || err.message, ALERT_TYPES.ERROR);
-          await delay(400);
+          await delay(1000);
           router.push(PAGE_PATHS.LANDING);
           return;
         });
@@ -153,6 +195,7 @@ function ReviewForm() {
             <Grid
               style={{
                 height: "100%",
+                width: "100%",
               }}
             >
               <FormControl variant="outlined">
@@ -190,7 +233,10 @@ function ReviewForm() {
             label="Write Review"
             variant="outlined"
             rows={6}
-            value={formik.values.eventName}
+            value={formik.values.review}
+            onChange={formik.handleChange}
+            error={formik.touched.review && Boolean(formik.errors.review)}
+            helperText={formik.touched.review && formik.errors.review}
           />
         </Grid>
 
@@ -198,6 +244,8 @@ function ReviewForm() {
           <ButtonCapsule
             showLoader={submitLoading}
             buttonStyle={classes.btnRootStyle}
+            disabled={submitLoading}
+            type="submit"
             text="Save"
           ></ButtonCapsule>
         </Grid>
@@ -211,6 +259,12 @@ const styles = makeStyles((theme) => ({
     padding: "0.5em 5em",
     fontWeight: "600",
     fontSize: "0.9em",
+  },
+  eventImage: {
+    width: "100%",
+    "&:hover": {
+      boxShadow: "0px 0px 7px 0px grey",
+    },
   },
 }));
 
