@@ -9,10 +9,11 @@ import { styles } from "./styles";
 const getClassName = (state, classes) => {
   if (state && state.details) {
     const details = getMessageForDetails(state.details);
-    return classes[details.type];
-  } else {
-    return "";
+    if (details) {
+      return classes[details.type];
+    }
   }
+  return "";
 };
 
 function VendorDashboardContainer({ children }) {
