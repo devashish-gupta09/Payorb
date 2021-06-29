@@ -59,13 +59,25 @@ function VendorDashboard() {
   React.useEffect(() => {
     if (router.isReady && userContext.user && userContext.user.uid) {
       const { vendorId } = router.query;
+
+      // if (vendorId === userContext.user.uid) {
       getUser({ vendorId })
         .then(async (res) => {
           if (res.success) {
             // allowing a user to head to the profile section even if no data exists in the firestore
             if (Object.keys(res.data).length > 0) {
-              setProfileData(res.data.vendor);
-              setLoading(false);
+              if (res.data.vendor.userUID === userContext.user.uid) {
+                setProfileData(res.data.vendor);
+                setLoading(false);
+              } else {
+                showAlert("Access Denied", ALERT_TYPES.ERROR);
+                delay(1000).then(async () => {
+                  showAlert("Redirecting to home page", ALERT_TYPES.ERROR);
+                  await delay(500);
+                  router.replace(PAGE_PATHS.LANDING);
+                });
+                return;
+              }
             } else {
               router.replace(buildVendorDashboardUrl(vendorId));
             }
@@ -85,6 +97,14 @@ function VendorDashboard() {
           await delay(750);
           router.replace(PAGE_PATHS.SIGNUP);
         });
+      // } else {
+      //   showAlert("Access Denied");
+      //   delay(1000).then(async () => {
+      //     showAlert("Redirecting to home page");
+      //     await delay(500);
+      //     router.replace(PAGE_PATHS.LANDING);
+      //   });
+      // }
     } else if (userContext.userState === "UNAUTHENTICATED") {
       router.replace(PAGE_PATHS.SIGNUP);
     }
