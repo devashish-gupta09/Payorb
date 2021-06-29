@@ -13,6 +13,7 @@ import copy from "clipboard-copy";
 import React from "react";
 
 import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
+import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 
 // import { PAGE_PATHS } from "../../constants/paths";
 import DashboardCard from "../DashboardCard";
@@ -22,9 +23,12 @@ import ReadMore from "../ReadMore";
 function PostEventCreationDialog(props) {
   const { event, eventImg } = props;
   const eventLink = `/event/${event.link}/register`;
+  const { Alert, showAlert } = useAlertSnackbar();
 
   const handleCopy = () => {
     // can use window.location.host -> If we need port number as well.
+    showAlert("Link copied");
+    console.log("Test");
     copy(`${document.domain}${eventLink}`);
   };
   const classes = styles();
@@ -39,6 +43,7 @@ function PostEventCreationDialog(props) {
       }}
     >
       <Grid className={classes.container}>
+        {Alert()}
         <Grid container spacing={2}>
           <Grid item sm={12} className={classes.fullWidth}>
             <DashboardCard rootClass={`${classes.posterRoot}`}>
@@ -103,12 +108,11 @@ function PostEventCreationDialog(props) {
                   justify="space-evenly"
                   className={classes.iconContainer}
                 >
-                  <Tooltip title="Copy link">
-                    <FilterNone
-                      className={classes.icon}
-                      onClick={handleCopy}
-                    ></FilterNone>
-                  </Tooltip>
+                  <Grid onClick={handleCopy}>
+                    <Tooltip title="Copy link">
+                      <FilterNone className={classes.icon}></FilterNone>
+                    </Tooltip>
+                  </Grid>
 
                   <Link target="_blank" href={eventLink}>
                     <Tooltip title="Open in browser">

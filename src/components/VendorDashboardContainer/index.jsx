@@ -18,9 +18,14 @@ const getClassName = (state, classes) => {
 
 function VendorDashboardContainer({ children }) {
   const classes = styles();
-  const { state } = useUserAuthDetails();
+  const context = useUserAuthDetails();
   return (
-    <Grid className={`${classes.container} ${getClassName(state, classes)}`}>
+    <Grid
+      className={`${classes.container} ${getClassName(
+        context?.state || "",
+        classes
+      )}`}
+    >
       {children}
     </Grid>
   );
