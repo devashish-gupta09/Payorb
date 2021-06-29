@@ -1,11 +1,28 @@
 import { Grid } from "@material-ui/core";
 import React from "react";
 
+import { useUserAuthDetails } from "../../context/UserAuthDetailContext";
+import { getMessageForDetails } from "../../utils/vendor";
+
 import { styles } from "./styles";
+
+const getClassName = (state, classes) => {
+  if (state && state.details) {
+    const details = getMessageForDetails(state.details);
+    return classes[details.type];
+  } else {
+    return "";
+  }
+};
 
 function VendorDashboardContainer({ children }) {
   const classes = styles();
-  return <Grid className={classes.container}>{children}</Grid>;
+  const { state } = useUserAuthDetails();
+  return (
+    <Grid className={`${classes.container} ${getClassName(state, classes)}`}>
+      {children}
+    </Grid>
+  );
 }
 
 export default VendorDashboardContainer;
