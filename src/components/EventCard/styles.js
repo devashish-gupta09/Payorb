@@ -71,6 +71,7 @@ export const styles = makeStyles((theme) => ({
   },
   editButton: {
     padding: "0.5em 3em",
+    marginRight: "0.3em",
   },
   dialogPaper: {
     maxWidth: "80vw",

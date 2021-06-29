@@ -6,28 +6,41 @@ import React from "react";
 import { PAGE_PATHS } from "../../constants/paths";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { FirebaseAuth } from "../AuthenticationContext";
+import CustomConfirmationDialog from "../CustomConfirmationDialog";
 
 function Logout(props) {
   const router = useRouter();
   const { Alert, showAlert } = useAlertSnackbar();
+  const [logoutDialog, setLogoutDialog] = React.useState(false);
+
+  const cancelLogout = () => {
+    setLogoutDialog(false);
+  };
 
   const handleLogout = () => {
     FirebaseAuth.Singleton()
       .signOut()
       .then(() => {
         showAlert("Logging out.");
+        router.replace(PAGE_PATHS.SIGNIN);
       })
       .catch((err) => {
         showAlert("Couldn't log you out. Please try again");
       });
-
-    router.replace(PAGE_PATHS.SIGNIN);
   };
+
+  const showConfirmDialog = () => setLogoutDialog(true);
 
   return (
     <>
       {Alert()}
-      <Button title="Logout" onClick={handleLogout} {...props}>
+      <CustomConfirmationDialog
+        onOk={handleLogout}
+        onCancel={cancelLogout}
+        show={logoutDialog}
+        title={"Logout"}
+      />
+      <Button title="Logout" onClick={showConfirmDialog} {...props}>
         <ExitToApp />
       </Button>
     </>

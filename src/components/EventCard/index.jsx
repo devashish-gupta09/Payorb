@@ -1,5 +1,12 @@
-import { Button, Dialog, Grid, Tooltip, Typography } from "@material-ui/core";
-import { Share } from "@material-ui/icons";
+import {
+  Button,
+  Dialog,
+  Grid,
+  IconButton,
+  Tooltip,
+  Typography,
+} from "@material-ui/core";
+import { DeleteRounded, Share } from "@material-ui/icons";
 import React from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
@@ -11,6 +18,7 @@ import { formatEventType, isEventPastDate } from "../../utils/events";
 import { isPaymentDetailsIncomplete } from "../../utils/vendor";
 import AuthAlertGrid from "../AuthAlertGrid";
 import ButtonCapsule from "../ButtonCapsule";
+import CustomConfirmationDialog from "../CustomConfirmationDialog";
 import DashboardCard from "../DashboardCard";
 import PostEventCreationDialog from "../PostEventCreationDialog";
 import ReadMore from "../ReadMore";
@@ -31,12 +39,13 @@ export function EventCardDate({ classes, startDate, endDate }) {
   );
 }
 
-function EventCard({ event }) {
+function EventCard({ event, handleEventDelete }) {
   const classes = styles();
   const globalClasses = globalStyles();
   const [edit, setEdit] = React.useState(false);
   const [shareDialog, setShareDialog] = React.useState(false);
   const { state } = useUserAuthDetails();
+  const [deleteBtn, setDelete] = React.useState(false);
 
   const handleEdit = () => {
     setEdit(true);
@@ -51,6 +60,19 @@ function EventCard({ event }) {
 
   const handleShareDialogClose = () => {
     setShareDialog(false);
+  };
+
+  const handleDeleteCancel = () => {
+    setDelete(false);
+  };
+
+  const enableDelete = () => {
+    setDelete(true);
+  };
+
+  const handleEventDeleteConfirmation = async () => {
+    await handleEventDelete(event.link);
+    setDelete(false);
   };
 
   return (
@@ -70,6 +92,13 @@ function EventCard({ event }) {
           />
         </Dialog>
       )}
+
+      <CustomConfirmationDialog
+        onOk={handleEventDeleteConfirmation}
+        onCancel={handleDeleteCancel}
+        show={deleteBtn}
+        title={"Event Deletion"}
+      />
 
       {shareDialog && (
         <PostEventCreationDialog
@@ -190,9 +219,17 @@ function EventCard({ event }) {
                       onClick={handleEdit}
                     ></ButtonCapsule>
                     <Tooltip title="Share">
-                      <Button onClick={handleShareDialog}>
+                      <IconButton onClick={handleShareDialog}>
                         <Share />
-                      </Button>
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete">
+                      <IconButton
+                        onClick={enableDelete}
+                        disabled={event.orders.length > 0}
+                      >
+                        <DeleteRounded />
+                      </IconButton>
                     </Tooltip>
                   </Grid>
                 ) : (
