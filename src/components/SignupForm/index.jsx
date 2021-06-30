@@ -7,6 +7,7 @@ import {
   Typography,
   Link as ALink,
   Tooltip,
+  CircularProgress,
 } from "@material-ui/core";
 import { Maximize, AccountCircle, Lock, MoreHoriz } from "@material-ui/icons";
 import { useFormik } from "formik";
@@ -65,6 +66,8 @@ function SignUpForm() {
   const [confirmationResult, setConfirmationResult] = React.useState();
   const [tAndC, setTAndC] = React.useState(false);
   const { Alert, showAlert } = useAlertSnackbar();
+  const [loading, setLoading] = React.useState();
+  const [otpLoading, setOtpLoading] = React.useState();
 
   const handleTAndCChange = () => {
     setTAndC(!tAndC);
@@ -83,7 +86,7 @@ function SignUpForm() {
     onSubmit: async (values) => {
       try {
         let user;
-
+        setLoading(true);
         // Create a account with firebase.
         if (usernameType === USERNAME_TYPE.PHONE_NUMBER) {
           if (!confirmationResult) {
@@ -120,6 +123,8 @@ function SignUpForm() {
         await firebaseInstance.signOut();
         showAlert(err.message, ALERT_TYPES.ERROR);
       }
+
+      setLoading(false);
     },
   });
 
@@ -152,12 +157,17 @@ function SignUpForm() {
     }
   };
 
-  const handleSendOTP = async () => {
+  const handleSendOTP = async (arg = "test") => {
     try {
+      setOtpLoading(true);
+
       window.recaptchaVerifier = new app.auth.RecaptchaVerifier(
         "sign-in-button",
         {
           size: "invisible",
+          callback: (response) => {
+            console.log("Recaptch callback", response);
+          },
         }
       );
 
@@ -177,11 +187,13 @@ function SignUpForm() {
           "reCAPTCHA has already been rendered in this element"
         )
       ) {
-        showAlert("OTP Sent");
+        showAlert("Please refresh your page.", ALERT_TYPES.ERROR);
       } else {
         showAlert("OTP could not be sent.", ALERT_TYPES.ERROR);
       }
     }
+
+    setOtpLoading(false);
   };
 
   const handleUsernameChange = (event) => {
@@ -239,9 +251,12 @@ function SignUpForm() {
               <Grid item xs={4} container justify="flex-end">
                 <ButtonCapsule
                   text="Get OTP"
+                  showLoader={otpLoading}
                   buttonStyle={classes.getOtp}
                   onClick={handleSendOTP}
+                  disabled={otpLoading || confirmationResultreca}
                 ></ButtonCapsule>
+
                 <div id="sign-in-button"></div>
               </Grid>
             )}
@@ -403,12 +418,20 @@ function SignUpForm() {
                     !formik.values.otp) ||
                   formik.errors.name ||
                   formik.errors.username ||
-                  !tAndC
+                  !tAndC ||
+                  loading
                 }
                 fullWidth
                 className={classes.signupButton}
                 type="submit"
               >
+                {loading ? (
+                  <CircularProgress
+                    size={"1.5em"}
+                    width="1em"
+                    style={{ marginRight: "1em", color: "white" }}
+                  ></CircularProgress>
+                ) : null}
                 Sign Up
               </Button>
             </div>
