@@ -17,7 +17,7 @@ function CustomConfirmationDialog({ onOk, onCancel, show, title }) {
       open={show}
     >
       <DialogTitle id="confirmation-dialog-title">{title}</DialogTitle>
-      <DialogContent style={{ height: "8em", width: "15em" }}>
+      <DialogContent style={{ height: "6.5em", width: "18em" }}>
         Are you sure ?
       </DialogContent>
       <DialogActions>
