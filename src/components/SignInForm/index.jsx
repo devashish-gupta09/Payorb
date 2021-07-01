@@ -1,5 +1,6 @@
 import {
   Button,
+  CircularProgress,
   FormControl,
   Grid,
   InputAdornment,
@@ -21,6 +22,7 @@ import { PAGE_PATHS } from "../../constants/paths";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import useFederatedAuth from "../../hooks/useFederatedAuth";
 import { getUser } from "../../services/auth";
+import { delay } from "../../utils/dateTime";
 import app from "../../utils/firebase";
 import { buildVendorDashboardUrl } from "../../utils/url";
 import { phoneRegExp } from "../../validations/signup";
@@ -37,6 +39,8 @@ function SigninForm() {
   const [confirmationResult, setConfirmationResult] = React.useState();
   const auth = FirebaseAuth.Singleton();
   const { Alert, showAlert } = useAlertSnackbar();
+  const [loading, setLoading] = React.useState();
+  const [otpLoading, setOtpLoading] = React.useState();
 
   const formik = useFormik({
     initialValues: {
@@ -46,6 +50,7 @@ function SigninForm() {
     },
     onSubmit: async (values) => {
       try {
+        setLoading(true);
         // Create a account with firebase.
         if (usernameType === USERNAME_TYPE.PHONE_NUMBER) {
           if (!confirmationResult) {
@@ -63,6 +68,34 @@ function SigninForm() {
           return;
         }
 
+        const result = await getUser({
+          vendorId: auth.getUser().uid,
+        });
+
+        console.log("result", result);
+
+        if (result?.success) {
+          const { vendor } = result.data;
+          router.replace(
+            buildVendorDashboardUrl(
+              vendor?.username || vendor?.userUID,
+              "/events"
+            )
+          );
+        } else {
+          const firebaseInstance = FirebaseAuth.Singleton();
+          await firebaseInstance.signOut();
+
+          if (result?.data?.error?.includes("Vendor does not exist")) {
+            showAlert(`User doesn't exist`);
+            delay(1000).then(() => {
+              router.push(PAGE_PATHS.SIGNUP);
+            });
+          }
+
+          throw new Error(result?.data?.error);
+        }
+
         if (auth.getUser()) {
           router.push(buildVendorDashboardUrl(auth.getUser().uid, "/events"));
         }
@@ -73,6 +106,7 @@ function SigninForm() {
         await firebaseInstance.signOut();
         showAlert(err.message, ALERT_TYPES.ERROR);
       }
+      setLoading(false);
     },
   });
 
@@ -85,14 +119,32 @@ function SigninForm() {
       const { userInfo, idToken } = await fedSignUp(provider);
       if (userInfo && idToken) {
         const result = await getUser({
-          vendorId: userInfo.uid || userInfo.user.uid,
+          vendorId: userInfo?.uid || userInfo?.user?.uid,
         });
 
-        const { vendor } = result.data;
+        console.log(result);
+        if (result.success) {
+          const { vendor } = result.data;
 
-        router.replace(
-          buildVendorDashboardUrl(vendor.username || vendor.userUID, "/events")
-        );
+          router.replace(
+            buildVendorDashboardUrl(
+              vendor?.username || vendor?.userUID,
+              "/events"
+            )
+          );
+        } else {
+          const firebaseInstance = FirebaseAuth.Singleton();
+          await firebaseInstance.signOut();
+
+          if (result?.data?.error?.includes("Vendor does not exist")) {
+            showAlert(`User doesn't exist`);
+            delay(1000).then(() => {
+              router.push(PAGE_PATHS.SIGNUP);
+            });
+          }
+
+          throw new Error(result?.data?.error);
+        }
       } else {
         throw "Not able to sign in the user using a federated source.";
       }
@@ -114,6 +166,7 @@ function SigninForm() {
   };
 
   const handleSendOTP = async () => {
+    setOtpLoading(true);
     window.recaptchaVerifier = new app.auth.RecaptchaVerifier(
       "sign-in-button",
       {
@@ -142,6 +195,8 @@ function SigninForm() {
         showAlert(`OTP could not be sent. ${err.message}`, ALERT_TYPES.ERROR);
       }
     }
+
+    setOtpLoading(false);
   };
 
   return (
@@ -186,9 +241,11 @@ function SigninForm() {
             {usernameType === USERNAME_TYPE.PHONE_NUMBER && (
               <Grid item xs={4} container justify="flex-end">
                 <ButtonCapsule
-                  text="Get OTP"
+                  showLoader={otpLoading}
+                  text={otpLoading ? "" : "Get OTP"}
                   buttonStyle={classes.getOtp}
                   onClick={handleSendOTP}
+                  disabled={otpLoading || confirmationResult}
                 ></ButtonCapsule>
                 <div id="sign-in-button"></div>
               </Grid>
@@ -261,9 +318,17 @@ function SigninForm() {
               (usernameType === USERNAME_TYPE.EMAIL &&
                 !formik.values.password) ||
               (usernameType === USERNAME_TYPE.PHONE_NUMBER &&
-                !formik.values.otp)
+                !formik.values.otp) ||
+              loading
             }
           >
+            {loading ? (
+              <CircularProgress
+                size={"1.5em"}
+                width="1em"
+                style={{ marginRight: "1em", color: "white" }}
+              ></CircularProgress>
+            ) : null}{" "}
             Sign In
           </Button>
           <Typography align="center" className={classes.orText}>

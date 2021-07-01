@@ -24,6 +24,7 @@ import { PAGE_PATHS } from "../../constants/paths";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import useFederatedAuth from "../../hooks/useFederatedAuth";
 import { addUser } from "../../services/auth";
+import { delay } from "../../utils/dateTime";
 import app from "../../utils/firebase";
 import { buildVendorDashboardUrl } from "../../utils/url";
 
@@ -99,7 +100,7 @@ function SignUpForm() {
         } else if (usernameType === USERNAME_TYPE.EMAIL) {
           user = await app
             .auth()
-            .createUserWithEmailAndPassword(values.username, values.password);
+            .createUserWithEmailAndPassword(values?.username, values?.password);
         }
 
         if (user) {
@@ -114,14 +115,20 @@ function SignUpForm() {
 
           router.replace(
             buildVendorDashboardUrl(
-              vendor.data.username || user?.uid || user.user.uid
+              vendor?.data?.username || user?.uid || user?.user?.uid
             )
           );
+
+          await delay(500);
         }
       } catch (err) {
+        console.log(err);
         const firebaseInstance = FirebaseAuth.Singleton();
         await firebaseInstance.signOut();
-        showAlert(err.message, ALERT_TYPES.ERROR);
+        showAlert(
+          err?.response?.data?.error || err?.error || err?.message,
+          ALERT_TYPES.ERROR
+        );
       }
 
       setLoading(false);
@@ -138,10 +145,11 @@ function SignUpForm() {
 
       if (userInfo && idToken) {
         const res = await handleUserAddition(userInfo, idToken);
+        console.log(res);
         if (res) {
           router.push(
             buildVendorDashboardUrl(
-              res.data.username || userInfo?.uid || userInfo.user.uid
+              res?.data?.username || userInfo?.uid || userInfo?.user?.uid
             )
           );
         } else {
@@ -157,7 +165,7 @@ function SignUpForm() {
     }
   };
 
-  const handleSendOTP = async (arg = "test") => {
+  const handleSendOTP = async () => {
     try {
       setOtpLoading(true);
 
@@ -165,9 +173,7 @@ function SignUpForm() {
         "sign-in-button",
         {
           size: "invisible",
-          callback: (response) => {
-            console.log("Recaptch callback", response);
-          },
+          callback: (response) => {},
         }
       );
 
@@ -250,11 +256,11 @@ function SignUpForm() {
             {usernameType === USERNAME_TYPE.PHONE_NUMBER && (
               <Grid item xs={4} container justify="flex-end">
                 <ButtonCapsule
-                  text="Get OTP"
+                  text={otpLoading ? "" : "Get OTP"}
                   showLoader={otpLoading}
                   buttonStyle={classes.getOtp}
                   onClick={handleSendOTP}
-                  disabled={otpLoading || confirmationResultreca}
+                  disabled={otpLoading || confirmationResult}
                 ></ButtonCapsule>
 
                 <div id="sign-in-button"></div>
