@@ -12,7 +12,9 @@ import React from "react";
 
 import Skeleton from "react-loading-skeleton";
 
-import { getEventsVendorDashboard } from "../../services/events";
+import useAlertSnackbar from "../../hooks/useAlertSnackbar";
+
+import { deleteEvent, getEventsVendorDashboard } from "../../services/events";
 import { delay } from "../../utils/dateTime";
 import { buildVendorDashboardUrl } from "../../utils/url";
 import ButtonCapsule from "../ButtonCapsule";
@@ -42,6 +44,8 @@ function VendorEvents() {
     );
   };
 
+  const { Alert, showAlert } = useAlertSnackbar();
+
   const toggleView = () => {
     setListView(!listView);
   };
@@ -66,12 +70,32 @@ function VendorEvents() {
     }
   };
 
+  const handleEventDelete = React.useCallback(
+    async (eventId) => {
+      try {
+        const res = await deleteEvent(eventId);
+        if (res.success) {
+          showAlert("Event deleted.");
+          await delay(300);
+          setEvents([...events.filter((event) => event.link !== eventId)]);
+        }
+      } catch (err) {
+        showAlert(err?.error || err?.message);
+      }
+    },
+    [events]
+  );
+
   React.useEffect(() => {
     getEventsVendorDashboard(eventsParams)
       .then(async (res) => {
-        if (res.data) {
-          await delay(50);
-          setEvents(res.data);
+        if (res.success) {
+          if (res.data) {
+            await delay(50);
+            setEvents(res.data);
+          }
+        } else {
+          setEvents([]);
         }
       })
       .catch((err) => {
@@ -81,6 +105,7 @@ function VendorEvents() {
 
   return (
     <Grid className={classes.root}>
+      {Alert()}
       <Grid container justify="flex-end" style={{ padding: "1em" }}>
         <Button onClick={toggleView}>
           {!listView ? <List /> : <DateRange />}
@@ -97,7 +122,10 @@ function VendorEvents() {
             {events.length > 0 ? (
               <>
                 <Grid className={classes.events}>
-                  <EventsViewList events={events} />
+                  <EventsViewList
+                    events={events}
+                    handleEventDelete={handleEventDelete}
+                  />
                 </Grid>
 
                 <Grid

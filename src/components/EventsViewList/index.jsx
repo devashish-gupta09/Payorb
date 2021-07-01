@@ -3,14 +3,15 @@ import React from "react";
 
 import EventCard from "../EventCard";
 
-function EventsViewList({ events }) {
+function EventsViewList({ events, handleEventDelete }) {
   const classes = styles();
+
   return (
     <Grid container className={classes.root} spacing={4}>
       {events.map((event, index) => {
         return (
           <Grid key={index} item sm={12}>
-            <EventCard event={event} />
+            <EventCard event={event} handleEventDelete={handleEventDelete} />
           </Grid>
         );
       })}

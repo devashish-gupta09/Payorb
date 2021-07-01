@@ -95,3 +95,20 @@ export const getEventsBetween = async (params) => {
     throw err.response.data || err.message;
   }
 };
+
+export const deleteEvent = async (eventId) => {
+  try {
+    const res = await axios.delete(
+      `${API_URL}/${END_POINTS.EVENTS}`,
+
+      {
+        headers: await getAuthHeader(),
+        params: { link: eventId },
+      }
+    );
+
+    return res.data;
+  } catch (err) {
+    return err.response.data || err.message;
+  }
+};
