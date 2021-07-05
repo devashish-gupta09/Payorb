@@ -221,7 +221,7 @@ export const getGrowthContent = async () => {
 
         {
           description:
-            "Platform Usage Charges 6% (+ taxes), reduced to 4.5% (+ taxes) on monthly transactions above ₹20000",
+            "Platform Usage Charges 6% (+ taxes), reduced to 4.5% (+ taxes) for early users",
           image:
             "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png",
         },
