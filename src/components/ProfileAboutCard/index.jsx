@@ -77,12 +77,14 @@ function Details(props) {
               textFieldProps={{
                 fullWidth: true,
                 id: "about",
-                label: "About",
+                label: "Please add some information about yourself",
                 value: formik.values.about,
                 variant: "outlined",
                 margin: "normal",
                 onChange: formik.handleChange,
                 onBlur: formik.onBlur,
+                multiline: true,
+                rows: "4",
               }}
             />
           </Grid>
