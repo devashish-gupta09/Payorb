@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import React from "react";
 
 import { PAGE_PATHS } from "../../constants/paths";
+import { ABOUT_CLICK, event } from "../../utils/ga";
 
 import CustomHeader from "../Header";
 import LandingHeaderProfile from "../LandingHeaderProfile";
@@ -66,7 +67,12 @@ function LandingHeader() {
             justify="space-evenly"
           >
             <Link href={PAGE_PATHS.ABOUT}>
-              <Button className={classes.buttonSpacing}>About Us</Button>
+              <Button
+                onClick={() => event(ABOUT_CLICK)}
+                className={classes.buttonSpacing}
+              >
+                About Us
+              </Button>
             </Link>
 
             <LandingHeaderProfile />

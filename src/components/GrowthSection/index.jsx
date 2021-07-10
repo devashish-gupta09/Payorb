@@ -2,6 +2,7 @@ import { Grid, Link } from "@material-ui/core";
 import React from "react";
 
 import { PAGE_PATHS } from "../../constants/paths";
+import { event, SIGNUP_CLICK } from "../../utils/ga";
 
 import ButtonCapsule from "../ButtonCapsule";
 import LandingSectionContent from "../LandingSectionContent";
@@ -35,7 +36,10 @@ function GrowthSection({ content }) {
       </Grid>
       <Grid container justify={"center"} className={classes.bottomButton}>
         <Link href={PAGE_PATHS.SIGNUP}>
-          <ButtonCapsule text={"Get Started"} />
+          <ButtonCapsule
+            onClick={() => event(SIGNUP_CLICK, "footer")}
+            text={"Get Started"}
+          />
         </Link>
       </Grid>
     </Grid>

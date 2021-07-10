@@ -2,6 +2,8 @@ import { Button, Grid, Typography } from "@material-ui/core";
 import Link from "next/link";
 import React from "react";
 
+import { event, SIGNUP_CLICK } from "../../utils/ga";
+
 import LandingCarousel from "../LandingCarousel";
 import { styles } from "./styles";
 
@@ -37,7 +39,12 @@ function HomeSection({ content }) {
         </Typography>
         <Grid container>
           <Link href={"/signup"}>
-            <Button className={classes.capsuleButton}>Get Started</Button>
+            <Button
+              className={classes.capsuleButton}
+              onClick={() => event(SIGNUP_CLICK, "header")}
+            >
+              Get Started
+            </Button>
           </Link>
         </Grid>
       </Grid>
