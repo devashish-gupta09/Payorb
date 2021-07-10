@@ -26,6 +26,7 @@ import {
 import { delay } from "../../utils/dateTime";
 import app from "../../utils/firebase";
 import { getRzpAmountFormat } from "../../utils/payments";
+import { FirebaseAuth } from "../AuthenticationContext";
 import ButtonCapsule from "../ButtonCapsule";
 import PaymentSuccess from "../PaymentSuccess";
 
@@ -59,6 +60,7 @@ function EventBookingForm({
   const [orderId, setOrderId] = React.useState();
   const [paymentProgLoader, setPaymentProgLoader] = React.useState(false);
   const [tAndC, setTAndC] = React.useState(false);
+  const auth = FirebaseAuth.Singleton();
 
   const handleTAndCChange = () => {
     setTAndC(!tAndC);
@@ -207,11 +209,15 @@ function EventBookingForm({
           } else {
             throw new Error("Could not make payment");
           }
+
+          await auth.signOut();
         } catch (err) {
           showAlert(
             "Error booking your event. Please contact suport",
             ALERT_TYPES.ERROR
           );
+
+          await auth.signOut();
         }
       },
       prefill: {

@@ -2,9 +2,12 @@ import {
   FormControl,
   FormLabel,
   Grid,
+  InputAdornment,
   makeStyles,
+  TextField,
   useTheme,
 } from "@material-ui/core";
+import { Maximize, MoreHoriz } from "@material-ui/icons";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
 import React from "react";
@@ -19,7 +22,9 @@ import { addReview } from "../../services/review";
 
 import { delay } from "../../utils/dateTime";
 import firebase from "../../utils/firebase";
+import app from "../../utils/firebase";
 import { createReviewValidationSchema } from "../../validations/review";
+import { FirebaseAuth } from "../AuthenticationContext";
 import ButtonCapsule from "../ButtonCapsule";
 
 import CustomTextField from "../CustomTextField";
@@ -33,6 +38,9 @@ function ReviewForm() {
   const [submitLoading, setSubmitLoading] = React.useState(false);
   const router = useRouter();
   const { Alert, showAlert } = useAlertSnackbar();
+  const [confirmationResult, setConfirmationResult] = React.useState();
+  const [otpLoading, setOtpLoading] = React.useState();
+  const auth = FirebaseAuth.Singleton();
 
   const handleCroppedImage = React.useCallback((data) => {
     setCroppedImage(data);
@@ -48,6 +56,7 @@ function ReviewForm() {
       eventName: "",
       eventId: "",
       vendorId: "",
+      otp: "",
     },
     validationSchema: createReviewValidationSchema,
     validateOnBlur: true,
@@ -58,6 +67,13 @@ function ReviewForm() {
 
         delete tempObject.phoneNumber;
         delete tempObject.email;
+        delete tempObject.otp;
+
+        if (!formik.values.otp) {
+          showAlert("Please enter the otp");
+        }
+
+        await confirmationResult.confirm(formik.values.otp);
 
         let imageUrl = "";
         if (croppedImg) {
@@ -85,6 +101,8 @@ function ReviewForm() {
         console.log("Eror", err);
         showAlert(err.error || err.message, ALERT_TYPES.ERROR);
       }
+
+      await auth.signOut();
       setSubmitLoading(false);
     },
   });
@@ -118,6 +136,43 @@ function ReviewForm() {
     },
     [croppedImg]
   );
+
+  const handleSendOTP = async () => {
+    setOtpLoading(true);
+    window.recaptchaVerifier = new app.auth.RecaptchaVerifier(
+      "sign-in-button",
+      {
+        size: "invisible",
+      }
+    );
+    const appVerifier = window.recaptchaVerifier;
+
+    if (!formik.values.phoneNumber) {
+      showAlert("Phone number not present. Please refresh the page.");
+    }
+
+    try {
+      const response = await app
+        .auth()
+        .signInWithPhoneNumber(formik.values.phoneNumber, appVerifier);
+      showAlert("OTP Sent");
+      setConfirmationResult(response);
+    } catch (err) {
+      if (
+        err &&
+        err.message &&
+        err.message.includes(
+          "reCAPTCHA has already been rendered in this element"
+        )
+      ) {
+        showAlert("OTP Sent");
+      } else {
+        showAlert(`OTP could not be sent. ${err.message}`, ALERT_TYPES.ERROR);
+      }
+    }
+
+    setOtpLoading(false);
+  };
 
   React.useEffect(() => {
     if (router.isReady) {
@@ -173,14 +228,56 @@ function ReviewForm() {
       <Grid container spacing={3}>
         <Grid item sm={12} container spacing={3}>
           <Grid item sm={6}>
-            <CustomTextField
+            <Grid container spacing={2}>
+              <Grid item xs={8}>
+                <CustomTextField
+                  fullWidth
+                  id="phoneNumber"
+                  label="Phone Number"
+                  variant="outlined"
+                  value={formik.values.phoneNumber}
+                  disabled
+                  style={{ marginBottom: theme.spacing(3) }}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <ButtonCapsule
+                  showLoader={otpLoading}
+                  text={otpLoading ? "" : "Get OTP"}
+                  buttonStyle={classes.getOtp}
+                  onClick={handleSendOTP}
+                  disabled={otpLoading || confirmationResult}
+                ></ButtonCapsule>
+                <div id="sign-in-button"></div>
+              </Grid>
+            </Grid>
+
+            <TextField
               fullWidth
-              id="phoneNumber"
-              label="Phone Number"
+              className={classes.textInput}
+              id="otp"
+              label="OTP"
               variant="outlined"
-              value={formik.values.phoneNumber}
-              disabled
+              autoComplete={"off"}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.otp}
               style={{ marginBottom: theme.spacing(3) }}
+              type="password"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Grid style={{ display: "flex", flexDirection: "column" }}>
+                      <MoreHoriz
+                        style={{
+                          color: "rgba(189, 189, 189, 1",
+                        }}
+                      />
+                      <Maximize style={{ color: "rgba(189, 189, 189, 1" }} />
+                    </Grid>
+                  </InputAdornment>
+                ),
+              }}
             />
             <CustomTextField
               fullWidth
@@ -264,6 +361,12 @@ const styles = makeStyles((theme) => ({
     width: "100%",
     "&:hover": {
       boxShadow: "0px 0px 7px 0px grey",
+    },
+  },
+  getOtp: {
+    width: "80%",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
     },
   },
 }));
