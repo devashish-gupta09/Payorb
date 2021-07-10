@@ -20,6 +20,22 @@ import DashboardCard from "../DashboardCard";
 import DateMonth from "../DateMonth";
 import ReadMore from "../ReadMore";
 
+const loadFacebook = () => {
+  return new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = "https://connect.facebook.net/en_US/sdk.js";
+    document.body.appendChild(script);
+
+    script.onload = () => {
+      resolve(true);
+    };
+
+    script.onerror = () => {
+      resolve(false);
+    };
+  });
+};
+
 function PostEventCreationDialog(props) {
   const { event, eventImg } = props;
   const eventLink = `/event/${event.link}/register`;
@@ -29,7 +45,29 @@ function PostEventCreationDialog(props) {
     // can use window.location.host -> If we need port number as well.
     showAlert("Link copied");
     console.log("Test");
-    copy(`${document.domain}${eventLink}`);
+    copy(`${location.host}${eventLink}`);
+  };
+
+  const handleFacebookShare = async () => {
+    const res = await loadFacebook();
+
+    window.FB.init({
+      appId: "906148326867108",
+      autoLogAppEvents: true,
+      xfbml: true,
+      version: "v11.0",
+    });
+
+    alert(location.hostname);
+    window.FB.ui(
+      {
+        display: "popup",
+        method: "share",
+        href: `${location.host}${eventLink}`,
+        hashtab: "#payorb",
+      },
+      function (response) {}
+    );
   };
   const classes = styles();
   return (
@@ -77,6 +115,31 @@ function PostEventCreationDialog(props) {
                     startDate={event.startDate}
                     endDate={event.endDate}
                   />
+                </Grid>
+              </Grid>
+
+              <Grid container justify="center" style={{ width: "100%" }}>
+                <Grid item sm={12} style={{ marginBottom: "0.5em" }}>
+                  <Typography variant={"h5"} align="center">
+                    Share
+                  </Typography>
+                </Grid>
+                <Grid>
+                  <Grid
+                    onClick={handleFacebookShare}
+                    style={{
+                      borderRadius: "50%",
+                      background: "#ABC6FF",
+                      height: "3em",
+                      width: "3em",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      padding: "1em",
+                    }}
+                  >
+                    <img src="/assets/facebook-xl.png" />
+                  </Grid>
                 </Grid>
               </Grid>
             </DashboardCard>
@@ -146,6 +209,7 @@ const styles = makeStyles((theme) => ({
   posterRoot: {
     padding: 0,
     borderRadius: "5px",
+    paddingBottom: "1em",
   },
   eventLinkContainer: {
     height: "fit-content",
