@@ -69,8 +69,14 @@ function ReviewForm() {
         delete tempObject.email;
         delete tempObject.otp;
 
+        if (!confirmationResult) {
+          throw new Error("Please click on Get Otp");
+        }
+
         if (!formik.values.otp) {
-          showAlert("Please enter the otp");
+          throw new Error(
+            "Please enter the otp received on registered mobile number"
+          );
         }
 
         await confirmationResult.confirm(formik.values.otp);
@@ -285,8 +291,20 @@ function ReviewForm() {
               label="Email"
               variant="outlined"
               value={formik.values.email}
+              style={{ marginBottom: theme.spacing(3) }}
               disabled
             />
+
+            <Grid item sm={12} container>
+              <CustomTextField
+                fullWidth
+                id="eventName"
+                label="Event Name"
+                variant="outlined"
+                value={formik.values.eventName}
+                disabled
+              />
+            </Grid>
           </Grid>
           <Grid item sm={6}>
             <Grid
@@ -309,17 +327,6 @@ function ReviewForm() {
               </FormControl>
             </Grid>
           </Grid>
-        </Grid>
-
-        <Grid item sm={12} container>
-          <CustomTextField
-            fullWidth
-            id="eventName"
-            label="Event Name"
-            variant="outlined"
-            value={formik.values.eventName}
-            disabled
-          />
         </Grid>
 
         <Grid item sm={12} container>
