@@ -142,27 +142,26 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
             values.startDate = momentStartDate.toISOString();
           }
 
-          const formatedLink = removeStringAndAddSeperator(values.link, "-");
-
-          formik.setFieldValue("link", formatedLink);
-
           const req = {
             ...values,
             category: values.otherField || values.category,
-            link: formatedLink,
           };
 
           setLoader(true);
           delete req["otherField"];
           if (!edit) {
             // Lets upload image
+
+            const formatedLink = removeStringAndAddSeperator(values.link, "-");
+            formik.setFieldValue("link", formatedLink);
+
             let url;
             if (croppedImg) {
               url = await handleImageUpload(req.link);
             }
 
             await createEvent({
-              event: { ...req, photoUrl: url },
+              event: { ...req, photoUrl: url, link: formatedLink },
             });
 
             setLoader(false);
