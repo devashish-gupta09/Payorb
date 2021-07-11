@@ -118,11 +118,24 @@ function PostEventCreationDialog(props) {
 
               <Grid container justify="center" style={{ width: "100%" }}>
                 <Grid item sm={12} style={{ marginBottom: "0.5em" }}>
-                  <Typography variant={"h5"} align="center">
+                  <Typography
+                    variant={"h5"}
+                    align="center"
+                    style={{ width: "100%" }}
+                  >
                     Share
                   </Typography>
                 </Grid>
-                <Grid>
+                <Grid
+                  item
+                  sm={12}
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <Grid
                     onClick={handleFacebookShare}
                     style={{
