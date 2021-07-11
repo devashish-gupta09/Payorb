@@ -44,7 +44,6 @@ function PostEventCreationDialog(props) {
   const handleCopy = () => {
     // can use window.location.host -> If we need port number as well.
     showAlert("Link copied");
-    console.log("Test");
     copy(`${location.host}${eventLink}`);
   };
 
@@ -58,7 +57,6 @@ function PostEventCreationDialog(props) {
       version: "v11.0",
     });
 
-    alert(location.hostname);
     window.FB.ui(
       {
         display: "popup",

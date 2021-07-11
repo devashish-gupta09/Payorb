@@ -41,6 +41,7 @@ import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { createEvent, editEvent } from "../../services/events";
 import { delay, getDateForTime } from "../../utils/dateTime";
 import firebase from "../../utils/firebase";
+import { removeStringAndAddSeperator } from "../../utils/strings";
 import { buildVendorDashboardUrl, getVendorIdFromUrl } from "../../utils/url";
 import { createEventValidationSchema } from "../../validations/events";
 import { FirebaseAuth } from "../AuthenticationContext";
@@ -141,9 +142,14 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
             values.startDate = momentStartDate.toISOString();
           }
 
+          const formatedLink = removeStringAndAddSeperator(values.link, "-");
+
+          formik.setFieldValue("link", formatedLink);
+
           const req = {
             ...values,
             category: values.otherField || values.category,
+            link: formatedLink,
           };
 
           setLoader(true);
@@ -177,7 +183,7 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
             router.reload();
           }
         } catch (err) {
-          if (err.errors.length > 0) {
+          if (err?.errors?.length > 0) {
             setLoader(false);
 
             if (Object.keys(err.errors[0]).length) {
@@ -193,6 +199,8 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
             showAlert(err.message, ALERT_TYPES.ERROR);
           }
         }
+
+        setLoader(false);
       }
     },
   });
