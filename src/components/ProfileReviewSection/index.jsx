@@ -74,7 +74,7 @@ function ProfileReviewSection(props) {
           alignItems="center"
           style={{ padding: "0.5em" }}
         >
-          <CircularProgress size={"1.5em"} style={{ color: "white" }} />
+          <CircularProgress size={"1.5em"} style={{ color: "#8eeceb" }} />
         </Grid>
       </DashboardCard>
     );
@@ -150,7 +150,7 @@ const styles = makeStyles((theme) => ({
   infoRow: {
     padding: "1em 0",
     width: "100%",
-    borderBottom: "2px solid",
+    borderBottom: "1.5px solid grey",
     borderColor: "grey",
     [theme.breakpoints.down("sm")]: {
       padding: "1em",
