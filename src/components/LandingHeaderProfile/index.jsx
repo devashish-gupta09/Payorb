@@ -48,7 +48,44 @@ function LandingHeaderProfile({ handleLinkClick }) {
   }, [userContext]);
 
   if (loading && userContext.userState !== "UNAUTHENTICATED") {
-    return null;
+    return (
+      <>
+        {/* {matches ? } */}
+
+        {matches ? (
+          <li
+            onClick={() => {
+              handleLinkClick(PAGE_PATHS.SIGNIN);
+            }}
+            className={classes.list}
+          >
+            Sign In
+          </li>
+        ) : (
+          <Link href={PAGE_PATHS.SIGNIN}>
+            <Button className={classes.buttonSpacing}>Sign In</Button>
+          </Link>
+        )}
+
+        {matches ? (
+          <li
+            onClick={() => {
+              handleLinkClick(PAGE_PATHS.SIGNUP);
+            }}
+            className={classes.list}
+          >
+            Sign Up for Vendor
+          </li>
+        ) : (
+          <Link href={PAGE_PATHS.SIGNUP}>
+            <ButtonCapsule
+              buttonStyle={classes.btnCapSpacing}
+              text="Sign Up For Vendor"
+            ></ButtonCapsule>
+          </Link>
+        )}
+      </>
+    );
   }
 
   if (vendor && vendor.userUID) {
