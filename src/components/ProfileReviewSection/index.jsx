@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Button,
   CircularProgress,
   Grid,
@@ -7,7 +6,6 @@ import {
   Typography,
 } from "@material-ui/core";
 
-import { AccountCircle } from "@material-ui/icons";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -18,7 +16,6 @@ import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { getReviewsForVendor } from "../../services/review";
 import { getTimeDiff } from "../../utils/dateTime";
 import DashboardCard from "../DashboardCard";
-import FallbackLoading from "../FallbackLoading";
 import ReadMore from "../ReadMore";
 
 function ProfileReviewSection(props) {
@@ -32,7 +29,7 @@ function ProfileReviewSection(props) {
 
   React.useEffect(() => {
     if (router.isReady) {
-      getReviewsForVendor({ vendorId: router.query.vendorId, limit: "1" })
+      getReviewsForVendor({ vendorId: router.query.vendorId, limit: "5" })
         .then((res) => {
           if (res.success) {
             setReviews(res.data.reviews);
@@ -69,10 +66,17 @@ function ProfileReviewSection(props) {
 
   if (!reviews) {
     return (
-      <>
+      <DashboardCard rootClass={classes.root}>
         {Alert()}
-        <FallbackLoading />
-      </>
+        <Grid
+          container
+          justify="center"
+          alignItems="center"
+          style={{ padding: "0.5em" }}
+        >
+          <CircularProgress size={"1.5em"} style={{ color: "white" }} />
+        </Grid>
+      </DashboardCard>
     );
   }
 
@@ -86,15 +90,18 @@ function ProfileReviewSection(props) {
               return (
                 <Grid container className={classes.infoRow} key={index}>
                   <Grid container item xs={10}>
-                    <Avatar>
-                      <AccountCircle></AccountCircle>
-                    </Avatar>
                     <Grid className={classes.infoRowRoot}>
                       <ReadMore percent={10} text={review.review}></ReadMore>
                       <Typography
                         className={`${globalClasses.bold500} ${classes.reviewerLabel}`}
                       >
-                        {review.customerName} | {review.eventName}
+                        {review.customerName}
+                      </Typography>
+
+                      <Typography
+                        className={`${globalClasses.bold500} ${classes.reviewerLabel}`}
+                      >
+                        {review.eventName}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -110,16 +117,18 @@ function ProfileReviewSection(props) {
             <Typography>No Reviews</Typography>
           )}
         </Grid>
-        <Grid container justify="flex-end">
-          <Button onClick={handleLoadMore} variant="outlined">
-            {loadMore ? (
-              <CircularProgress
-                size={"1.5em"}
-                style={{ marginRight: " 0.5em" }}
-              />
-            ) : null}{" "}
-            Load More
-          </Button>
+        <Grid container justify="flex-end" style={{ paddingRight: "0.5em" }}>
+          {reviews.length > 4 ? (
+            <Button onClick={handleLoadMore} variant="outlined">
+              {loadMore ? (
+                <CircularProgress
+                  size={"1.5em"}
+                  style={{ marginRight: "0.5em" }}
+                />
+              ) : null}{" "}
+              Load More
+            </Button>
+          ) : null}
         </Grid>
       </DashboardCard>
     );
@@ -141,8 +150,8 @@ const styles = makeStyles((theme) => ({
   infoRow: {
     padding: "1em 0",
     width: "100%",
-    borderBottom: "2px",
-    borderColor: "black",
+    borderBottom: "2px solid",
+    borderColor: "grey",
     [theme.breakpoints.down("sm")]: {
       padding: "1em",
       fontSize: "0.75em",
