@@ -314,8 +314,6 @@ function ReviewForm() {
               }}
             >
               <FormControl variant="outlined">
-                <FormLabel>Upload Event Cover Photo</FormLabel>
-
                 <ImageEventUpload
                   croppedImg={croppedImg}
                   handleCroppedImage={handleCroppedImage}
