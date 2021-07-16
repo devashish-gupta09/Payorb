@@ -28,40 +28,33 @@ export default class MyDocument extends Document {
           <meta name="msapplication-tap-highlight" content="no" />
           <meta name="theme-color" content="#000000" />
 
+          <link rel="apple-touch-icon" href="/assets/logo-mobile.png" />
           <link
             rel="apple-touch-icon"
-            href="/static/icons/touch-icon-iphone.png"
+            sizes="192x192"
+            href="/assets/logo_mobile_x192.png"
           />
           <link
             rel="apple-touch-icon"
-            sizes="152x152"
-            href="/static/icons/touch-icon-ipad.png"
+            sizes="128x128"
+            href="/assets/logo_mobile_x128.png"
           />
           <link
             rel="apple-touch-icon"
-            sizes="180x180"
-            href="/static/icons/touch-icon-iphone-retina.png"
-          />
-          <link
-            rel="apple-touch-icon"
-            sizes="167x167"
-            href="/static/icons/touch-icon-ipad-retina.png"
+            sizes="96x96"
+            href="/assets/logo_mobile_x96.png"
           />
 
           <link
             rel="icon"
             type="image/png"
-            sizes="32x32"
-            href="/assets/logo-mobile.png"
+            sizes="48x48"
+            href="/assets/logo_mobile_x48.png"
           />
 
           <link rel="manifest" href="/manifest.json" />
 
           <link rel="shortcut icon" href="/favicon.ico" />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
-          />
 
           {/* Global Site Tag (gtag.js) - Google Analytics */}
           <script
