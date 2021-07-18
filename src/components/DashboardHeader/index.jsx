@@ -93,7 +93,7 @@ function VendorDashboardHeader({ profileData }) {
             </li>
 
             <li
-              onClick={() => handleClick("customers")}
+              onClick={() => handleClick("/customers")}
               className={isActive("/customers") && classes.activeLink}
             >
               Customers
