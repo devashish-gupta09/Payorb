@@ -136,3 +136,35 @@ export const getDateForTime = (hour) => {
   currDate.setMilliseconds(0);
   return currDate;
 };
+
+export const getBeginingOfDay = (date) => {
+  const momentDate = moment(date);
+  return momentDate
+    .set({
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+      milliseconds: 0,
+    })
+    .toDate();
+};
+
+export const getEndOfDay = (date) => {
+  return moment(date).format("YYYY-MM-DDT23:59:59.000") + "Z";
+};
+
+export const addDaysToDate = (date, days) => {
+  const momentDate = moment(date);
+
+  momentDate.add(days, "days");
+
+  return momentDate.toDate();
+};
+
+export const subDaysFromDate = (date, days) => {
+  const momentDate = moment(date);
+
+  momentDate.subtract(days, "days");
+
+  return momentDate.toDate();
+};

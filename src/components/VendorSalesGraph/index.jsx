@@ -1,18 +1,27 @@
-import { ArgumentScale, Animation } from "@devexpress/dx-react-chart";
+import {
+  ArgumentScale,
+  Animation,
+  SplineSeries,
+  EventTracker,
+  HoverState,
+  LineSeries,
+  ScatterSeries,
+} from "@devexpress/dx-react-chart";
 import {
   Chart,
   ArgumentAxis,
   ValueAxis,
-  LineSeries,
   Title,
   Legend,
 } from "@devexpress/dx-react-chart-material-ui";
 import { Grid, makeStyles, Typography, withStyles } from "@material-ui/core";
 import { scaleTime } from "d3-scale";
+import { symbol, symbolCircle } from "d3-shape";
 import React from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
 import useFetchStats from "../../hooks/useFetchStats";
+import { addDaysToDate, subDaysFromDate } from "../../utils/dateTime";
 
 import DashboardCard from "../DashboardCard";
 import SkeletonLoading from "../SkeletonLoading";
@@ -64,9 +73,13 @@ const demoStyles = () => ({
   },
 });
 
-const ValueLabel = (props) => {
+const RevenueValueLabel = (props) => {
   const { text } = props;
-  return <ValueAxis.Label {...props} text={`${text}%`} />;
+  return <ValueAxis.Label {...props} text={`Rs. ${text}`} />;
+};
+const CustomerValueLabel = (props) => {
+  const { text } = props;
+  return <ValueAxis.Label {...props} text={`${text}`} />;
 };
 
 const titleStyles = {
@@ -74,15 +87,45 @@ const titleStyles = {
     whiteSpace: "pre",
   },
 };
-const TitleText = withStyles(titleStyles)(({ classes, ...props }) => (
-  <Title.Text {...props} className={classes.title} />
-));
+const TitleText = withStyles(titleStyles)(({ classes, ...props }) => {
+  return (
+    <>
+      <Title.Text {...props} className={classes.title} />
+      <h5>{props.description}</h5>
+    </>
+  );
+});
+
+const Point = (type, styles) => (props) => {
+  const { arg, val, color } = props;
+  return (
+    <path
+      fill={color}
+      transform={`translate(${arg} ${val})`}
+      d={symbol()
+        .size([10 ** 2])
+        .type(type)()}
+      style={styles}
+    />
+  );
+};
+
+const CirclePoint = Point(symbolCircle, {
+  stroke: "white",
+  strokeWidth: "1px",
+});
+
+const LineWithCircle = (props) => (
+  <React.Fragment>
+    <SplineSeries.Path {...props} />
+    <ScatterSeries.Path {...props} pointComponent={CirclePoint} />
+  </React.Fragment>
+);
 
 function VendorSalesGraph() {
   const endDate = new Date();
-  const startDate = new Date();
-  startDate.setDate(endDate.getDate() - 7);
-  const { data: Test, loading, error } = useFetchStats(startDate, endDate);
+  const startDate = subDaysFromDate(new Date(), 7);
+  const { data: eventData, loading, error } = useFetchStats(startDate, endDate);
 
   const classes = styles();
   const globalClasses = globalStyles();
@@ -106,7 +149,7 @@ function VendorSalesGraph() {
     );
   }
 
-  if (Test) {
+  if (eventData) {
     return (
       <Grid className={classes.root}>
         <Typography
@@ -120,19 +163,26 @@ function VendorSalesGraph() {
             <Grid item sm={6}>
               <Chart
                 data={transformChartDataRevenue(
-                  Test.timeSerializedEventsSummary
+                  { ...eventData.timeSerializedEventsSummary },
+                  startDate,
+                  endDate
                 )}
                 className={classes.chart}
               >
+                <Title
+                  text={`Weekly Revenue Report (in Rs) `}
+                  textComponent={TitleText}
+                />
                 <ArgumentAxis factory={scaleTime} />
-                <ValueAxis labelComponent={ValueLabel} />
+                <ValueAxis labelComponent={RevenueValueLabel} />
 
                 <ArgumentScale factory={scaleTime} />
                 {/* <ValueScale factory={scaleLog} modifyDomain={modifyDomain} /> */}
-                <LineSeries
+                <SplineSeries
                   name="Revenue"
                   valueField="revenue"
                   argumentField="date"
+                  seriesComponent={LineWithCircle}
                 />
 
                 <Legend
@@ -141,22 +191,23 @@ function VendorSalesGraph() {
                   itemComponent={Item}
                   labelComponent={Label}
                 />
-                <Title
-                  text={`Weekly Revenue Report`}
-                  textComponent={TitleText}
-                />
+
                 <Animation />
               </Chart>
             </Grid>
             <Grid item sm={6}>
               <Chart
                 data={transformChartDataCustomers(
-                  Test.timeSerializedEventsSummary
+                  {
+                    ...eventData.timeSerializedEventsSummary,
+                  },
+                  startDate,
+                  endDate
                 )}
                 className={classes.chart}
               >
                 <ArgumentAxis factory={scaleTime} />
-                <ValueAxis labelComponent={ValueLabel} />
+                <ValueAxis labelComponent={CustomerValueLabel} />
 
                 <ArgumentScale factory={scaleTime} />
                 {/* <ValueScale factory={scaleLog} modifyDomain={modifyDomain} /> */}
@@ -164,6 +215,7 @@ function VendorSalesGraph() {
                   name="Customers"
                   valueField="customers"
                   argumentField="date"
+                  seriesComponent={LineWithCircle}
                 />
 
                 <Legend
@@ -173,17 +225,19 @@ function VendorSalesGraph() {
                   labelComponent={Label}
                 />
                 <Title
-                  text={`Weekly Customer Report`}
+                  text={`Weekly Customers Report`}
                   textComponent={TitleText}
                 />
                 <Animation />
+                <EventTracker />
+                <HoverState />
               </Chart>
             </Grid>
           </Grid>
 
           {/* <p>
             {JSON.stringify(
-              transformChartDataRevenue(Test.timeSerializedEventsSummary)
+              transformChartDataRevenue(eventData.timeSerializedEventsSummary)
             )}
           </p> */}
         </DashboardCard>
@@ -194,27 +248,50 @@ function VendorSalesGraph() {
   return <h2>Something Went Wrong</h2>;
 }
 
-const transformChartDataRevenue = (data) => {
-  const test = Object.keys(data)
-    .sort()
+const transformChartDataRevenue = (data, startDate, endDate) => {
+  // const result = [];
+
+  let offset = startDate;
+  while (offset <= endDate) {
+    if (!data[new Date(offset).toLocaleDateString()]) {
+      data[offset] = {
+        eventCount: 0,
+        eventCustomers: 0,
+        eventRevenue: 0,
+      };
+    }
+    offset = addDaysToDate(offset, 1);
+  }
+
+  return Object.keys(data)
     .map((dp, index) => ({
       date: new Date(dp),
       revenue: data[dp].eventRevenue,
-    }));
-
-  console.log(test);
-  return test;
+    }))
+    .sort((a, b) => a.date - b.date);
 };
 
-const transformChartDataCustomers = (data) => {
-  const test = Object.keys(data)
-    .sort()
-    .map((dp, index) => ({
+const transformChartDataCustomers = (data, startDate, endDate) => {
+  let offset = startDate;
+  while (offset <= endDate) {
+    if (!data[new Date(offset).toLocaleDateString()]) {
+      data[offset] = {
+        eventCount: 0,
+        eventCustomers: 0,
+        eventRevenue: 0,
+      };
+    }
+    offset = addDaysToDate(offset, 1);
+  }
+
+  console.log("data", data);
+
+  return Object.keys(data)
+    .map((dp) => ({
       date: new Date(dp),
       customers: data[dp].eventCustomers,
-    }));
-
-  return test;
+    }))
+    .sort((a, b) => a.date - b.date);
 };
 
 const styles = makeStyles((theme) => ({
