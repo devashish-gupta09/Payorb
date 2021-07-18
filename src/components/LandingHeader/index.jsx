@@ -68,7 +68,11 @@ function LandingHeader() {
           >
             <Link href={PAGE_PATHS.ABOUT}>
               <Button
-                onClick={() => event(ABOUT_CLICK)}
+                onClick={() =>
+                  event({
+                    action: ABOUT_CLICK,
+                  })
+                }
                 className={classes.buttonSpacing}
               >
                 About Us
