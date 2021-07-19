@@ -14,7 +14,14 @@ import {
   Title,
   Legend,
 } from "@devexpress/dx-react-chart-material-ui";
-import { Grid, makeStyles, Typography, withStyles } from "@material-ui/core";
+import {
+  Grid,
+  makeStyles,
+  Typography,
+  withStyles,
+  useTheme,
+  useMediaQuery,
+} from "@material-ui/core";
 import { scaleTime } from "d3-scale";
 import { symbol, symbolCircle } from "d3-shape";
 import React from "react";
@@ -26,9 +33,6 @@ import { addDaysToDate, subDaysFromDate } from "../../utils/dateTime";
 import DashboardCard from "../DashboardCard";
 import SkeletonLoading from "../SkeletonLoading";
 
-const format = () => (tick) => {
-  return tick;
-};
 const legendStyles = () => ({
   root: {
     display: "flex",
@@ -64,14 +68,6 @@ const Label = withStyles(legendLabelStyles, { name: "LegendLabel" })(
 const Item = withStyles(legendItemStyles, { name: "LegendItem" })(
   legendItemBase
 );
-const demoStyles = () => ({
-  chart: {
-    paddingRight: "20px",
-  },
-  title: {
-    whiteSpace: "pre",
-  },
-});
 
 const RevenueValueLabel = (props) => {
   const { text } = props;
@@ -126,6 +122,8 @@ function VendorSalesGraph() {
   const endDate = new Date();
   const startDate = subDaysFromDate(new Date(), 7);
   const { data: eventData, loading, error } = useFetchStats(startDate, endDate);
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
 
   const classes = styles();
   const globalClasses = globalStyles();
@@ -159,8 +157,18 @@ function VendorSalesGraph() {
           Sales
         </Typography>
         <DashboardCard>
-          <Grid container spacing={5}>
-            <Grid item sm={6}>
+          <Grid container spacing={2}>
+            <Grid
+              item
+              sm={6}
+              style={{
+                overflowX: "auto",
+                padding: "2em 1em",
+              }}
+            >
+              <Typography className={classes.title} align="center">
+                Weekly Revenue Report (in Rs.)
+              </Typography>
               <Chart
                 data={transformChartDataRevenue(
                   { ...eventData.timeSerializedEventsSummary },
@@ -168,11 +176,8 @@ function VendorSalesGraph() {
                   endDate
                 )}
                 className={classes.chart}
+                width={matches && 1000}
               >
-                <Title
-                  text={`Weekly Revenue Report (in Rs) `}
-                  textComponent={TitleText}
-                />
                 <ArgumentAxis factory={scaleTime} />
                 <ValueAxis labelComponent={RevenueValueLabel} />
 
@@ -184,18 +189,20 @@ function VendorSalesGraph() {
                   argumentField="date"
                   seriesComponent={LineWithCircle}
                 />
-
-                <Legend
-                  position="bottom"
-                  rootComponent={Root}
-                  itemComponent={Item}
-                  labelComponent={Label}
-                />
-
                 <Animation />
               </Chart>
             </Grid>
-            <Grid item sm={6}>
+            <Grid
+              item
+              sm={6}
+              style={{
+                overflowX: "auto",
+                padding: "2em 1em",
+              }}
+            >
+              <Typography className={classes.title} align="center">
+                Weekly Customers
+              </Typography>
               <Chart
                 data={transformChartDataCustomers(
                   {
@@ -205,6 +212,7 @@ function VendorSalesGraph() {
                   endDate
                 )}
                 className={classes.chart}
+                width={matches && 1000}
               >
                 <ArgumentAxis factory={scaleTime} />
                 <ValueAxis labelComponent={CustomerValueLabel} />
@@ -218,16 +226,6 @@ function VendorSalesGraph() {
                   seriesComponent={LineWithCircle}
                 />
 
-                <Legend
-                  position="bottom"
-                  rootComponent={Root}
-                  itemComponent={Item}
-                  labelComponent={Label}
-                />
-                <Title
-                  text={`Weekly Customers Report`}
-                  textComponent={TitleText}
-                />
                 <Animation />
                 <EventTracker />
                 <HoverState />
@@ -284,8 +282,6 @@ const transformChartDataCustomers = (data, startDate, endDate) => {
     offset = addDaysToDate(offset, 1);
   }
 
-  console.log("data", data);
-
   return Object.keys(data)
     .map((dp) => ({
       date: new Date(dp),
@@ -306,8 +302,10 @@ const styles = makeStyles((theme) => ({
     // maxHeight: 300,
   },
   title: {
-    fontSize: "1.2em",
-    paddingBottom: "1em",
+    fontSize: "1.4em",
+    fontWeight: "bold",
+    paddingBottom: "1.5em",
+    [theme.breakpoints.down("sm")]: {},
   },
   errorCard: {
     padding: "2em",
