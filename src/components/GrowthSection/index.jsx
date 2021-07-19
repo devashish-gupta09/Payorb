@@ -37,7 +37,9 @@ function GrowthSection({ content }) {
       <Grid container justify={"center"} className={classes.bottomButton}>
         <Link href={PAGE_PATHS.SIGNUP}>
           <ButtonCapsule
-            onClick={() => event(SIGNUP_CLICK, "footer")}
+            onClick={() =>
+              event({ action: SIGNUP_CLICK, params: { location: "footer" } })
+            }
             text={"Get Started"}
           />
         </Link>

@@ -41,7 +41,9 @@ function HomeSection({ content }) {
           <Link href={"/signup"}>
             <Button
               className={classes.capsuleButton}
-              onClick={() => event(SIGNUP_CLICK, "header")}
+              onClick={() =>
+                event({ action: SIGNUP_CLICK, params: { location: "header" } })
+              }
             >
               Get Started
             </Button>
