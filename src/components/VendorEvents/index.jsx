@@ -54,14 +54,14 @@ function VendorEvents() {
     try {
       const res = await getEventsVendorDashboard({
         ...eventsParams,
-        startFrom: eventsParams.startFrom + eventsParams.limit,
+        startFrom: eventsParams.startFrom,
       });
-      if (res.data.length > 0) {
+      if (res.data.events.length > 0) {
         setEventsParams({
           ...eventsParams,
-          startFrom: eventsParams.startFrom + eventsParams.limit,
+          startFrom: res.data.lastEvent,
         });
-        setEvents([...events, ...res.data]);
+        setEvents([...events, ...res.data.events]);
       } else {
         setLoadMore(false);
       }
@@ -92,7 +92,11 @@ function VendorEvents() {
         if (res.success) {
           if (res.data) {
             await delay(50);
-            setEvents(res.data);
+            setEvents(res.data.events);
+            setEventsParams({
+              ...eventsParams,
+              startFrom: res.data.lastEvent,
+            });
           }
         } else {
           setEvents([]);

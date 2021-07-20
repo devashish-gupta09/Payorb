@@ -90,7 +90,7 @@ function Details(props) {
           </Grid>
         )}
 
-        {(email || vendor) && (
+        {email && vendor && (
           <DetailRow classes={classes} icon={<MailOutline />}>
             <EditableTextField
               edit={edit}
@@ -109,7 +109,7 @@ function Details(props) {
           </DetailRow>
         )}
 
-        {(phoneNumber || vendor) && (
+        {phoneNumber && vendor && (
           <DetailRow classes={classes} icon={<Phone />}>
             <EditableTextField
               edit={edit}

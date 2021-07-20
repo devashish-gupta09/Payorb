@@ -27,16 +27,17 @@ function useFetchEvents(isVendor, filterParams) {
   const loadMoreEvents = async () => {
     try {
       if (isVendor) {
+        alert(eventsParams.startFrom);
         const res = await getEventsVendorDashboard({
           ...eventsParams,
-          startFrom: eventsParams.startFrom + eventsParams.limit,
+          startFrom: eventsParams.startFrom,
         });
-        if (res.data.length > 0) {
+        if (res.data?.events?.length > 0) {
           setEventsParams({
             ...eventsParams,
-            startFrom: eventsParams.startFrom + eventsParams.limit,
+            startFrom: res.data.lastEvent,
           });
-          setEvents([...events, ...res.data]);
+          setEvents([...events, ...res.data.events]);
         } else {
           setLoadMore(false);
           setError("No events found");
@@ -66,7 +67,7 @@ function useFetchEvents(isVendor, filterParams) {
           if (res.data) {
             await delay(50);
             setLoading(false);
-            setEvents(res.data);
+            setEvents(res.data.events);
             setEventsParams({ ...eventsParams, startFrom: res.data.lastEvent });
           }
         })
@@ -90,7 +91,7 @@ function useFetchEvents(isVendor, filterParams) {
           console.log("Error", err);
         });
     }
-  }, [eventsParams.limit]);
+  }, []);
 
   return {
     loading,

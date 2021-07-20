@@ -66,20 +66,33 @@ function VendorEventsStats() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const { loading, events, changeLimit } = useFetchEvents(true, {
-    limit: rowsPerPage,
-  });
+  const { loading, events, changeLimit, loadMoreEvents } = useFetchEvents(
+    true,
+    {
+      limit: 6,
+    }
+  );
 
   const globalClasses = globalStyles();
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = async (event, newPage) => {
+    if (newPage > page) {
+      await loadMoreEvents();
+    }
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
+  const handleChangeRowsPerPage = async (event) => {
     setRowsPerPage(event.target.value);
     // Trigger To fetch events
-    changeLimit(400);
+
+    if (
+      event.target.value > rowsPerPage &&
+      events.length < event.target.value
+    ) {
+      await loadMoreEvents();
+    }
+    changeLimit(event.target.value + 1);
   };
 
   if (loading) {
