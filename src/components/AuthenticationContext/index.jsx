@@ -1,9 +1,8 @@
-import app from "../../utils/firebase";
 import React from "react";
 
-export class FirebaseAuth {
-  firebaseInstance;
+import app from "../../utils/firebase";
 
+export class FirebaseAuth {
   constructor() {
     this.googleProvider = new app.auth.GoogleAuthProvider();
     this.facebookProvider = new app.auth.FacebookAuthProvider();
