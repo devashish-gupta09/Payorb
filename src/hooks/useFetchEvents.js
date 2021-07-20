@@ -27,7 +27,6 @@ function useFetchEvents(isVendor, filterParams) {
   const loadMoreEvents = async () => {
     try {
       if (isVendor) {
-        alert(eventsParams.startFrom);
         const res = await getEventsVendorDashboard({
           ...eventsParams,
           startFrom: eventsParams.startFrom,
