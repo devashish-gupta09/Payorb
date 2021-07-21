@@ -34,7 +34,7 @@ import { FirebaseAuth } from "../AuthenticationContext";
 import ButtonCapsule from "../ButtonCapsule";
 import { styles } from "./styles";
 
-export const handleUserAddition = async (userRes, idToken) => {
+export const handleUserAddition = async (userRes, idToken, referral = "") => {
   const name = userRes.displayName || userRes.user?.displayName || userRes.name;
   const email = userRes.email || userRes.user?.email || "";
   const phoneNumber = userRes.phoneNumber || userRes.user?.phoneNumber || "";
@@ -48,6 +48,9 @@ export const handleUserAddition = async (userRes, idToken) => {
 
     event({
       action: SIGNUP_DONE,
+      params: {
+        referral,
+      },
     });
 
     return addUserRes;
@@ -74,6 +77,8 @@ function SignUpForm() {
   const { Alert, showAlert } = useAlertSnackbar();
   const [loading, setLoading] = React.useState();
   const [otpLoading, setOtpLoading] = React.useState();
+
+  const { referral } = router.query;
 
   const handleTAndCChange = () => {
     setTAndC(!tAndC);
@@ -115,7 +120,8 @@ function SignUpForm() {
               location: values.location,
               name: values.name,
             },
-            await FirebaseAuth.Singleton().getIdToken()
+            await FirebaseAuth.Singleton().getIdToken(),
+            referral
           );
 
           router.replace(
