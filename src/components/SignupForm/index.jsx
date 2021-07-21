@@ -26,6 +26,7 @@ import useFederatedAuth from "../../hooks/useFederatedAuth";
 import { addUser } from "../../services/auth";
 import { delay } from "../../utils/dateTime";
 import app from "../../utils/firebase";
+import { event, SIGNUP_DONE } from "../../utils/ga";
 import { buildVendorDashboardUrl } from "../../utils/url";
 
 import { signUpValidation, phoneRegExp } from "../../validations/signup";
@@ -43,6 +44,10 @@ export const handleUserAddition = async (userRes, idToken) => {
       email,
       phoneNumber,
       location: userRes.location,
+    });
+
+    event({
+      action: SIGNUP_DONE,
     });
 
     return addUserRes;
