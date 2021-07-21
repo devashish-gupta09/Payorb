@@ -155,7 +155,7 @@ function SignUpForm() {
       const { userInfo, idToken } = await fedSignUp(provider);
 
       if (userInfo && idToken) {
-        const res = await handleUserAddition(userInfo, idToken);
+        const res = await handleUserAddition(userInfo, idToken, referral);
         console.log(res);
         if (res) {
           router.push(

@@ -15,10 +15,11 @@ const CrispWithNoSSR = dynamic(() => import("../src/components/Crisp"), {
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
+  const { referral } = router.query;
 
   useEffect(() => {
     const handleRouteChange = (url) => {
-      pageview(url);
+      pageview(url, { referral });
     };
     //When the component is mounted, subscribe to router changes
     //and log those page views

@@ -4,12 +4,12 @@ export const SIGNUP_CLICK = "signup_click";
 export const ABOUT_CLICK = "about_click";
 export const SIGNUP_DONE = "signup_done";
 
-export const pageview = (url) => {
+export const pageview = (url, params) => {
   if (!isProd()) {
     return;
   }
   firebase.analytics().setCurrentScreen(url);
-  firebase.analytics().logEvent("screen_view");
+  firebase.analytics().logEvent("screen_view", params);
 };
 
 export const event = ({ action, params }) => {
