@@ -44,6 +44,7 @@ export const handleUserAddition = async (userRes, idToken, referral = "") => {
       email,
       phoneNumber,
       location: userRes.location,
+      referredBy: referral,
     });
 
     event({
