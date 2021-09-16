@@ -199,26 +199,26 @@ export const getGrowthContent = async () => {
   return {
     title: "Platform Pricing",
     sectionLogo:
-      "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
+      "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2FGroup%20(1).png?alt=media&token=b3134df5-8143-43e9-b425-55bf168a3bdb",
     sectionTitle: "Platform pricing",
     growthPoints: [
       {
         description: "Zero Onboarding Fee",
         image:
-          "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png",
+          "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2FGroup%20(2).png?alt=media&token=e0918a49-8343-4f3b-b8f8-be7de1a0e9df",
       },
 
       {
         description: "No annual subscription charges",
         image:
-          "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png",
+          "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2FGroup%20(2).png?alt=media&token=e0918a49-8343-4f3b-b8f8-be7de1a0e9df",
       },
 
       {
         description:
           "Platform Usage Charges 6% (+ taxes), reduced to 4.5% (+ taxes) for early users",
         image:
-          "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(2).png",
+          "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2FGroup%20(2).png?alt=media&token=e0918a49-8343-4f3b-b8f8-be7de1a0e9df",
       },
     ],
     // };
