@@ -35,7 +35,7 @@ const styles = makeStyles((theme) => ({
       padding: "0 1em 2em 1em",
     },
     [theme.breakpoints.up("xl")]: {
-      padding: "10em",
+      padding: "5em 10em",
     },
   },
   detailContainer: {
