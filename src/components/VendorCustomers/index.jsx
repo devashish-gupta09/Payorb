@@ -11,8 +11,9 @@ import {
   TableHead,
   TableRow,
   Typography,
+  Tooltip,
 } from "@material-ui/core";
-import { Send } from "@material-ui/icons";
+import { Send, Info } from "@material-ui/icons";
 import React from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
@@ -26,19 +27,29 @@ import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
 import SkeletonLoading from "../SkeletonLoading";
 
-function createData(name, phoneNumber, email, date) {
+function createData(name, phoneNumber, email, date, events, eventList) {
   return {
     name,
     phoneNumber,
     email,
     date,
+    events: events.length
+      ? [
+          ...new Set(
+            events.map((e) => e.name).filter((e) => eventList.includes(e))
+          ),
+        ].join(", ")
+      : "",
   };
 }
 
 function VendorCustomers() {
   const classes = styles();
   const globalClasses = globalStyles();
-  const [selectedValue, setSelectedValue] = React.useState("");
+  const [selectedValue, setSelectedValue] = React.useState([]);
+  const [selectedValueForFilter, setSelectedValueForFilter] = React.useState(
+    []
+  );
   // const [sendBtnLoading, setSendBtnLoading] = React.useState(false);
   const { Alert, showAlert } = useAlertSnackbar();
 
@@ -49,7 +60,19 @@ function VendorCustomers() {
   });
 
   const handleEventTypeChange = (event) => {
-    setSelectedValue(event.target.value);
+    setSelectedValue(
+      typeof event.target.value === "string"
+        ? event.target.value.split(",")
+        : event.target.value
+    );
+  };
+
+  const handleFilterChange = (event) => {
+    setSelectedValueForFilter(
+      typeof event.target.value === "string"
+        ? event.target.value.split(",")
+        : event.target.value
+    );
   };
 
   const sendNotification = async () => {
@@ -58,7 +81,9 @@ function VendorCustomers() {
         throw new Error("Please select an event from the drop down");
       }
 
-      const res = await sendNotificationToCustomers({ eventId: selectedValue });
+      const res = await sendNotificationToCustomers({
+        eventIds: selectedValue,
+      });
 
       if (res) {
         showAlert("Notification sent");
@@ -74,7 +99,7 @@ function VendorCustomers() {
     }
   };
 
-  if (loading) {
+  if (loading || eventLoading) {
     return (
       <Grid className={classes.root}>
         <SkeletonLoading message={"Loading customers"} />
@@ -82,17 +107,38 @@ function VendorCustomers() {
     );
   }
 
-  if (customers) {
-    const rows = customers.map((customer) =>
-      createData(
-        customer.name,
-        customer.phoneNumber,
-        customer.email,
-        getMonthDate(customer.createdAt, customer.createdAt),
-        customer.events
-      )
-    );
-
+  if (customers && events) {
+    const eventList = events.map((e) => e.name);
+    const rows =
+      selectedValueForFilter && selectedValueForFilter.length //if filter is present
+        ? customers
+            .filter((customer) =>
+              customer.events
+                .map((event) => event.link)
+                .some((r) => selectedValueForFilter.includes(r))
+            )
+            .map((customer) =>
+              createData(
+                customer.name,
+                customer.phoneNumber,
+                customer.email,
+                getMonthDate(customer.createdAt, customer.createdAt),
+                customer.events,
+                eventList,
+                selectedValueForFilter
+              )
+            )
+        : customers.map((customer) =>
+            createData(
+              customer.name,
+              customer.phoneNumber,
+              customer.email,
+              getMonthDate(customer.createdAt, customer.createdAt),
+              customer.events,
+              eventList,
+              selectedValueForFilter
+            )
+          );
     if (!customers.length) {
       return (
         <DashboardCard>
@@ -120,14 +166,63 @@ function VendorCustomers() {
           >
             Customers
           </Typography>
-
+        </Grid>
+        <Grid
+          className={`${classes.title}`}
+          container
+          justify="space-between"
+          alignItems="center"
+        >
           <Grid>
             {eventLoading ? (
               <CircularProgress />
             ) : events && events.length ? (
               <Grid container alignItems={"center"}>
-                <Typography>Select event</Typography>
+                <Typography>Filter by Events</Typography>
                 <Select
+                  style={{ margin: "0.5em 0.5em" }}
+                  multiple
+                  variant="outlined"
+                  value={selectedValueForFilter}
+                  onChange={handleFilterChange}
+                  SelectDisplayProps={{
+                    style: {
+                      width: "10em",
+                      background: "white",
+                      paddingTop: "0.75em",
+                      paddingBottom: "0.75em",
+                    },
+                  }}
+                  MenuProps={{
+                    style: {},
+                  }}
+                >
+                  {events &&
+                    events.map((event) => (
+                      <MenuItem key={event.link} value={event.link}>
+                        {event.name}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </Grid>
+            ) : null}
+          </Grid>
+          <Grid>
+            {eventLoading ? (
+              <CircularProgress />
+            ) : events && events.length ? (
+              <Grid container alignItems={"center"}>
+                <Typography style={{ margin: "0.5em 0.5em" }}>
+                  Promote Event
+                </Typography>
+                <Tooltip
+                  title="Send promotional emails for upcoming events"
+                  placement="top"
+                >
+                  <Info style={{ fontSize: "1rem", color: "#808080" }} />
+                </Tooltip>
+                <Select
+                  multiple
                   style={{ margin: "0.5em 0.5em" }}
                   variant="outlined"
                   value={selectedValue}
@@ -223,6 +318,12 @@ const columns = [
   {
     id: "email",
     label: "Email",
+    minWidth: 100,
+    align: "center",
+  },
+  {
+    id: "events",
+    label: "Events",
     minWidth: 100,
     align: "center",
   },
