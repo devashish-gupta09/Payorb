@@ -38,7 +38,7 @@ function createData(name, phoneNumber, email, date, events, eventList) {
           ...new Set(
             events.map((e) => e.name).filter((e) => eventList.includes(e))
           ),
-        ].join(", ")
+        ].join(",")
       : "",
   };
 }
@@ -46,7 +46,7 @@ function createData(name, phoneNumber, email, date, events, eventList) {
 function VendorCustomers() {
   const classes = styles();
   const globalClasses = globalStyles();
-  const [selectedValue, setSelectedValue] = React.useState([]);
+  const [selectedValue, setSelectedValue] = React.useState("");
   const [selectedValueForFilter, setSelectedValueForFilter] = React.useState(
     []
   );
@@ -60,11 +60,7 @@ function VendorCustomers() {
   });
 
   const handleEventTypeChange = (event) => {
-    setSelectedValue(
-      typeof event.target.value === "string"
-        ? event.target.value.split(",")
-        : event.target.value
-    );
+    setSelectedValue(event.target.value);
   };
 
   const handleFilterChange = (event) => {
@@ -82,7 +78,7 @@ function VendorCustomers() {
       }
 
       const res = await sendNotificationToCustomers({
-        eventIds: selectedValue,
+        eventId: selectedValue,
       });
 
       if (res) {
@@ -180,8 +176,9 @@ function VendorCustomers() {
               <Grid container alignItems={"center"}>
                 <Typography>Filter by Events</Typography>
                 <Select
-                  style={{ margin: "0.5em 0.5em" }}
                   multiple
+                  style={{ margin: "0.5em 0.5em" }}
+                  className={classes.select}
                   variant="outlined"
                   value={selectedValueForFilter}
                   onChange={handleFilterChange}
@@ -207,7 +204,7 @@ function VendorCustomers() {
               </Grid>
             ) : null}
           </Grid>
-          <Grid>
+          <Grid className={classes.selectDesktopView}>
             {eventLoading ? (
               <CircularProgress />
             ) : events && events.length ? (
@@ -222,8 +219,8 @@ function VendorCustomers() {
                   <Info style={{ fontSize: "1rem", color: "#808080" }} />
                 </Tooltip>
                 <Select
-                  multiple
                   style={{ margin: "0.5em 0.5em" }}
+                  className={classes.select}
                   variant="outlined"
                   value={selectedValue}
                   onChange={handleEventTypeChange}
@@ -294,6 +291,54 @@ function VendorCustomers() {
             </Table>
           </TableContainer>
         </DashboardCard>
+        <Grid className={classes.selectMobileView}>
+          {eventLoading ? (
+            <CircularProgress />
+          ) : events && events.length ? (
+            <Grid container alignItems={"center"}>
+              <Typography style={{ margin: "0.5em 0.5em" }}>
+                Promote Event
+              </Typography>
+              <Tooltip
+                title="Send promotional emails for upcoming events"
+                placement="top"
+              >
+                <Info style={{ fontSize: "1rem", color: "#808080" }} />
+              </Tooltip>
+              <Select
+                style={{ margin: "0.5em 0.5em" }}
+                className={classes.select}
+                variant="outlined"
+                value={selectedValue}
+                onChange={handleEventTypeChange}
+                SelectDisplayProps={{
+                  style: {
+                    width: "10em",
+                    background: "white",
+                    paddingTop: "0.75em",
+                    paddingBottom: "0.75em",
+                  },
+                }}
+                MenuProps={{
+                  style: {},
+                }}
+              >
+                {events &&
+                  events.map((event) => (
+                    <MenuItem key={event.link} value={event.link}>
+                      {event.name}
+                    </MenuItem>
+                  ))}
+              </Select>
+              <ButtonCapsule
+                buttonStyle={classes.sendButton}
+                text={`Send`}
+                icon={<Send />}
+                onClick={sendNotification}
+              ></ButtonCapsule>
+            </Grid>
+          ) : null}
+        </Grid>
       </Grid>
     );
   }
@@ -338,11 +383,23 @@ const styles = makeStyles((theme) => ({
     },
   },
   container: {
-    // maxHeight: 300,
+    [theme.breakpoints.down("sm")]: {
+      height: "45vh",
+    },
   },
   title: {
     fontSize: "1.2em",
     paddingBottom: "1em",
+  },
+  selectMobileView: {
+    [theme.breakpoints.up("sm")]: {
+      display: "none",
+    },
+  },
+  selectDesktopView: {
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
   },
   sendButton: {
     background: "white",
@@ -353,6 +410,9 @@ const styles = makeStyles((theme) => ({
     },
     "&:hover": {
       background: "#dedede",
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "30%",
     },
   },
 }));
