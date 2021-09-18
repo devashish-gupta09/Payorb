@@ -2,6 +2,8 @@ import * as Yup from "yup";
 
 import { EVENT_MODES, EVENT_TYPES } from "../constants/events";
 
+const linkSpecialCharRegex = /^[a-z0-9]+$/i;
+
 export const createEventValidationSchema = Yup.object({
   name: Yup.string().max(100, "Must be 100 characters or less").required(),
   category: Yup.string().required(),
@@ -20,8 +22,13 @@ export const createEventValidationSchema = Yup.object({
     .min(Yup.ref("startDate"), "End date can't be before start Date")
     .required(),
   link: Yup.string()
+    .matches(
+      linkSpecialCharRegex,
+      "Should not contain special charactes or spaces"
+    )
     .min(6, "Must be 6 characters or more.")
     .max(40, "Must be 40 characters or less")
+
     .required(),
   price: Yup.number()
     .min(0, "Price of a ticket must be greater than 0")
