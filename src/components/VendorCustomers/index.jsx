@@ -12,8 +12,10 @@ import {
   TableRow,
   Typography,
   Tooltip,
+  Chip,
+  Collapse,
 } from "@material-ui/core";
-import { Send, Info } from "@material-ui/icons";
+import { Send, Info, KeyboardArrowDown } from "@material-ui/icons";
 import React from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
@@ -50,6 +52,7 @@ function VendorCustomers() {
   const [selectedValueForFilter, setSelectedValueForFilter] = React.useState(
     []
   );
+  const [collapsed, setCollapsed] = React.useState(true);
   // const [sendBtnLoading, setSendBtnLoading] = React.useState(false);
   const { Alert, showAlert } = useAlertSnackbar();
 
@@ -63,12 +66,15 @@ function VendorCustomers() {
     setSelectedValue(event.target.value);
   };
 
-  const handleFilterChange = (event) => {
-    setSelectedValueForFilter(
-      typeof event.target.value === "string"
-        ? event.target.value.split(",")
-        : event.target.value
-    );
+  const handleFilterChange = (link) => {
+    let temp = [...selectedValueForFilter];
+    if (temp.includes(link)) {
+      temp = temp.filter((l) => l !== link);
+      setSelectedValueForFilter([...temp]);
+    } else {
+      temp = [...temp, link];
+      setSelectedValueForFilter([...temp]);
+    }
   };
 
   const sendNotification = async () => {
@@ -169,41 +175,17 @@ function VendorCustomers() {
           justify="space-between"
           alignItems="center"
         >
-          <Grid>
-            {eventLoading ? (
-              <CircularProgress />
-            ) : events && events.length ? (
-              <Grid container alignItems={"center"}>
-                <Typography>Filter by Events</Typography>
-                <Select
-                  multiple
-                  style={{ margin: "0.5em 0.5em" }}
-                  className={classes.select}
-                  variant="outlined"
-                  value={selectedValueForFilter}
-                  onChange={handleFilterChange}
-                  SelectDisplayProps={{
-                    style: {
-                      width: "10em",
-                      background: "white",
-                      paddingTop: "0.75em",
-                      paddingBottom: "0.75em",
-                    },
-                  }}
-                  MenuProps={{
-                    style: {},
-                  }}
-                >
-                  {events &&
-                    events.map((event) => (
-                      <MenuItem key={event.link} value={event.link}>
-                        {event.name}
-                      </MenuItem>
-                    ))}
-                </Select>
-              </Grid>
-            ) : null}
-          </Grid>
+          <div
+            className={classes.collapseController}
+            onClick={() => setCollapsed(!collapsed)}
+          >
+            <Typography>Filter by Events</Typography>
+            <KeyboardArrowDown
+              className={
+                collapsed ? classes.collapseArrowDown : classes.collapseArrowUp
+              }
+            />
+          </div>
           <Grid className={classes.selectDesktopView}>
             {eventLoading ? (
               <CircularProgress />
@@ -252,6 +234,48 @@ function VendorCustomers() {
               </Grid>
             ) : null}
           </Grid>
+        </Grid>
+
+        <Grid
+          className={`${classes.title}`}
+          container
+          justify="start"
+          alignItems="center"
+        >
+          <Collapse in={!collapsed}>
+            {events &&
+              [
+                ...events,
+                ...events,
+                ...events,
+                ...events,
+                ...events,
+                ...events,
+                ...events,
+                ...events,
+                ...events,
+                ...events,
+                ...events,
+                ...events,
+                ...events,
+                ...events,
+                ...events,
+                ...events,
+              ].map((event) => (
+                <Chip
+                  className={classes.chips}
+                  label={event.name}
+                  color={
+                    selectedValueForFilter.includes(event.link) ? "primary" : ""
+                  }
+                  key={event.link}
+                  onClick={(e) => handleFilterChange(event.link)}
+                />
+                // <MenuItem key={event.link} value={event.link}>
+                //   {event.name}
+                // </MenuItem>
+              ))}
+          </Collapse>
         </Grid>
         <DashboardCard>
           <TableContainer className={classes.container}>
@@ -400,6 +424,23 @@ const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
+  },
+  chips: {
+    margin: "0px 5px 5px 0",
+  },
+  collapseController: {
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "start",
+  },
+  collapseArrowDown: {
+    transition: `transform .8s ease`,
+    transform: `rotate(0deg)`,
+  },
+  collapseArrowUp: {
+    transform: `rotate(-180deg)`,
+    transition: `transform .8s ease`,
   },
   sendButton: {
     background: "white",
