@@ -93,12 +93,7 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
   return (
     <DashboardCard rootClass={classes.root}>
       {Alert()}
-      <Grid
-        style={{
-          paddingBottom: "2em",
-        }}
-        container
-      >
+      <Grid container>
         <Typography
           className={`${globalClasses.bold} ${classes.sectionTitle}`}
           gutterBottom
@@ -106,6 +101,16 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
           Payment Section
         </Typography>
         {getPaymentDetailsStatus(profileData.paymentDetails)}
+      </Grid>
+      <Grid
+        style={{
+          paddingBottom: "2em",
+        }}
+        container
+      >
+        <Typography variant="p" gutterBottom>
+          Fill this information to get paid for your events and services
+        </Typography>
       </Grid>
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={5}>
