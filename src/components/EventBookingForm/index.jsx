@@ -23,8 +23,8 @@ import {
   failOrder,
   submitSuccessOrder,
 } from "../../services/orders";
+import { sendOTP, verifyOTP } from "../../services/twilio";
 import { delay } from "../../utils/dateTime";
-import app from "../../utils/firebase";
 import { getRzpAmountFormat } from "../../utils/payments";
 import { FirebaseAuth } from "../AuthenticationContext";
 import ButtonCapsule from "../ButtonCapsule";
@@ -76,7 +76,7 @@ function EventBookingForm({
     },
     onSubmit: async (values) => {
       let user;
-
+      const phoneNumber = `+91${values.phoneNumber}`;
       if (!confirmationResult) {
         throw Error("Please send the OTP first");
       }
@@ -86,14 +86,14 @@ function EventBookingForm({
       setPaymentProgLoader(true);
 
       try {
-        user = await confirmationResult.confirm(values.otp);
+        user = await verifyOTP(phoneNumber, values.otp);
       } catch (err) {
         setPaymentProgLoader(false);
         showAlert(err.message);
         return;
       }
 
-      if (user) {
+      if (user && user.response && user.response.status === "approved") {
         // Let's create a customer in Firestore
         try {
           setPaymentProgLoader(true);
@@ -135,27 +135,18 @@ function EventBookingForm({
             }
           }
         }
+      } else {
+        showAlert("Please enter correct OTP");
       }
       setPaymentProgLoader(false);
     },
   });
 
-  const sendOTP = async () => {
-    window.recaptchaVerifier = new app.auth.RecaptchaVerifier(
-      "sign-in-button",
-      {
-        size: "invisible",
-      }
-    );
-
+  const requestOTP = async () => {
     try {
       if (formik.values.phoneNumber) {
         const phoneNumber = `+91${formik.values.phoneNumber}`;
-        const appVerifier = window.recaptchaVerifier;
-        const response = await app
-          .auth()
-          .signInWithPhoneNumber(phoneNumber, appVerifier);
-
+        const response = await sendOTP(phoneNumber, "sms");
         setOtpSent(true);
         showAlert("OTP Sent");
         setConfirmationResult(response);
@@ -163,18 +154,7 @@ function EventBookingForm({
         formik.setFieldError("phoneNumber", "Please enter phone number");
       }
     } catch (err) {
-      if (
-        err &&
-        err.message &&
-        err.message.includes(
-          "reCAPTCHA has already been rendered in this element"
-        )
-      ) {
-        showAlert("OTP Sent");
-        return;
-      }
-
-      showAlert(err.message, ALERT_TYPES.ERROR);
+      if (err) showAlert(err.message, ALERT_TYPES.ERROR);
     }
   };
 
@@ -311,7 +291,7 @@ function EventBookingForm({
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    <Button onClick={sendOTP}>Get OTP</Button>
+                    <Button onClick={requestOTP}>Get OTP</Button>
                   </InputAdornment>
                 ),
               }}
