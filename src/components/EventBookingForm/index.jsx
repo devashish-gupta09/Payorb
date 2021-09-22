@@ -334,7 +334,15 @@ function EventBookingForm({
               </Grid>
             </Grid>
 
-            <Tooltip title="Make sure you have agreed to the terms and conditions">
+            <Tooltip
+              title={
+                !tAndC
+                  ? "Make sure you have agreed to the terms and conditions"
+                  : !otpSent && !confirmationResult
+                  ? "Make sure you have entered the correct OTP."
+                  : ""
+              }
+            >
               <div style={{ width: "100%" }}>
                 <ButtonCapsule
                   showLoader={paymentProgLoader}
