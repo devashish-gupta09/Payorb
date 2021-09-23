@@ -55,6 +55,7 @@ function EventBookingForm({
   const [otpSent, setOtpSent] = React.useState(false);
   const [confirmationResult, setConfirmationResult] = React.useState();
   const [otpCountDown, setOtpCountDown] = React.useState(0);
+  const [disableOtpButton, setDisableOtpButton] = React.useState(false);
   const { Alert, showAlert } = useAlertSnackbar();
   const [success, setSuccess] = React.useState(false);
   const [orderId, setOrderId] = React.useState();
@@ -161,11 +162,13 @@ function EventBookingForm({
   const requestOTP = async () => {
     try {
       if (formik.values.phoneNumber) {
+        setDisableOtpButton(true);
         const phoneNumber = `+91${formik.values.phoneNumber}`;
         const response = await sendOTP(phoneNumber, "sms");
         setOtpSent(true);
         showAlert("OTP Sent");
         setConfirmationResult(response);
+        setDisableOtpButton(false);
       } else {
         formik.setFieldError("phoneNumber", "Please enter phone number");
       }
@@ -307,7 +310,10 @@ function EventBookingForm({
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    <Button disabled={otpCountDown} onClick={requestOTP}>
+                    <Button
+                      disabled={otpCountDown || disableOtpButton}
+                      onClick={requestOTP}
+                    >
                       {otpCountDown ? `Retry (${otpCountDown}s)` : "Get OTP"}
                     </Button>
                   </InputAdornment>
