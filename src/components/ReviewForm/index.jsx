@@ -19,10 +19,10 @@ import { PAGE_PATHS } from "../../constants/paths";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { getCustomerForReview } from "../../services/customers";
 import { addReview } from "../../services/review";
+import { sendOTP, verifyOTP } from "../../services/twilio";
 
 import { delay } from "../../utils/dateTime";
 import firebase from "../../utils/firebase";
-import app from "../../utils/firebase";
 import { createReviewValidationSchema } from "../../validations/review";
 import { FirebaseAuth } from "../AuthenticationContext";
 import ButtonCapsule from "../ButtonCapsule";
@@ -36,8 +36,10 @@ function ReviewForm() {
   const classes = styles();
   const [croppedImg, setCroppedImage] = React.useState();
   const [submitLoading, setSubmitLoading] = React.useState(false);
-  const router = useRouter();
+  const [otpCountDown, setOtpCountDown] = React.useState(0);
+  const [disableOtpButton, setDisableOtpButton] = React.useState(false);
   const { Alert, showAlert } = useAlertSnackbar();
+  const router = useRouter();
   const [confirmationResult, setConfirmationResult] = React.useState();
   const [otpLoading, setOtpLoading] = React.useState();
   const auth = FirebaseAuth.Singleton();
@@ -45,6 +47,22 @@ function ReviewForm() {
   const handleCroppedImage = React.useCallback((data) => {
     setCroppedImage(data);
   }, []);
+
+  React.useEffect(() => {
+    if (confirmationResult) {
+      setOtpCountDown(30);
+    }
+  }, [confirmationResult]);
+
+  React.useEffect(() => {
+    let timerInterval;
+    if (otpCountDown > 0) {
+      timerInterval = setInterval(() => {
+        setOtpCountDown(otpCountDown - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timerInterval);
+  }, [otpCountDown]);
 
   const formik = useFormik({
     initialValues: {
@@ -64,10 +82,20 @@ function ReviewForm() {
       setSubmitLoading(true);
       try {
         const tempObject = { ...values };
-
+        let verificationResult;
         delete tempObject.phoneNumber;
         delete tempObject.email;
         delete tempObject.otp;
+
+        try {
+          verificationResult = await verifyOTP(
+            formik.values.phoneNumber,
+            formik.values.otp
+          );
+        } catch (err) {
+          showAlert(err.message);
+          return;
+        }
 
         if (!confirmationResult) {
           throw new Error("Please click on Get Otp");
@@ -79,29 +107,33 @@ function ReviewForm() {
           );
         }
 
-        await confirmationResult.confirm(formik.values.otp);
+        if (
+          verificationResult &&
+          verificationResult.response &&
+          verificationResult.response.status === "approved"
+        ) {
+          let imageUrl = "";
+          if (croppedImg) {
+            imageUrl = await handleImageUpload(
+              tempObject.customerId,
+              tempObject.eventId
+            );
+          }
 
-        let imageUrl = "";
-        if (croppedImg) {
-          imageUrl = await handleImageUpload(
-            tempObject.customerId,
-            tempObject.eventId
-          );
-        }
+          const response = await addReview({
+            ...tempObject,
+            imageUrl: imageUrl || "",
+          });
 
-        const response = await addReview({
-          ...tempObject,
-          imageUrl: imageUrl || "",
-        });
-
-        if (response.success) {
-          showAlert("Review Submitted");
-          await delay(400);
-          showAlert("Redirecting you to home.");
-          await delay(200);
-          router.push(PAGE_PATHS.LANDING);
-        } else {
-          showAlert(response.error, ALERT_TYPES.ERROR);
+          if (response.success) {
+            showAlert("Review Submitted");
+            await delay(400);
+            showAlert("Redirecting you to home.");
+            await delay(200);
+            router.push(PAGE_PATHS.LANDING);
+          } else {
+            showAlert(response.error, ALERT_TYPES.ERROR);
+          }
         }
       } catch (err) {
         console.log("Eror", err);
@@ -145,38 +177,18 @@ function ReviewForm() {
 
   const handleSendOTP = async () => {
     setOtpLoading(true);
-    window.recaptchaVerifier = new app.auth.RecaptchaVerifier(
-      "sign-in-button",
-      {
-        size: "invisible",
-      }
-    );
-    const appVerifier = window.recaptchaVerifier;
-
     if (!formik.values.phoneNumber) {
       showAlert("Phone number not present. Please refresh the page.");
     }
-
     try {
-      const response = await app
-        .auth()
-        .signInWithPhoneNumber(formik.values.phoneNumber, appVerifier);
+      const phoneNumber = `${formik.values.phoneNumber}`;
+      const response = await sendOTP(phoneNumber, "sms");
       showAlert("OTP Sent");
       setConfirmationResult(response);
+      setDisableOtpButton(false);
     } catch (err) {
-      if (
-        err &&
-        err.message &&
-        err.message.includes(
-          "reCAPTCHA has already been rendered in this element"
-        )
-      ) {
-        showAlert("OTP Sent");
-      } else {
-        showAlert(`OTP could not be sent. ${err.message}`, ALERT_TYPES.ERROR);
-      }
+      showAlert(`OTP could not be sent. ${err.message}`, ALERT_TYPES.ERROR);
     }
-
     setOtpLoading(false);
   };
 
@@ -249,10 +261,16 @@ function ReviewForm() {
               <Grid item xs={4}>
                 <ButtonCapsule
                   showLoader={otpLoading}
-                  text={otpLoading ? "" : "Get OTP"}
+                  text={
+                    otpLoading
+                      ? ""
+                      : otpCountDown
+                      ? `Retry (${otpCountDown}s)`
+                      : "Get OTP"
+                  }
                   buttonStyle={classes.getOtp}
                   onClick={handleSendOTP}
-                  disabled={otpLoading || confirmationResult}
+                  disabled={otpLoading || disableOtpButton || otpCountDown}
                 ></ButtonCapsule>
                 <div id="sign-in-button"></div>
               </Grid>
