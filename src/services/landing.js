@@ -113,7 +113,7 @@ export const getEventRegistrationContent = async () => {
     description:
       "Track every penny flowing in and each customer joining your network, in real time",
     image:
-      "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2FDashboard.png?alt=media&token=a6e600cf-672f-4342-8785-ab97353dee22",
+      "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2FDashboard.jpg?alt=media&token=29ff26b6-abae-4d67-bb57-19f718417be4",
   };
   // }
 };
@@ -139,7 +139,7 @@ export const getUserRegistrationContent = async () => {
     description:
       "Create Group events and One-on-one services, Monetize all your business ideas.",
     image:
-      "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2FEvent.png?alt=media&token=decc0f20-fdf4-46f4-8760-99cd27a6a721",
+      "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2FEvent.jpg?alt=media&token=5e1ad1da-90d9-4ab2-93c9-f25ecf1c6145",
   };
   // }
 };
