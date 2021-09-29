@@ -64,4 +64,8 @@ export const styles = makeStyles((theme) => ({
       boxShadow: "0px 0px 7px 0px grey",
     },
   },
+
+  helperText: {
+    color: "#000000",
+  },
 }));

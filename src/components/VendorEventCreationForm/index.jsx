@@ -610,7 +610,14 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                 onBlur={formik.handleBlur}
                 value={formik.values.link}
                 error={formik.touched.link && Boolean(formik.errors.link)}
-                helperText={formik.touched.link && formik.errors.link}
+                helperText={
+                  formik.errors.link
+                    ? formik.errors.link
+                    : edit
+                    ? ""
+                    : "You can also personalize your event link, e.g. YogaWithNeha, CookieBakingWorkshop"
+                }
+                FormHelperTextProps={{ className: classes.helperText }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">payorb/</InputAdornment>
