@@ -64,7 +64,8 @@ export const styles = makeStyles((theme) => ({
       boxShadow: "0px 0px 7px 0px grey",
     },
   },
-  customEventLinkPrompt: {
-    fontSize: "0.75em",
+
+  helperText: {
+    color: "#000000",
   },
 }));
