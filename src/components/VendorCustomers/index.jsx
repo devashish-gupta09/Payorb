@@ -25,6 +25,7 @@ import { sendNotificationToCustomers } from "../../services/notification";
 import { getMonthDate } from "../../utils/dateTime";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
+import Multiselect from "../Multiselect";
 import SkeletonLoading from "../SkeletonLoading";
 
 function createData(name, phoneNumber, email, date, events, eventList) {
@@ -50,6 +51,7 @@ function VendorCustomers() {
   const [selectedValueForFilter, setSelectedValueForFilter] = React.useState(
     []
   );
+  const [collapsed, setCollapsed] = React.useState(true);
   // const [sendBtnLoading, setSendBtnLoading] = React.useState(false);
   const { Alert, showAlert } = useAlertSnackbar();
 
@@ -63,12 +65,15 @@ function VendorCustomers() {
     setSelectedValue(event.target.value);
   };
 
-  const handleFilterChange = (event) => {
-    setSelectedValueForFilter(
-      typeof event.target.value === "string"
-        ? event.target.value.split(",")
-        : event.target.value
-    );
+  const handleFilterChange = (link) => {
+    let temp = [...selectedValueForFilter];
+    if (temp.includes(link)) {
+      temp = temp.filter((l) => l !== link);
+      setSelectedValueForFilter([...temp]);
+    } else {
+      temp = [...temp, link];
+      setSelectedValueForFilter([...temp]);
+    }
   };
 
   const sendNotification = async () => {
@@ -169,41 +174,29 @@ function VendorCustomers() {
           justify="space-between"
           alignItems="center"
         >
-          <Grid>
+          <div
+            className={classes.collapseController}
+            onClick={() => setCollapsed(!collapsed)}
+          >
+            <Typography>Filter by Events</Typography>
             {eventLoading ? (
               <CircularProgress />
-            ) : events && events.length ? (
-              <Grid container alignItems={"center"}>
-                <Typography>Filter by Events</Typography>
-                <Select
-                  multiple
-                  style={{ margin: "0.5em 0.5em" }}
-                  className={classes.select}
-                  variant="outlined"
-                  value={selectedValueForFilter}
-                  onChange={handleFilterChange}
-                  SelectDisplayProps={{
-                    style: {
-                      width: "10em",
-                      background: "white",
-                      paddingTop: "0.75em",
-                      paddingBottom: "0.75em",
-                    },
-                  }}
-                  MenuProps={{
-                    style: {},
-                  }}
-                >
-                  {events &&
-                    events.map((event) => (
-                      <MenuItem key={event.link} value={event.link}>
-                        {event.name}
-                      </MenuItem>
-                    ))}
-                </Select>
-              </Grid>
-            ) : null}
-          </Grid>
+            ) : (
+              <Multiselect
+                className={classes.select}
+                events={events}
+                setSelected={handleFilterChange}
+                selected={selectedValueForFilter}
+                label={
+                  selectedValueForFilter.length === 1
+                    ? events.filter(
+                        (e) => e.link === selectedValueForFilter[0]
+                      )[0]["name"]
+                    : selectedValueForFilter.length + " Selected"
+                }
+              />
+            )}
+          </div>
           <Grid className={classes.selectDesktopView}>
             {eventLoading ? (
               <CircularProgress />
@@ -400,6 +393,22 @@ const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
+  },
+  chips: {
+    margin: "0px 5px 5px 0",
+  },
+  collapseController: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "start",
+  },
+  collapseArrowDown: {
+    transition: `transform .8s ease`,
+    transform: `rotate(0deg)`,
+  },
+  collapseArrowUp: {
+    transform: `rotate(-180deg)`,
+    transition: `transform .8s ease`,
   },
   sendButton: {
     background: "white",
