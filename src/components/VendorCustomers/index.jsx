@@ -12,10 +12,8 @@ import {
   TableRow,
   Typography,
   Tooltip,
-  Chip,
-  Collapse,
 } from "@material-ui/core";
-import { Send, Info, KeyboardArrowDown } from "@material-ui/icons";
+import { Send, Info } from "@material-ui/icons";
 import React from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
@@ -27,6 +25,7 @@ import { sendNotificationToCustomers } from "../../services/notification";
 import { getMonthDate } from "../../utils/dateTime";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
+import Multiselect from "../Multiselect";
 import SkeletonLoading from "../SkeletonLoading";
 
 function createData(name, phoneNumber, email, date, events, eventList) {
@@ -180,11 +179,23 @@ function VendorCustomers() {
             onClick={() => setCollapsed(!collapsed)}
           >
             <Typography>Filter by Events</Typography>
-            <KeyboardArrowDown
-              className={
-                collapsed ? classes.collapseArrowDown : classes.collapseArrowUp
-              }
-            />
+            {eventLoading ? (
+              <CircularProgress />
+            ) : (
+              <Multiselect
+                className={classes.select}
+                events={events}
+                setSelected={handleFilterChange}
+                selected={selectedValueForFilter}
+                label={
+                  selectedValueForFilter.length === 1
+                    ? events.filter(
+                        (e) => e.link === selectedValueForFilter[0]
+                      )[0]["name"]
+                    : selectedValueForFilter.length + " Selected"
+                }
+              />
+            )}
           </div>
           <Grid className={classes.selectDesktopView}>
             {eventLoading ? (
@@ -234,48 +245,6 @@ function VendorCustomers() {
               </Grid>
             ) : null}
           </Grid>
-        </Grid>
-
-        <Grid
-          className={`${classes.title}`}
-          container
-          justify="start"
-          alignItems="center"
-        >
-          <Collapse in={!collapsed}>
-            {events &&
-              [
-                ...events,
-                ...events,
-                ...events,
-                ...events,
-                ...events,
-                ...events,
-                ...events,
-                ...events,
-                ...events,
-                ...events,
-                ...events,
-                ...events,
-                ...events,
-                ...events,
-                ...events,
-                ...events,
-              ].map((event) => (
-                <Chip
-                  className={classes.chips}
-                  label={event.name}
-                  color={
-                    selectedValueForFilter.includes(event.link) ? "primary" : ""
-                  }
-                  key={event.link}
-                  onClick={(e) => handleFilterChange(event.link)}
-                />
-                // <MenuItem key={event.link} value={event.link}>
-                //   {event.name}
-                // </MenuItem>
-              ))}
-          </Collapse>
         </Grid>
         <DashboardCard>
           <TableContainer className={classes.container}>
@@ -429,7 +398,6 @@ const styles = makeStyles((theme) => ({
     margin: "0px 5px 5px 0",
   },
   collapseController: {
-    cursor: "pointer",
     display: "flex",
     alignItems: "center",
     justifyContent: "start",
