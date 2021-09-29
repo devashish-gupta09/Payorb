@@ -618,6 +618,10 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                 }}
                 disabled={edit}
               />
+              <FormLabel className={classes.customEventLinkPrompt}>
+                You can also personalize your event link, e.g. YogaWithNeha,
+                CookieBakingWorkshop
+              </FormLabel>
 
               <ButtonCapsule
                 disabled={loader}
