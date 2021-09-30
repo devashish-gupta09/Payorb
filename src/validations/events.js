@@ -30,6 +30,9 @@ export const createEventValidationSchema = Yup.object({
     .max(40, "Must be 40 characters or less")
 
     .required(),
+  privateMessage: Yup.string()
+    .min(6, "Must be 6 characters or more.")
+    .max(1000, "Must be 1000 characters or less"),
   price: Yup.number()
     .min(0, "Price of a ticket must be greater than 0")
     .max(999999, "Price of a ticket must be less than 999999"),
