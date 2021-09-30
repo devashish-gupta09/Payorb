@@ -64,6 +64,7 @@ function getCreationFormInitialState() {
     category: EVENT_CATEGORY.EDUCATION,
     address: "",
     description: "",
+    privateMessage: "",
     price: 0,
     mode: EVENT_MODES.ONLINE,
     totalTickets: 0,
@@ -490,7 +491,7 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                   />
                 </Grid>
               ) : null}
-
+              {/* <Grid item sm={12} container spacing={2}> */}
               {/* EVENT DESCRIPTION FIELD */}
               <Grid item sm={12} style={{ width: "100%" }}>
                 <TextField
@@ -510,10 +511,36 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                   helperText={
                     formik.touched.description && formik.errors.description
                   }
-                  rows={4}
+                  rows={2}
                 />
               </Grid>
 
+              {/* PRIVATE MESSAGE FIELD */}
+              <Grid item sm={12} style={{ width: "100%" }}>
+                <TextField
+                  multiline
+                  fullWidth
+                  className={classes.textInput}
+                  id="privateMessage"
+                  label={"Message to Customers"}
+                  variant="outlined"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.privateMessage}
+                  error={
+                    formik.touched.privateMessage &&
+                    Boolean(formik.errors.privateMessage)
+                  }
+                  helperText={
+                    formik.errors.privateMessage
+                      ? formik.errors.privateMessage
+                      : "Customers will receive this message on email after they complete their purchase"
+                  }
+                  rows={2}
+                  FormHelperTextProps={{ className: classes.helperText }}
+                />
+              </Grid>
+              {/* </Grid> */}
               {/* EVENT MODE AND TICKET PRICE */}
               <Grid item sm={12} container>
                 {/* EVENT MODE */}
