@@ -7,7 +7,7 @@ export const styles = makeStyles((theme) => ({
   container: {
     background: "white",
     borderRadius: "10px",
-    padding: "2em",
+    padding: "1em 2em",
     [theme.breakpoints.down("sm")]: {
       padding: "1em",
     },
@@ -42,7 +42,7 @@ export const styles = makeStyles((theme) => ({
     },
   },
   titleContainer: {
-    padding: "2em 2em 0 2em",
+    padding: "1em 2em 0 2em",
     [theme.breakpoints.down("sm")]: {
       padding: "0 0 2em 0",
     },
