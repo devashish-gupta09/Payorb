@@ -9,7 +9,7 @@ export const sendOTP = async (to, channel) => {
     const res = await axios.post(
       `${API_URL}/${END_POINTS.TWILIO_SEND_OTP}`,
       {
-        to,
+        to: to.startsWith("+91") ? to : `+91${to}`,
         channel,
       },
       {
@@ -28,7 +28,7 @@ export const verifyOTP = async (to, code) => {
     const res = await axios.post(
       `${API_URL}/${END_POINTS.TWILIO_VERIFY_OTP}`,
       {
-        to,
+        to: to.startsWith("+91") ? to : `+91${to}`,
         code,
       },
       {
