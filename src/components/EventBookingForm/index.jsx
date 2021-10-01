@@ -134,7 +134,11 @@ function EventBookingForm({
                   : "",
             });
 
-            displayRazorpay(order.rzpOrderId, values);
+            displayRazorpay(
+              order.rzpOrderId,
+              values,
+              customerCreationRes.data.customer.customerId
+            );
             setPaymentProgLoader(false);
           }
         } catch (err) {
@@ -177,11 +181,26 @@ function EventBookingForm({
     }
   };
 
-  const displayRazorpay = async (orderId, orderData) => {
+  const displayRazorpay = async (orderId, orderData, customerId) => {
+    if (eventLink === "payorbseminar") {
+      await submitSuccessOrder({
+        razorpayPaymentId: `payorb-seminar-${customerId}`,
+        razorpaySignature: `payorb-seminar-${customerId}`,
+        razorpayOrderId: `payorb-seminar-${customerId}`,
+        eventID: eventLink,
+      });
+
+      showAlert(`Your payment id: payorb-seminar-${customerId} `);
+      setOrderId(`payorb-seminar-${customerId}`);
+      setSuccess(true);
+
+      return;
+    }
+
     const res = await loadRazorPay();
 
     if (!res) {
-      alert("Are you online?");
+      showAlert("Are you online?");
     }
 
     const options = {
@@ -236,7 +255,7 @@ function EventBookingForm({
     var rzp1 = new window.Razorpay(options);
 
     rzp1.on("payment.failed", async function (response) {
-      alert(response.error);
+      showAlert(response.error);
       try {
         const res = await failOrder(response.error.metadata.order_id);
 
