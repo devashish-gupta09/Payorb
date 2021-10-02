@@ -1,3 +1,9 @@
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  KeyboardDatePicker,
+  KeyboardTimePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
 import {
   Button,
   FormControl,
@@ -17,6 +23,7 @@ import {
   Tooltip,
   useMediaQuery,
   useTheme,
+  Switch,
 } from "@material-ui/core";
 
 import createHash from "create-hash";
@@ -49,7 +56,6 @@ import ButtonCapsule from "../ButtonCapsule";
 import ImageEventUpload from "../ImageEventUpload";
 import OneOnOneDateSelector from "../OneOnOneDateSelector";
 import OneTimeDateSelector from "../OneTimeDateSelector";
-
 import PostEventCreationDialog from "../PostEventCreationDialog";
 import { EventCategoryField } from "./EventCategoryField";
 import { styles } from "./styles";
@@ -76,6 +82,9 @@ function getCreationFormInitialState() {
     slotStartTimePerDay: getDateForTime(9),
     slotEndTimePerDay: getDateForTime(17),
     otherField: "",
+    earlyBird: false,
+    earlyBirdPrice: 0,
+    earlyBirdDeadline: getDateForTime(new Date().getHours() + 1),
   };
 }
 
@@ -204,6 +213,10 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
       }
     },
   });
+
+  const handleEarlyBirdDeadlineChange = (date) => {
+    formik.setFieldValue("earlyBirdDeadline", date.toISOString());
+  };
 
   const handleImageUpload = React.useCallback(
     async (link) => {
@@ -585,6 +598,136 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                     helperText={formik.touched.price && formik.errors.price}
                     disabled={checkDisabled()}
                   />
+                </Grid>
+                <Grid item sm={12}>
+                  <Grid container alignItems="center">
+                    <Grid item sm={6}>
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            id="earlyBird"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            checked={formik.values.earlyBird}
+                            error={
+                              formik.touched.earlyBird &&
+                              Boolean(formik.errors.earlyBird)
+                            }
+                            helperText={
+                              formik.touched.earlyBird &&
+                              formik.errors.earlyBird
+                            }
+                          />
+                        }
+                        label={"Early Bird"}
+                      />
+                    </Grid>
+                    {formik.values.earlyBird ? (
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <Grid
+                          item
+                          sm={6}
+                          container
+                          spacing={1}
+                          alignItems="center"
+                        >
+                          <Grid item xs={6}>
+                            <KeyboardDatePicker
+                              disablePast={true}
+                              KeyboardButtonProps={{
+                                style: {
+                                  paddingLeft: "0.2em",
+                                  paddingRight: "0.4em",
+                                },
+                              }}
+                              InputProps={{
+                                style: {
+                                  padding: 0,
+                                },
+                              }}
+                              inputVariant="outlined"
+                              margin="normal"
+                              id="earlyBirdEndDate"
+                              label="Offer End Date"
+                              format="dd/MM/yyyy"
+                              value={formik.values.earlyBirdDeadline}
+                              onChange={handleEarlyBirdDeadlineChange}
+                              helperText={
+                                formik.touched.earlyBirdDeadline &&
+                                formik.errors.earlyBirdDeadline
+                              }
+                              error={
+                                formik.touched.earlyBirdDeadline &&
+                                Boolean(formik.errors.earlyBirdDeadline)
+                              }
+                              disabled={checkDisabled()}
+                            />
+
+                            {/* </FormControl> */}
+                          </Grid>
+                          <Grid item xs={6}>
+                            <KeyboardTimePicker
+                              KeyboardButtonProps={{
+                                style: {
+                                  paddingLeft: "0.2em",
+                                  paddingRight: "0.4em",
+                                },
+                              }}
+                              InputProps={{
+                                style: {
+                                  padding: 0,
+                                },
+                              }}
+                              inputVariant="outlined"
+                              margin="normal"
+                              id="time-picker"
+                              label="Offer End Time"
+                              value={formik.values.earlyBirdDeadline}
+                              onChange={handleEarlyBirdDeadlineChange}
+                              helperText={
+                                formik.touched.earlyBirdDeadline &&
+                                formik.errors.earlyBirdDeadline
+                              }
+                              error={
+                                formik.touched.earlyBirdDeadline &&
+                                Boolean(formik.errors.earlyBirdDeadline)
+                              }
+                              disabled={checkDisabled()}
+                            />
+                          </Grid>
+                        </Grid>
+                      </MuiPickersUtilsProvider>
+                    ) : null}
+                  </Grid>
+                </Grid>
+                <Grid item sm={12}>
+                  <Grid container spacing={3} alignItems="center">
+                    {formik.values.earlyBird ? (
+                      <>
+                        <Grid item sm={6}>
+                          <TextField
+                            type="number"
+                            fullWidth
+                            className={classes.textInput}
+                            id="earlyBirdPrice"
+                            label={"Early bird price"}
+                            variant="outlined"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.earlyBirdPrice}
+                            error={
+                              formik.touched.earlyBirdPrice &&
+                              Boolean(formik.errors.earlyBirdPrice)
+                            }
+                            helperText={
+                              formik.touched.earlyBirdPrice &&
+                              formik.errors.earlyBirdPrice
+                            }
+                          />
+                        </Grid>
+                      </>
+                    ) : null}
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
