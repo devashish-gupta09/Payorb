@@ -16,6 +16,8 @@ export const styles = makeStyles((theme) => ({
     padding: "1em",
     maxHeight: "30em",
     width: "100%",
+    display: "flex",
+    alignItems: "center",
     [theme.breakpoints.down("sm")]: {
       padding: 0,
     },

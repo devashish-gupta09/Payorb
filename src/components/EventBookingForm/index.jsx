@@ -48,6 +48,9 @@ const loadRazorPay = () => {
 
 function EventBookingForm({
   eventLink,
+  earlyBird,
+  earlyBirdPrice,
+  earlyBirdDeadline,
   price,
   type,
   oneOnOneBooking: { startDate },
@@ -123,7 +126,11 @@ function EventBookingForm({
           if (customerCreationRes.data.customer) {
             const order = await createOrder({
               order: {
-                amount: price,
+                amount:
+                  earlyBird &&
+                  parseInt(Date.parse(new Date(earlyBirdDeadline))) > Date.now()
+                    ? earlyBirdPrice
+                    : price,
                 customerId: customerCreationRes.data.customer.customerId,
               },
               eventId: eventLink,
@@ -186,7 +193,11 @@ function EventBookingForm({
 
     const options = {
       key: process.env.NEXT_PUBLIC_PAYMENT_GATEWAY_KEY,
-      amount: getRzpAmountFormat(price),
+      amount:
+        earlyBird &&
+        parseInt(Date.parse(new Date(earlyBirdDeadline))) > Date.now()
+          ? getRzpAmountFormat(earlyBirdPrice)
+          : getRzpAmountFormat(price),
       currency: "INR",
       name: orderData.name,
       description: `Payment made for ${eventLink}`,
@@ -372,7 +383,13 @@ function EventBookingForm({
                   showLoader={paymentProgLoader}
                   buttonStyle={classes.paybutton}
                   disabled={(!otpSent && !confirmationResult) || !tAndC}
-                  text={`Pay Rs.${price}`}
+                  text={
+                    earlyBird &&
+                    parseInt(Date.parse(new Date(earlyBirdDeadline))) >
+                      Date.now()
+                      ? `Pay <s>Rs.${price}</s> Rs.${earlyBirdPrice}`
+                      : `Pay Rs.${price}`
+                  }
                   type={"submit"}
                 />
               </div>

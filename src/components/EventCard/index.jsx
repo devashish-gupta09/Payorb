@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import { DeleteRounded, Share } from "@material-ui/icons";
 import React from "react";
+import { useMediaQuery } from "react-responsive";
 
 import { globalStyles } from "../../../styles/globalStyles";
 import { EVENT_TYPES } from "../../constants/events";
@@ -28,7 +29,11 @@ import { styles } from "./styles";
 export function EventCardDate({ classes, startDate, endDate }) {
   return (
     <>
-      <Typography align="center" variant="h6" style={{ width: "max-content" }}>
+      <Typography
+        align="center"
+        variant="h6"
+        style={{ width: "max-content", margin: "0" }}
+      >
         {getEventMonth(startDate, endDate)}
       </Typography>
       <Typography align="center">{`${getEventDate(
@@ -46,7 +51,7 @@ function EventCard({ event, handleEventDelete }) {
   const [shareDialog, setShareDialog] = React.useState(false);
   const { state } = useUserAuthDetails();
   const [deleteBtn, setDelete] = React.useState(false);
-
+  const isTabletOrMobile = useMediaQuery({ maxWidth: 900 });
   const handleEdit = () => {
     setEdit(true);
   };
@@ -148,59 +153,133 @@ function EventCard({ event, handleEventDelete }) {
               </Grid>
             </Grid>
           </Grid>
-
-          {/* Second Row : Event Type and General information */}
           <Grid container>
-            <Grid item sm={4} className={classes.generalInfoContainer}>
-              <Grid container justify="space-between">
-                <Grid>
+            <Grid item sm={3} className={classes.generalInfoContainer}>
+              <Typography
+                variant="body2"
+                gutterBottom
+                className={classes.greyFont}
+              >
+                {"Event Type"}
+              </Typography>
+              <Typography className={globalClasses.bold500} gutterBottom>
+                {formatEventType(event.type)}
+              </Typography>
+            </Grid>
+            <Grid item sm={3} className={classes.generalInfoContainer}>
+              <Typography
+                variant="body2"
+                gutterBottom
+                className={classes.greyFont}
+              >
+                {"Regular Price"}
+              </Typography>
+              <Typography className={globalClasses.bold800} gutterBottom>
+                &#8377; {event.price}
+              </Typography>
+            </Grid>
+            {event.earlyBird ? (
+              <>
+                {" "}
+                <Grid item sm={3} className={classes.generalInfoContainer}>
                   <Typography
                     variant="body2"
                     gutterBottom
                     className={classes.greyFont}
                   >
-                    {formatEventType(event.type)}
+                    {"Early Bird Price"}
                   </Typography>
                   <Typography className={globalClasses.bold500} gutterBottom>
                     {" "}
-                    &#8377; {event.price}
+                    &#8377; {event.earlyBirdPrice}
                   </Typography>
                 </Grid>
+                <Grid item sm={3} className={classes.generalInfoContainer}>
+                  <Typography
+                    variant="body2"
+                    gutterBottom
+                    className={classes.greyFont}
+                  >
+                    {"Early Bird Deadline"}
+                  </Typography>
+                  <Typography className={globalClasses.bold500} gutterBottom>
+                    {new Date(
+                      Date.parse(event.earlyBirdDeadline)
+                    ).toLocaleString("en-GB", {
+                      hour12: true,
+                    })}
+                  </Typography>
+                </Grid>
+              </>
+            ) : null}
+          </Grid>
 
-                {/* Date and month section */}
+          {/* third Row : Event Type and General information */}
+          <Grid container>
+            <Grid item container sm={8} xs={8} md={8} lg={8} xl={8}>
+              <Grid
+                container
+                item
+                sm={12}
+                xs={12}
+                md={6}
+                lg={6}
+                xl={6}
+                className={classes.generalInfoContainer}
+              >
+                <Typography className={`${classes.greyFont} ${classes.seats}`}>
+                  Sold out seats: {event.orders ? event.orders.length : 0}
+                  {event.type === EVENT_TYPES.ONE_TIME &&
+                    `/${event.totalTickets}`}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                container
+                sm={12}
+                xs={12}
+                md={6}
+                lg={6}
+                xl={6}
+                className={classes.generalInfoContainer}
+              >
+                <Typography className={`${classes.greyFont} ${classes.seats}`}>
+                  Total Revenue: &#8377;
+                  {`${
+                    parseInt(event.orders ? event.orders.length : 0) *
+                    parseInt(event.price)
+                  }`}
+                </Typography>
+              </Grid>
+            </Grid>
+            {isTabletOrMobile ? (
+              <Grid item container sm={4} xs={4} md={0} lg={0} xl={0}>
                 <Grid
-                  className={classes.mobile}
+                  container
                   style={{
-                    height: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
-                  <Grid className={classes.datesInnerContainer}>
-                    <EventCardDate
-                      classes={classes}
-                      startDate={event.startDate}
-                      endDate={event.endDate}
-                    />
+                  <Grid
+                    className={classes.mobile}
+                    style={{
+                      height: "100%",
+                    }}
+                  >
+                    <Grid className={classes.datesInnerContainer}>
+                      <EventCardDate
+                        classes={classes}
+                        startDate={event.startDate}
+                        endDate={event.endDate}
+                      />
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
-
-              <Typography className={`${classes.greyFont} ${classes.seats}`}>
-                Sold out seats: {event.orders ? event.orders.length : 0}
-                {event.type === EVENT_TYPES.ONE_TIME &&
-                  `/${event.totalTickets}`}
-              </Typography>
-            </Grid>
-
-            <Grid item container sm={4} alignItems="flex-end">
-              <Typography className={`${classes.greyFont} ${classes.seats}`}>
-                Total Revenue: &#8377;
-                {`${
-                  parseInt(event.orders ? event.orders.length : 0) *
-                  parseInt(event.price)
-                }`}
-              </Typography>
-            </Grid>
-
+            ) : null}
             <Grid
               item
               sm={4}
