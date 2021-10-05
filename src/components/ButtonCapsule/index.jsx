@@ -3,6 +3,16 @@ import React from "react";
 
 import { styles } from "./styles";
 
+export const DangerouslySetInnterHtml = ({ text }) => {
+  return (
+    <div
+      dangerouslySetInnerHTML={{
+        __html: text,
+      }}
+    ></div>
+  );
+};
+
 function ButtonCapsule({
   disabled = false,
   type,
@@ -14,6 +24,7 @@ function ButtonCapsule({
   icon,
 }) {
   const classes = styles();
+
   return (
     <Button
       type={type}
@@ -29,7 +40,7 @@ function ButtonCapsule({
           style={{ marginRight: "1em" }}
         />
       )}
-      {text} {icon ? icon : null}
+      {<DangerouslySetInnterHtml text={text} />} {icon ? icon : null}
     </Button>
   );
 }

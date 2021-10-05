@@ -16,6 +16,7 @@ import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 import useFetchEvents from "../../hooks/useFetchEvents";
 import { getMonthDate } from "../../utils/dateTime";
 import { getCategoryString } from "../../utils/events";
+import { DangerouslySetInnterHtml } from "../ButtonCapsule";
 import Capsule from "../Capsule";
 import DashboardCard from "../DashboardCard";
 import DetailRow from "../DetailRow";
@@ -44,7 +45,11 @@ const eventRows = (event, oneOnOneSlot) => [
   {
     icon: <Money />,
     key: "price",
-    value: `Rs. ${event.price}`,
+    value:
+      event.earlyBird &&
+      parseInt(Date.parse(new Date(event.earlyBirdDeadline))) > Date.now()
+        ? `<s>Rs. ${event.price}</s> Rs. ${event.earlyBirdPrice} <span style="color:grey;">(Early bird discount)<span>`
+        : `Rs. ${event.price}`,
   },
   // {
   //   ...(event.type === EVENT_TYPES.ONE_TIME && {
@@ -68,6 +73,7 @@ const eventRows = (event, oneOnOneSlot) => [
         ? getEventslotDuration(event.startDate, event.endDate)
         : getEventslotDuration(oneOnOneSlot.startDate, oneOnOneSlot.endDate),
   },
+
   event.mode === EVENT_MODES.OFFLINE && {
     icon: <LocationOn />,
     key: "location",
@@ -134,7 +140,11 @@ function EventBooking({ eventLink }) {
                   }).map((row, index) => {
                     return (
                       <DetailRow key={index} classes={classes} icon={row.icon}>
-                        <Typography>{row.value}</Typography>
+                        <Typography>
+                          <DangerouslySetInnterHtml
+                            text={row.value}
+                          ></DangerouslySetInnterHtml>
+                        </Typography>
                       </DetailRow>
                     );
                   })}
@@ -162,6 +172,9 @@ function EventBooking({ eventLink }) {
                 </Typography>
                 <EventBookingForm
                   eventLink={event.link}
+                  earlyBird={event.earlyBird}
+                  earlyBirdPrice={event.earlyBirdPrice}
+                  earlyBirdDeadline={event.earlyBirdDeadline}
                   price={event.price}
                   type={event.type}
                   oneOnOneBooking={{ startDate: from }}
