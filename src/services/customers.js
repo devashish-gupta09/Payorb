@@ -6,13 +6,13 @@ import { getAuthHeader } from "./api";
 
 export const createCustomer = async (customer) => {
   try {
-    const x = {
-      headers: await getAuthHeader(),
-    };
+    // const x = {
+    //   headers: await getAuthHeader(),
+    // };
     const res = await axios.post(
       `${API_URL}/${END_POINTS.CUSTOMER}`,
-      { customer },
-      x
+      { customer }
+      // x
     );
 
     return res.data;
