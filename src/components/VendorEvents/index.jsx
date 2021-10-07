@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import React from "react";
 
 import Skeleton from "react-loading-skeleton";
+import { globalStyles } from "../../../styles/globalStyles";
 
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 
@@ -24,6 +25,7 @@ import EventsViewList from "../EventsViewList";
 import VendorEventsCalenderView from "../VendorEventsCalenderView";
 
 function VendorEvents() {
+  const globalClasses = globalStyles();
   const classes = styles();
   const theme = useTheme();
   const desktop = useMediaQuery(theme.breakpoints.up("sm"));
@@ -38,10 +40,19 @@ function VendorEvents() {
   const [loadMore, setLoadMore] = React.useState(true);
   const router = useRouter();
 
-  const handleCreateEvent = () => {
-    router.push(
-      buildVendorDashboardUrl(router.query.vendorId, "/events/create")
-    );
+  const handleCreateEvent = (trialClass) => {
+    if (trialClass) {
+      router.push(
+        buildVendorDashboardUrl(
+          router.query.vendorId,
+          "/events/create?trialClass=true"
+        )
+      );
+    } else {
+      router.push(
+        buildVendorDashboardUrl(router.query.vendorId, "/events/create")
+      );
+    }
   };
 
   const { Alert, showAlert } = useAlertSnackbar();
@@ -110,14 +121,23 @@ function VendorEvents() {
   return (
     <Grid className={classes.root}>
       {Alert()}
-      <Grid container justify="flex-end" style={{ padding: "1em" }}>
+      <Grid container justify="space-between" style={{ padding: "1em" }}>
         <Button onClick={toggleView}>
           {!listView ? <List /> : <DateRange />}
         </Button>
         {desktop && (
-          <Button title={"Add event"} onClick={handleCreateEvent}>
-            <Add />
-          </Button>
+          <div style={{ display: "flex" }}>
+            <ButtonCapsule
+              buttonStyle={`${globalClasses.bold} ${classes.editButton}`}
+              text="Create Event"
+              onClick={() => handleCreateEvent(false)}
+            ></ButtonCapsule>
+            <ButtonCapsule
+              buttonStyle={`${globalClasses.bold} ${classes.editButton}`}
+              text="Create Trial Event"
+              onClick={() => handleCreateEvent(true)}
+            ></ButtonCapsule>
+          </div>
         )}
       </Grid>
       {listView ? (
@@ -168,8 +188,13 @@ function VendorEvents() {
               <ButtonCapsule
                 text="Create New Event"
                 buttonStyle={classes.createEventButton}
-                onClick={handleCreateEvent}
+                onClick={() => handleCreateEvent(false)}
               />
+              <ButtonCapsule
+                buttonStyle={classes.createEventButton}
+                onClick={() => handleCreateEvent(true)}
+                text="Create Trial Event"
+              ></ButtonCapsule>
             </Grid>
           </DashboardCard>
         </Grid>
@@ -221,6 +246,7 @@ const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
+    marginBottom: "0.5em",
   },
   skeleton: {
     padding: "2em",
@@ -231,6 +257,11 @@ const styles = makeStyles((theme) => ({
       height: "80vh",
     },
     height: "fit-content",
+  },
+  editButton: {
+    padding: "0.5em 3em",
+    marginRight: "0.3em",
+    border: "1px solid grey",
   },
 }));
 
