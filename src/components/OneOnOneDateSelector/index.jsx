@@ -99,6 +99,14 @@ function OneOnOneDateSelector({ formik, checkDisabled }) {
             id="endDate"
             label="End Date"
             format="dd/MM/yyyy"
+            maxDate={
+              formik.values.trialClass
+                ? new Date(
+                    Date.parse(new Date(formik.values.startDate)) +
+                      30 * 24 * 60 * 60 * 1000
+                  )
+                : new Date().setFullYear(2099)
+            }
             value={formik.values.endDate}
             onChange={handleEndDate}
             helperText={formik.touched.endDate && formik.errors.endDate}

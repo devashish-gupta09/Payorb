@@ -39,7 +39,9 @@ function VendorDashboard() {
           case `/vendor/${vendorId}/customers`:
             return <VendorCustomers />;
           case `/vendor/${vendorId}/events/create`:
-            return <VendorEventCreationForm />;
+            return <VendorEventCreationForm trialClass={false} />;
+          case `/vendor/${vendorId}/events/create?trialClass=true`:
+            return <VendorEventCreationForm trialClass={true} />;
           case `/vendor/${vendorId}/events`:
             return <VendorEvents />;
           default:

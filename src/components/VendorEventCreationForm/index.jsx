@@ -24,6 +24,7 @@ import {
   useMediaQuery,
   useTheme,
   Switch,
+  DialogContentText,
 } from "@material-ui/core";
 
 import createHash from "create-hash";
@@ -46,6 +47,7 @@ import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { createEvent, editEvent } from "../../services/events";
+import { getVendorTrialClassQuota } from "../../services/vendor";
 import { delay, getDateForTime } from "../../utils/dateTime";
 import firebase from "../../utils/firebase";
 import { removeStringAndAddSeperator } from "../../utils/strings";
@@ -63,7 +65,7 @@ import { styles } from "./styles";
 const hash = createHash("sha256");
 hash.update(v4());
 
-function getCreationFormInitialState() {
+function getCreationFormInitialState(trialClass) {
   return {
     name: "",
     location: "",
@@ -85,6 +87,7 @@ function getCreationFormInitialState() {
     earlyBird: false,
     earlyBirdPrice: 0,
     earlyBirdDeadline: getDateForTime(new Date().getHours() + 1),
+    trialClass: trialClass === true ? true : false,
   };
 }
 
@@ -95,7 +98,7 @@ function getEventTypeDescription(type) {
   return "";
 }
 
-function VendorEventCreationForm({ event, edit, handleClose }) {
+function VendorEventCreationForm({ event, edit, handleClose, trialClass }) {
   const classes = styles();
   const globalClasses = globalStyles();
   const router = useRouter();
@@ -106,7 +109,9 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
   const { Alert, showAlert } = useAlertSnackbar();
   const [loader, setLoader] = React.useState(false);
-
+  const [trialClassQuotaExhausted, setTrialClassQuotaExhausted] =
+    React.useState(true);
+  const [trialErrorModalOpen, setTrialErrorModalOpen] = React.useState(false);
   const handlePostCreationDialogClose = () => {
     router.push(buildVendorDashboardUrl(getVendorIdFromUrl(router), "/events"));
   };
@@ -124,7 +129,7 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
   }, []);
 
   const formik = useFormik({
-    initialValues: event || getCreationFormInitialState(),
+    initialValues: event || getCreationFormInitialState(trialClass),
     validationSchema: createEventValidationSchema,
     validateOnBlur: true,
     onSubmit: async (values) => {
@@ -214,6 +219,39 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
     },
   });
 
+  const fetchVendorTrialClassQuota = async (startDate) => {
+    await getVendorTrialClassQuota(startDate)
+      .then((res) => {
+        if (res.data) {
+          if (res.data.trialClassQuota === true) {
+            setTrialErrorModalOpen(true);
+          }
+          setTrialClassQuotaExhausted(res.data.trialClassQuota);
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+  React.useEffect(() => {
+    fetchVendorTrialClassQuota(formik.values.startDate);
+  }, [formik.values.startDate]);
+
+  React.useEffect(() => {
+    if (formik.values.trialClass === true) {
+      formik.setFieldValue("price", 0);
+    }
+  }, [formik.values.trialClass]);
+
+  React.useEffect(() => {
+    if (!edit && trialClass && trialClassQuotaExhausted) {
+      formik.setFieldValue("trialClass", false);
+    } else if (!edit && trialClass && !trialClassQuotaExhausted) {
+      formik.setFieldValue("trialClass", true);
+    }
+  }, [trialClassQuotaExhausted]);
+
   const handleEarlyBirdDeadlineChange = (date) => {
     formik.setFieldValue("earlyBirdDeadline", date.toISOString());
   };
@@ -271,6 +309,8 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
 
   const checkDisabled = () => {
     if (edit && event?.orders && event?.orders?.length > 0) {
+      return true;
+    } else if (edit && formik.values.trialClass) {
       return true;
     }
   };
@@ -346,6 +386,50 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                   helperText={formik.touched.name && formik.errors.name}
                 />
               </Grid>
+
+              {trialClass || formik.values.trialClass ? (
+                trialClassQuotaExhausted && !formik.values.trialClass ? (
+                  <Dialog
+                    open={trialClassQuotaExhausted && trialErrorModalOpen}
+                    onClose={() => setTrialErrorModalOpen(false)}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                  >
+                    <DialogContent>
+                      <DialogContentText
+                        id="alert-dialog-description"
+                        style={{ padding: "2em", fontWeight: "bold" }}
+                      >
+                        You have utilized your trial class quota for the month.
+                        Please change Start Date in to create a new trial class.
+                      </DialogContentText>
+                    </DialogContent>
+                  </Dialog>
+                ) : (
+                  <Grid item sm={12}>
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          id="trialClass"
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          checked={formik.values.trialClass}
+                          error={
+                            formik.touched.trialClass &&
+                            Boolean(formik.errors.trialClass)
+                          }
+                          helperText={
+                            formik.touched.trialClass &&
+                            formik.errors.trialClass
+                          }
+                          disabled={edit}
+                        />
+                      }
+                      label={"Trial Class"}
+                    />
+                  </Grid>
+                )
+              ) : null}
 
               {/* EVENT TYPE FIELD */}
               <Grid container item sm={12} spacing={3} alignItems="center">
@@ -438,9 +522,11 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                   <OneTimeDateSelector
                     formik={formik}
                     checkDisabled={checkDisabled}
+                    edit={edit}
                   />
                 ) : (
                   <OneOnOneDateSelector
+                    edit={edit}
                     formik={formik}
                     checkDisabled={checkDisabled}
                   />
@@ -596,7 +682,7 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                     value={formik.values.price}
                     error={formik.touched.price && Boolean(formik.errors.price)}
                     helperText={formik.touched.price && formik.errors.price}
-                    disabled={checkDisabled()}
+                    disabled={formik.values.trialClass || checkDisabled()}
                   />
                 </Grid>
                 <Grid item sm={12}>
@@ -616,6 +702,9 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                             helperText={
                               formik.touched.earlyBird &&
                               formik.errors.earlyBird
+                            }
+                            disabled={
+                              checkDisabled() || formik.values.trialClass
                             }
                           />
                         }

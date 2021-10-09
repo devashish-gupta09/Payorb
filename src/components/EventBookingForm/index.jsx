@@ -47,6 +47,7 @@ const loadRazorPay = () => {
 };
 
 function EventBookingForm({
+  trialClass,
   eventLink,
   earlyBird,
   earlyBirdPrice,
@@ -124,6 +125,18 @@ function EventBookingForm({
           });
 
           if (customerCreationRes.data.customer) {
+            // console.log(customerCreationRes.data.customer);
+            if (
+              trialClass &&
+              customerCreationRes.data.customer.events.includes(eventLink)
+            ) {
+              showAlert(
+                "You had already subscribed to this event",
+                ALERT_TYPES.ERROR
+              );
+              setPaymentProgLoader(false);
+              return;
+            }
             const order = await createOrder({
               order: {
                 amount:
@@ -134,6 +147,7 @@ function EventBookingForm({
                 customerId: customerCreationRes.data.customer.customerId,
               },
               eventId: eventLink,
+              trialClass,
               type: type,
               slotTime:
                 type === EVENT_TYPES.ONE_ON_ONE
@@ -201,6 +215,18 @@ function EventBookingForm({
       setOrderId(`payorb-seminar-${customerId}`);
       setSuccess(true);
 
+      return;
+    } else if (trialClass) {
+      await submitSuccessOrder({
+        razorpayPaymentId: `trial-class-${eventLink}-${customerId}`,
+        razorpaySignature: `trial-class-${eventLink}-${customerId}`,
+        razorpayOrderId: `trial-class-${eventLink}-${customerId}`,
+        eventID: eventLink,
+      });
+
+      showAlert(`Your payment id: trial-class-${eventLink}-${customerId}`);
+      setOrderId(`trial-class-${eventLink}-${customerId}`);
+      setSuccess(true);
       return;
     }
 
@@ -403,10 +429,13 @@ function EventBookingForm({
                   buttonStyle={classes.paybutton}
                   disabled={(!otpSent && !confirmationResult) || !tAndC}
                   text={
-                    earlyBird &&
-                    parseInt(Date.parse(new Date(earlyBirdDeadline))) >
-                      Date.now()
-                      ? `Pay <s>Rs.${price}</s> Rs.${earlyBirdPrice}`
+                    earlyBird
+                      ? parseInt(Date.parse(new Date(earlyBirdDeadline))) >
+                        Date.now()
+                        ? `Pay <s>Rs.${price}</s> Rs.${earlyBirdPrice}`
+                        : `Pay Rs.${price}`
+                      : trialClass
+                      ? "Book Now"
                       : `Pay Rs.${price}`
                   }
                   type={"submit"}
