@@ -131,7 +131,7 @@ function EventBookingForm({
               customerCreationRes.data.customer.events.includes(eventLink)
             ) {
               showAlert(
-                "You had already subscribed to this event",
+                "You have already subscribed to this event",
                 ALERT_TYPES.ERROR
               );
               setPaymentProgLoader(false);
