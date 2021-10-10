@@ -203,20 +203,7 @@ function EventBookingForm({
   };
 
   const displayRazorpay = async (orderId, orderData, customerId) => {
-    if (eventLink === "payorbseminar") {
-      await submitSuccessOrder({
-        razorpayPaymentId: `payorb-seminar-${customerId}`,
-        razorpaySignature: `payorb-seminar-${customerId}`,
-        razorpayOrderId: `payorb-seminar-${customerId}`,
-        eventID: eventLink,
-      });
-
-      showAlert(`Your payment id: payorb-seminar-${customerId} `);
-      setOrderId(`payorb-seminar-${customerId}`);
-      setSuccess(true);
-
-      return;
-    } else if (trialClass) {
+    if (trialClass) {
       await submitSuccessOrder({
         razorpayPaymentId: `trial-class-${eventLink}-${customerId}`,
         razorpaySignature: `trial-class-${eventLink}-${customerId}`,
