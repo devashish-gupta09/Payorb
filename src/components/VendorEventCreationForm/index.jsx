@@ -101,6 +101,8 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
   const router = useRouter();
   const [dialog, setDialog] = React.useState({ display: false, text: "" });
   const [postEventDialog, setPostEventDialog] = React.useState(false);
+  const [descriptionRows, setDescriptionRows] = React.useState(3);
+  const [customMessageRows, setCustomMessageRows] = React.useState(3);
   const [croppedImg, setCroppedImage] = React.useState();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
@@ -213,6 +215,23 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
       }
     },
   });
+
+  React.useEffect(() => {
+    let toAddDescription =
+      formik.values.description.split("\n").length > 3
+        ? formik.values.description.split("\n").length - 3
+        : 0;
+    let toAddMessage =
+      formik.values.privateMessage.split("\n").length > 3
+        ? formik.values.privateMessage.split("\n").length - 3
+        : 0;
+    if (toAddDescription <= 7) {
+      setDescriptionRows(3 + toAddDescription);
+    }
+    if (toAddMessage <= 7) {
+      setCustomMessageRows(3 + toAddMessage);
+    }
+  }, [formik.values.description, formik.values.privateMessage]);
 
   const handleEarlyBirdDeadlineChange = (date) => {
     formik.setFieldValue("earlyBirdDeadline", date.toISOString());
@@ -524,7 +543,7 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                   helperText={
                     formik.touched.description && formik.errors.description
                   }
-                  rows={2}
+                  rows={descriptionRows}
                 />
               </Grid>
 
@@ -549,7 +568,7 @@ function VendorEventCreationForm({ event, edit, handleClose }) {
                       ? formik.errors.privateMessage
                       : "Customers will receive this message on email after they complete their purchase"
                   }
-                  rows={2}
+                  rows={customMessageRows}
                   FormHelperTextProps={{ className: classes.helperText }}
                 />
               </Grid>
