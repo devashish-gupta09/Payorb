@@ -33,7 +33,6 @@ function createData(name, phoneNumber, email, date, events, eventList) {
     name,
     phoneNumber,
     email,
-    date,
     events: events.length
       ? [
           ...new Set(
@@ -341,12 +340,12 @@ function VendorCustomers() {
 
 const columns = [
   { id: "name", label: "Customers", minWidth: 170 },
-  {
-    id: "date",
-    label: "Date",
-    minWidth: 100,
-    align: "center",
-  },
+  // {
+  //   id: "date",
+  //   label: "Date",
+  //   minWidth: 100,
+  //   align: "center",
+  // },
   {
     id: "phoneNumber",
     label: "Contact",
