@@ -18,6 +18,7 @@ import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 // import { PAGE_PATHS } from "../../constants/paths";
 import DashboardCard from "../DashboardCard";
 import DateMonth from "../DateMonth";
+import EventImageContainer from "../EventImageContainer/Index";
 import ReadMore from "../ReadMore";
 
 const loadFacebook = () => {
@@ -84,9 +85,8 @@ function PostEventCreationDialog(props) {
           <Grid item sm={12} className={classes.fullWidth}>
             <DashboardCard rootClass={`${classes.posterRoot}`}>
               <Grid>
-                <img
-                  src={eventImg || event.photoUrl || DEFAULT_EVENT_IMAGE}
-                  className={classes.eventPoster}
+                <EventImageContainer
+                  url={eventImg || event.photoUrl || DEFAULT_EVENT_IMAGE}
                 />
               </Grid>
 

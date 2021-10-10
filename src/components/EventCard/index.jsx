@@ -21,6 +21,7 @@ import AuthAlertGrid from "../AuthAlertGrid";
 import ButtonCapsule from "../ButtonCapsule";
 import CustomConfirmationDialog from "../CustomConfirmationDialog";
 import DashboardCard from "../DashboardCard";
+import EventImageContainer from "../EventImageContainer/Index";
 import PostEventCreationDialog from "../PostEventCreationDialog";
 import ReadMore from "../ReadMore";
 import VendorEventCreationForm from "../VendorEventCreationForm";
@@ -55,6 +56,7 @@ function EventCard({ event, handleEventDelete }) {
   const handleEdit = () => {
     setEdit(true);
   };
+
   const handleClose = () => {
     setEdit(false);
   };
@@ -115,10 +117,7 @@ function EventCard({ event, handleEventDelete }) {
 
       <Grid container alignItems={"stretch"}>
         <Grid item sm={3} className={classes.imageContainer}>
-          <img
-            className={classes.eventImage}
-            src={event.photoUrl || DEFAULT_EVENT_IMAGE}
-          />
+          <EventImageContainer url={event.photoUrl || DEFAULT_EVENT_IMAGE} />
         </Grid>
 
         <Grid className={classes.eventDetailContainer} item sm={9}>

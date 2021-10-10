@@ -22,6 +22,7 @@ import DashboardCard from "../DashboardCard";
 import DetailRow from "../DetailRow";
 import EventBookingForm from "../EventBookingForm";
 import EventBookingVendorCard from "../EventBookingVendorCard";
+import EventImageContainer from "../EventImageContainer/Index";
 import ReadMore from "../ReadMore";
 import SkeletonLoading from "../SkeletonLoading";
 
@@ -153,9 +154,8 @@ function EventBooking({ eventLink }) {
             </Grid>
             <Grid item sm={12} className={classes.fullWidth}>
               <DashboardCard rootClass={`${classes.posterRoot}`}>
-                <img
-                  src={event.photoUrl || DEFAULT_EVENT_IMAGE}
-                  className={classes.eventPoster}
+                <EventImageContainer
+                  url={event.photoUrl || DEFAULT_EVENT_IMAGE}
                 />
               </DashboardCard>
             </Grid>

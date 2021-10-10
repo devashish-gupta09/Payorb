@@ -8,6 +8,7 @@ import { formatEventType, isEventPastDate } from "../../utils/events";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
 import { EventCardDate } from "../EventCard";
+import EventImageContainer from "../EventImageContainer/Index";
 import ReadMore from "../ReadMore";
 import { styles } from "./styles";
 
@@ -24,10 +25,7 @@ function CustomerEventCard({ event, expand, onBook }) {
     <DashboardCard rootClass={classes.root}>
       <Grid container alignItems={"stretch"}>
         <Grid item sm={3} className={classes.imageContainer}>
-          <img
-            className={classes.eventImage}
-            src={event.photoUrl || DEFAULT_EVENT_IMAGE}
-          />
+          <EventImageContainer url={event.photoUrl || DEFAULT_EVENT_IMAGE} />
         </Grid>
 
         <Grid
