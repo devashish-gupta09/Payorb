@@ -1,6 +1,10 @@
 import { TextField, Typography } from "@material-ui/core";
+import Linkify from "linkify-react";
 import React from "react";
-import Linkify from "react-linkify";
+
+const options = {
+  className: "new-link--url-linkify",
+};
 
 function EditableTextField({ value, edit, typographyProps, textFieldProps }) {
   return (
@@ -9,12 +13,7 @@ function EditableTextField({ value, edit, typographyProps, textFieldProps }) {
         <TextField {...textFieldProps}></TextField>
       ) : (
         <Typography {...typographyProps}>
-          <Linkify
-            component="a"
-            properties={{
-              target: "_blank",
-            }}
-          >
+          <Linkify tagName="p" options={options}>
             {value}
           </Linkify>
         </Typography>

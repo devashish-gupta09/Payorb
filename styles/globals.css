@@ -28,3 +28,8 @@ a {
   background-color: darkgrey;
   outline: 1px solid slategrey;
 }
+
+.new-link--url-linkify {
+  color: skyblue;
+  cursor: pointer;
+}
