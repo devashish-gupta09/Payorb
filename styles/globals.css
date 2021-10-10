@@ -30,6 +30,10 @@ a {
 }
 
 .new-link--url-linkify {
-  color: skyblue;
+  color: #377373;
   cursor: pointer;
+}
+
+.new-link--url-linkify:hover {
+  color: #0eadad;
 }
