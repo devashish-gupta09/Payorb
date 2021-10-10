@@ -20,6 +20,8 @@ const EventImageContainer = ({ url }) => {
         alignItems: "center",
         justifyContent: "center",
         overflow: "hidden",
+        transform: "scale(1.03)",
+        border: "10px solid grey",
       }}
       ref={imageContainerRef}
     >
@@ -32,7 +34,7 @@ const EventImageContainer = ({ url }) => {
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
-          filter: "blur(2px)",
+          filter: "blur(8px)",
           position: "absolute",
           zIndex: "0",
           height: imgHeight,
