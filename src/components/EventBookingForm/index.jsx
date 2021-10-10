@@ -118,10 +118,13 @@ function EventBookingForm({
         try {
           setPaymentProgLoader(true);
 
-          const customerCreationRes = await createCustomer({
-            ...values,
-            otp: undefined,
-          });
+          const customerCreationRes = await createCustomer(
+            {
+              ...values,
+              otp: undefined,
+            },
+            eventLink
+          );
 
           if (customerCreationRes.data.customer) {
             const order = await createOrder({
