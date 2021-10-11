@@ -34,7 +34,10 @@ export const createEventValidationSchema = Yup.object({
     .min(6, "Must be 6 characters or more.")
     .max(1000, "Must be 1000 characters or less"),
   price: Yup.number()
-    .min(1, "Price of a ticket must be greater than 0")
+    .when("trialClass", {
+      is: (value) => value === false,
+      then: Yup.number().min(1, "Price of a ticket must be greater than 0"),
+    })
     .max(999999, "Price of a ticket must be less than 999999"),
   totalTickets: Yup.number().lessThan(
     100000,
@@ -67,18 +70,20 @@ export const createEventValidationSchema = Yup.object({
       )
       .required(),
   }),
-  earlyBird: Yup.boolean().required(),
+  earlyBird: Yup.boolean(),
   earlyBirdPrice: Yup.number().when("earlyBird", {
     is: (value) => value === true,
-    then: Yup.number()
-      .min(1, "Price of a ticket must be greater than 0")
-      .max(Yup.ref("price"), "Discounted price can't be more than actual price")
-      .required(),
+    then: Yup.number().max(
+      Yup.ref("price"),
+      "Discounted price can't be more than actual price"
+    ),
   }),
   earlyBirdDeadline: Yup.date().when("earlyBird", {
     is: (value) => value === true,
-    then: Yup.date()
-      .max(Yup.ref("endDate"), "Deadline can't be after event end Date")
-      .required(),
+    then: Yup.date().max(
+      Yup.ref("endDate"),
+      "Deadline can't be after event end Date"
+    ),
   }),
+  trialClass: Yup.boolean(),
 });

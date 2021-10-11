@@ -37,3 +37,27 @@ export const getVendorVerifiedDetails = async () => {
     throw err.response.data || err.message;
   }
 };
+
+export const getVendorTrialClassQuota = async (startDate) => {
+  try {
+    const authHeader = await getAuthHeader();
+
+    if (!authHeader) {
+      throw new Error("No auth header found");
+    }
+
+    console.log(startDate)
+
+    const res = await axios.get(
+      `${API_URL}/${END_POINTS.VENDOR}/trialClassQuota?startDate=${Date.parse(
+        new Date(startDate)
+      )}`,
+      {
+        headers: authHeader,
+      }
+    );
+    return res.data;
+  } catch (err) {
+    throw err.response.data || err.message;
+  }
+};

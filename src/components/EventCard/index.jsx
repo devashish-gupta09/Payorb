@@ -175,12 +175,11 @@ function EventCard({ event, handleEventDelete }) {
                 {"Regular Price"}
               </Typography>
               <Typography className={globalClasses.bold800} gutterBottom>
-                &#8377; {event.price}
+                {event.trialClass ? "Trial Class" : <>&#8377; {event.price}</>}
               </Typography>
             </Grid>
             {event.earlyBird ? (
               <>
-                {" "}
                 <Grid item sm={3} className={classes.generalInfoContainer}>
                   <Typography
                     variant="body2"
@@ -190,8 +189,11 @@ function EventCard({ event, handleEventDelete }) {
                     {"Early Bird Price"}
                   </Typography>
                   <Typography className={globalClasses.bold500} gutterBottom>
-                    {" "}
-                    &#8377; {event.earlyBirdPrice}
+                    {event.trialClass ? (
+                      "Trial Class"
+                    ) : (
+                      <>&#8377; {event.earlyBirdPrice}</>
+                    )}
                   </Typography>
                 </Grid>
                 <Grid item sm={3} className={classes.generalInfoContainer}>

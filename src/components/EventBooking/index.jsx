@@ -45,11 +45,13 @@ const eventRows = (event, oneOnOneSlot) => [
   {
     icon: <Money />,
     key: "price",
-    value:
-      event.earlyBird &&
-      parseInt(Date.parse(new Date(event.earlyBirdDeadline))) > Date.now()
+    value: event.earlyBird
+      ? parseInt(Date.parse(new Date(event.earlyBirdDeadline))) > Date.now()
         ? `<s>Rs. ${event.price}</s> Rs. ${event.earlyBirdPrice} <span style="color:grey;">(Early bird discount)<span>`
-        : `Rs. ${event.price}`,
+        : `Rs. ${event.price}`
+      : event.trialClass
+      ? "Trial Class"
+      : `Rs. ${event.price}`,
   },
   // {
   //   ...(event.type === EVENT_TYPES.ONE_TIME && {
@@ -171,6 +173,7 @@ function EventBooking({ eventLink }) {
                   Register
                 </Typography>
                 <EventBookingForm
+                  trialClass={event.trialClass}
                   eventLink={event.link}
                   earlyBird={event.earlyBird}
                   earlyBirdPrice={event.earlyBirdPrice}

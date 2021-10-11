@@ -7,7 +7,7 @@ import {
 } from "@material-ui/pickers";
 import React from "react";
 
-function OneTimeDateSelector({ formik, checkDisabled }) {
+function OneTimeDateSelector({ formik, checkDisabled, edit }) {
   const handleStartDate = (date) => {
     formik.setFieldValue("startDate", date.toISOString());
   };
@@ -94,6 +94,15 @@ function OneTimeDateSelector({ formik, checkDisabled }) {
             label="End Date"
             format="dd/MM/yyyy"
             value={formik.values.endDate}
+            //restrict calender to 30 days ahead in case of trial class
+            maxDate={
+              formik.values.trialClass
+                ? new Date(
+                    Date.parse(new Date(formik.values.startDate)) +
+                      30 * 24 * 60 * 60 * 1000
+                  )
+                : new Date().setFullYear(2099)
+            }
             onChange={handleEndDate}
             helperText={formik.touched.endDate && formik.errors.endDate}
             error={formik.touched.endDate && Boolean(formik.errors.endDate)}
