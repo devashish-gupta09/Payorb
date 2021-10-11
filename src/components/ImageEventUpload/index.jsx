@@ -40,7 +40,7 @@ function ImageEventUpload({ imageProps, croppedImg, handleCroppedImage }) {
               title="Select poster for event"
               imagePath={croppedImg || imageProps.src}
               handleDataUrl={handleDataUrl}
-              cropperAspectRatio={16 / 9}
+              // cropperAspectRatio={16 / 9}
             />
 
             <Grid

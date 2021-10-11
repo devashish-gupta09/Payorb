@@ -36,10 +36,8 @@ export const styles = makeStyles((theme) => ({
   eventDetailContainer: {
     padding: "1.5em 1.5em 1em 1em",
   },
-  eventImage: {
-    width: "100%",
+  eventImageWrapper: {
     borderRadius: "10px",
-    maxHeight: "350px",
     [theme.breakpoints.down("sm")]: {
       borderRadius: "0.4em",
     },
