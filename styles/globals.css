@@ -28,3 +28,12 @@ a {
   background-color: darkgrey;
   outline: 1px solid slategrey;
 }
+
+.new-link--url-linkify {
+  color: #377373;
+  cursor: pointer;
+}
+
+.new-link--url-linkify:hover {
+  color: #0eadad;
+}
