@@ -254,6 +254,23 @@ function VendorEventCreationForm({ event, edit, handleClose, trialClass }) {
     }
   }, [trialClassQuotaExhausted]);
 
+  React.useEffect(() => {
+    let toAddDescription =
+      formik.values.description.split("\n").length > 3
+        ? formik.values.description.split("\n").length - 3
+        : 0;
+    let toAddMessage =
+      formik.values.privateMessage.split("\n").length > 3
+        ? formik.values.privateMessage.split("\n").length - 3
+        : 0;
+    if (toAddDescription <= 7) {
+      setDescriptionRows(3 + toAddDescription);
+    }
+    if (toAddMessage <= 7) {
+      setCustomMessageRows(3 + toAddMessage);
+    }
+  }, [formik.values.description, formik.values.privateMessage]);
+
   const handleEarlyBirdDeadlineChange = (date) => {
     formik.setFieldValue("earlyBirdDeadline", date.toISOString());
   };

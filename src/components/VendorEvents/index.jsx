@@ -121,22 +121,34 @@ function VendorEvents() {
   return (
     <Grid className={classes.root}>
       {Alert()}
-      <Grid container justify="space-between" style={{ padding: "1em" }}>
+      <Grid container justify="space-between" style={{ padding: "1em 0px" }}>
         <Button onClick={toggleView}>
           {!listView ? <List /> : <DateRange />}
         </Button>
         {desktop && (
           <div style={{ display: "flex" }}>
-            <ButtonCapsule
-              buttonStyle={`${globalClasses.bold} ${classes.editButton}`}
-              text="Create Event"
+            <Button
+              style={{
+                background: "white",
+                padding: "0.5em 1.5em",
+                borderRadius: "10px",
+                marginLeft: "1em",
+              }}
               onClick={() => handleCreateEvent(false)}
-            ></ButtonCapsule>
-            <ButtonCapsule
-              buttonStyle={`${globalClasses.bold} ${classes.editButton}`}
-              text="Create Trial Event"
+            >
+              Create Event
+            </Button>
+            <Button
+              style={{
+                marginLeft: "1em",
+                background: "white",
+                padding: "0.5em 1.5em",
+                borderRadius: "10px",
+              }}
               onClick={() => handleCreateEvent(true)}
-            ></ButtonCapsule>
+            >
+              Create Trial Event
+            </Button>
           </div>
         )}
       </Grid>
