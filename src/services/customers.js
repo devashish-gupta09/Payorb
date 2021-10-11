@@ -4,14 +4,14 @@ import { API_URL } from "../config/urls";
 import { END_POINTS } from "../constants/api";
 import { getAuthHeader } from "./api";
 
-export const createCustomer = async (customer) => {
+export const createCustomer = async (customer, eventLink) => {
   try {
     // const x = {
     //   headers: await getAuthHeader(),
     // };
     const res = await axios.post(
       `${API_URL}/${END_POINTS.CUSTOMER}`,
-      { customer }
+      { customer, eventLink }
       // x
     );
 
