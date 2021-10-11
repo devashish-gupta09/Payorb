@@ -25,27 +25,8 @@ const EventImageContainer = ({ url }) => {
       }}
       ref={imageContainerRef}
     >
-      {/* <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          // backgroundImage: `url(${url})`,
-          // backgroundPosition: "center",
-          // backgroundRepeat: "no-repeat",
-          // backgroundSize: "cover",
-          // filter: "blur(8px)",
-
-          position: "absolute",
-          zIndex: "0",
-          height: imgHeight,
-          width: `${imageContainerRef?.current?.offsetWidth || 0}px`,
-        }}
-      ></div> */}
-      {/* <div style={{ overflow: "hidden", position: "relative", zIndex: "10" }}> */}
       <img style={{ height: imgHeight }} src={url} />
-      {/* </div> */}
-    </div>
+     </div>
   );
 };
 
