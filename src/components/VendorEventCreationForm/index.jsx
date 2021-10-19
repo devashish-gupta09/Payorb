@@ -98,7 +98,13 @@ function getEventTypeDescription(type) {
   return "";
 }
 
-function VendorEventCreationForm({ event, edit, handleClose, trialClass }) {
+function VendorEventCreationForm({
+  event,
+  edit,
+  clone,
+  handleClose,
+  trialClass,
+}) {
   const classes = styles();
   const globalClasses = globalStyles();
   const router = useRouter();
@@ -116,6 +122,7 @@ function VendorEventCreationForm({ event, edit, handleClose, trialClass }) {
   const [trialErrorModalOpen, setTrialErrorModalOpen] = React.useState(false);
   const handlePostCreationDialogClose = () => {
     router.push(buildVendorDashboardUrl(getVendorIdFromUrl(router), "/events"));
+    handleCancel();
   };
 
   const handleEventTypeChange = (event) => {
@@ -313,7 +320,7 @@ function VendorEventCreationForm({ event, edit, handleClose, trialClass }) {
   }, []);
 
   const handleCancel = () => {
-    if (edit) {
+    if (edit || clone) {
       handleClose();
     } else {
       router.push(
@@ -338,7 +345,21 @@ function VendorEventCreationForm({ event, edit, handleClose, trialClass }) {
     const hours = parseFloat(parseFloat(event.target.value).toFixed(1));
     formik.setFieldValue("slotDuration", hours);
   };
-
+  React.useEffect(() => {
+    if (event && clone && !edit) {
+      formik.setFieldValue("link", hash.digest("hex").substr(0, 6));
+      formik.setFieldValue("orders", undefined);
+      formik.setFieldValue("bookedSlots", undefined);
+      formik.setFieldValue("customers", undefined);
+      formik.setFieldValue("reviews", undefined);
+      formik.setFieldValue("createdDate", undefined);
+      formik.setFieldValue("userUID", undefined);
+      formik.setFieldValue("status", undefined);
+      formik.setFieldValue("updatedAt", undefined);
+      formik.setFieldValue("price", parseInt(event.price));
+      formik.setFieldValue("earlyBirdPrice", parseInt(event.earlyBirdPrice));
+    }
+  }, [event, clone]);
   return (
     <Grid style={{ width: "100%" }}>
       {Alert()}
@@ -367,6 +388,12 @@ function VendorEventCreationForm({ event, edit, handleClose, trialClass }) {
             >
               Edit Event
             </Typography>
+          ) : clone ? (
+            <Grid>
+              <Typography className={`${globalStyles.bold}`} variant={"h3"}>
+                Clone Event
+              </Typography>
+            </Grid>
           ) : (
             <Grid>
               <Typography className={`${globalStyles.bold}`} variant={"h3"}>
