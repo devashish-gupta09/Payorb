@@ -6,7 +6,7 @@ import {
   Tooltip,
   Typography,
 } from "@material-ui/core";
-import { DeleteRounded, Share } from "@material-ui/icons";
+import { DeleteRounded, Share, FileCopy } from "@material-ui/icons";
 import React from "react";
 import { useMediaQuery } from "react-responsive";
 
@@ -49,10 +49,15 @@ function EventCard({ event, handleEventDelete }) {
   const classes = styles();
   const globalClasses = globalStyles();
   const [edit, setEdit] = React.useState(false);
+  const [clone, setClone] = React.useState(false);
   const [shareDialog, setShareDialog] = React.useState(false);
   const { state } = useUserAuthDetails();
   const [deleteBtn, setDelete] = React.useState(false);
   const isTabletOrMobile = useMediaQuery({ maxWidth: 900 });
+
+  const handleClone = () => setClone(true);
+  const handleCloneFromClose = () => setClone(false);
+
   const handleEdit = () => {
     setEdit(true);
   };
@@ -84,6 +89,22 @@ function EventCard({ event, handleEventDelete }) {
 
   return (
     <DashboardCard rootClass={classes.root}>
+      {clone && (
+        <Dialog
+          PaperProps={{
+            className: classes.dialogPaper,
+          }}
+          open={clone}
+          handleClose={handleCloneFromClose}
+        >
+          <VendorEventCreationForm
+            event={event}
+            edit={edit}
+            clone={clone}
+            handleClose={handleCloneFromClose}
+          />
+        </Dialog>
+      )}
       {edit && (
         <Dialog
           PaperProps={{
@@ -94,7 +115,8 @@ function EventCard({ event, handleEventDelete }) {
         >
           <VendorEventCreationForm
             event={event}
-            edit={true}
+            edit={edit}
+            clone={clone}
             handleClose={handleClose}
           />
         </Dialog>
@@ -311,9 +333,21 @@ function EventCard({ event, handleEventDelete }) {
                         <DeleteRounded />
                       </IconButton>
                     </Tooltip>
+                    <Tooltip title="Clone">
+                      <IconButton onClick={handleClone}>
+                        <FileCopy />
+                      </IconButton>
+                    </Tooltip>
                   </Grid>
                 ) : (
-                  <Button disabled>Event Completed</Button>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <Button disabled>Event Completed</Button>
+                    <Tooltip title="Clone">
+                      <IconButton onClick={handleClone}>
+                        <FileCopy />
+                      </IconButton>
+                    </Tooltip>
+                  </div>
                 )
               ) : null}
             </Grid>
