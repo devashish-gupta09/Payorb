@@ -269,10 +269,7 @@ function EventCard({ event, handleEventDelete }) {
               >
                 <Typography className={`${classes.greyFont} ${classes.seats}`}>
                   Total Revenue: &#8377;
-                  {`${
-                    parseInt(event.orders ? event.orders.length : 0) *
-                    parseInt(event.price)
-                  }`}
+                  {`${event.revenue ? event.revenue : "0.0"}`}
                 </Typography>
               </Grid>
             </Grid>

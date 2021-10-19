@@ -110,7 +110,7 @@ function VendorEventsStats() {
         getMonthDate(event.startDate, event.endDate),
         event.orders.length,
         event.mode,
-        event.orders.length * event.price,
+        event.revenue ? event.revenue : "0.0",
         event.startDate,
         event.endDate
       )
