@@ -26,12 +26,45 @@ function CustomerVendorProfileEvents({ userUID }) {
       <>
         {events && events.length > 0 ? (
           <>
-            <Grid container justify="space-between">
-              <Typography variant="h6">Events list</Typography>
-            </Grid>
-            <Grid>
-              <CustomerEventsList events={events} expand={expand} />
-            </Grid>
+            {events &&
+            events.length &&
+            events.filter((e) => e.trialClass).length ? (
+              <>
+                <Grid container justify="space-between">
+                  <Typography variant="h6">Trial Classes</Typography>
+                </Grid>
+                <Grid>
+                  <CustomerEventsList
+                    events={events}
+                    expand={expand}
+                    trialClass={true}
+                  />
+                </Grid>
+                <Grid container justify="space-between">
+                  <Typography variant="h6">Events list</Typography>
+                </Grid>
+                <Grid>
+                  <CustomerEventsList
+                    events={events}
+                    expand={expand}
+                    trialClass={false}
+                  />
+                </Grid>
+              </>
+            ) : (
+              <>
+                <Grid container justify="space-between">
+                  <Typography variant="h6">Events list</Typography>
+                </Grid>
+                <Grid>
+                  <CustomerEventsList
+                    events={events}
+                    expand={expand}
+                    trialClass={false}
+                  />
+                </Grid>
+              </>
+            )}
 
             <Grid
               style={{ marginBottom: "1em" }}
