@@ -158,12 +158,24 @@ function VendorEvents() {
             {events.length > 0 ? (
               <>
                 <Grid className={classes.events}>
+                  <Typography variant="h6" style={{ marginBottom: "0.5em" }}>
+                    Open Events
+                  </Typography>
                   <EventsViewList
+                    showOpen={true}
+                    events={events}
+                    handleEventDelete={handleEventDelete}
+                  />
+
+                  <Typography variant="h6" style={{ marginBottom: "0.5em" }}>
+                    Completed Events
+                  </Typography>
+                  <EventsViewList
+                    showOpen={false}
                     events={events}
                     handleEventDelete={handleEventDelete}
                   />
                 </Grid>
-
                 <Grid
                   style={{ marginBottom: "1em" }}
                   container
