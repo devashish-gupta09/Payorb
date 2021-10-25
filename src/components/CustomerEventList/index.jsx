@@ -3,17 +3,29 @@ import React from "react";
 
 import CustomerEventCard from "../CustomerEventCard";
 
-function CustomerEventsList({ events, expand }) {
+function CustomerEventsList({ events, expand, trialClass }) {
   const classes = styles();
   return (
     <Grid>
-      {events.map((event, index) => {
-        return (
-          <Grid key={index} className={classes.cardContainer}>
-            <CustomerEventCard event={event} expand={expand} />
-          </Grid>
-        );
-      })}
+      {trialClass
+        ? events
+            .filter((e) => e.trialClass)
+            .map((event, index) => {
+              return (
+                <Grid key={index} className={classes.cardContainer}>
+                  <CustomerEventCard event={event} expand={expand} />
+                </Grid>
+              );
+            })
+        : events
+            .filter((e) => !e.trialClass)
+            .map((event, index) => {
+              return (
+                <Grid key={index} className={classes.cardContainer}>
+                  <CustomerEventCard event={event} expand={expand} />
+                </Grid>
+              );
+            })}
     </Grid>
   );
 }
