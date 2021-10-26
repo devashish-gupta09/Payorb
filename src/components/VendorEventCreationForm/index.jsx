@@ -447,7 +447,8 @@ function VendorEventCreationForm({
                         style={{ padding: "2em", fontWeight: "bold" }}
                       >
                         You have utilized your trial class quota for the month.
-                        Please change Start Date in to create a new trial class.
+                        Please change Start Date to create a new trial class for
+                        the next month.
                       </DialogContentText>
                     </DialogContent>
                   </Dialog>
