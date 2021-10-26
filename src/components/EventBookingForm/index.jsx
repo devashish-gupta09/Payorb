@@ -97,7 +97,7 @@ function EventBookingForm({
     },
     onSubmit: async (values) => {
       let user;
-      const phoneNumber = `+91${values.phoneNumber}`;
+      const phoneNumber = `${values.phoneNumber}`;
       if (!confirmationResult) {
         throw Error("Please send the OTP first");
       }
@@ -191,7 +191,7 @@ function EventBookingForm({
     try {
       if (formik.values.phoneNumber) {
         setDisableOtpButton(true);
-        const phoneNumber = `+91${formik.values.phoneNumber}`;
+        const phoneNumber = `${formik.values.phoneNumber}`;
         const response = await sendOTP(phoneNumber, "sms");
         setOtpSent(true);
         showAlert("OTP Sent");
