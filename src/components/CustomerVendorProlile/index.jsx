@@ -6,6 +6,7 @@ import { getUser } from "../../services/auth";
 import CustomerVendorProfileEvents from "../CustomerVendorProfileEvents";
 import ProfileDetailsSection from "../ProfileDetailsSection";
 import ProfileInfoCard from "../ProfileInfoCard";
+import ProfilePageCarausel from "../ProfilePageCarausel";
 import SkeletonLoading from "../SkeletonLoading";
 
 function CustomerVendorProfile({ userUID }) {
@@ -37,6 +38,11 @@ function CustomerVendorProfile({ userUID }) {
       <Grid>
         <ProfileInfoCard profileData={profileData} vendor={false} />
         <ProfileDetailsSection profileData={profileData} vendor={false} />
+        {profileData.carauselAssets &&
+        profileData.carauselAssets.length &&
+        profileData.carauselAssets.filter((a) => a.link && a.type).length ? (
+          <ProfilePageCarausel profileData={profileData} vendor={false} />
+        ) : null}
         <CustomerVendorProfileEvents userUID={profileData.userUID} />
       </Grid>
     );

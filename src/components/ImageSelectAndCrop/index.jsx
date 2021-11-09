@@ -99,7 +99,7 @@ function ImageSelectAndCrop({
       <Cropper
         checkCrossOrigin={false}
         src={imgSrc}
-        style={{ height: 300, width: matches ? 250 : 300 }}
+        style={{ height: 300, width: "100%" }}
         guides={true}
         ref={cropperRef}
         crop={handleOnCrop}

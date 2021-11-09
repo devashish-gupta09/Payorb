@@ -9,7 +9,7 @@ import ProfilePaymentSection from "../ProfilePaymentSection";
 export default function Profile({ profileData }) {
   const [profileInfo, setProfileInfo] = React.useState(profileData);
   const updateProfileInfo = (data) => {
-    setProfileInfo(data);
+    setProfileInfo({ ...data });
   };
 
   return (
