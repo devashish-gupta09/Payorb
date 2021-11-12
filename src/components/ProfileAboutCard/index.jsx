@@ -86,6 +86,9 @@ function Details(props) {
                 multiline: true,
                 rows: "4",
               }}
+              typographyProps={{
+                className: classes.aboutContainer,
+              }}
             />
           </Grid>
         )}
@@ -280,6 +283,7 @@ const styles = makeStyles((theme) => ({
   },
   aboutContainer: {
     paddingBottom: "1em",
+    whiteSpace: "pre-wrap",
   },
 }));
 
