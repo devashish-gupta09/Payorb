@@ -18,10 +18,10 @@ import { ALERT_TYPES } from "../../constants/alerts";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { updateUser } from "../../services/auth";
 import DashboardCard from "../DashboardCard";
+import FullScreenImageViewer from "../FullScreenImageViewer";
 import ProfilePageCarauselEditForm from "../ProfilePageCarauselEditForm";
 import VideoPlayer from "../VideoPlayer";
 import "react-multi-carousel/lib/styles.css";
-import FullScreenImageViewer from "../FullScreenImageViewer";
 
 const responsive = {
   desktop: {
@@ -41,13 +41,7 @@ const responsive = {
   },
 };
 
-const initialValue = [
-  { link: false, type: false },
-  { link: false, type: false },
-  { link: false, type: false },
-  { link: false, type: false },
-  { link: false, type: false },
-];
+const initialValue = [];
 
 const filters = {
   ALL: "all",
@@ -65,17 +59,16 @@ function ProfilePageCarausel({ profileData, updateProfile, vendor }) {
   const globalClasses = globalStyles();
   React.useEffect(() => {
     if (profileData.carauselAssets && profileData.carauselAssets.length) {
-      console.log("setting assets from profile", profileData.carauselAssets);
       setCarauselAssets([...profileData.carauselAssets]);
     } else {
-      console.log("setting assets from values", profileData.carauselAssets);
       setCarauselAssets([...initialValue]);
     }
   }, [profileData]);
 
   const handleDelete = async (index) => {
     let temp = [...carauselAssets];
-    temp[index] = { ...initialValue[index] };
+    temp[index] = false;
+    temp = temp.filter((v) => v !== false);
     try {
       const res = await updateUser({ carauselAssets: temp });
       if (res?.success) {
@@ -106,13 +99,31 @@ function ProfilePageCarausel({ profileData, updateProfile, vendor }) {
         />
       )}
       <DashboardCard rootClass={classes.root}>
-        <Grid container>
+        <Grid
+          container
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            paddingBottom: "1rem",
+          }}
+        >
           <Typography
             className={`${globalClasses.bold} ${classes.sectionTitle}`}
-            gutterBottomcarauselAssets
           >
             Gallery
           </Typography>
+          <Button
+            style={{
+              background: "white",
+              padding: "0.5em 1.5em",
+              borderRadius: "10px",
+              marginLeft: "1em",
+            }}
+            onClick={() => setEditIndex(carauselAssets.length)}
+          >
+            Upload
+          </Button>
         </Grid>
         <Carousel
           swipeable={true}
@@ -378,7 +389,6 @@ const styles = makeStyles((theme) => ({
   },
   sectionTitle: {
     width: "fit-content",
-    paddingBottom: "1rem",
   },
   cancelButton: {
     [theme.breakpoints.down("sm")]: {
