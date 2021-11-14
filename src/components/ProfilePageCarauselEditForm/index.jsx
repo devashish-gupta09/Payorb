@@ -203,9 +203,9 @@ const ProfilePageCarauselEditForm = ({
             variant="fullWidth"
             aria-label="full width tabs example"
           >
-            <Tab label={values.youtube + " " + index} {...a11yProps(0)} />
+            <Tab label={values.youtube} {...a11yProps(0)} />
             <Tab label={"OR"} {...a11yProps(0)} disabled={true} />
-            <Tab label={values.image + " " + index} {...a11yProps(1)} />
+            <Tab label={values.image} {...a11yProps(1)} />
           </Tabs>
         </AppBar>
         <SwipeableViews

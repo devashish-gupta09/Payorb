@@ -1,4 +1,4 @@
-import { Backdrop, makeStyles, Typography } from "@material-ui/core";
+import { Backdrop, Button, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -17,13 +17,36 @@ export default function FullScreenImageViewer({ image, setImage }) {
   return (
     <Backdrop className={classes.backdrop} open={image} onClick={handleClose}>
       <div style={{ width: "80vw" }}>
-        <Typography
-          variant="h6"
-          style={{ textAlign: "left", width: "90%", marginBottom: "1rem" }}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
         >
-          {image.title}
-        </Typography>
-        <img src={image.link} alt="fullscreen-view" style={{ width: "100%" }} />
+          <Typography
+            variant="h6"
+            style={{ textAlign: "left", width: "90%", marginBottom: "1rem" }}
+          >
+            {image.title}
+          </Typography>
+          <Button
+            style={{
+              background: "white",
+              padding: "0.5em 1.5em",
+              borderRadius: "10px",
+              marginLeft: "1em",
+            }}
+            onClick={() => handleClose()}
+          >
+            Close
+          </Button>
+        </div>
+        <img
+          src={image.link}
+          alt="fullscreen-view"
+          style={{ height: "90vh" }}
+        />
       </div>
     </Backdrop>
   );

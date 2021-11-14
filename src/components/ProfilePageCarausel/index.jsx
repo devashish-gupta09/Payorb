@@ -13,10 +13,10 @@ import Carousel from "react-multi-carousel";
 
 import { appColors } from "../../../styles/colors";
 import { globalStyles } from "../../../styles/globalStyles";
-
 import { ALERT_TYPES } from "../../constants/alerts";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { updateUser } from "../../services/auth";
+import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
 import FullScreenImageViewer from "../FullScreenImageViewer";
 import ProfilePageCarauselEditForm from "../ProfilePageCarauselEditForm";
@@ -65,7 +65,18 @@ function ProfilePageCarausel({ profileData, updateProfile, vendor }) {
     }
   }, [profileData]);
 
+  const carauselAssetsHasBothImageAndVideo = (carauselAssets) => {
+    let video = false;
+    let image = false;
+    carauselAssets.forEach((i) => {
+      if (i.type === "video") video = true;
+      if (i.type === "image") image = true;
+    });
+    return image && video;
+  };
+
   const handleDelete = async (index) => {
+    setFilter(filters.ALL);
     let temp = [...carauselAssets];
     temp[index] = false;
     temp = temp.filter((v) => v !== false);
@@ -113,82 +124,90 @@ function ProfilePageCarausel({ profileData, updateProfile, vendor }) {
           >
             Gallery
           </Typography>
-          <Button
-            style={{
-              background: "white",
-              padding: "0.5em 1.5em",
-              borderRadius: "10px",
-              marginLeft: "1em",
-            }}
-            onClick={() => setEditIndex(carauselAssets.length)}
-          >
-            Upload
-          </Button>
+          {vendor ? (
+            <ButtonCapsule
+              text="Upload"
+              onClick={() => setEditIndex(carauselAssets.length)}
+            ></ButtonCapsule>
+          ) : null}
         </Grid>
-        <Carousel
-          swipeable={true}
-          draggable={false}
-          showDots={true}
-          responsive={responsive}
-          ssr={true} // means to render carousel on server-side.
-          infinite={true}
-          autoPlay={true}
-          autoPlaySpeed={3000}
-          keyBoardControl={true}
-          customTransition="all .5"
-          transitionDuration={1000}
-          containerClass="carousel-container"
-          removeArrowOnDeviceType={["tablet", "mobile"]}
-          // deviceType={this.props.deviceType}
-          dotListClass="custom-dot-list-style"
-          itemClass="carousel-item-padding-40-px"
-        >
-          {vendor
-            ? carauselAssets
-                .filter((a) =>
-                  filter === filters.ALL
-                    ? true
-                    : filter === filters.IMAGES
-                    ? a.type === false || a.type === "image"
-                    : filter === filters.VIDEOS
-                    ? a.type === false || a.type === "video"
-                    : true
-                )
-                .map((item, i) => (
-                  <Item
-                    setImage={setImage}
-                    handleDelete={handleDelete}
-                    key={i}
-                    item={item}
-                    index={i}
-                    setEditIndex={setEditIndex}
-                    vendor={vendor}
-                  />
-                ))
-            : carauselAssets
-                .filter((a) => a.link && a.type)
-                .filter((a) =>
-                  filter === filters.ALL
-                    ? true
-                    : filter === filters.IMAGES
-                    ? a.type === false || a.type === "image"
-                    : filter === filters.VIDEOS
-                    ? a.type === false || a.type === "video"
-                    : true
-                )
-                .map((item, i) => (
-                  <Item
-                    setImage={setImage}
-                    handleDelete={handleDelete}
-                    key={i}
-                    item={item}
-                    index={i}
-                    setEditIndex={setEditIndex}
-                    vendor={vendor}
-                  />
-                ))}
-        </Carousel>
-        <FilterButtonGroup filter={filter} setFilter={setFilter} />
+        <div style={{ height: "40vh" }}>
+          {carauselAssets && carauselAssets.length ? (
+            <Carousel
+              swipeable={true}
+              draggable={false}
+              showDots={true}
+              responsive={responsive}
+              ssr={true} // means to render carousel on server-side.
+              infinite={true}
+              autoPlay={true}
+              autoPlaySpeed={3000}
+              keyBoardControl={true}
+              customTransition="all .5"
+              transitionDuration={1000}
+              containerClass="carousel-container"
+              removeArrowOnDeviceType={["tablet", "mobile"]}
+              // deviceType={this.props.deviceType}
+              dotListClass="custom-dot-list-style"
+              itemClass="carousel-item-padding-40-px"
+            >
+              {vendor
+                ? carauselAssets
+                    .filter((a) =>
+                      filter === filters.ALL
+                        ? true
+                        : filter === filters.IMAGES
+                        ? a.type === false || a.type === "image"
+                        : filter === filters.VIDEOS
+                        ? a.type === false || a.type === "video"
+                        : true
+                    )
+                    .map((item, i) => (
+                      <Item
+                        setImage={setImage}
+                        handleDelete={handleDelete}
+                        key={i}
+                        item={item}
+                        index={i}
+                        setEditIndex={setEditIndex}
+                        vendor={vendor}
+                      />
+                    ))
+                : carauselAssets
+                    .filter((a) => a.link && a.type)
+                    .filter((a) =>
+                      filter === filters.ALL
+                        ? true
+                        : filter === filters.IMAGES
+                        ? a.type === false || a.type === "image"
+                        : filter === filters.VIDEOS
+                        ? a.type === false || a.type === "video"
+                        : true
+                    )
+                    .map((item, i) => (
+                      <Item
+                        setImage={setImage}
+                        handleDelete={handleDelete}
+                        key={i}
+                        item={item}
+                        index={i}
+                        setEditIndex={setEditIndex}
+                        vendor={vendor}
+                      />
+                    ))}
+            </Carousel>
+          ) : (
+            <Typography
+              variant="h6"
+              style={{ color: "grey", marginTop: "1rem" }}
+            >
+              Upload few items to gallery...
+            </Typography>
+          )}
+        </div>
+        {carauselAssetsHasBothImageAndVideo(carauselAssets) ? (
+          <FilterButtonGroup filter={filter} setFilter={setFilter} />
+        ) : null}
       </DashboardCard>
     </div>
   );
@@ -198,7 +217,7 @@ function Item(props) {
   return (
     <div
       style={{
-        height: "45vh",
+        height: "40vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -217,6 +236,7 @@ function Item(props) {
             ) : null}
             <div
               style={{
+                height: "100%",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -241,6 +261,7 @@ function Item(props) {
             ) : null}
             <div
               style={{
+                height: "100%",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -344,7 +365,7 @@ const styles = makeStyles((theme) => ({
   },
   container: {
     padding: "2em 0",
-    minHeight: "65vh",
+    height: "70vh",
   },
   root: {
     height: "100%",
