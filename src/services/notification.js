@@ -7,11 +7,12 @@ import { getAuthHeader } from "./api";
 export const sendNotificationToCustomers = async ({
   eventId,
   notificationTypes,
+  filterEventIds,
 }) => {
   try {
     const res = await axios.post(
       `${API_URL}/${END_POINTS.NOTIFICATION}/customers`,
-      { eventId, notificationTypes },
+      { eventId, notificationTypes, filterEventIds },
       {
         headers: await getAuthHeader(),
       }

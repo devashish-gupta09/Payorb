@@ -23,11 +23,12 @@ import useFetchVendorCustomers from "../../hooks/useFetchCustomers";
 import useFetchEvents from "../../hooks/useFetchEvents";
 import { sendNotificationToCustomers } from "../../services/notification";
 import { getMonthDate } from "../../utils/dateTime";
+import { isEventPastDate } from "../../utils/events";
 import ButtonCapsule from "../ButtonCapsule";
+import ConfirmationAlertDialog from "../ConfirmationAlertDialog";
 import DashboardCard from "../DashboardCard";
 import Multiselect from "../Multiselect";
 import SkeletonLoading from "../SkeletonLoading";
-
 function createData(name, phoneNumber, email, date, events, eventList) {
   return {
     name,
@@ -50,6 +51,8 @@ function VendorCustomers() {
   const [selectedValueForFilter, setSelectedValueForFilter] = React.useState(
     []
   );
+  const [confirmationDialogOpen, setConfirmationDialogOpen] =
+    React.useState(false);
   const [collapsed, setCollapsed] = React.useState(true);
   // const [sendBtnLoading, setSendBtnLoading] = React.useState(false);
   const { Alert, showAlert } = useAlertSnackbar();
@@ -75,25 +78,44 @@ function VendorCustomers() {
     }
   };
 
+  const onReject = () => {
+    console.log("closed");
+    setConfirmationDialogOpen(false);
+  };
+
+  const onAccept = () => {
+    sendNotification();
+  };
+
   const sendNotification = async () => {
+    if (
+      selectedValueForFilter.length === 0 &&
+      confirmationDialogOpen === false
+    ) {
+      setConfirmationDialogOpen(true);
+      return;
+    }
     try {
       if (!selectedValue) {
         throw new Error("Please select an event from the drop down");
       }
-
       const res = await sendNotificationToCustomers({
         eventId: selectedValue,
+        filterEventIds: selectedValueForFilter,
       });
 
       if (res) {
         showAlert("Notification sent");
       }
+      setConfirmationDialogOpen(false);
     } catch (err) {
       if (err.message) {
         showAlert(err.message, ALERT_TYPES.ERROR);
+        setConfirmationDialogOpen(false);
         return;
       } else if (err.error) {
         showAlert(err.error, ALERT_TYPES.ERROR);
+        setConfirmationDialogOpen(false);
         return;
       }
     }
@@ -154,6 +176,16 @@ function VendorCustomers() {
     return (
       <Grid className={classes.root}>
         {Alert()}
+        {confirmationDialogOpen ? (
+          <ConfirmationAlertDialog
+            open={confirmationDialogOpen}
+            onAccept={onAccept}
+            onReject={onReject}
+            message={
+              "Are you sure you wish to send promotional email to all customers? If not, please filter relevant customers based on past events."
+            }
+          />
+        ) : null}
         <Grid
           className={`${classes.title}`}
           container
@@ -229,11 +261,13 @@ function VendorCustomers() {
                   }}
                 >
                   {events &&
-                    events.map((event) => (
-                      <MenuItem key={event.link} value={event.link}>
-                        {event.name}
-                      </MenuItem>
-                    ))}
+                    events
+                      .filter((e) => !isEventPastDate(e))
+                      .map((event) => (
+                        <MenuItem key={event.link} value={event.link}>
+                          {event.name}
+                        </MenuItem>
+                      ))}
                 </Select>
                 <ButtonCapsule
                   buttonStyle={classes.sendButton}
