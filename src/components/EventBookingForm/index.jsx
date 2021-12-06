@@ -131,7 +131,8 @@ function EventBookingForm({
             // console.log(customerCreationRes.data.customer);
             if (
               trialClass &&
-              customerCreationRes.data.customer.events.includes(eventLink)
+              customerCreationRes.data.customer.events.includes(eventLink) &&
+              type != EVENT_TYPES.ONE_ON_ONE
             ) {
               showAlert(
                 "You have already subscribed to this event",
