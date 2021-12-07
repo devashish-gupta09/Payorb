@@ -24,7 +24,14 @@ function EventsViewList({ events, handleEventDelete, showOpen }) {
               );
             })
         ) : (
-          <Typography variant="h5">No Open events found...</Typography>
+          <Grid
+            style={{ marginBottom: "1em" }}
+            container
+            alignItems="center"
+            justify="center"
+          >
+            <Typography>No Open events found...</Typography>
+          </Grid>
         )
       ) : events.filter((e) => isEventPastDate(e)).length ? (
         events
@@ -40,7 +47,14 @@ function EventsViewList({ events, handleEventDelete, showOpen }) {
             );
           })
       ) : (
-        <Typography variant="h5">No Completed events found...</Typography>
+        <Grid
+          style={{ marginBottom: "1em" }}
+          container
+          alignItems="center"
+          justify="center"
+        >
+          <Typography>No Completed events found...</Typography>
+        </Grid>
       )}
     </Grid>
   );

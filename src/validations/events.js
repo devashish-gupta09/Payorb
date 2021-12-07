@@ -37,7 +37,7 @@ export const createEventValidationSchema = Yup.object({
   price: Yup.number()
     .when("trialClass", {
       is: (value) => value === false,
-      then: Yup.number().min(1, "Price of a ticket must be greater than 0"),
+      then: Yup.number().min(5, "Price of a ticket must be minimum 5 Rs."),
     })
     .max(999999, "Price of a ticket must be less than 999999"),
   totalTickets: Yup.number().lessThan(
@@ -74,10 +74,12 @@ export const createEventValidationSchema = Yup.object({
   earlyBird: Yup.boolean(),
   earlyBirdPrice: Yup.number().when("earlyBird", {
     is: (value) => value === true,
-    then: Yup.number().max(
-      Yup.ref("price"),
-      "Discounted price can't be more than actual price"
-    ),
+    then: Yup.number()
+      .min(5, "Discounted price can't be less than 5 Rs.")
+      .max(
+        Yup.ref("price"),
+        "Discounted price can't be more than actual price"
+      ),
   }),
   earlyBirdDeadline: Yup.date().when("earlyBird", {
     is: (value) => value === true,
