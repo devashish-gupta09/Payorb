@@ -38,6 +38,7 @@ function OneTimeDateSelector({ formik, checkDisabled, edit }) {
             id="startDate"
             label="Start Date"
             format="dd/MM/yyyy"
+            minDate={new Date()}
             // disablePast={true}
             value={formik.values.startDate}
             onChange={handleStartDate}
@@ -103,6 +104,7 @@ function OneTimeDateSelector({ formik, checkDisabled, edit }) {
                   )
                 : new Date().setFullYear(2099)
             }
+            minDate={formik.values.startDate}
             onChange={handleEndDate}
             helperText={formik.touched.endDate && formik.errors.endDate}
             error={formik.touched.endDate && Boolean(formik.errors.endDate)}
