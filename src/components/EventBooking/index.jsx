@@ -97,15 +97,8 @@ function EventBooking({ eventLink }) {
   }
 
   useEffect(() => {
-    var ads = document.getElementsByClassName("adsbygoogle").length;
-    for (var i = 0; i < ads; i++) {
-      try {
-        // eslint-disable-next-line no-undef
-        (adsbygoogle = window.adsbygoogle || []).push({});
-      } catch (e) {
-        //
-      }
-    }
+    // eslint-disable-next-line no-undef
+    (adsbygoogle = window.adsbygoogle || []).push({});
   }, []);
 
   if (events && events.length > 0) {
