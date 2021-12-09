@@ -89,6 +89,16 @@ function useFetchEvents(isVendor, filterParams) {
         .catch((err) => {
           console.log("Error", err);
         });
+
+      var ads = document.getElementsByClassName("adsbygoogle").length;
+      for (var i = 0; i < ads; i++) {
+        try {
+          // eslint-disable-next-line no-undef
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {
+          //
+        }
+      }
     }
   }, []);
 

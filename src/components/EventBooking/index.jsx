@@ -96,11 +96,6 @@ function EventBooking({ eventLink }) {
     return <SkeletonLoading message={"Loading Event Booking Page"} />;
   }
 
-  useEffect(() => {
-    // eslint-disable-next-line no-undef
-    (adsbygoogle = window.adsbygoogle || []).push({});
-  }, []);
-
   if (events && events.length > 0) {
     const event = events[0];
 
