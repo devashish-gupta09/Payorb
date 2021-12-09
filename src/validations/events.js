@@ -36,7 +36,7 @@ export const createEventValidationSchema = Yup.object({
     .max(1000, "Must be 1000 characters or less"),
   price: Yup.number()
     .when("trialClass", {
-      is: (value) => value === false,
+      is: (value) => !value,
       then: Yup.number().min(5, "Price of a ticket must be minimum 5 Rs."),
     })
     .max(999999, "Price of a ticket must be less than 999999"),
