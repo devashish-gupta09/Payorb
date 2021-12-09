@@ -350,11 +350,13 @@ function VendorCustomers() {
                 }}
               >
                 {events &&
-                  events.map((event) => (
-                    <MenuItem key={event.link} value={event.link}>
-                      {event.name}
-                    </MenuItem>
-                  ))}
+                  events
+                    .filter((e) => !isEventPastDate(e))
+                    .map((event) => (
+                      <MenuItem key={event.link} value={event.link}>
+                        {event.name}
+                      </MenuItem>
+                    ))}
               </Select>
               <ButtonCapsule
                 buttonStyle={classes.sendButton}
