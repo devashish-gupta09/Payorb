@@ -8,7 +8,7 @@ import {
 import moment from "moment";
 import { useRouter } from "next/router";
 
-import React from "react";
+import React, { useEffect } from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
 import { EVENT_MODES, EVENT_TYPES } from "../../constants/events";
@@ -95,6 +95,18 @@ function EventBooking({ eventLink }) {
   if (loading) {
     return <SkeletonLoading message={"Loading Event Booking Page"} />;
   }
+
+  useEffect(() => {
+    var ads = document.getElementsByClassName("adsbygoogle").length;
+    for (var i = 0; i < ads; i++) {
+      try {
+        // eslint-disable-next-line no-undef
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {
+        //
+      }
+    }
+  }, []);
 
   if (events && events.length > 0) {
     const event = events[0];
@@ -183,6 +195,17 @@ function EventBooking({ eventLink }) {
                   oneOnOneBooking={{ startDate: from }}
                 />
               </DashboardCard>
+            </Grid>
+
+            <Grid sm={12}>
+              <ins
+                className="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-9608205273509118"
+                data-ad-slot="9714251680"
+                data-ad-format="auto"
+                data-full-width-responsive="true"
+              ></ins>
             </Grid>
 
             <Grid item sm={12} className={`${classes.vendorCardContainer}`}>
