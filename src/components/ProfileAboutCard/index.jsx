@@ -183,7 +183,7 @@ function ProfileAboutCard({ profileData, vendor, updateProfile }) {
     <DashboardCard rootClass={classes.root}>
       <Grid>
         <Grid container spacing={5} className={classes.desktop}>
-          <Grid item sm={profileData.videoLink ? 6 : 0}>
+          <Grid item sm={!profileData.videoLink && !vendor ? 0 : 6}>
             <Grid className={classes.detailsContainer}>
               <Details
                 about={profileData.about}
@@ -197,7 +197,7 @@ function ProfileAboutCard({ profileData, vendor, updateProfile }) {
               />
             </Grid>
           </Grid>
-          <Grid item sm={profileData.videoLink ? 6 : 0}>
+          <Grid item sm={!profileData.videoLink && !vendor ? 0 : 6}>
             {/* Need to include a video section over here. */}
             <VideoUpload
               vendor={vendor}
