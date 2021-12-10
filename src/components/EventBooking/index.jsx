@@ -185,7 +185,7 @@ function EventBooking({ eventLink }) {
               </DashboardCard>
             </Grid>
 
-            <Grid sm={12}>
+            {/* <Grid sm={12}>
               <ins
                 className="adsbygoogle"
                 style="display:block"
@@ -194,7 +194,7 @@ function EventBooking({ eventLink }) {
                 data-ad-format="auto"
                 data-full-width-responsive="true"
               ></ins>
-            </Grid>
+            </Grid> */}
 
             <Grid item sm={12} className={`${classes.vendorCardContainer}`}>
               <DashboardCard rootClass={`${classes.vendorCard}`}>
