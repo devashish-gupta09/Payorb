@@ -107,6 +107,7 @@ function OneOnOneDateSelector({ formik, checkDisabled }) {
                   )
                 : new Date().setFullYear(2099)
             }
+            minDate={formik.values.startDate}
             value={formik.values.endDate}
             onChange={handleEndDate}
             helperText={formik.touched.endDate && formik.errors.endDate}
