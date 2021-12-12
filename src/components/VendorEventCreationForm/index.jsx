@@ -78,11 +78,11 @@ function getCreationFormInitialState(trialClass) {
     totalTickets: 0,
     link: hash.digest("hex").substr(0, 6),
     type: "",
-    startDate: getDateForTime(new Date().getHours()),
-    endDate: getDateForTime(new Date().getHours() + 1),
+    startDate: new Date().getTime() + 60 * 60000,
+    endDate: new Date().getTime() + 120 * 60000,
     slotDuration: 0,
-    slotStartTimePerDay: getDateForTime(9),
-    slotEndTimePerDay: getDateForTime(17),
+    slotStartTimePerDay: new Date().getTime() + 60 * 60000,
+    slotEndTimePerDay: new Date().getTime() + 120 * 60000,
     otherField: "",
     earlyBird: false,
     earlyBirdPrice: 0,
@@ -109,6 +109,7 @@ function VendorEventCreationForm({
   const globalClasses = globalStyles();
   const router = useRouter();
   const [dialog, setDialog] = React.useState({ display: false, text: "" });
+  const [dateError, setDateError] = React.useState(null);
   const [postEventDialog, setPostEventDialog] = React.useState(false);
   const [descriptionRows, setDescriptionRows] = React.useState(3);
   const [customMessageRows, setCustomMessageRows] = React.useState(3);
@@ -230,6 +231,43 @@ function VendorEventCreationForm({
       }
     },
   });
+
+  React.useEffect(() => {
+    if (new Date(formik.values.slotStartTimePerDay) < new Date()) {
+      setDateError("Time cannot be less than current time");
+    } else {
+      setDateError(null);
+    }
+    formik.setFieldValue(
+      "slotEndTimePerDay",
+      new Date(formik.values.slotStartTimePerDay).getTime() + 60 * 60000
+    );
+  }, [formik.values.slotStartTimePerDay]);
+
+  React.useEffect(() => {
+    formik.setFieldValue(
+      "slotEndTimePerDay",
+      new Date(formik.values.slotStartTimePerDay).getTime() +
+        formik.values.slotDuration * 60 * 60000
+    );
+  }, [formik.values.slotDuration]);
+
+  React.useEffect(() => {
+    if (new Date(formik.values.startDate) < new Date()) {
+      setDateError("Time cannot be less than current time");
+    } else {
+      setDateError(null);
+    }
+  }, [formik.values.startDate]);
+
+  React.useEffect(() => {
+    if (new Date(formik.values.endDate) < new Date(formik.values.startDate)) {
+      formik.setFieldValue(
+        "endDate",
+        new Date(formik.values.startDate).getTime() + 60 * 60000
+      );
+    }
+  }, [formik.values.startDate, formik.values.endDate]);
 
   const fetchVendorTrialClassQuota = async (startDate) => {
     await getVendorTrialClassQuota(startDate)
@@ -582,7 +620,10 @@ function VendorEventCreationForm({
                   />
                 )}
               </Grid>
-
+              {/* EVENT DATES */}
+              <Grid item sm={12} container style={{ width: "100%" }}>
+                <p style={{ color: "#ff0000" }}>{dateError}</p>
+              </Grid>
               {/* LOCATION AND CATEGORY */}
               <Grid item sm={12}>
                 <Grid container spacing={3} alignItems="flex-start">
@@ -936,7 +977,7 @@ function VendorEventCreationForm({
               />
 
               <ButtonCapsule
-                disabled={loader}
+                disabled={loader || dateError}
                 buttonStyle={classes.saveButton}
                 type={"submit"}
                 text={"Host Event"}

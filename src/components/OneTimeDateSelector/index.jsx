@@ -121,6 +121,7 @@ function OneTimeDateSelector({ formik, checkDisabled, edit }) {
                 paddingRight: "0.4em",
               },
             }}
+            minDate={formik.values.startDate}
             InputProps={{
               style: {
                 padding: 0,
