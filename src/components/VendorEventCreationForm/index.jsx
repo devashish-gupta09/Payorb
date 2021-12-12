@@ -170,6 +170,9 @@ function VendorEventCreationForm({
             ...values,
             category: values.otherField || values.category,
           };
+          if (!req.privateMessage || req.privateMessage.length === 0) {
+            delete req.privateMessage;
+          }
 
           setLoader(true);
           delete req["otherField"];
