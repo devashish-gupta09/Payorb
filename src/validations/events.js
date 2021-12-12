@@ -40,10 +40,9 @@ export const createEventValidationSchema = Yup.object({
       then: Yup.number().min(5, "Price of a ticket must be minimum 5 Rs."),
     })
     .max(999999, "Price of a ticket must be less than 999999"),
-  totalTickets: Yup.number().lessThan(
-    100000,
-    "You can't book more than 100000 tickets"
-  ),
+  totalTickets: Yup.number()
+    .min(1, "Seats can't be zero")
+    .lessThan(100000, "You can't book more than 100000 tickets"),
   location: Yup.string().when("mode", {
     is: (value) => value === EVENT_MODES.ONLINE,
     then: Yup.string().optional().max(100),
