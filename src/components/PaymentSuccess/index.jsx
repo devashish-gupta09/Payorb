@@ -3,7 +3,7 @@ import React from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
 
-function PaymentSuccess({ orderId }) {
+function PaymentSuccess({ orderId, message, image }) {
   const classes = styles();
   const globalClasses = globalStyles();
 
@@ -11,13 +11,7 @@ function PaymentSuccess({ orderId }) {
     <Grid className={classes.root}>
       <Grid container justify="center" spacing={3}>
         <Grid item sm={12} container justify="center">
-          <img
-            className={classes.success}
-            src={
-              "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/assets%2Fcheck.png?alt=media&token=efa36c3e-0bdf-4cd7-97f5-c41b5f33413f"
-            }
-            alt=""
-          />
+          <img className={classes.success} src={image} alt="" />
         </Grid>
         <Grid item sm={12} container justify="center">
           <Typography
@@ -25,9 +19,11 @@ function PaymentSuccess({ orderId }) {
             variant="h6"
             className={globalClasses.bold500}
           >
-            Payment Complete.
+            {message}
           </Typography>
-          <Typography align="center">ORDER ID : {orderId}</Typography>
+          {orderId ? (
+            <Typography align="center">ORDER ID : {orderId}</Typography>
+          ) : null}
         </Grid>
       </Grid>
     </Grid>

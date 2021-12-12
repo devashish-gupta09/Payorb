@@ -25,6 +25,7 @@ import {
 } from "../../services/orders";
 import { sendOTP, verifyOTP } from "../../services/twilio";
 import { delay } from "../../utils/dateTime";
+import { isEventPastDate } from "../../utils/events";
 import { getRzpAmountFormat } from "../../utils/payments";
 import { FirebaseAuth } from "../AuthenticationContext";
 import ButtonCapsule from "../ButtonCapsule";
@@ -55,6 +56,9 @@ function EventBookingForm({
   price,
   type,
   oneOnOneBooking: { startDate },
+  endDate,
+  orders,
+  totalTickets,
 }) {
   const [otpSent, setOtpSent] = React.useState(false);
   const [confirmationResult, setConfirmationResult] = React.useState();
@@ -310,8 +314,30 @@ function EventBookingForm({
 
   return (
     <>
-      {success ? (
-        <PaymentSuccess orderId={orderId} />
+      {type === EVENT_TYPES.ONE_TIME &&
+      orders &&
+      orders.length === totalTickets ? (
+        <PaymentSuccess
+          message={"No seats left for booking."}
+          image={
+            "https://firebasestorage.googleapis.com/v0/b/payorb-prod.appspot.com/o/assets-new%2Fclose-window-128.png?alt=media&token=37170740-1a8c-4308-a55b-cfd76d0054ea"
+          }
+        />
+      ) : isEventPastDate({ endDate }) ? (
+        <PaymentSuccess
+          message={"Event Expired."}
+          image={
+            "https://firebasestorage.googleapis.com/v0/b/payorb-prod.appspot.com/o/assets-new%2Fclose-window-128.png?alt=media&token=37170740-1a8c-4308-a55b-cfd76d0054ea"
+          }
+        />
+      ) : success ? (
+        <PaymentSuccess
+          orderId={orderId}
+          message={"Payment Complete."}
+          image={
+            "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/assets%2Fcheck.png?alt=media&token=efa36c3e-0bdf-4cd7-97f5-c41b5f33413f"
+          }
+        />
       ) : (
         <form onSubmit={formik.handleSubmit}>
           <div id="sign-in-button"></div>

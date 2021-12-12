@@ -181,6 +181,9 @@ function EventBooking({ eventLink }) {
                   price={event.price}
                   type={event.type}
                   oneOnOneBooking={{ startDate: from }}
+                  endDate={event.endDate}
+                  orders={event.orders}
+                  totalTickets={event.totalTickets}
                 />
               </DashboardCard>
             </Grid>
