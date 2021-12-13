@@ -131,7 +131,7 @@ function ProfilePageCarausel({ profileData, updateProfile, vendor }) {
             ></ButtonCapsule>
           ) : null}
         </Grid>
-        <div style={{ height: "40vh" }}>
+        <div>
           {carauselAssets && carauselAssets.length ? (
             <Carousel
               swipeable={true}
@@ -145,7 +145,7 @@ function ProfilePageCarausel({ profileData, updateProfile, vendor }) {
               keyBoardControl={true}
               customTransition="all .5"
               transitionDuration={1000}
-              containerClass="carousel-container"
+              containerClass="carouselContainer"
               removeArrowOnDeviceType={["tablet", "mobile"]}
               // deviceType={this.props.deviceType}
               dotListClass="custom-dot-list-style"
@@ -217,11 +217,15 @@ function Item(props) {
   return (
     <div
       style={{
-        height: "40vh",
+        height: "50vh",
+        padding: "0.5rem",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        border: "1px solid black",
+        borderRadius: "10px",
+        margin: "0px 5px 0px 5px",
       }}
     >
       {props.item.type && props.item.link ? (
@@ -292,11 +296,14 @@ const ActionButtons = ({ index, handleDelete, setEditIndex }) => {
   return (
     <div
       style={{
+        position: "relative",
+        top: "0px",
+        right: "0px",
         display: "flex",
         width: "100%",
         justifyContent: "end",
         alignItems: "center",
-        padding: "1rem 2rem",
+        padding: "0.5rem 2rem",
       }}
     >
       <Edit
@@ -365,10 +372,8 @@ const styles = makeStyles((theme) => ({
   },
   container: {
     padding: "2em 0",
-    height: "70vh",
   },
   root: {
-    height: "100%",
     borderRadius: "0.8em",
     padding: "2em",
     [theme.breakpoints.down("sm")]: {

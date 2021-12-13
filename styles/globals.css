@@ -37,3 +37,7 @@ a {
 .new-link--url-linkify:hover {
   color: #0eadad;
 }
+
+.carauselContainer{
+  padding : 2rem 0px;
+}
