@@ -75,7 +75,7 @@ const RevenueValueLabel = (props) => {
 };
 const CustomerValueLabel = (props) => {
   const { text } = props;
-  return <ValueAxis.Label {...props} text={`${text}`} />;
+  return <ValueAxis.Label {...props} text={`${Math.round(text)}`} />;
 };
 
 const titleStyles = {
@@ -148,6 +148,7 @@ function VendorSalesGraph() {
   }
 
   if (eventData) {
+    console.log(eventData)
     return (
       <Grid className={classes.root}>
         <Typography
