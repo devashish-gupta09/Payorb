@@ -20,6 +20,7 @@ import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import useFetchEvents from "../../hooks/useFetchEvents";
 import CustomerEventCard from "../CustomerEventCard";
 import DashboardCard from "../DashboardCard";
+import PageTitle from "../PageTitle";
 import SkeletonLoading from "../SkeletonLoading";
 
 function generateOneOnOneEventSlots(event) {
@@ -132,6 +133,7 @@ function CustomerEventScheduler({ eventLink }) {
     if (event.type === EVENT_TYPES.ONE_ON_ONE) {
       return (
         <Grid>
+          <PageTitle title="Payorb | Event Booking" />
           {Alert()}
           <Grid style={{ padding: "1em 0" }}>
             <CustomerEventCard

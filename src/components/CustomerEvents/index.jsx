@@ -12,6 +12,7 @@ import React from "react";
 
 import useFetchEvents from "../../hooks/useFetchEvents";
 import CustomerEventsList from "../CustomerEventList";
+import PageTitle from "../PageTitle";
 import SkeletonLoading from "../SkeletonLoading";
 
 function CustomerEvents() {
@@ -35,6 +36,7 @@ function CustomerEvents() {
   if (events) {
     return (
       <Grid>
+        <PageTitle title="Payorb | Events" />
         <Grid container alignItems={"center"}>
           <Grid item sm={8} style={{ width: "90vw" }}>
             <Tabs

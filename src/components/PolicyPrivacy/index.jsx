@@ -1,10 +1,13 @@
 import { Grid, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 
+import PageTitle from "../PageTitle";
+
 function PolicyPrivacy() {
   const classes = styles();
   return (
     <Grid className={classes.root}>
+      <PageTitle title="Payorb | Privacy" />
       <Typography variant={"h4"}>Privacy Policy</Typography>
       {/* Data and revision */}
       <Grid className={classes.dateAndRevision}>

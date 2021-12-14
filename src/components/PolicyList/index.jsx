@@ -2,11 +2,13 @@ import { Grid, Link, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 
 import { PAGE_PATHS } from "../../constants/paths";
+import PageTitle from "../PageTitle";
 
 function PolicyList() {
   const classes = styles();
   return (
     <Grid className={classes.root}>
+      <PageTitle title="Payorb | Policies" />
       <Typography variant={"h4"} gutterBottom>
         Policies
       </Typography>

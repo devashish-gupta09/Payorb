@@ -1,5 +1,7 @@
 import { Grid } from "@material-ui/core";
 
+import PageTitle from "../src/components/PageTitle";
+
 import SigningHeader from "../src/components/SigningHeader";
 import SignUpContainer from "../src/components/SignUpContainer";
 import { getHomeContent } from "../src/services/landing";
@@ -7,6 +9,7 @@ import { getHomeContent } from "../src/services/landing";
 export default function SignUp({ content }) {
   return (
     <Grid style={{ height: "90vh" }}>
+      <PageTitle title="Payorb | Sign Up" />
       <SigningHeader />
       <SignUpContainer content={content} />
     </Grid>

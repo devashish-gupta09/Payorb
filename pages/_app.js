@@ -1,10 +1,11 @@
 import { ThemeProvider } from "@material-ui/styles";
 import dynamic from "next/dynamic";
-import Head from "next/head";
 import { useRouter } from "next/router";
+
 import { useEffect } from "react";
 
 import AuthenticationContextProvider from "../src/components/AuthenticationContext";
+import PageTitle from "../src/components/PageTitle";
 import theme from "../src/theme";
 import { pageview } from "../src/utils/ga";
 import "../styles/globals.css";
@@ -34,9 +35,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
-      <Head>
-        <title>Payorb</title>
-      </Head>
+      <PageTitle title="Payorb" />
       <AuthenticationContextProvider>
         <ThemeProvider theme={theme}>
           <Component {...pageProps} />

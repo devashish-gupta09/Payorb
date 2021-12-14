@@ -28,6 +28,7 @@ import ButtonCapsule from "../ButtonCapsule";
 import ConfirmationAlertDialog from "../ConfirmationAlertDialog";
 import DashboardCard from "../DashboardCard";
 import Multiselect from "../Multiselect";
+import PageTitle from "../PageTitle";
 import SkeletonLoading from "../SkeletonLoading";
 function createData(name, phoneNumber, email, date, events, eventList) {
   return {
@@ -124,6 +125,7 @@ function VendorCustomers() {
   if (loading || eventLoading) {
     return (
       <Grid className={classes.root}>
+        <PageTitle title="Payorb | Customers" />
         <SkeletonLoading message={"Loading customers"} />
       </Grid>
     );
@@ -164,6 +166,7 @@ function VendorCustomers() {
     if (!customers.length) {
       return (
         <DashboardCard>
+          <PageTitle title="Payorb | Customers" />
           <h2>There are no customers to display</h2>
           <Typography>
             Create new events and start sharing by heading over to the events
@@ -175,6 +178,7 @@ function VendorCustomers() {
 
     return (
       <Grid className={classes.root}>
+        <PageTitle title="Payorb | Customers" />
         {Alert()}
         {confirmationDialogOpen ? (
           <ConfirmationAlertDialog

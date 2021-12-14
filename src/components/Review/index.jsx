@@ -3,6 +3,7 @@ import React from "react";
 
 import CustomerViewHeader from "../CustomerViewHeader";
 import DashboardCard from "../DashboardCard";
+import PageTitle from "../PageTitle";
 import ReviewForm from "../ReviewForm";
 import DashboardContainer from "../VendorDashboardContainer";
 
@@ -11,6 +12,7 @@ function Review() {
 
   return (
     <Grid>
+      <PageTitle title="Payorb | Review" />
       <CustomerViewHeader />
       <DashboardContainer>
         <Grid className={classes.root}>

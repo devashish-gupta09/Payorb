@@ -15,6 +15,7 @@ import { Context } from "../AuthenticationContext";
 import VendorDashboardHeader from "../DashboardHeader";
 import FallbackLoading from "../FallbackLoading";
 import FallbackPage from "../FallbackPage";
+import PageTitle from "../PageTitle";
 import Profile from "../Profile";
 import VendorCustomers from "../VendorCustomers";
 import VendorDashboardContainer from "../VendorDashboardContainer";
@@ -53,7 +54,12 @@ function VendorDashboard() {
             );
         }
       } else {
-        return <Profile profileData={profileData} />;
+        return (
+          <>
+            <PageTitle title="Payorb | Profile" />
+            <Profile profileData={profileData} />;
+          </>
+        );
       }
     }
   };

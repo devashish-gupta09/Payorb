@@ -1,10 +1,13 @@
 import { Grid, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 
+import PageTitle from "../PageTitle";
+
 function PolicyUserAgreement() {
   const classes = styles();
   return (
     <Grid className={classes.root}>
+      <PageTitle title="Payorb | User Agreement" />
       <Typography variant={"h4"}>Marketplace Vendor Agreement</Typography>
       {/* Data and revision */}
       <Grid className={classes.dateAndRevision}>

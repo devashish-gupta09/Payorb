@@ -8,11 +8,13 @@ import AboutTeam from "../AboutTeam";
 
 import LandingFooter from "../LandingFooter";
 import LandingHeader from "../LandingHeader";
+import PageTitle from "../PageTitle";
 
 function AboutView() {
   const classes = styles();
   return (
     <Grid className={classes.root}>
+      <PageTitle title="Payorb | About" />
       <LandingHeader />
       <AboutBanner />
       <AboutDetail />

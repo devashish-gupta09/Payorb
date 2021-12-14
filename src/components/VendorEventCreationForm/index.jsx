@@ -61,6 +61,7 @@ import OneTimeDateSelector from "../OneTimeDateSelector";
 import PostEventCreationDialog from "../PostEventCreationDialog";
 import { EventCategoryField } from "./EventCategoryField";
 import { styles } from "./styles";
+import PageTitle from "../PageTitle";
 
 const hash = createHash("sha256");
 hash.update(v4());
@@ -317,10 +318,11 @@ function VendorEventCreationForm({
       formik.values.description.split("\n").length > 3
         ? formik.values.description.split("\n").length - 3
         : 0;
-    let toAddMessage =
-      formik.values.privateMessage.split("\n").length > 3
+    let toAddMessage = formik.values.privateMessage
+      ? formik.values.privateMessage.split("\n").length > 3
         ? formik.values.privateMessage.split("\n").length - 3
-        : 0;
+        : 0
+      : 0;
     if (toAddDescription <= 7) {
       setDescriptionRows(3 + toAddDescription);
     }
@@ -414,6 +416,7 @@ function VendorEventCreationForm({
   }, [event, clone]);
   return (
     <Grid style={{ width: "100%" }}>
+      <PageTitle title="Payorb | Create Event" />
       {Alert()}
       <PostEventCreationDialog
         eventImg={croppedImg || formik.values.photoUrl}

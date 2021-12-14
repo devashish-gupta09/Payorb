@@ -23,6 +23,7 @@ import DetailRow from "../DetailRow";
 import EventBookingForm from "../EventBookingForm";
 import EventBookingVendorCard from "../EventBookingVendorCard";
 import EventImageContainer from "../EventImageContainer/Index";
+import PageTitle from "../PageTitle";
 import ReadMore from "../ReadMore";
 import SkeletonLoading from "../SkeletonLoading";
 
@@ -101,6 +102,7 @@ function EventBooking({ eventLink }) {
 
     return (
       <Grid style={{ width: "100%" }}>
+        <PageTitle title="Payorb | Event Booking" />
         <Grid
           container
           className={classes.root}

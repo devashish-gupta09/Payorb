@@ -4,6 +4,7 @@ import React from "react";
 
 import { getUser } from "../../services/auth";
 import CustomerVendorProfileEvents from "../CustomerVendorProfileEvents";
+import PageTitle from "../PageTitle";
 import ProfileDetailsSection from "../ProfileDetailsSection";
 import ProfileInfoCard from "../ProfileInfoCard";
 import ProfilePageCarausel from "../ProfilePageCarausel";
@@ -36,6 +37,7 @@ function CustomerVendorProfile({ userUID }) {
   if (profileData && profileData.userUID) {
     return (
       <Grid>
+        <PageTitle title="Payorb | Profile" />
         <ProfileInfoCard profileData={profileData} vendor={false} />
         <ProfileDetailsSection profileData={profileData} vendor={false} />
         {profileData.carauselAssets &&

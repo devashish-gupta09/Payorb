@@ -21,6 +21,7 @@ import { buildVendorDashboardUrl } from "../../utils/url";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
 import EventsViewList from "../EventsViewList";
+import PageTitle from "../PageTitle";
 
 import VendorEventsCalenderView from "../VendorEventsCalenderView";
 
@@ -120,6 +121,7 @@ function VendorEvents() {
 
   return (
     <Grid className={classes.root}>
+      <PageTitle title="Payorb | Events" />
       {Alert()}
       <Grid container justify="space-between" style={{ padding: "1em 0px" }}>
         <Button onClick={toggleView}>

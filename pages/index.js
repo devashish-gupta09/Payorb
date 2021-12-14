@@ -1,6 +1,7 @@
 import { Grid } from "@material-ui/core";
 
 import Landing from "../src/components/Landing";
+import PageTitle from "../src/components/PageTitle";
 import {
   getClientReviewContent,
   getEventRegistrationContent,
@@ -13,6 +14,7 @@ import {
 export default function Index({ landing }) {
   return (
     <Grid style={{ backgroundColor: "#BDF5F2" }}>
+      <PageTitle title="Payorb | Home" />
       <Landing content={landing} />
     </Grid>
   );
