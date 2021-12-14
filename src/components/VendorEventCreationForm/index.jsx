@@ -48,7 +48,7 @@ import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { createEvent, editEvent } from "../../services/events";
 import { getVendorTrialClassQuota } from "../../services/vendor";
-import { delay, getDateForTime } from "../../utils/dateTime";
+import { delay } from "../../utils/dateTime";
 import firebase from "../../utils/firebase";
 import { removeStringAndAddSeperator } from "../../utils/strings";
 import { buildVendorDashboardUrl, getVendorIdFromUrl } from "../../utils/url";
@@ -78,15 +78,15 @@ function getCreationFormInitialState(trialClass) {
     totalTickets: 0,
     link: hash.digest("hex").substr(0, 6),
     type: "",
-    startDate: new Date().getTime() + 60 * 60000,
-    endDate: new Date().getTime() + 120 * 60000,
+    startDate: new Date(new Date().getTime() + 60 * 60000),
+    endDate: new Date(new Date().getTime() + 120 * 60000),
     slotDuration: 0,
-    slotStartTimePerDay: new Date().getTime() + 60 * 60000,
-    slotEndTimePerDay: new Date().getTime() + 120 * 60000,
+    slotStartTimePerDay: new Date(new Date().getTime() + 60 * 60000),
+    slotEndTimePerDay: new Date(new Date().getTime() + 120 * 60000),
     otherField: "",
     earlyBird: false,
     earlyBirdPrice: 0,
-    earlyBirdDeadline: getDateForTime(new Date().getHours() + 1),
+    earlyBirdDeadline: new Date(new Date().getHours() + 1),
     trialClass: trialClass === true ? true : false,
   };
 }
@@ -240,15 +240,25 @@ function VendorEventCreationForm({
     }
     formik.setFieldValue(
       "slotEndTimePerDay",
-      new Date(formik.values.slotStartTimePerDay).getTime() + 60 * 60000
+      new Date(
+        new Date(formik.values.slotStartTimePerDay).getTime() + 60 * 60000
+      )
     );
   }, [formik.values.slotStartTimePerDay]);
 
   React.useEffect(() => {
     formik.setFieldValue(
       "slotEndTimePerDay",
-      new Date(formik.values.slotStartTimePerDay).getTime() +
-        formik.values.slotDuration * 60 * 60000
+      new Date(
+        new Date(formik.values.slotStartTimePerDay).getTime() +
+          formik.values.slotDuration * 60 * 60000
+      )
+    );
+    console.log(
+      new Date(
+        new Date(formik.values.slotStartTimePerDay).getTime() +
+          formik.values.slotDuration * 60 * 60000
+      )
     );
   }, [formik.values.slotDuration]);
 
@@ -264,7 +274,7 @@ function VendorEventCreationForm({
     if (new Date(formik.values.endDate) < new Date(formik.values.startDate)) {
       formik.setFieldValue(
         "endDate",
-        new Date(formik.values.startDate).getTime() + 60 * 60000
+        new Date(new Date(formik.values.startDate).getTime() + 60 * 60000)
       );
     }
   }, [formik.values.startDate, formik.values.endDate]);
