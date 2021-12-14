@@ -403,6 +403,7 @@ function VendorEventCreationForm({
       formik.setFieldValue("bookedSlots", undefined);
       formik.setFieldValue("customers", undefined);
       formik.setFieldValue("reviews", undefined);
+      formik.setFieldValue("revenue", undefined);
       formik.setFieldValue("createdDate", undefined);
       formik.setFieldValue("userUID", undefined);
       formik.setFieldValue("status", undefined);
