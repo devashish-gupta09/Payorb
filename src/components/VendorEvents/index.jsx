@@ -158,7 +158,7 @@ function VendorEvents() {
         events ? (
           <Grid className={classes.container}>
             {events.length > 0 ? (
-              <>
+              <div style={!desktop ? { paddingBottom: "13vh" } : {}}>
                 <Grid className={classes.events}>
                   <Typography variant="h6" style={{ marginBottom: "0.5em" }}>
                     Open Events
@@ -190,7 +190,7 @@ function VendorEvents() {
                     <Typography>All events loaded. </Typography>
                   )}
                 </Grid>
-              </>
+              </div>
             ) : (
               <Typography variant="h5">
                 No past events found. Start creating new events...
