@@ -250,7 +250,12 @@ function Item(props) {
                 onClick={(e) => props.setImage({ ...props.item })}
                 src={props.item.link}
                 alt="carausel-image"
-                style={{ cursor: "pointer", width: "80%", aspectRatio: "1" }}
+                style={{
+                  cursor: "pointer",
+                  width: "80%",
+                  aspectRatio: "1",
+                  objectFit: "cover",
+                }}
               />
             </div>
           </>
