@@ -10,11 +10,15 @@ import React from "react";
 
 function OneOnOneDateSelector({ formik, checkDisabled }) {
   const handleStartDate = (date) => {
-    formik.setFieldValue("startDate", date.toISOString());
+    if (!isNaN(Date.parse(date))) {
+      formik.setFieldValue("startDate", date.toISOString());
+    }
   };
 
   const handleEndDate = (date) => {
-    formik.setFieldValue("endDate", date.toISOString());
+    if (!isNaN(Date.parse(date))) {
+      formik.setFieldValue("endDate", date.toISOString());
+    }
   };
 
   const handleStartSlotTimeChange = (date) => {

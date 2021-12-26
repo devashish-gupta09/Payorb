@@ -9,11 +9,15 @@ import React from "react";
 
 function OneTimeDateSelector({ formik, checkDisabled, edit }) {
   const handleStartDate = (date) => {
-    formik.setFieldValue("startDate", date.toISOString());
+    if (!isNaN(Date.parse(date))) {
+      formik.setFieldValue("startDate", date.toISOString());
+    }
   };
 
   const handleEndDate = (date) => {
-    formik.setFieldValue("endDate", date.toISOString());
+    if (!isNaN(Date.parse(date))) {
+      formik.setFieldValue("endDate", date.toISOString());
+    }
   };
 
   return (
