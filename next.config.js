@@ -41,6 +41,7 @@ const SentryWebpackPluginOptions = {
   //   urlPrefix, include, ignore
   org: "payorb",
   project: "payorb",
+  authToken: "c79dc10f510641c8ba0e83c0d71a7744a88277453b5d41f886fcaf1364181f61",
   silent: false,
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options.
