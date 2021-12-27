@@ -40,7 +40,8 @@ const SentryWebpackPluginOptions = {
   //   release, url, org, project, authToken, configFile, stripPrefix,
   //   urlPrefix, include, ignore
   org: "payorb",
-  silent: true, // Suppresses all logs
+  project: "payorb",
+  silent: false,
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options.
 };
