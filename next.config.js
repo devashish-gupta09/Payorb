@@ -21,7 +21,7 @@ const moduleExports = withPWA({
   images: {
     domains: ["firebasestorage.googleapis.com"],
   },
-  target: "serverless",
+  target: "experimental-serverless-trace",
   headers: {
     source: "/about",
     headers: [
