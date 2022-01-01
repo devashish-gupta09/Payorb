@@ -32,6 +32,8 @@
     "dotenv": "^8.2.0",
     "firebase": "^8.3.1",
     "formik": "^2.2.6",
+    "image-type": "^4.1.0",
+    "is-svg": "^4.3.2",
     "linkify-react": "^3.0.1",
     "linkifyjs": "^3.0.1",
     "moment": "^2.29.1",
@@ -55,7 +57,7 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
-    "@netlify/plugin-nextjs": "^3.0.3",
+    "@netlify/plugin-nextjs": "^4.1.1",
     "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-autofix": "^1.0.4",
@@ -64,6 +66,7 @@
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-unused-imports": "^1.1.1",
     "file-loader": "^6.2.0",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "webpack": "^5.65.0"
   }
 }

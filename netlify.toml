@@ -1,15 +1,15 @@
 [build]
   command = "yarn build"
-  publish = "out"
+  publish = ".next"
 
 [context.prod]
   command = "yarn build"
-  publish = "out"
+  publish = ".next"
   environment = { NEXT_PUBLIC_CMS_URL="http://localhost:1337",NEXT_PUBLIC_API_URL="https://asia-south1-payorb-prod.cloudfunctions.net",NEXT_PUBLIC_FIREBASE_API_KEY="AIzaSyCXOsWI8rTwdM_mweNWT2f8slsmqGaf5pk",NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="payorb-prod.firebaseapp.com",NEXT_PUBLIC_FIREBASE_PROJECT_ID="payorb-prod",NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="payorb-prod.appspot.com",NEXT_PUBLIC_FIREBASE_MESSAGE_SENDER_ID="753115269023",NEXT_PUBLIC_FIREBASE_APP_ID="1:753115269023:web:26f9a74d58302c7d49dfaa",NEXT_PUBLIC_PAYMENT_GATEWAY_KEY="rzp_live_DpNBVgsAwqessX",NEXT_PUBLIC_GOOGLE_ANALYTICS="G-ZKNL3ZEK44",NEXT_PUBLIC_SENTRY_DSN="https://017bcefac8324f49bf55df640fd9c82c@o1094318.ingest.sentry.io/6113312"}
 
 [context.main]
   command = "yarn build"
-  publish = "out"
+  publish = ".next"
   environment = { NEXT_PUBLIC_CMS_URL="http://localhost:1337",NEXT_PUBLIC_API_URL="https://asia-south1-payorb-staging.cloudfunctions.net",NEXT_PUBLIC_FIREBASE_API_KEY="AIzaSyATler-IHGoMPozwtjsPVu3dXiJ2AcLM44",NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="payorb-staging.firebaseapp.com",NEXT_PUBLIC_FIREBASE_PROJECT_ID="payorb-staging",NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="payorb-staging.appspot.com",NEXT_PUBLIC_FIREBASE_MESSAGE_SENDER_ID="775767066439",NEXT_PUBLIC_FIREBASE_APP_ID="1:775767066439:web:ebbd0ab42264bb858d6e62",NEXT_PUBLIC_PAYMENT_GATEWAY_KEY="rzp_test_fA0gdYKhk4xUou",NEXT_PUBLIC_SENTRY_DSN="https://28bda70561e7470da2978c56e23f0138@o1094318.ingest.sentry.io/6113332" }
 
 
