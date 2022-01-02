@@ -57,12 +57,35 @@ function VendorCustomers() {
   const [collapsed, setCollapsed] = React.useState(true);
   // const [sendBtnLoading, setSendBtnLoading] = React.useState(false);
   const { Alert, showAlert } = useAlertSnackbar();
-
+  const [formattedCustomers, setFormattedCustomers] = React.useState([]);
   const { customers, loading } = useFetchVendorCustomers();
   const { events, loading: eventLoading } = useFetchEvents(true, {
     limit: 400,
     keys: ["name", "link"],
   });
+
+  React.useEffect(() => {
+    if (customers && events) {
+      let formattedCustomersData = [];
+      customers.forEach((customer) => {
+        let formattedEvents = customer?.events?.map((link) => {
+          events.forEach((event) =>
+            event.link === link ? { ...event } : null
+          );
+        });
+        formattedEvents =
+          formattedEvents && formattedEvents.length
+            ? formattedEvents.filter((v) => v)
+            : [];
+        formattedCustomersData.push({
+          ...customer,
+          events: [...formattedEvents],
+        });
+      });
+      console.log(formattedCustomersData);
+      setFormattedCustomers([...formattedCustomersData]);
+    }
+  }, [customers, events]);
 
   const handleEventTypeChange = (event) => {
     setSelectedValue(event.target.value);
@@ -131,11 +154,11 @@ function VendorCustomers() {
     );
   }
 
-  if (customers && events) {
+  if (formattedCustomers && events) {
     const eventList = events.map((e) => e.name);
     const rows =
       selectedValueForFilter && selectedValueForFilter.length //if filter is present
-        ? customers
+        ? formattedCustomers
             .filter((customer) =>
               customer.events
                 .map((event) => event.link)
@@ -152,7 +175,7 @@ function VendorCustomers() {
                 selectedValueForFilter
               )
             )
-        : customers.map((customer) =>
+        : formattedCustomers.map((customer) =>
             createData(
               customer.name,
               customer.phoneNumber,
@@ -163,7 +186,7 @@ function VendorCustomers() {
               selectedValueForFilter
             )
           );
-    if (!customers.length) {
+    if (!formattedCustomers.length) {
       return (
         <DashboardCard>
           <PageTitle title="Payorb | Customers" />
