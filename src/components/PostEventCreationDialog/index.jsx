@@ -14,7 +14,7 @@ import React from "react";
 
 import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
-
+import { Context } from "../AuthenticationContext";
 // import { PAGE_PATHS } from "../../constants/paths";
 import DashboardCard from "../DashboardCard";
 import DateMonth from "../DateMonth";
@@ -38,8 +38,11 @@ const loadFacebook = () => {
 };
 
 function PostEventCreationDialog(props) {
+  const userContext = React.useContext(Context);
   const { event, eventImg } = props;
-  const eventLink = `/event/${event.link}/register`;
+  const eventLink = `/event/${userContext.user.uid}/${
+    event.url ? event.url : event.link
+  }`;
   const { Alert, showAlert } = useAlertSnackbar();
 
   const handleCopy = () => {
@@ -178,7 +181,7 @@ function PostEventCreationDialog(props) {
                       ),
                     }}
                     disabled={true}
-                    value={event.link}
+                    value={event.url ? event.url : event.link}
                   />
                 </Grid>
                 <Grid

@@ -77,8 +77,11 @@ function generateOneOnOneEventSlots(event) {
   return result;
 }
 
-function CustomerEventScheduler({ eventLink }) {
-  const { events, loading, error } = useFetchEvents(false, { link: eventLink });
+function CustomerEventScheduler({ eventLink, vendorId }) {
+  const { events, loading, error } = useFetchEvents(false, {
+    link: eventLink,
+    vendorId,
+  });
   const [week, setWeek] = React.useState();
   const { Alert, showAlert } = useAlertSnackbar();
   const [timeChosen, setTimeChosen] = React.useState({
@@ -119,7 +122,7 @@ function CustomerEventScheduler({ eventLink }) {
     const endTime = moment(momentStartTime);
     endTime.add(slotDuration, "hours");
     router.push(
-      `/event/${eventLink}/register?from=${momentStartTime
+      `/event/${vendorId}/${eventLink}?from=${momentStartTime
         .toDate()
         .getTime()}&to=${endTime.toDate().getTime()}`
     );

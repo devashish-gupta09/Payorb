@@ -19,7 +19,7 @@ function EventRegistration() {
 
   React.useEffect(() => {
     if (router.query.eventId) {
-      getEventPublic(router.query.eventId)
+      getEventPublic(router.query.eventId, router.query.vendorId)
         .then((res) => {
           if (res.success) {
             const { event } = res.data;
@@ -54,7 +54,10 @@ function EventRegistration() {
       <Grid>
         <CustomerViewHeader />
         <VendorDashboardContainer>
-          <EventBooking eventLink={router.query.eventId}></EventBooking>{" "}
+          <EventBooking
+            vendorId={router.query.vendorId}
+            eventLink={router.query.eventId}
+          ></EventBooking>{" "}
         </VendorDashboardContainer>
       </Grid>
     );
@@ -67,6 +70,7 @@ function EventRegistration() {
           <CustomerViewHeader />
           <VendorDashboardContainer>
             <EventBooking
+              vendorId={router.query.vendorId}
               eventLink={router.query.eventId}
               to={router.query.from}
               from={router.query.from}
@@ -80,7 +84,10 @@ function EventRegistration() {
       <Grid>
         <CustomerViewHeader />
         <VendorDashboardContainer>
-          <CustomerEventScheduler eventLink={router.query.eventId} />
+          <CustomerEventScheduler
+            eventLink={router.query.eventId}
+            vendorId={router.query.vendorId}
+          />
         </VendorDashboardContainer>
       </Grid>
     );

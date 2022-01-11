@@ -28,7 +28,15 @@ export const createEventValidationSchema = Yup.object({
     )
     .min(6, "Must be 6 characters or more.")
     .max(40, "Must be 40 characters or less")
+    .required(),
 
+  url: Yup.string()
+    .matches(
+      linkSpecialCharRegex,
+      "Should not contain special charactes or spaces"
+    )
+    .min(6, "Must be 6 characters or more.")
+    .max(40, "Must be 40 characters or less")
     .required(),
   privateMessage: Yup.string()
     .optional()

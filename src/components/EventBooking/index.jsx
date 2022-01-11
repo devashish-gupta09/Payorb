@@ -85,13 +85,16 @@ const eventRows = (event, oneOnOneSlot) => [
   },
 ];
 
-function EventBooking({ eventLink }) {
+function EventBooking({ eventLink, vendorId }) {
   const classes = styles();
   const globalClasses = globalStyles();
   const router = useRouter();
   const { to, from } = router.query;
 
-  const { loading, events } = useFetchEvents(false, { link: eventLink });
+  const { loading, events } = useFetchEvents(false, {
+    link: eventLink,
+    vendorId,
+  });
 
   if (loading) {
     return <SkeletonLoading message={"Loading Event Booking Page"} />;

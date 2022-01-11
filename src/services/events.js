@@ -60,11 +60,12 @@ export const getEventsVendorDashboard = async (params) => {
   }
 };
 
-export const getEventPublic = async (link) => {
+export const getEventPublic = async (link, vendorId) => {
   try {
     const res = await axios.get(`${API_URL}/${END_POINTS.EVENTS}`, {
       params: {
         link,
+        vendorId,
       },
     });
     return res.data;

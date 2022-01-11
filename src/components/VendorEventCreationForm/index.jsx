@@ -1,10 +1,5 @@
 import DateFnsUtils from "@date-io/date-fns";
 import {
-  KeyboardDatePicker,
-  KeyboardTimePicker,
-  MuiPickersUtilsProvider,
-} from "@material-ui/pickers";
-import {
   Button,
   FormControl,
   FormControlLabel,
@@ -26,6 +21,11 @@ import {
   Switch,
   DialogContentText,
 } from "@material-ui/core";
+import {
+  KeyboardDatePicker,
+  KeyboardTimePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
 
 import createHash from "create-hash";
 import { useFormik } from "formik";
@@ -46,7 +46,7 @@ import {
 import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
-import { createEvent, editEvent } from "../../services/events";
+import { createEvent, editEvent, getEventsPublic } from "../../services/events";
 import { getVendorTrialClassQuota } from "../../services/vendor";
 import { delay } from "../../utils/dateTime";
 import firebase from "../../utils/firebase";
@@ -58,10 +58,10 @@ import ButtonCapsule from "../ButtonCapsule";
 import ImageEventUpload from "../ImageEventUpload";
 import OneOnOneDateSelector from "../OneOnOneDateSelector";
 import OneTimeDateSelector from "../OneTimeDateSelector";
+import PageTitle from "../PageTitle";
 import PostEventCreationDialog from "../PostEventCreationDialog";
 import { EventCategoryField } from "./EventCategoryField";
 import { styles } from "./styles";
-import PageTitle from "../PageTitle";
 
 const hash = createHash("sha256");
 hash.update(v4());
@@ -78,6 +78,7 @@ function getCreationFormInitialState(trialClass) {
     mode: EVENT_MODES.ONLINE,
     totalTickets: 0,
     link: hash.digest("hex").substr(0, 6),
+    url: hash.digest("hex").substr(0, 6),
     type: "",
     startDate: new Date(new Date().getTime() + 60 * 60000),
     endDate: new Date(new Date().getTime() + 120 * 60000),
@@ -116,6 +117,8 @@ function VendorEventCreationForm({
   const [customMessageRows, setCustomMessageRows] = React.useState(3);
   const [croppedImg, setCroppedImage] = React.useState();
   const theme = useTheme();
+  const [eventsLoading, setEventsLoading] = React.useState(false);
+  const [urlIsValid, setUrlIsValid] = React.useState(true);
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
   const { Alert, showAlert } = useAlertSnackbar();
   const [loader, setLoader] = React.useState(false);
@@ -125,6 +128,24 @@ function VendorEventCreationForm({
   const handlePostCreationDialogClose = () => {
     router.push(buildVendorDashboardUrl(getVendorIdFromUrl(router), "/events"));
     handleCancel();
+  };
+
+  const isUrlvalid = async (link, vendorId) => {
+    setEventsLoading(true);
+    getEventsPublic({ link, vendorId })
+      .then(async (res) => {
+        if (res.data) {
+          setEventsLoading(false);
+          // We recieve an object instead of array when fetching a single
+          // event
+          // setEvents(res.data.events || [res.data.event]);
+          // setEventsParams({ ...eventsParams, startFrom: res.data.lastEvent });
+          formik.setFieldError("url", "Url is already in use");
+        }
+      })
+      .catch((err) => {
+        console.log("Error", err);
+      });
   };
 
   const handleEventTypeChange = (event) => {
@@ -181,7 +202,7 @@ function VendorEventCreationForm({
           if (!edit) {
             // Lets upload image
 
-            const formatedLink = removeStringAndAddSeperator(values.link, "-");
+            const formatedLink = removeStringAndAddSeperator(values.url, "-");
             formik.setFieldValue("link", formatedLink);
 
             let url;
@@ -190,7 +211,7 @@ function VendorEventCreationForm({
             }
 
             await createEvent({
-              event: { ...req, photoUrl: url, link: formatedLink },
+              event: { ...req, photoUrl: url, url: formatedLink },
             });
 
             setLoader(false);
@@ -200,6 +221,8 @@ function VendorEventCreationForm({
             if (croppedImg) {
               url = await handleImageUpload(req.link);
             }
+
+            delete req.revenue;
 
             await editEvent({
               event: { ...req, photoUrl: url },
@@ -232,6 +255,12 @@ function VendorEventCreationForm({
       }
     },
   });
+
+  React.useEffect(() => {
+    const auth = FirebaseAuth.Singleton();
+    const user = auth.getUser();
+    isUrlvalid(formik.values.url, user.uid);
+  }, [formik.values.url]);
 
   React.useEffect(() => {
     if (new Date(formik.values.slotStartTimePerDay) < new Date()) {
@@ -400,6 +429,10 @@ function VendorEventCreationForm({
   };
   React.useEffect(() => {
     if (event && clone && !edit) {
+      formik.setFieldValue(
+        "url",
+        event.url ? event.url : hash.digest("hex").substr(0, 6)
+      );
       formik.setFieldValue("link", hash.digest("hex").substr(0, 6));
       formik.setFieldValue("orders", undefined);
       formik.setFieldValue("bookedSlots", undefined);
@@ -967,16 +1000,16 @@ function VendorEventCreationForm({
               <TextField
                 fullWidth
                 className={classes.textInput}
-                id="link"
+                id="url"
                 label={"Event Link"}
                 variant="outlined"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.link}
-                error={formik.touched.link && Boolean(formik.errors.link)}
+                value={formik.values.url}
+                error={formik.touched.url && Boolean(formik.errors.url)}
                 helperText={
-                  formik.errors.link
-                    ? formik.errors.link
+                  formik.errors.url
+                    ? formik.errors.url
                     : edit
                     ? ""
                     : "You can also personalize your event link, e.g. YogaWithNeha, CookieBakingWorkshop"
@@ -991,7 +1024,7 @@ function VendorEventCreationForm({
               />
 
               <ButtonCapsule
-                disabled={loader || dateError}
+                disabled={loader || dateError || formik.errors.url}
                 buttonStyle={classes.saveButton}
                 type={"submit"}
                 text={"Host Event"}

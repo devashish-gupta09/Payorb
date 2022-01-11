@@ -41,6 +41,7 @@ function CustomersView() {
         ) {
           return (
             <EventBooking
+              vendorId={router.query.vendorId}
               eventLink={router.query.event}
               to={router.query.from}
               from={router.query.from}
