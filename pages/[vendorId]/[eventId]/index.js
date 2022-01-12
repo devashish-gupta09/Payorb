@@ -1,6 +1,6 @@
 import React from "react";
 
-import EventRegistration from "../../../../src/components/EventRegistration";
+import EventRegistration from "../../../src/components/EventRegistration";
 
 /**
  * Route Map

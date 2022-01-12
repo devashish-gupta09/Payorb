@@ -14,6 +14,7 @@ import React from "react";
 
 import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
+import { getUser } from "../../services/auth";
 import { Context } from "../AuthenticationContext";
 // import { PAGE_PATHS } from "../../constants/paths";
 import DashboardCard from "../DashboardCard";
@@ -39,10 +40,9 @@ const loadFacebook = () => {
 
 function PostEventCreationDialog(props) {
   const userContext = React.useContext(Context);
+  const [vendor, setVendor] = React.useState();
   const { event, eventImg } = props;
-  const eventLink = `/event/${userContext.user.uid}/${
-    event.url ? event.url : event.link
-  }`;
+  const [eventLink, setEventLink] = React.useState("");
   const { Alert, showAlert } = useAlertSnackbar();
 
   const handleCopy = () => {
@@ -72,6 +72,33 @@ function PostEventCreationDialog(props) {
     );
   };
   const classes = styles();
+  React.useEffect(() => {
+    if (userContext && userContext.user && userContext.user.uid) {
+      // API call to get vendor details
+      getUser({ vendorId: userContext.user.uid })
+        .then((res) => {
+          if (res.data.vendor) {
+            setVendor(res.data.vendor);
+          } else {
+            throw new Error("Error fetching vendor");
+          }
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    }
+  }, [userContext.user.uid]);
+
+  React.useEffect(() => {
+    if (vendor && (vendor.username || vendor.userUID)) {
+      setEventLink(
+        `/${vendor.username ? vendor.username : vendor.userUID}/${
+          event.url ? event.url : event.link
+        }`
+      );
+    }
+  }, [vendor, event]);
+
   return (
     <Dialog
       {...props}
