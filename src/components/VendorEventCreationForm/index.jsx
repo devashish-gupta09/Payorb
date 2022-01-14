@@ -443,6 +443,7 @@ function VendorEventCreationForm({
       formik.setFieldValue("userUID", undefined);
       formik.setFieldValue("status", undefined);
       formik.setFieldValue("updatedAt", undefined);
+      formik.setFieldValue("vendorUserName", undefined);
       formik.setFieldValue("price", parseInt(event.price));
       formik.setFieldValue("earlyBirdPrice", parseInt(event.earlyBirdPrice));
     }
