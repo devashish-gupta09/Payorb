@@ -46,6 +46,7 @@ import {
 import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
+import { getUser } from "../../services/auth";
 import { createEvent, editEvent, getEventsPublic } from "../../services/events";
 import { getVendorTrialClassQuota } from "../../services/vendor";
 import { delay } from "../../utils/dateTime";
@@ -132,6 +133,7 @@ function VendorEventCreationForm({
   };
 
   const isUrlvalid = async (link, vendorId) => {
+    if (edit) return;
     setEventsLoading(true);
     getEventsPublic({ link, vendorId })
       .then(async (res) => {
@@ -260,7 +262,17 @@ function VendorEventCreationForm({
   React.useEffect(() => {
     const auth = FirebaseAuth.Singleton();
     const user = auth.getUser();
-    isUrlvalid(formik.values.url, user.uid);
+    getUser({ vendorId: user.uid })
+      .then((res) => {
+        if (res.data.vendor) {
+          isUrlvalid(formik.values.url, res.data.vendor.username);
+        } else {
+          throw new Error("Error fetching vendor");
+        }
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
   }, [formik.values.url]);
 
   React.useEffect(() => {
@@ -451,6 +463,13 @@ function VendorEventCreationForm({
       formik.setFieldValue("earlyBirdPrice", parseInt(event.earlyBirdPrice));
     }
   }, [event, clone]);
+
+  React.useEffect(() => {
+    if (edit) {
+      formik.setFieldValue("vendorUserName", undefined);
+    }
+  }, [edit]);
+
   return (
     <Grid style={{ width: "100%" }}>
       <PageTitle title="Payorb | Create Event" />
