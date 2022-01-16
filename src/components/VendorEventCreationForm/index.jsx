@@ -49,6 +49,7 @@ import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { createEvent, editEvent, getEventsPublic } from "../../services/events";
 import { getVendorTrialClassQuota } from "../../services/vendor";
 import { delay } from "../../utils/dateTime";
+import { isEventPastDate } from "../../utils/events";
 import firebase from "../../utils/firebase";
 import { removeStringAndAddSeperator } from "../../utils/strings";
 import { buildVendorDashboardUrl, getVendorIdFromUrl } from "../../utils/url";
@@ -431,7 +432,9 @@ function VendorEventCreationForm({
     if (event && clone && !edit) {
       formik.setFieldValue(
         "url",
-        event.url ? event.url : hash.digest("hex").substr(0, 6)
+        isEventPastDate(event.endDate) && event.url
+          ? event.url
+          : hash.digest("hex").substr(0, 6)
       );
       formik.setFieldValue("link", hash.digest("hex").substr(0, 6));
       formik.setFieldValue("orders", undefined);

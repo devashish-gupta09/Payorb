@@ -23,9 +23,8 @@ function useFederatedAuth() {
     try {
       let userInfo = firebaseAuth.getUser();
       if (!userInfo) {
-        userInfo = await firebaseAuth.googleSignin();
+        userInfo = await firebaseAuth.facebookSignin();
       }
-
       const idToken = await firebaseAuth.getIdToken();
       return { userInfo, idToken };
     } catch (err) {
