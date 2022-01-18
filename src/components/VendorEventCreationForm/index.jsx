@@ -137,16 +137,14 @@ function VendorEventCreationForm({
     setEventsLoading(true);
     getEventsPublic({ link, vendorId })
       .then(async (res) => {
-        if (res.data) {
+        if (res.data.event) {
           setEventsLoading(false);
-          // We recieve an object instead of array when fetching a single
-          // event
-          // setEvents(res.data.events || [res.data.event]);
-          // setEventsParams({ ...eventsParams, startFrom: res.data.lastEvent });
           formik.setFieldError("url", "Url is already in use");
         }
       })
       .catch((err) => {
+        setEventsLoading(false);
+        formik.setFieldError("url", "");
         console.log("Error", err);
       });
   };
@@ -264,7 +262,7 @@ function VendorEventCreationForm({
     const user = auth.getUser();
     getUser({ vendorId: user.uid })
       .then((res) => {
-        if (res.data.vendor) {
+        if (res) {
           isUrlvalid(formik.values.url, res.data.vendor.username);
         } else {
           throw new Error("Error fetching vendor");
