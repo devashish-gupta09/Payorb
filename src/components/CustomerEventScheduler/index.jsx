@@ -122,7 +122,7 @@ function CustomerEventScheduler({ eventLink, vendorId }) {
     const endTime = moment(momentStartTime);
     endTime.add(slotDuration, "hours");
     router.push(
-      `/event/${vendorId}/${eventLink}?from=${momentStartTime
+      `/${vendorId}/${eventLink}?from=${momentStartTime
         .toDate()
         .getTime()}&to=${endTime.toDate().getTime()}`
     );

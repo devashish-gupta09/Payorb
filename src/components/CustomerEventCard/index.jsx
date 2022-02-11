@@ -18,7 +18,7 @@ function CustomerEventCard({ event, expand, onBook }) {
   const router = useRouter();
 
   const redirectToBook = () => {
-    router.push(`/event/${event.userUID}/${event.link}`);
+    router.push(`/${event.userUID}/${event.link}`);
   };
 
   return (
