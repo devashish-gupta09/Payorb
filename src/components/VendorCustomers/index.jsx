@@ -68,15 +68,12 @@ function VendorCustomers() {
     if (customers && events) {
       let formattedCustomersData = [];
       customers.forEach((customer) => {
-        let formattedEvents = customer?.events?.map((link) => {
-          events.forEach((event) =>
-            event.link === link ? { ...event } : null
-          );
-        });
-        formattedEvents =
-          formattedEvents && formattedEvents.length
-            ? formattedEvents.filter((v) => v)
-            : [];
+        let formattedEvents = customer?.events
+          ?.map((link) => {
+            return events.find((event) => event.link === link);
+          })
+          .filter((e) => e);
+
         formattedCustomersData.push({
           ...customer,
           events: [...formattedEvents],
