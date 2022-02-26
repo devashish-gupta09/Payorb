@@ -5,6 +5,8 @@ import { appColors } from "../../../styles/colors";
 export const styles = makeStyles((theme) => ({
   buttonSpacing: {
     padding: "0 1.5em",
+    fontSize: "1em",
+    textTransform: "none",
   },
   logo: {
     width: "5% !important",
