@@ -1,4 +1,4 @@
-import { Button, Grid, makeStyles, Typography } from "@material-ui/core";
+import { Button, Grid, makeStyles, TextField, Typography } from "@material-ui/core";
 import { MailOutline, Phone, Place } from "@material-ui/icons";
 import { useFormik } from "formik";
 import React from "react";
@@ -179,59 +179,39 @@ function Details(props) {
 function ProfileAboutCard({ profileData, vendor, updateProfile }) {
   const classes = styles();
 
+  const formik = useFormik({
+    initialValues: {
+      about: profileData.about || "",
+    },
+    onSubmit: async (values) => {
+      try {
+        const res = await updateUser(values);
+        if (res?.success) {
+          showAlert("User updated.");
+          updateProfile({ ...profileData, ...values });
+          setEdit(false);
+        } else {
+          showAlert("User not updated.", ALERT_TYPES.ERROR);
+        }
+      } catch (err) {
+        console.log(err);
+        showAlert("User not updated", ALERT_TYPES.ERROR);
+      }
+    },
+  });
+
+
   return (
-    <DashboardCard rootClass={classes.root}>
-      <Grid>
-        <Grid container spacing={5} className={classes.desktop}>
-          <Grid item sm={!profileData.videoLink && !vendor ? 0 : 6}>
-            <Grid className={classes.detailsContainer}>
-              <Details
-                about={profileData.about}
-                email={profileData.email}
-                phoneNumber={profileData.phoneNumber}
-                location={profileData.location}
-                classes={classes}
-                vendor={vendor}
-                profileData={profileData}
-                updateProfile={updateProfile}
-              />
-            </Grid>
-          </Grid>
-          <Grid item sm={!profileData.videoLink && !vendor ? 0 : 6}>
-            {/* Need to include a video section over here. */}
-            <VideoUpload
-              vendor={vendor}
-              videoProps={{
-                src: profileData.videoLink,
-              }}
-            />
-          </Grid>
-        </Grid>
-        <Grid className={classes.mobile}>
-          <Grid>
-            {/* Need to include a video section over here. */}
-            <VideoUpload
-              vendor={vendor}
-              videoProps={{
-                src: profileData.videoLink,
-              }}
-            />
-          </Grid>
-          <Grid className={classes.mobileDetailsContainer}>
-            <Details
-              about={profileData.about}
-              email={profileData.email}
-              phoneNumber={profileData.phoneNumber}
-              location={profileData.location}
-              classes={classes}
-              vendor={vendor}
-              profileData={profileData}
-              updateProfile={updateProfile}
-            />
-          </Grid>
+    <Grid className={classes.root}>
+      <Grid className={classes.detailsContainer}>
+        <Typography variant="h6" style={{ fontWeight: "bold", marginBottom: "1.5em" }}>About</Typography>
+        <Grid style={{ background: "#ECEDF4", padding: "1em", borderRadius: "5px" }}>
+          <TextField multiline fullWidth value={formik.values.about} placeholder="Please add some information about yourself" InputProps={{
+            disableUnderline: "true"
+          }} minRows={6} />
         </Grid>
       </Grid>
-    </DashboardCard>
+    </Grid>
   );
 }
 
@@ -276,9 +256,7 @@ const styles = makeStyles((theme) => ({
     padding: "2em 1em",
   },
   detailsContainer: {
-    [theme.breakpoints.down("sm")]: {
-      width: "100%",
-    },
+    width: "100%"
   },
   aboutContainer: {
     paddingBottom: "1em",

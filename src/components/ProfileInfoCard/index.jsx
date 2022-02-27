@@ -1,11 +1,16 @@
 import {
   Button,
   Grid,
+  InputAdornment,
+  ListItem,
+  TextField,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@material-ui/core";
+import { ContactPhone, Edit, FiberManualRecord, LocationCity, LocationOn, Mail, WorkOutline } from "@material-ui/icons";
 import { useFormik } from "formik";
+import * as  MaterialAlert from "@material-ui/lab/Alert"
 
 import React from "react";
 
@@ -16,6 +21,7 @@ import { updateUser } from "../../services/auth";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
 import EditableTextField from "../EditableTextfield";
+import { EditableTextFieldV2 } from "../EditTextFieldV2";
 import ImageProfileUpload from "../ImageProfileUpload";
 import Logout from "../LogoutButton";
 import { styles } from "./styles";
@@ -23,15 +29,15 @@ import { styles } from "./styles";
 function ProfileInfoCard({ profileData, vendor, updateProfile }) {
   const classes = styles();
   const globalClasses = globalStyles();
-  const [edit, setEdit] = React.useState(false);
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down("sm"));
   const { Alert, showAlert } = useAlertSnackbar();
 
   const formik = useFormik({
     initialValues: {
       occupation: profileData.occupation || "",
       location: profileData.location || "",
+      email: profileData.email || "",
+      phoneNumber: profileData.phoneNumber || "",
     },
     onSubmit: async (values) => {
       try {
@@ -49,90 +55,123 @@ function ProfileInfoCard({ profileData, vendor, updateProfile }) {
     },
   });
 
-  const handleEditProfile = () => {
-    setEdit(!edit);
-  };
-
   return (
-    <DashboardCard>
+    <Grid className={classes.profileInfoCardContainer}>
       {Alert()}
-      <form onSubmit={formik.handleSubmit}>
-        <Grid container justify="space-between" alignItems="center">
-          <Grid
-            container
-            alignItems="center"
-            className={classes.titleCardProfileContainer}
-          >
-            <Grid>
-              <ImageProfileUpload
-                vendor={vendor}
-                title={"Select profile picture"}
-                imageProps={{
-                  src: profileData.profileImgUrl || "/assets/profile.jpg",
-                  className: classes.profileImage,
-                }}
-              />
-            </Grid>
-
-            <Grid className={classes.titleCardInfoContainer}>
+      < form onSubmit={formik.handleSubmit} >
+        <Grid style={{ position: "relative" }}>
+          <Grid className={classes.profileImageContainer}>
+            <ImageProfileUpload
+              vendor={vendor}
+              title={"Select profile picture"}
+              imageProps={{
+                src: profileData.profileImgUrl || "/assets/profile.jpg",
+                className: classes.profileImage,
+              }}
+            />
+          </Grid>
+          <Grid className={classes.profileDetailsContainer}>
+            <Grid container justifyContent="center">
               <Typography
-                variant={"h4"}
-                className={globalClasses.boldSixHundred}
+                className={`${globalClasses.boldSixHundred} ${classes.profileName}`} gutterBottom
               >
                 {profileData.name}
               </Typography>
+            </Grid>
+            <EditableTextFieldV2
+              containerPadding="0.75em 0"
+              label="Occupation"
+              startIcon={<WorkOutline />}
+              textFieldProps={
+                {
+                  id: "occupation",
+                  value: formik.values.occupation ?? "Add occupation",
+                  variant: "filled",
+                  margin: "dense",
+                  fullWidth: true,
+                  onChange: formik.handleChange,
+                  onBlur: formik.onBlur
+                }
+              }
+            />
+            <EditableTextFieldV2
+              containerPadding="0.75em 0"
+              label="Email ID"
+              startIcon={<Mail />}
+              textFieldProps={
+                {
+                  id: "email",
+                  value: formik.values.email ?? "Add email",
+                  variant: "filled",
+                  margin: "dense",
+                  fullWidth: true,
+                  onChange: formik.handleChange,
+                  onBlur: formik.onBlur
+                }
+              }
+            />
+            <EditableTextFieldV2
+              containerPadding="0.75em 0"
+              label="Contact Number"
+              startIcon={<ContactPhone />}
+              textFieldProps={
+                {
+                  id: "phoneNumber",
+                  value: formik.values.phoneNumber ?? "Add contact number",
+                  variant: "filled",
+                  margin: "dense",
+                  fullWidth: true,
+                  onChange: formik.handleChange,
+                  onBlur: formik.onBlur
+                }
+              }
+            />
+            <EditableTextFieldV2
+              containerPadding="0.75em 0"
+              label="Location"
+              startIcon={<LocationOn />}
+              textFieldProps={
+                {
+                  id: "location",
+                  value: formik.values.location ?? "Add Your Location",
+                  variant: "filled",
+                  margin: "dense",
+                  fullWidth: true,
+                  onChange: formik.handleChange,
+                  onBlur: formik.onBlur
+                }
+              }
+            />
+            <Grid style={{ padding: "0.75em 0" }}>
+              <Typography gutterBottom style={{ fontWeight: "bold" }}>
+                Accounts
+              </Typography>
 
-              <Grid>
-                <EditableTextField
-                  edit={edit}
-                  value={
-                    profileData.occupation ||
-                    !vendor ||
-                    "Please add your occupation"
-                  }
-                  textFieldProps={{
-                    id: "occupation",
-                    label: "Occupation",
-                    value: formik.values.occupation,
-                    variant: "outlined",
-                    margin: "normal",
-                    onChange: formik.handleChange,
-                    onBlur: formik.onBlur,
-                  }}
-                  typographyProps={{ className: classes.grey }}
-                />
+              <Grid container spacing={1} justifyContent="space-between">
+                <Grid item xs={6}>
+                  <Grid style={{ background: "rgba(30, 206, 122, 0.1)", width: "100%", border: "2px solid #00B25D", height: "5.5em", borderRadius: "3px", boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.25)" }}>
+                    <Typography align="center" style={{ color: "#00B25D", paddingTop: "0.25em" }}><FiberManualRecord style={{ fontSize: "0.5em" }} /> Connected</Typography>
+                    <Grid container alignItems="center" justifyContent="center"><img alt="tehre" src='../assets/google-meet.png' style={{ height: "1.5em", marginTop: "1em" }} /></Grid>
+                  </Grid>
+
+                </Grid>
+                <Grid item xs={6}>
+                  <Grid style={{ background: "rgba(30, 206, 122, 0.1)", width: "100%", border: "2px solid #00B25D", height: "5.5em", borderRadius: "3px", boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.25)" }}>
+                    <Typography align="center" style={{ color: "#00B25D", paddingTop: "0.25em" }}><FiberManualRecord style={{ fontSize: "0.5em" }} /> Connected</Typography>
+                    <Grid container alignItems="center" justifyContent="center"><img alt="tehre" src='../assets/zoom.png' style={{ height: "1.75em", marginTop: "1em" }} /></Grid>
+                  </Grid>
+                </Grid>
               </Grid>
+
+              <Grid style={{ background: "rgba(255, 206, 49, 0.17)", width: "100%", border: "2px solid #FFCE31", borderRadius: "3px", marginTop: "1.25em", padding: "1em" }}>
+                NOTE: By connecting accounts you allow google to manage calendar/google-meet
+              </Grid>
+
             </Grid>
           </Grid>
-          <Grid style={{ paddingTop: `${matches ? "1.5em" : 0}` }}>
-            {vendor && (
-              <>
-                {edit ? (
-                  <>
-                    <Button className={classes.saveButton} type="submit">
-                      Save
-                    </Button>
-                    <ButtonCapsule
-                      text="Cancel"
-                      buttonStyle={classes.cancelButton}
-                      onClick={handleEditProfile}
-                    ></ButtonCapsule>
-                  </>
-                ) : (
-                  <Grid container alignItems="center">
-                    <ButtonCapsule
-                      text="Edit Profile"
-                      onClick={handleEditProfile}
-                    ></ButtonCapsule>
-                    <Logout />
-                  </Grid>
-                )}
-              </>
-            )}
-          </Grid>
         </Grid>
-      </form>
-    </DashboardCard>
+      </form >
+    </Grid >
   );
 }
 
