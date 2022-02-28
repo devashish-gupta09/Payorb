@@ -5,6 +5,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@material-ui/core";
+import CallMadeIcon from "@material-ui/icons/CallMade";
 import React, { useContext } from "react";
 
 import { appColors } from "../../../styles/colors";
@@ -84,6 +85,7 @@ function LandingHeaderProfile({ handleLinkClick }) {
             <ButtonCapsule
               buttonStyle={classes.btnCapSpacing}
               text="Sign Up For Vendor"
+              icon={<CallMadeIcon />}
             ></ButtonCapsule>
           </Link>
         )}
@@ -144,6 +146,7 @@ function LandingHeaderProfile({ handleLinkClick }) {
             <ButtonCapsule
               buttonStyle={classes.btnCapSpacing}
               text="Sign Up For Vendor"
+              icon={<CallMadeIcon />}
             ></ButtonCapsule>
           </Link>
         )}

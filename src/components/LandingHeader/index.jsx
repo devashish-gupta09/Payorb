@@ -5,7 +5,13 @@ import { useRouter } from "next/router";
 import React from "react";
 
 import { PAGE_PATHS } from "../../constants/paths";
-import { HOME_CLICK, ABOUT_CLICK, FEATURES_CLICK, event } from "../../utils/ga";
+import {
+  HOME_CLICK,
+  ABOUT_CLICK,
+  FEATURES_CLICK,
+  SOLOPRENEUR_CLICK,
+  event,
+} from "../../utils/ga";
 
 import CustomHeader from "../Header";
 import LandingHeaderProfile from "../LandingHeaderProfile";
@@ -45,6 +51,13 @@ function LandingHeader() {
           <Grid className={classes.drawerList}>
             <li
               onClick={() => {
+                handleClick(PAGE_PATHS.HOME);
+              }}
+            >
+              Home
+            </li>
+            <li
+              onClick={() => {
                 handleClick(PAGE_PATHS.FEATURES);
               }}
             >
@@ -59,17 +72,10 @@ function LandingHeader() {
             </li>
             <li
               onClick={() => {
-                handleClick(PAGE_PATHS.ABOUT);
+                handleClick(PAGE_PATHS.SOLOPRENEUR);
               }}
             >
               Become a Solopreneur
-            </li>
-            <li
-              onClick={() => {
-                handleClick(PAGE_PATHS.ABOUT);
-              }}
-            >
-              About Us
             </li>
 
             <LandingHeaderProfile handleLinkClick={handleClick} />
@@ -127,7 +133,7 @@ function LandingHeader() {
               <Button
                 onClick={() =>
                   event({
-                    action: ABOUT_CLICK,
+                    action: SOLOPRENEUR_CLICK,
                   })
                 }
                 className={classes.buttonSpacing}
