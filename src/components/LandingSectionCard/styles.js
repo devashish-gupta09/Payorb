@@ -5,7 +5,7 @@ import { appColors } from "../../../styles/colors";
 export const styles = makeStyles((theme) => ({
   container: {
     borderRadius: "0.75em",
-    padding: "1em 1em 1em 1em",
+    padding: "0.7em 0.7em 0.7em 0.7em",
     boxShadow: "0px 1em 2em rgba(0, 0, 0, 0.1)",
     [theme.breakpoints.down("sm")]: {
       padding: "2em",
@@ -15,7 +15,7 @@ export const styles = makeStyles((theme) => ({
     },
   },
   logo: {
-    padding: "3em 0",
+    padding: "1em 0",
     [theme.breakpoints.down("sm")]: {
       padding: "1em 0",
     },
@@ -34,7 +34,7 @@ export const styles = makeStyles((theme) => ({
   },
   description: {
     fontSize: "1em",
-    textAlign: "center",
+    textAlign: "left",
     paddingTop: "7.5%",
     paddingBottom: "5%",
     color: appColors.grey,

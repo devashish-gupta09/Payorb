@@ -44,8 +44,6 @@ export const styles = makeStyles((theme) => ({
   },
   titleSection1: {
     marginTop:"2vw",
-    alignSelf:"center",
-    textAlign:"center",
     fontSize:"3vw",
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.25em",
@@ -95,7 +93,7 @@ export const styles = makeStyles((theme) => ({
   },
   image: {
     width:"37vw",
-    
+
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       marginTop: "4em",

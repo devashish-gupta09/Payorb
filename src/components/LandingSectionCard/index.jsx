@@ -12,7 +12,7 @@ function LandingSectionCard({ image, title, description }) {
         <Grid item sm={6}>
         <Grid className={classes.logo} container justify="center">
           {/* <img className={classes.image} src={image}></img> */}
-          <Image src={image} height={65} width={65} quality={"75"}></Image>
+          <Image src={image} height={80} width={80} quality={"75"}></Image>
         </Grid>
         </Grid>
         <Grid item sm={6}>

@@ -38,6 +38,7 @@ export const styles = makeStyles((theme) => ({
     },
   },
   titleSection1: {
+    textJustify:'left',
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.25em",
       width: "100%",

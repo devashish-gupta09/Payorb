@@ -9,6 +9,7 @@ import {
   getHomeContent,
   getUserRegistrationContent,
   getGrowthContent,
+  getUserBenefits,
 } from "../src/services/landing";
 
 export default function Features({ landing }) {
@@ -26,6 +27,7 @@ export async function getStaticProps({ params, preview = null }) {
   const userRegistration = await getUserRegistrationContent();
   const eventRegistration = await getEventRegistrationContent();
   const clientReview = await getClientReviewContent();
+  const userBenefits= await getUserBenefits();
   const growth = await getGrowthContent();
 
   return {
@@ -36,6 +38,7 @@ export async function getStaticProps({ params, preview = null }) {
         userRegistration,
         eventRegistration,
         clientReview,
+        userBenefits,
         growth,
       },
     },

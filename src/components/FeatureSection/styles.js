@@ -4,9 +4,11 @@ import { appColors } from "../../../styles/colors";
 
 export const styles = makeStyles((theme) => ({
   container: {
-    minHeight: "80vh",
+    minHeight: "33vh",
+    width:"100%",
+    justifyContent:"center",
     maxHeight: "fit-content",
-    padding: "4em 2em 10em 6em",
+    padding: "4em 2em 6em 3em",
     [theme.breakpoints.down("sm")]: {
       minHeight: "fit-content",
       padding: "2em 1em",
@@ -62,18 +64,21 @@ export const styles = makeStyles((theme) => ({
       marginTop: "-3em",
     },
   },
-
+  title:{
+    width:"100%",
+    fontSize:"1.5vw",
+  },
   description: {
     color: appColors.grey,
-    paddingBottom: "1em",
+    paddingBottom: "0.5em",
   },
+
   paragraphContainer: {
     paddingBottom: "4em",
     textAlign: "justify",
   },
 
   sectionTitle:{
- 
     width:"100%",
     color: "black",
     fontWeight: "bolder",
