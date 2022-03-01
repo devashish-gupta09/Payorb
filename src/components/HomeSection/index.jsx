@@ -1,4 +1,5 @@
 import { Button, Grid, Typography } from "@material-ui/core";
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import CallMadeIcon from "@material-ui/icons/CallMade";
 import Link from "next/link";
 import React from "react";
@@ -16,28 +17,17 @@ function HomeSection({ content }) {
         <LandingCarousel urls={content.urls} />
       </Grid> */}
       <Grid className={classes.textContainer}>
-        <Grid container>
+        <Grid container sx={{ whiteSpace: "nowrap", overflowX: "auto" }}>
           <Typography
             variant="h2"
             className={`${classes.titleSection} ${classes.titleSection1}`}
           >
             {content.titleSection1}
-          </Typography>
-          <Typography
-            variant="h2"
-            className={`${classes.titleSection} ${classes.aquaText}`}
-          >
-            {content.titleSection2}
+            <Typography variant="h2" className={`${classes.aquaText}`}>
+              &nbsp;{content.titleSection2}
+            </Typography>
           </Typography>
         </Grid>
-
-        <Typography
-          gutterBottom
-          variant="h2"
-          className={`${classes.titleSection}`}
-        >
-          {content.titleSection3}
-        </Typography>
         <Typography variant={"h6"} className={classes.descriptionText}>
           {content.description}
         </Typography>
@@ -54,6 +44,12 @@ function HomeSection({ content }) {
             </Button>
           </Link>
         </Grid>
+        <Button className={classes.scroll} onclick="window.scrollBy(0, 100)">
+          <Grid className={classes.scrollIcon}>
+            <ArrowDownwardIcon />
+          </Grid>
+          Scroll to Explore
+        </Button>
       </Grid>
       <Grid className={classes.imgContainer}>
         <img

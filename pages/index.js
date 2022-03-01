@@ -14,7 +14,7 @@ import {
 
 export default function Index({ landing }) {
   return (
-    <Grid style={{ backgroundColor: "#BDF5F2" }}>
+    <Grid style={{ backgroundColor: "#fff" }}>
       <PageTitle title="Payorb | Home" />
       <Landing content={landing} />
     </Grid>

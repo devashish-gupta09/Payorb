@@ -18,6 +18,7 @@ const styles = makeStyles((theme) => ({
       padding: "0.5em 1em",
     },
     boxShadow: "none",
+    height: "90px",
   },
 }));
 
