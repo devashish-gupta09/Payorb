@@ -1,10 +1,11 @@
 import {
-  Button,
+  // Button,
   Link,
   makeStyles,
   useMediaQuery,
   useTheme,
 } from "@material-ui/core";
+import CallMadeIcon from "@material-ui/icons/CallMade";
 import React, { useContext } from "react";
 
 import { appColors } from "../../../styles/colors";
@@ -63,7 +64,10 @@ function LandingHeaderProfile({ handleLinkClick }) {
           </li>
         ) : (
           <Link href={PAGE_PATHS.SIGNIN}>
-            <Button className={classes.buttonSpacing}>Sign In</Button>
+            <ButtonCapsule
+              buttonStyle={classes.buttonSpacing}
+              text="Sign In"
+            ></ButtonCapsule>
           </Link>
         )}
 
@@ -74,13 +78,14 @@ function LandingHeaderProfile({ handleLinkClick }) {
             }}
             className={classes.list}
           >
-            Sign Up for Vendor
+            Sign Up as Vendor
           </li>
         ) : (
           <Link href={PAGE_PATHS.SIGNUP}>
             <ButtonCapsule
               buttonStyle={classes.btnCapSpacing}
-              text="Sign Up For Vendor"
+              text="Sign Up as Vendor"
+              icon={<CallMadeIcon />}
             ></ButtonCapsule>
           </Link>
         )}
@@ -119,7 +124,11 @@ function LandingHeaderProfile({ handleLinkClick }) {
           </li>
         ) : (
           <Link href={PAGE_PATHS.SIGNIN}>
-            <Button className={classes.buttonSpacing}>Sign In</Button>
+            {/* <Button className={classes.buttonSpacing}>Sign In</Button> */}
+            <ButtonCapsule
+              buttonStyle={classes.buttonSpacing}
+              text="Sign In"
+            ></ButtonCapsule>
           </Link>
         )}
 
@@ -130,13 +139,14 @@ function LandingHeaderProfile({ handleLinkClick }) {
             }}
             className={classes.list}
           >
-            Sign Up for Vendor
+            Sign Up as Vendor
           </li>
         ) : (
           <Link href={PAGE_PATHS.SIGNUP}>
             <ButtonCapsule
               buttonStyle={classes.btnCapSpacing}
-              text="Sign Up For Vendor"
+              text="Sign Up as Vendor"
+              icon={<CallMadeIcon />}
             ></ButtonCapsule>
           </Link>
         )}
@@ -147,14 +157,20 @@ function LandingHeaderProfile({ handleLinkClick }) {
 
 const styles = makeStyles((theme) => ({
   btnCapSpacing: {
-    padding: "0.5em 2.25em",
+    padding: "1em 2em",
     fontWeight: "600",
-    textTransform: "uppercase",
+    background: "white",
+    boxShadow: "none",
+    border: `1px solid black`,
+    fontSize: "1em",
   },
   buttonSpacing: {
-    padding: "0.5em 2em",
-    textTransform: "uppercase",
+    padding: "1em 2em",
     marginRight: "0.5em",
+    background: "linear-gradient(178.83deg, #68FDF3 1%, #00D4FF 183.74%)",
+    // borderRadius: "40%",
+    boxShadow: "none",
+    fontSize: "1em",
   },
   list: {
     listStyleType: "None",

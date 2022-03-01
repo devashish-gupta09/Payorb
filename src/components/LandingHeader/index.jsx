@@ -5,7 +5,13 @@ import { useRouter } from "next/router";
 import React from "react";
 
 import { PAGE_PATHS } from "../../constants/paths";
-import { ABOUT_CLICK, event } from "../../utils/ga";
+import {
+  HOME_CLICK,
+  ABOUT_CLICK,
+  FEATURES_CLICK,
+  SOLOPRENEUR_CLICK,
+  event,
+} from "../../utils/ga";
 
 import CustomHeader from "../Header";
 import LandingHeaderProfile from "../LandingHeaderProfile";
@@ -45,10 +51,31 @@ function LandingHeader() {
           <Grid className={classes.drawerList}>
             <li
               onClick={() => {
+                handleClick(PAGE_PATHS.HOME);
+              }}
+            >
+              Home
+            </li>
+            <li
+              onClick={() => {
+                handleClick(PAGE_PATHS.FEATURES);
+              }}
+            >
+              Features
+            </li>
+            <li
+              onClick={() => {
                 handleClick(PAGE_PATHS.ABOUT);
               }}
             >
               About Us
+            </li>
+            <li
+              onClick={() => {
+                handleClick(PAGE_PATHS.SOLOPRENEUR);
+              }}
+            >
+              Become a Solopreneur
             </li>
 
             <LandingHeaderProfile handleLinkClick={handleClick} />
@@ -59,13 +86,37 @@ function LandingHeader() {
       <Toolbar>
         <Grid container justify="space-between" alignItems="center">
           {/* Will be replaced with logo */}
-          <Logo redirectToHome={true} dark={true} width={"4.5em"}></Logo>
+          <Logo redirectToHome={true} dark={true} width={"6em"}></Logo>
 
           <Grid
             className={classes.buttonContainer}
             container
             justify="space-evenly"
           >
+            <Link href={PAGE_PATHS.HOME}>
+              <Button
+                onClick={() =>
+                  event({
+                    action: HOME_CLICK,
+                  })
+                }
+                className={classes.buttonSpacing}
+              >
+                Home
+              </Button>
+            </Link>
+            <Link href={PAGE_PATHS.FEATURES}>
+              <Button
+                onClick={() =>
+                  event({
+                    action: FEATURES_CLICK,
+                  })
+                }
+                className={classes.buttonSpacing}
+              >
+                Features
+              </Button>
+            </Link>
             <Link href={PAGE_PATHS.ABOUT}>
               <Button
                 onClick={() =>
@@ -76,6 +127,18 @@ function LandingHeader() {
                 className={classes.buttonSpacing}
               >
                 About Us
+              </Button>
+            </Link>
+            <Link href={PAGE_PATHS.ABOUT}>
+              <Button
+                onClick={() =>
+                  event({
+                    action: SOLOPRENEUR_CLICK,
+                  })
+                }
+                className={classes.buttonSpacing}
+              >
+                Become a Solopreneur
               </Button>
             </Link>
 

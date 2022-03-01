@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@material-ui/core";
+import { Grid,Typography } from "@material-ui/core";
 import React from "react";
 
 import Carousel from "react-material-ui-carousel";
@@ -7,28 +7,47 @@ import SectionCard from "../LandingSectionCard";
 import SectionContent from "../LandingSectionContent";
 import { styles } from "./styles";
 
+const ColoredLine = ({ color }) => (
+  <hr
+      style={{
+          color:"#00D4FF",
+          backgroundColor:"#00D4FF",
+          height: "0.1vw",
+          width:"8vw",
+      }}
+  />
+);
+
 function FeatureSection({ content }) {
   const classes = styles();
 
   return (
-    <Grid className={classes.container} container alignItems={"stretch"}>
-      <Grid container className={classes.paragraphContainer}>
+    <Grid>
+      {/* <Grid container className={classes.paragraphContainer}>
         <Typography className={classes.description}>
           {content.topPara}
         </Typography>
         <Typography className={classes.description}>
           {content.bottomPara}
         </Typography>
-      </Grid>
-      <Grid container>
-        <Grid item sm={4}>
+      </Grid> */}
+      <Typography  variant="h4" className={classes.sectionTitle}>
+        {content.title}
+      </Typography >
+      <ColoredLine color="blue"/>
+    
+      <Grid className={classes.container} container alignItems={"stretch"}>
+      {/* Removing the Features Title from the grid
+      <Grid item sm={4}>
           <SectionContent
             sectionLogo={content.sectionLogo}
             sectionTitle={content.sectionTitle}
             title={content.title}
             description={content.description}
           />
-        </Grid>
+       </Grid>*/}
+
+
         <Grid container item sm={8} justify={"center"}>
           <Grid className={classes.mobile}>
             <Carousel
@@ -73,11 +92,11 @@ function FeatureSection({ content }) {
             className={classes.desktop}
             container
             alignItems={"stretch"}
-            spacing={4}
+            spacing={6}
           >
             {content.features.map((feature, index) => {
               return (
-                <Grid container item sm={4} key={index}>
+                <Grid container item sm={6} key={index}>
                   <SectionCard
                     image={feature.image}
                     title={feature.title}

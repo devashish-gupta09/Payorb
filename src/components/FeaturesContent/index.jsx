@@ -2,13 +2,10 @@ import { Button, Grid, Typography } from "@material-ui/core";
 import CallMadeIcon from "@material-ui/icons/CallMade";
 import Link from "next/link";
 import React from "react";
-
 import { event, SIGNUP_CLICK } from "../../utils/ga";
-
-// import LandingCarousel from "../LandingCarousel";
 import { styles } from "./styles";
 
-function HomeSection({ content }) {
+function FeaturesContent({ content }) {
   const classes = styles();
   return (
     <Grid className={classes.container}>
@@ -31,13 +28,13 @@ function HomeSection({ content }) {
           </Typography>
         </Grid>
 
-        <Typography
+       {/* <Typography
           gutterBottom
           variant="h2"
           className={`${classes.titleSection}`}
         >
           {content.titleSection3}
-        </Typography>
+       </Typography>*/}
         <Typography variant={"h6"} className={classes.descriptionText}>
           {content.description}
         </Typography>
@@ -57,7 +54,7 @@ function HomeSection({ content }) {
       </Grid>
       <Grid className={classes.imgContainer}>
         <img
-          src="/assets/landing-image.svg"
+          src="/assets/videosnip.png"
           alt="landing"
           className={classes.image}
         />
@@ -66,4 +63,4 @@ function HomeSection({ content }) {
   );
 }
 
-export default HomeSection;
+export default FeaturesContent;

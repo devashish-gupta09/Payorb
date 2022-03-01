@@ -4,7 +4,7 @@ import { appColors } from "../../../styles/colors";
 
 export const styles = makeStyles((theme) => ({
   container: {
-    minHeight: "100vh",
+    minHeight: "80vh",
     maxHeight: "fit-content",
     padding: "4em 2em 10em 6em",
     [theme.breakpoints.down("sm")]: {
@@ -30,6 +30,8 @@ export const styles = makeStyles((theme) => ({
   },
   desktop: {
     display: "flex",
+    width:"95vw",
+
     [theme.breakpoints.down("sm")]: {
       display: "None !important",
     },
@@ -68,5 +70,16 @@ export const styles = makeStyles((theme) => ({
   paragraphContainer: {
     paddingBottom: "4em",
     textAlign: "justify",
+  },
+
+  sectionTitle:{
+ 
+    width:"100%",
+    color: "black",
+    fontWeight: "bolder",
+    textAlign:"center",
+    alignSelf:"center",
+    justifyContent:"center",
+    alignItems:"center",
   },
 }));

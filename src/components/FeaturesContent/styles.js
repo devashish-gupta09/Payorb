@@ -20,6 +20,7 @@ export const styles = makeStyles((theme) => ({
     height: "13.8125em",
     left: "3.625em",
     top: "9.5em",
+    alignContent:"center",
 
     [theme.breakpoints.down("sm")]: {
       top: "15%",
@@ -32,12 +33,20 @@ export const styles = makeStyles((theme) => ({
   titleSection: {
     color: "black",
     fontWeight: "bolder",
+    textAlign:"center",
+    justifyContent:"center",
+    alignItems:"center",
     [theme.breakpoints.down("sm")]: {
+      marginTop:"5vw",
       fontSize: "1.6em",
       textAlign: "center",
     },
   },
   titleSection1: {
+    marginTop:"2vw",
+    alignSelf:"center",
+    textAlign:"center",
+    fontSize:"3vw",
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.25em",
       width: "100%",
@@ -54,6 +63,8 @@ export const styles = makeStyles((theme) => ({
     color: "#2D2F30",
     width: "100%",
     textJustify: "auto",
+    fontSize:"20px",
+    marginTop:"1vw",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       fontSize: "0.9em",
@@ -68,24 +79,26 @@ export const styles = makeStyles((theme) => ({
     // top: "40%",
     // right: "6%",
     // width: "50%",
-    position: "absolute",
-    width: "43.875em",
-    height: "29.25em",
+    position: "absolute",    
     right: "2.5em",
-    top: "15em",
-
+    top: "12em",
+    left: "57vw",
     [theme.breakpoints.down("sm")]: {
       top: "50%",
       display: "contents",
       width: "100%",
-      float: "left",
       padding: "0em 1em",
+      justifyContent: "center",
+      marginLeft:"auto",
+      marginRight:"auto",
     },
   },
   image: {
+    width:"37vw",
+    
     [theme.breakpoints.down("sm")]: {
       width: "100%",
-      marginTop: "4rem",
+      marginTop: "4em",
       padding: "1em 1em",
     },
   },
@@ -93,10 +106,11 @@ export const styles = makeStyles((theme) => ({
     position: "absolute",
     width: "100%",
     height: "3em",
-    top: "19em",
-
+    top: "37vh",
+    
     [theme.breakpoints.down("sm")]: {
       justifyContent: "center",
+      marginBottom:"10vh",
     },
   },
   buttonSpacing: {
@@ -106,7 +120,7 @@ export const styles = makeStyles((theme) => ({
     background: "linear-gradient(178.83deg, #68FDF3 1%, #00D4FF 183.74%)",
     borderRadius: "2em",
     fontWeight: "bold",
-    marginTop: "1.6em",
+    marginTop: "1.2em",
     padding: "1em 2em",
     [theme.breakpoints.down("sm")]: {
       alignItems: "center",

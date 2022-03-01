@@ -15,10 +15,11 @@ export const getHomeContent = async () => {
   // } catch (err) {
   //   console.error(err.message);
   return {
-    titleSection1: "One",
-    titleSection2: "Platform",
-    titleSection3: "Infinite Opportunities",
-    description: "A place to start & grow all your business ideas",
+    titleSection1: "Up your multitasking game as a",
+    titleSection2: "SOLOPRENEUR!",
+    titleSection3: "",
+    description:
+      "With your personal virtual online workspace, accessible anytime, anywhere.",
     urls: [
       "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2Flanding-carousel4.jpg?alt=media&token=4f5c9789-9a19-4f7b-ab9e-7d1e61c27d7a",
       "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2Flanding-caraousel1-resize.jpg?alt=media&token=0d0f4234-d01f-4adf-8cc0-b26ad7be5cf1",
@@ -49,42 +50,42 @@ export const getFeaturesContent = async () => {
     topPara:
       "The desire for having a more flexible and fulfilling career path has led to Freelancing & solo entrepreneurship supplementing and complementing existing 9-5 worklife. When people think of venturing out on their own, the thought of all the efforts required in 'managing the business' holds them back. Hours spent in planning your offering, client communications, promoting your offering, booking reminders, scheduling & rescheduling, managing payments, follow up for feedback & reviews, and the list goes on...",
     bottomPara: "Don't let all these overwhelm & hold you back.",
-    title: "What Payorb Offers You",
+    title: "Features",
     sectionLogo:
       "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
-    sectionTitle: "FEATURES",
+    sectionTitle: "Features",
     description:
       "Our platform helps you transition into the freelance ecosystem at a faster pace by taking care of all basic operational barriers to starting something new: Online presence, bookings, payment, CRM all at one space.",
     features: [
       {
-        title: "Event",
-        description: "Event creation or On-on-one service bookings",
+        title: "Online Presence",
+        description: "Dynamically architect real-time web services for installed base systems",
         image: "/assets/features/eventCreation.png",
       },
 
       {
-        title: "Booking",
-        description: "Easy one-click event booking for your clients",
+        title: "Unlimited service listings",
+        description: "Dynamically architect real-time web services for installed base systems",
         image: "/assets/features/eventBooking.png",
       },
       {
-        title: "Instant Payouts",
-        description: "Receive money in your account sooner than you think",
+        title: "Bookings & Payments",
+        description: "Dynamically architect real-time web services for installed base systems",
 
         image: "/assets/features/payments.png",
       },
       {
-        title: "Reviews",
+        title: "Verified Reviews",
         description: "Verified user reviews to boost profile credibility",
         image: "/assets/features/rating.png",
       },
       {
-        title: "Analytics",
+        title: "Business Dashboards",
         description: "Real-time analytics for your business",
         image: "/assets/features/analytics.png",
       },
       {
-        title: "Social Media Sharing",
+        title: "One Click Promotions",
         description: "Easy marketing of your events",
         image: "/assets/features/social-media.png",
       },
