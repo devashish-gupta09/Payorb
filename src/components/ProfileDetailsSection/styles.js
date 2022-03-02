@@ -4,8 +4,8 @@ import { appColors } from "../../../styles/colors";
 
 export const styles = makeStyles(() => ({
   container: {
-    width: "70%",
-    paddingTop: "4em",
+    width: "65%",
+    padding: "4em 2em 0 0",
   },
   indicator: {
     display: "flex",

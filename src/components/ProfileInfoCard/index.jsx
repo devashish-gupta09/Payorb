@@ -1,16 +1,10 @@
 import {
-  Button,
   Grid,
-  InputAdornment,
-  ListItem,
-  TextField,
   Typography,
-  useMediaQuery,
   useTheme,
 } from "@material-ui/core";
-import { ContactPhone, Edit, FiberManualRecord, LocationCity, LocationOn, Mail, WorkOutline } from "@material-ui/icons";
+import { ContactPhone, FiberManualRecord, LocationOn, Mail, WorkOutline } from "@material-ui/icons";
 import { useFormik } from "formik";
-import * as  MaterialAlert from "@material-ui/lab/Alert"
 
 import React from "react";
 
@@ -18,12 +12,8 @@ import { globalStyles } from "../../../styles/globalStyles";
 import { ALERT_TYPES } from "../../constants/alerts";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { updateUser } from "../../services/auth";
-import ButtonCapsule from "../ButtonCapsule";
-import DashboardCard from "../DashboardCard";
-import EditableTextField from "../EditableTextfield";
 import { EditableTextFieldV2 } from "../EditTextFieldV2";
 import ImageProfileUpload from "../ImageProfileUpload";
-import Logout from "../LogoutButton";
 import { styles } from "./styles";
 
 function ProfileInfoCard({ profileData, vendor, updateProfile }) {
@@ -151,14 +141,14 @@ function ProfileInfoCard({ profileData, vendor, updateProfile }) {
                 <Grid item xs={6}>
                   <Grid style={{ background: "rgba(30, 206, 122, 0.1)", width: "100%", border: "2px solid #00B25D", height: "5.5em", borderRadius: "3px", boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.25)" }}>
                     <Typography align="center" style={{ color: "#00B25D", paddingTop: "0.25em" }}><FiberManualRecord style={{ fontSize: "0.5em" }} /> Connected</Typography>
-                    <Grid container alignItems="center" justifyContent="center"><img alt="tehre" src='../assets/google-meet.png' style={{ height: "1.5em", marginTop: "1em" }} /></Grid>
+                    <Grid container alignItems="center" justifyContent="center"><img src='../assets/google-meet.png' style={{ height: "1.25em", marginTop: "1em" }} /></Grid>
                   </Grid>
 
                 </Grid>
                 <Grid item xs={6}>
                   <Grid style={{ background: "rgba(30, 206, 122, 0.1)", width: "100%", border: "2px solid #00B25D", height: "5.5em", borderRadius: "3px", boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.25)" }}>
                     <Typography align="center" style={{ color: "#00B25D", paddingTop: "0.25em" }}><FiberManualRecord style={{ fontSize: "0.5em" }} /> Connected</Typography>
-                    <Grid container alignItems="center" justifyContent="center"><img alt="tehre" src='../assets/zoom.png' style={{ height: "1.75em", marginTop: "1em" }} /></Grid>
+                    <Grid container alignItems="center" justifyContent="center"><img src='../assets/zoom.png' style={{ height: "1.5em", marginTop: "1em" }} /></Grid>
                   </Grid>
                 </Grid>
               </Grid>

@@ -14,7 +14,7 @@ export const styles = makeStyles((theme) => ({
     },
   },
   profileInfoCardContainer: {
-    width: "30%",
+    width: "35%",
     [theme.breakpoints.down("sm")]: {
       width: "100%"
     },
@@ -27,7 +27,7 @@ export const styles = makeStyles((theme) => ({
   },
   profileImageContainer: {
     height: "12em",
-    width: "10em",
+    width: "10.5em",
     position: "absolute",
     marginTop: "-7.5em",
     left: 0,
@@ -42,7 +42,7 @@ export const styles = makeStyles((theme) => ({
     },
   },
   profileDetailsContainer: {
-    padding: "8.5em 4em",
+    padding: "8.5em 6em",
     [theme.breakpoints.down("sm")]: {
       padding: "6.5em 1.5em"
     },
