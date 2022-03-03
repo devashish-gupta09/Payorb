@@ -2,19 +2,13 @@ import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
   container: {
-    display: "flex",
-    maxWidth: "1400px",
-    height: "calc(100vh - 88px)",
-    overflow: "hidden",
-    margin: "0 auto",
+    height: "90vh",
+    position: "relative",
+    overflowX: "hidden",
   },
   textContainer: {
-    display: "inline",
-    position: "relative",
-    left: "2em",
-    top: "8em",
+    padding: "15em 4em 4em 4em",
     width: "50%",
-
     [theme.breakpoints.down("sm")]: {
       top: "15%",
       left: "0%",
@@ -27,7 +21,6 @@ export const styles = makeStyles((theme) => ({
     display: "inline-block",
     color: "black",
     fontWeight: "bolder",
-    fontSize: "2.7em",
     paddingBottom: "0.75em",
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.6em",
@@ -43,8 +36,9 @@ export const styles = makeStyles((theme) => ({
   aquaText: {
     position: "relative",
     display: "inline-block",
-    fontSize: "1em",
     color: "#00D4FF",
+    fontSize: "1em",
+    fontWeight: "bolder",
     [theme.breakpoints.down("sm")]: {
       textAlign: "center",
       width: "100%",
@@ -53,10 +47,9 @@ export const styles = makeStyles((theme) => ({
   descriptionText: {
     color: "black",
     width: "100%",
-    fontSize: "1em",
+    fontWeight: "400",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
-      fontSize: "0.9em",
       fontWeight: "500",
       padding: "0.6em 0.5em",
       textAlign: "center",
@@ -64,12 +57,11 @@ export const styles = makeStyles((theme) => ({
   },
   imgContainer: {
     display: "inline",
-    position: "relative",
+    position: "absolute",
     width: "43.875em",
     height: "29.25em",
     right: "2.5em",
-    top: "15em",
-
+    bottom: "0",
     [theme.breakpoints.down("sm")]: {
       top: "50%",
       display: "contents",
@@ -80,6 +72,8 @@ export const styles = makeStyles((theme) => ({
   },
   image: {
     width: "90%",
+    bottom: "0",
+    position: "absolute",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       marginTop: "4rem",

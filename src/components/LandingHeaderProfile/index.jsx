@@ -150,16 +150,15 @@ function LandingHeaderProfile({ handleLinkClick }) {
 
 const styles = makeStyles((theme) => ({
   btnCapSpacing: {
-    padding: "0.5em 1em",
+    padding: "0.75em 1em",
     fontWeight: "600",
     background: "white",
-    boxShadow: "none",
-    border: `1px solid black`,
+    boxShadow: "inset 0px 0px 0px 2px black",
     fontSize: "0.8em",
   },
   buttonSpacing: {
-    padding: "0.5em 1em",
-    marginRight: "0.5em",
+    padding: "0.75em 1.25em",
+    marginRight: "1em",
     background: "linear-gradient(178.83deg, #68FDF3 1%, #00D4FF 183.74%)",
     boxShadow: "none",
     fontSize: "0.8em",
