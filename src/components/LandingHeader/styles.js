@@ -4,7 +4,16 @@ import { appColors } from "../../../styles/colors";
 
 export const styles = makeStyles((theme) => ({
   buttonSpacing: {
+    borderRadius: "0",
     padding: "0 1.5em",
+    textTransform: "none",
+  },
+  buttonActive: {
+    borderBottom: "2px solid #00D4FF",
+    borderRadius: "0",
+    color: "#00D4FF",
+    padding: "0 1.5em",
+    textTransform: "none",
   },
   logo: {
     width: "5% !important",

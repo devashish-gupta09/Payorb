@@ -10,10 +10,7 @@ import { styles } from "./styles";
 function HomeSection({ content }) {
   const classes = styles();
   return (
-    <Grid>
-      <Grid>
-        <LandingCarousel urls={content.urls} />
-      </Grid>
+    <Grid className={classes.container}>
       <Grid className={classes.textContainer}>
         <Grid container>
           <Typography variant="h2" className={`${classes.titleSection}`}>
@@ -23,7 +20,10 @@ function HomeSection({ content }) {
             variant="h2"
             className={`${classes.titleSection} ${classes.aquaText}`}
           >
-            &nbsp;{`${content.titleSection2}`}
+            {content.titleSection1}&nbsp;{" "}
+            <Typography className={`${classes.aquaText} `}>
+              {content.titleSection2}
+            </Typography>
           </Typography>
         </Grid>
 
