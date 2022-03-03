@@ -1,4 +1,5 @@
 import { Grid } from "@material-ui/core";
+import React from "react";
 
 import Landing from "../src/components/Landing";
 import PageTitle from "../src/components/PageTitle";
