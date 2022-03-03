@@ -4,6 +4,7 @@ export const SIGNUP_CLICK = "signup_click";
 export const HOME_CLICK = "home_click";
 export const ABOUT_CLICK = "about_click";
 export const FEATURES_CLICK = "features_click";
+export const SOLOPRENEUR_CLICK = "solopreneur_click";
 export const SIGNUP_DONE = "signup_done";
 
 export const pageview = (url, params) => {

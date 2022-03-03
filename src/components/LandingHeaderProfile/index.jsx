@@ -1,10 +1,5 @@
-import {
-  // Button,
-  Link,
-  makeStyles,
-  useMediaQuery,
-  useTheme,
-} from "@material-ui/core";
+import { Link, makeStyles, useMediaQuery, useTheme } from "@material-ui/core";
+import CallMadeIcon from "@material-ui/icons/CallMade";
 import React, { useContext } from "react";
 
 import { appColors } from "../../../styles/colors";
@@ -84,6 +79,7 @@ function LandingHeaderProfile({ handleLinkClick }) {
             <ButtonCapsule
               buttonStyle={classes.btnCapSpacing}
               text="Sign Up For Vendor"
+              icon={<CallMadeIcon />}
             ></ButtonCapsule>
           </Link>
         )}
@@ -122,7 +118,6 @@ function LandingHeaderProfile({ handleLinkClick }) {
           </li>
         ) : (
           <Link href={PAGE_PATHS.SIGNIN}>
-            {/* <Button className={classes.buttonSpacing}>Sign In</Button> */}
             <ButtonCapsule
               buttonStyle={classes.buttonSpacing}
               text="Sign In"
@@ -144,6 +139,7 @@ function LandingHeaderProfile({ handleLinkClick }) {
             <ButtonCapsule
               buttonStyle={classes.btnCapSpacing}
               text="Sign Up For Vendor"
+              icon={<CallMadeIcon />}
             ></ButtonCapsule>
           </Link>
         )}
@@ -154,20 +150,19 @@ function LandingHeaderProfile({ handleLinkClick }) {
 
 const styles = makeStyles((theme) => ({
   btnCapSpacing: {
-    padding: "1em 2em",
+    padding: "0.5em 1em",
     fontWeight: "600",
     background: "white",
     boxShadow: "none",
     border: `1px solid black`,
-    fontSize: "1em",
+    fontSize: "0.8em",
   },
   buttonSpacing: {
-    padding: "1em 2em",
+    padding: "0.5em 1em",
     marginRight: "0.5em",
     background: "linear-gradient(178.83deg, #68FDF3 1%, #00D4FF 183.74%)",
-    // borderRadius: "40%",
     boxShadow: "none",
-    fontSize: "1em",
+    fontSize: "0.8em",
   },
   list: {
     listStyleType: "None",
