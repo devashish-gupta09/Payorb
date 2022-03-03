@@ -1,8 +1,6 @@
 import { Grid,Typography } from "@material-ui/core";
 import React from "react";
-
 import Carousel from "react-material-ui-carousel";
-
 import SectionCard from "../LandingSectionCard";
 import SectionContent from "../LandingSectionContent";
 import { styles } from "./styles";
@@ -12,15 +10,14 @@ const ColoredLine = ({ color }) => (
       style={{
           color:"#00D4FF",
           backgroundColor:"#00D4FF",
-          height: "0.2vw",
-          width:"8vw",
+          height: "0.35vw",
+          width:"6vw",
       }}
   />
 );
 
 function FeatureSection({ content }) {
   const classes = styles();
-
   return (
     <Grid  style={{backgroundColor:"#F5FBFE"}}>
       {/* <Grid container className={classes.paragraphContainer}>
@@ -35,7 +32,8 @@ function FeatureSection({ content }) {
         {content.title}
       </Typography >
       <ColoredLine color="blue"/>
-      <img src="./assets/features/VectorImgEarth1.svg" style={{position:"absolute", right:0}}/>
+      <img src="./assets/features/VectorImgEarth1.svg" className={classes.img} />
+      <img src="./assets/features/VectorImgEarth2.svg" className={classes.img2}/>
       <Grid className={classes.container} container alignItems={"stretch"}>
       {/* Removing the Features Title from the grid
       <Grid item sm={4}>
@@ -47,9 +45,8 @@ function FeatureSection({ content }) {
           />
        </Grid>*/}
 
-
         <Grid container item sm={10} justify={"center"}>
-          <Grid className={classes.mobile}>
+         {/*<Grid className={classes.mobile}>
             <Carousel
               className={classes.carousel}
               navButtonsProps={{ className: `${classes.navButton}` }}
@@ -86,8 +83,8 @@ function FeatureSection({ content }) {
                 );
               })}
             </Carousel>
-          </Grid>
-          <img src="./assets/features/VectorImgEarth2.svg" style={{position:"absolute", left:0,top:"175vh"}}/>
+          </Grid>*/ } 
+      
           <Grid
             className={classes.desktop}
             container

@@ -4,14 +4,15 @@ import { appColors } from "../../../styles/colors";
 
 export const styles = makeStyles((theme) => ({
   container: {
-    minHeight: "33vh",
+    minHeight: "33em",
     width:"100%",
     justifyContent:"center",
     maxHeight: "fit-content",
     padding: "4em 2em 6em 3em",
     [theme.breakpoints.down("sm")]: {
-      minHeight: "fit-content",
+      //minHeight: "fit-content",
       padding: "2em 1em",
+      width:"100%"
     },
   },
   carousel: {
@@ -22,21 +23,19 @@ export const styles = makeStyles((theme) => ({
     borderRadius: "10px",
   },
 
-  mobile: {
-    display: "None !important",
+  /*mobile: {
+    display: "none !important",
     [theme.breakpoints.down("sm")]: {
       borderRadius: "10px",
       display: "flex !important",
       paddingTop: "1em",
     },
-  },
+  },*/
   desktop: {
-    display: "flex",
-    width:"95vw",
-
-    [theme.breakpoints.down("sm")]: {
+    width:"100em",
+    /*[theme.breakpoints.down("sm")]: {
       display: "None !important",
-    },
+    },*/
   },
   navButton: {
     display: "None",
@@ -86,5 +85,20 @@ export const styles = makeStyles((theme) => ({
     alignSelf:"center",
     justifyContent:"center",
     alignItems:"center",
+  },
+  img:{
+    position:"absolute", 
+    right:0,
+    [theme.breakpoints.down("sm")]: {
+      display:"none",
+    },
+  },
+  img2:{
+    position:"absolute",
+    left:"0",
+    marginTop:"50vh",
+    [theme.breakpoints.down("sm")]: {
+      display:"none",
+    },
   },
 }));

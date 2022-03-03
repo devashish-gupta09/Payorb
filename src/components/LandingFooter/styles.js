@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
   container: {
-    background: "#333333",
+    background: "#2C2C2C",
     padding: "3em 10em 2em 12em",
     color: "white",
     [theme.breakpoints.down("sm")]: {
@@ -12,8 +12,10 @@ export const styles = makeStyles((theme) => ({
   },
   companySectionTitle: {
     letterSpacing: "1px",
+    paddingTop: "0.1em",
     width: "100%",
     fontWeight: "bold",
+    fontSize: "1.2em",
     [theme.breakpoints.down("sm")]: {
       paddingTop: "0.5em",
     },
@@ -21,7 +23,8 @@ export const styles = makeStyles((theme) => ({
   companyTabs: {
     "& > p": {
       padding: "0.125em",
-      fontWeight: "500",
+      paddingTop: "0.1em",
+      fontWeight: "450",
       fontSize: "0.9em",
       letterSpacing: "0.075em",
     },
@@ -39,6 +42,8 @@ export const styles = makeStyles((theme) => ({
     },
   },
   bottomLabel: {
+    justifyContent:"center",
+    textAlign:"center",
     paddingTop: "3em",
     opacity: "0.5",
     fontWeight: "500",
@@ -74,6 +79,11 @@ export const styles = makeStyles((theme) => ({
   logoContainer: {
     [theme.breakpoints.down("sm")]: {
       paddingBottom: "1em",
+    },
+  },
+  desktop:{
+    [theme.breakpoints.down("sm")]: {
+      display:"none",
     },
   },
 }));

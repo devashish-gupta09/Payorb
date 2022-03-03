@@ -93,6 +93,7 @@ export const styles = makeStyles((theme) => ({
   },
   image: {
     width:"37vw",
+    
 
     [theme.breakpoints.down("sm")]: {
       width: "100%",
@@ -121,7 +122,7 @@ export const styles = makeStyles((theme) => ({
     marginTop: "1.2em",
     padding: "1em 2em",
     [theme.breakpoints.down("sm")]: {
-      alignItems: "center",
+      //alignItems: "center",
       fontSize: "0.65em",
       fontWeight: "600",
       marginTop: "0",

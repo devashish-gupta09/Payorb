@@ -110,7 +110,7 @@ export const styles = makeStyles((theme) => ({
     marginTop: "1.6em",
     padding: "1em 2em",
     [theme.breakpoints.down("sm")]: {
-      alignItems: "center",
+      //alignItems: "center",
       fontSize: "0.65em",
       fontWeight: "600",
       marginTop: "0",

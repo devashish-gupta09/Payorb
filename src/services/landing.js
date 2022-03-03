@@ -191,6 +191,12 @@ export const getUserBenefits = async () => {
   }
 }
 
+export const getFeatureBookings= async () =>{
+  return{
+    title:"People who are ready to book events"
+  }
+}
+
 export const getGrowthContent = async () => {
   // try {
   //   const res = await axios.get(`${CMS_URL}/growth`);
