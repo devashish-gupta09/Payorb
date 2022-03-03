@@ -30,6 +30,33 @@ export const getHomeContent = async () => {
   // }
 };
 
+export const getHowItWorksContent = async () => {
+  return {
+    title: "How it works?",
+    image: "/assets/howItWorks/video-bg.svg",
+    works: [
+      {
+        title: "Create your profile",
+        description:
+          "Input material at the beginning of farming cycle is the most important aspect that determines the quality.",
+        image: "/assets/howItWorks/create-profile.svg",
+      },
+      {
+        title: "List your Services",
+        description:
+          "Input material at the beginning of farming cycle is the most important aspect that determines the quality.",
+        image: "/assets/howItWorks/services.svg",
+      },
+      {
+        title: "Bookings & Payments",
+        description:
+          "Dynamically architect real-time web services for installed base systems.",
+        image: "/assets/howItWorks/booking-payment.svg",
+      },
+    ],
+  };
+};
+
 export const getFeaturesContent = async () => {
   // try {
   //   const res = await axios.get(`${CMS_URL}/feature-section`);

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   // Button,
   Link,
@@ -5,6 +6,9 @@ import {
   useMediaQuery,
   useTheme,
 } from "@material-ui/core";
+=======
+import { Link, makeStyles, useMediaQuery, useTheme } from "@material-ui/core";
+>>>>>>> 19836e2f7b22c2a03f16a91efd6b70d6d891fc28
 import CallMadeIcon from "@material-ui/icons/CallMade";
 import React, { useContext } from "react";
 
@@ -84,7 +88,11 @@ function LandingHeaderProfile({ handleLinkClick }) {
           <Link href={PAGE_PATHS.SIGNUP}>
             <ButtonCapsule
               buttonStyle={classes.btnCapSpacing}
+<<<<<<< HEAD
               text="Sign Up as Vendor"
+=======
+              text="Sign Up For Vendor"
+>>>>>>> 19836e2f7b22c2a03f16a91efd6b70d6d891fc28
               icon={<CallMadeIcon />}
             ></ButtonCapsule>
           </Link>
@@ -124,7 +132,10 @@ function LandingHeaderProfile({ handleLinkClick }) {
           </li>
         ) : (
           <Link href={PAGE_PATHS.SIGNIN}>
+<<<<<<< HEAD
             {/* <Button className={classes.buttonSpacing}>Sign In</Button> */}
+=======
+>>>>>>> 19836e2f7b22c2a03f16a91efd6b70d6d891fc28
             <ButtonCapsule
               buttonStyle={classes.buttonSpacing}
               text="Sign In"
@@ -145,7 +156,11 @@ function LandingHeaderProfile({ handleLinkClick }) {
           <Link href={PAGE_PATHS.SIGNUP}>
             <ButtonCapsule
               buttonStyle={classes.btnCapSpacing}
+<<<<<<< HEAD
               text="Sign Up as Vendor"
+=======
+              text="Sign Up For Vendor"
+>>>>>>> 19836e2f7b22c2a03f16a91efd6b70d6d891fc28
               icon={<CallMadeIcon />}
             ></ButtonCapsule>
           </Link>
@@ -157,11 +172,16 @@ function LandingHeaderProfile({ handleLinkClick }) {
 
 const styles = makeStyles((theme) => ({
   btnCapSpacing: {
+<<<<<<< HEAD
     padding: "1em 2em",
+=======
+    padding: "0.5em 1em",
+>>>>>>> 19836e2f7b22c2a03f16a91efd6b70d6d891fc28
     fontWeight: "600",
     background: "white",
     boxShadow: "none",
     border: `1px solid black`,
+<<<<<<< HEAD
     fontSize: "1em",
   },
   buttonSpacing: {
@@ -171,6 +191,16 @@ const styles = makeStyles((theme) => ({
     // borderRadius: "40%",
     boxShadow: "none",
     fontSize: "1em",
+=======
+    fontSize: "0.8em",
+  },
+  buttonSpacing: {
+    padding: "0.5em 1em",
+    marginRight: "0.5em",
+    background: "linear-gradient(178.83deg, #68FDF3 1%, #00D4FF 183.74%)",
+    boxShadow: "none",
+    fontSize: "0.8em",
+>>>>>>> 19836e2f7b22c2a03f16a91efd6b70d6d891fc28
   },
   list: {
     listStyleType: "None",
