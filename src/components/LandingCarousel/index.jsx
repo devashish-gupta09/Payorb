@@ -7,10 +7,10 @@ import { styles } from "./styles";
 function LandingCarousel({ urls }) {
   const classes = styles();
   const testUrls = [
-    "/assets/landing-caraousel1.jpg",
-    "/assets/landing-caraousel2.jpg",
-    "/assets/landing-carousel3.jpg",
-    "/assets/landing-carousel4.jpg",
+    // "/assets/landing-caraousel1.jpg",
+    // "/assets/landing-caraousel2.jpg",
+    // "/assets/landing-carousel3.jpg",
+    // "/assets/landing-carousel4.jpg",
   ];
   return (
     <Grid className={classes.container}>
