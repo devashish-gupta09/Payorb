@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { Grid,Typography } from "@material-ui/core";
-=======
-import { Grid } from "@material-ui/core";
->>>>>>> 19836e2f7b22c2a03f16a91efd6b70d6d891fc28
 import React from "react";
 import Carousel from "react-material-ui-carousel";
 import SectionCard from "../LandingSectionCard";
@@ -23,11 +19,7 @@ const ColoredLine = ({ color }) => (
 function FeatureSection({ content }) {
   const classes = styles();
   return (
-<<<<<<< HEAD
     <Grid  style={{backgroundColor:"#F5FBFE"}}>
-=======
-    <Grid className={classes.container} container alignItems={"stretch"}>
->>>>>>> 19836e2f7b22c2a03f16a91efd6b70d6d891fc28
       {/* <Grid container className={classes.paragraphContainer}>
         <Typography className={classes.description}>
           {content.topPara}
@@ -36,20 +28,15 @@ function FeatureSection({ content }) {
           {content.bottomPara}
         </Typography>
       </Grid> */}
-<<<<<<< HEAD
       <Typography  variant="h4" className={classes.sectionTitle}>
         {content.title}
       </Typography >
       <ColoredLine color="blue"/>
       <img src="./assets/features/VectorImgEarth1.svg" className={classes.img} />
-      <img src="./assets/features/VectorImgEarth2.svg" className={classes.img2}/>
+      <img src="./assets/features/VectorImgEarth2.svg" className={classes.img2}style={{}}/>
       <Grid className={classes.container} container alignItems={"stretch"}>
       {/* Removing the Features Title from the grid
       <Grid item sm={4}>
-=======
-      <Grid container>
-        <Grid item sm={4}>
->>>>>>> 19836e2f7b22c2a03f16a91efd6b70d6d891fc28
           <SectionContent
             sectionLogo={content.sectionLogo}
             sectionTitle={content.sectionTitle}
