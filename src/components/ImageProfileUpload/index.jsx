@@ -152,7 +152,7 @@ function ImageProfileUpload({ imageProps, vendor }) {
             className={classes.editDiv}
           >
             <Tooltip title="Edit Profile">
-              <Edit style={{ fontSize: "1rem" }} />
+              <Edit style={{ fontSize: "1.25rem" }} />
             </Tooltip>
           </div>
         )}

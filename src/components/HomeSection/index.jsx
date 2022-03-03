@@ -13,18 +13,15 @@ function HomeSection({ content }) {
   const classes = styles();
   return (
     <Grid className={classes.container}>
-      {/* <Grid>
-        <LandingCarousel urls={content.urls} />
-      </Grid> */}
       <Grid className={classes.textContainer}>
         <Grid container sx={{ whiteSpace: "nowrap", overflowX: "auto" }}>
           <Typography
             variant="h2"
             className={`${classes.titleSection} ${classes.titleSection1}`}
           >
-            {content.titleSection1}
-            <Typography variant="h2" className={`${classes.aquaText}`}>
-              &nbsp;{content.titleSection2}
+            {content.titleSection1}&nbsp;{" "}
+            <Typography className={`${classes.aquaText} `}>
+              {content.titleSection2}
             </Typography>
           </Typography>
         </Grid>

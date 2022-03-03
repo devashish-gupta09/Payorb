@@ -5,14 +5,14 @@ import { appColors } from "../../../styles/colors";
 export const styles = makeStyles((theme) => ({
   container: {
     minHeight: "33em",
-    width:"100%",
-    justifyContent:"center",
+    width: "100%",
+    justifyContent: "center",
     maxHeight: "fit-content",
     padding: "4em 2em 6em 3em",
     [theme.breakpoints.down("sm")]: {
       //minHeight: "fit-content",
       padding: "2em 1em",
-      width:"100%"
+      width: "100%"
     },
   },
   carousel: {
@@ -32,7 +32,7 @@ export const styles = makeStyles((theme) => ({
     },
   },*/
   desktop: {
-    width:"100em",
+    width: "100em",
     /*[theme.breakpoints.down("sm")]: {
       display: "None !important",
     },*/
@@ -63,10 +63,6 @@ export const styles = makeStyles((theme) => ({
       marginTop: "-3em",
     },
   },
-  title:{
-    width:"100%",
-    fontSize:"1.5vw",
-  },
   description: {
     color: appColors.grey,
     paddingBottom: "0.5em",
@@ -77,28 +73,28 @@ export const styles = makeStyles((theme) => ({
     textAlign: "justify",
   },
 
-  sectionTitle:{
-    width:"100%",
+  sectionTitle: {
+    width: "100%",
     color: "black",
     fontWeight: "bolder",
-    textAlign:"center",
-    alignSelf:"center",
-    justifyContent:"center",
-    alignItems:"center",
+    textAlign: "center",
+    alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  img:{
-    position:"absolute", 
-    right:0,
+  img: {
+    position: "absolute",
+    right: 0,
     [theme.breakpoints.down("sm")]: {
-      display:"none",
+      display: "none",
     },
   },
-  img2:{
-    position:"absolute",
-    left:"0",
-    marginTop:"50vh",
+  img2: {
+    position: "absolute",
+    left: "0",
+    marginTop: "50vh",
     [theme.breakpoints.down("sm")]: {
-      display:"none",
+      display: "none",
     },
   },
 }));

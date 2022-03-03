@@ -1,11 +1,10 @@
-import { makeStyles, Grid, Container } from "@material-ui/core";
+import { makeStyles, Grid } from "@material-ui/core";
 import React from "react";
 
 import EventRegistrationSection from "../EventRegistrationSection";
 import FeatureSection from "../FeatureSection";
 import GrowthSection from "../GrowthSection";
 import HomeSection from "../HomeSection";
-import HowItWorksSection from "../HowItWorksSection";
 import Footer from "../LandingFooter";
 import LandingHeader from "../LandingHeader";
 import UserRegistrationSection from "../UserRegistrationSection";
@@ -14,12 +13,12 @@ function Landing({ content }) {
   const classes = styles();
 
   return (
-    <Grid>
-      <Container className={classes.box}>
+    <Grid style={{ padding: "0" }}>
+      <Grid className={classes.box}>
         <LandingHeader />
         <HomeSection content={content.home} />
-      </Container>
-      <HowItWorksSection content={content.howItWorks} />
+      </Grid>
+      {/* <HowItWorksSection content={content.howItWorks} /> */}
       <FeatureSection content={content.feature} />
       <UserRegistrationSection content={content.userRegistration} />
       <EventRegistrationSection content={content.eventRegistration} />
@@ -38,11 +37,8 @@ const styles = makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center",
-    height: "100vh",
-    maxWidth: "100vw",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
+    height: "100%",
+    width: "99vw",
     left: 0,
     right: 0,
     top: 0,

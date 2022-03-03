@@ -16,28 +16,11 @@ function ProfileDetailsSection({ profileData, vendor, updateProfile }) {
 
   return (
     <Grid className={classes.container}>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        classes={{
-          indicator: classes.indicator,
-        }}
-        TabIndicatorProps={{ children: <span /> }}
-      >
-        <Tab classes={{ root: classes.tabRoot }} label="Profile"></Tab>
-        <Tab classes={{ root: classes.tabRoot }} label="Review"></Tab>
-      </Tabs>
-      <TabPanel value={value} index={0} boxClasses={classes.box}>
-        <ProfileAboutCard
-          profileData={profileData}
-          vendor={vendor}
-          updateProfile={updateProfile}
-        />
-      </TabPanel>
-
-      <TabPanel value={value} index={1} boxClasses={classes.box}>
-        <ProfileReviewSection />
-      </TabPanel>
+      <ProfileAboutCard
+        profileData={profileData}
+        vendor={vendor}
+        updateProfile={updateProfile}
+      />
     </Grid>
   );
 }

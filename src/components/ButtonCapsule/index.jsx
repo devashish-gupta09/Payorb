@@ -3,7 +3,7 @@ import React from "react";
 
 import { styles } from "./styles";
 
-export const DangerouslySetInnterHtml = ({ text }) => {
+export const DangerouslySetInnerHtml = ({ text }) => {
   return (
     <div
       dangerouslySetInnerHTML={{
@@ -15,6 +15,7 @@ export const DangerouslySetInnterHtml = ({ text }) => {
 
 function ButtonCapsule({
   disabled = false,
+  iconBefore = false,
   type,
   text,
   onClick,
@@ -40,7 +41,9 @@ function ButtonCapsule({
           style={{ marginRight: "1em" }}
         />
       )}
-      {<DangerouslySetInnterHtml text={text} />} {icon ? icon : null}
+      {iconBefore && icon ? icon : null}
+      {<DangerouslySetInnerHtml text={text} />}
+      {!iconBefore && icon ? icon : null}
     </Button>
   );
 }
