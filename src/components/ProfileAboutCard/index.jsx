@@ -79,7 +79,7 @@ const styles = makeStyles((theme) => ({
     borderRadius: "0.8em",
     padding: "2em",
     [theme.breakpoints.down("sm")]: {
-      padding: "0",
+      padding: "0"
     },
   },
   logo: {

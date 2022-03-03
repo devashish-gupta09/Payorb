@@ -203,7 +203,8 @@ const styles = makeStyles((theme) => ({
     minHeight: "400px",
     [theme.breakpoints.down("sm")]: {
       border: 0,
-      borderRadius: 0,
+      borderRadius: "8px",
+      minHeight: "fit-content"
     },
   },
   videoPreview: {

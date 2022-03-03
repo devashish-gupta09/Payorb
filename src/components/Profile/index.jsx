@@ -3,9 +3,11 @@ import React from "react";
 
 import ProfileDetailsSection from "../ProfileDetailsSection";
 import { ProfileHeader } from "../ProfileHeader";
+import { ProfileImageGallery } from "../ProfileImageGallery";
 import ProfileInfoCard from "../ProfileInfoCard";
 import ProfilePageCarausel from "../ProfilePageCarausel";
 import ProfilePaymentSection from "../ProfilePaymentSection";
+import ProfileReviewSection from "../ProfileReviewSection";
 
 const Box = ({ num }) => {
   const [state, setState] = React.useState(num);
@@ -70,15 +72,12 @@ export default function Profile({ profileData }) {
 
         <ProfileImageGallery profileData={profileInfo} vendor={true} updateProfile={updateProfileInfo} />
 
-        {/* <ProfilePageCarausel
+        <ProfileReviewSection />
+
+        {/* <ProfilePaymentSection
           profileData={profileInfo}
           updateProfile={updateProfileInfo}
-          vendor={true}
         /> */}
-        <ProfilePaymentSection
-          profileData={profileInfo}
-          updateProfile={updateProfileInfo}
-        />
       </Grid>
     </Fade>
   );

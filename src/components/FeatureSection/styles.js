@@ -60,7 +60,6 @@ export const styles = makeStyles((theme) => ({
       marginTop: "-3em",
     },
   },
-
   description: {
     color: appColors.grey,
     paddingBottom: "1em",

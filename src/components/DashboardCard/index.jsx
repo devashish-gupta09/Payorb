@@ -1,9 +1,9 @@
-import { Card, makeStyles } from "@material-ui/core";
+import { Card, Grid, makeStyles } from "@material-ui/core";
 import React from "react";
 
 const styles = makeStyles((theme) => ({
   root: {
-    padding: "1.5em",
+    padding: "4em",
     [theme.breakpoints.down("sm")]: {
       padding: "2em 0.5em",
     },
@@ -19,11 +19,11 @@ const styles = makeStyles((theme) => ({
 export default function DashboardCard({ props, rootClass, children }) {
   const classes = styles();
   return (
-    <Card
+    <Grid
       {...props}
       className={`${rootClass ? rootClass : classes.root} ${classes.border}`}
     >
       {children}
-    </Card>
+    </Grid>
   );
 }
