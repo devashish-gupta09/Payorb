@@ -11,7 +11,7 @@ export const styles = makeStyles((theme) => ({
   textContainer: {
     display: "inline",
     position: "relative",
-    left: "4em",
+    left: "2em",
     top: "8em",
     width: "50%",
 
@@ -27,7 +27,7 @@ export const styles = makeStyles((theme) => ({
     display: "inline-block",
     color: "black",
     fontWeight: "bolder",
-    fontSize: "3.15em",
+    fontSize: "2.7em",
     paddingBottom: "0.75em",
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.6em",
@@ -102,9 +102,10 @@ export const styles = makeStyles((theme) => ({
   capsuleButton: {
     background: "linear-gradient(178.83deg, #68FDF3 1%, #00D4FF 183.74%)",
     borderRadius: "2em",
-    fontWeight: "bold",
+    fontWeight: "600",
+    fontSize: "0.8em",
     marginTop: "1.6em",
-    padding: "1em 2em",
+    padding: "0.5em 1em",
 
     [theme.breakpoints.down("sm")]: {
       alignItems: "center",
@@ -119,10 +120,9 @@ export const styles = makeStyles((theme) => ({
     fontSize: "2rem",
   },
   scroll: {
-    position: "fixed",
-    bottom: "3em",
-    left: "4rem",
+    marginTop: "13em",
     cursor: "pointer",
+    paddingLeft: "0",
   },
   scrollIcon: {
     display: "inline-block",

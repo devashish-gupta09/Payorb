@@ -5,6 +5,7 @@ import EventRegistrationSection from "../EventRegistrationSection";
 import FeatureSection from "../FeatureSection";
 import GrowthSection from "../GrowthSection";
 import HomeSection from "../HomeSection";
+import HowItWorksSection from "../HowItWorksSection";
 import Footer from "../LandingFooter";
 import LandingHeader from "../LandingHeader";
 import UserRegistrationSection from "../UserRegistrationSection";
@@ -18,6 +19,7 @@ function Landing({ content }) {
         <LandingHeader />
         <HomeSection content={content.home} />
       </Container>
+      <HowItWorksSection content={content.howItWorks} />
       <FeatureSection content={content.feature} />
       <UserRegistrationSection content={content.userRegistration} />
       <EventRegistrationSection content={content.eventRegistration} />

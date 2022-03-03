@@ -4,16 +4,18 @@ import { appColors } from "../../../styles/colors";
 
 export const styles = makeStyles((theme) => ({
   buttonSpacing: {
-    padding: "0 1.5em",
+    borderRadius: "0",
     fontSize: "0.8em",
+    padding: "0 1.5em",
     textTransform: "none",
   },
   buttonActive: {
-    padding: "0 1.5em",
-    fontSize: "0.8em",
-    textTransform: "none",
-    color: "#00D4FF",
     borderBottom: "2px solid #00D4FF",
+    borderRadius: "0",
+    color: "#00D4FF",
+    fontSize: "0.8em",
+    padding: "0 1.5em",
+    textTransform: "none",
   },
   logo: {
     width: "5% !important",
@@ -25,8 +27,8 @@ export const styles = makeStyles((theme) => ({
     background: "linear-gradient(115.52deg, #BDF5F2 0%, #79DFDF 100%)",
     borderRadius: "2em",
     fontWeight: "bold",
-    padding: "0.75em 1em",
     marginLeft: "1em",
+    padding: "0.75em 1em",
   },
   buttonContainer: {
     width: "fit-content",
