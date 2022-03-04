@@ -21,11 +21,12 @@ export const styles = makeStyles((theme) => ({
   flexbox:{
     [theme.breakpoints.down("sm")]: {
     display:"flex",
-    flexDirection:"column",
+    flexDirection:"row",
     },
   },
   logo: {
     padding: "1em 0",
+    alignItems:"center",
     [theme.breakpoints.down("sm")]: {
       padding: "0em 0",
     },
@@ -47,18 +48,17 @@ export const styles = makeStyles((theme) => ({
     textAlign:"left",
     height: "max-content",
     [theme.breakpoints.down("sm")]: { 
-      padding: "0.7em 0.5em 0 0",
+      padding: "0.5em 0.5em 0 0",
     },
   },
   description: {
-    fontSize:"1vw",
+    fontSize:"1em",
     textAlign: "left",
     paddingTop: "5%",
     paddingBottom: "2%",
     color: appColors.grey,
     [theme.breakpoints.down("sm")]: {
       paddingTop: "2%",
-      fontSize: "0.9em",
     },
   },
   image: {

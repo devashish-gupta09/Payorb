@@ -32,7 +32,7 @@ export const styles = makeStyles((theme) => ({
     },
   },*/
   desktop: {
-    width:"100em",
+    width:"100%",
     /*[theme.breakpoints.down("sm")]: {
       display: "None !important",
     },*/
@@ -40,7 +40,7 @@ export const styles = makeStyles((theme) => ({
   navButton: {
     display: "None",
   },
-  carouselIndicatorIcon: {
+  /*carouselIndicatorIcon: {
     borderRadius: "0.2em",
     height: "0.3em",
     width: "2em",
@@ -62,7 +62,7 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       marginTop: "-3em",
     },
-  },
+  },*/
   title:{
     width:"100%",
     fontSize:"1.5vw",

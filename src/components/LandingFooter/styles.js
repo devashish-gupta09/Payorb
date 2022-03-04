@@ -2,18 +2,19 @@ import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
   container: {
+    display:"flex",
     background: "#2C2C2C",
     padding: "3em 10em 2em 12em",
     color: "white",
     [theme.breakpoints.down("sm")]: {
-      height: "fit-content",
+      //height: "fit-content",
       padding: "2em 1em",
+      flexDirection:"column",
     },
   },
   companySectionTitle: {
     letterSpacing: "1px",
     paddingTop: "0.1em",
-    width: "100%",
     fontWeight: "bold",
     fontSize: "1.2em",
     [theme.breakpoints.down("sm")]: {
@@ -42,10 +43,10 @@ export const styles = makeStyles((theme) => ({
     },
   },
   bottomLabel: {
+    color:"white",
     justifyContent:"center",
     textAlign:"center",
     paddingTop: "3em",
-    opacity: "0.5",
     fontWeight: "500",
     fontSize: "0.8em",
     letterSpacing: "1px",

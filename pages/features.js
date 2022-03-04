@@ -1,5 +1,4 @@
 import { Grid } from "@material-ui/core";
-
 import FeaturesPage from "../src/components/FeaturesPage";
 import PageTitle from "../src/components/PageTitle";
 import {
@@ -11,10 +10,11 @@ import {
 
 export default function Features({ landing }) {
   return (
-    <Grid style={{ backgroundColor: "white" }}>
+      <Grid>
       <PageTitle title="Payorb | Features" />
       <FeaturesPage content={landing} />
-    </Grid>
+      </Grid>
+
   );
 }
 

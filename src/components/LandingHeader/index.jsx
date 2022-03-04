@@ -49,36 +49,6 @@ function LandingHeader() {
           </Grid>
 
           <Grid className={classes.drawerList}>
-<<<<<<< HEAD
-            <li
-              onClick={() => {
-                handleClick(PAGE_PATHS.HOME);
-              }}
-            >
-              Home
-            </li>
-            <li
-              onClick={() => {
-                handleClick(PAGE_PATHS.FEATURES);
-              }}
-            >
-              Features
-            </li>
-            <li
-              onClick={() => {
-                handleClick(PAGE_PATHS.ABOUT);
-              }}
-            >
-              About Us
-            </li>
-            <li
-              onClick={() => {
-                handleClick(PAGE_PATHS.SOLOPRENEUR);
-              }}
-            >
-              Become a Solopreneur
-            </li>
-=======
             {router.pathname === PAGE_PATHS.HOME ? (
               <li
                 onClick={() => {
@@ -151,7 +121,6 @@ function LandingHeader() {
                 Become a Solopreneur
               </li>
             )}
->>>>>>> 19836e2f7b22c2a03f16a91efd6b70d6d891fc28
 
             <LandingHeaderProfile handleLinkClick={handleClick} />
           </Grid>
@@ -169,30 +138,6 @@ function LandingHeader() {
             justify="space-evenly"
           >
             <Link href={PAGE_PATHS.HOME}>
-<<<<<<< HEAD
-              <Button
-                onClick={() =>
-                  event({
-                    action: HOME_CLICK,
-                  })
-                }
-                className={classes.buttonSpacing}
-              >
-                Home
-              </Button>
-            </Link>
-            <Link href={PAGE_PATHS.FEATURES}>
-              <Button
-                onClick={() =>
-                  event({
-                    action: FEATURES_CLICK,
-                  })
-                }
-                className={classes.buttonSpacing}
-              >
-                Features
-              </Button>
-=======
               {router.pathname === PAGE_PATHS.HOME ? (
                 <Button
                   onClick={() =>
@@ -241,7 +186,6 @@ function LandingHeader() {
                   Features
                 </Button>
               )}
->>>>>>> 19836e2f7b22c2a03f16a91efd6b70d6d891fc28
             </Link>
             <Link href={PAGE_PATHS.ABOUT}>
               {router.pathname === PAGE_PATHS.ABOUT ? (

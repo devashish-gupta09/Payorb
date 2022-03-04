@@ -2,7 +2,6 @@ import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
   container: {
-    zIndex:"-2",
     background:"linear-gradient(180deg, #BCF4F1 0%, rgba(0, 212, 255, 0.33) 157.68%)",
     padding: "8em 2em 10em 6em",
     [theme.breakpoints.down("sm")]: {
@@ -32,6 +31,24 @@ export const styles = makeStyles((theme) => ({
   description:{
     [theme.breakpoints.down("sm")]: {
       textAlign:"center",
+      alignItems:"center"
     },
   },
+  mainTitle:{
+    padding: "1.5em 0.5em 0 0",
+    fontWeight: "bold",
+    //fontSize:"1.3em",
+    color: "#333333",
+    //textAlign:"left",
+    height: "max-content",
+    [theme.breakpoints.down("sm")]: { 
+      padding: "0.5em 0.5em 0 0",
+    },
+  },
+  coloredLine:{
+    display:"none",
+    [theme.breakpoints.down("sm")]:{
+      display:"block",
+    }
+  }
 }));

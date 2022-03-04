@@ -32,8 +32,8 @@ function FeatureSection({ content }) {
         {content.title}
       </Typography >
       <ColoredLine color="blue"/>
-      <img src="./assets/features/VectorImgEarth1.svg" className={classes.img} />
-      <img src="./assets/features/VectorImgEarth2.svg" className={classes.img2}style={{}}/>
+      <img src="./assets/features/VectorImgEarth1.svg" className={classes.img} style={{position:"absolute", right:0 }}/>
+      <img src="./assets/features/VectorImgEarth2.svg" className={classes.img2} style={{position:"absolute",left:"0",marginTop:"20em"}}/>
       <Grid className={classes.container} container alignItems={"stretch"}>
       {/* Removing the Features Title from the grid
       <Grid item sm={4}>

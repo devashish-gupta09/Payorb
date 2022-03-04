@@ -73,7 +73,7 @@ function Footer() {
         </Grid>
         <Grid item sm={12}>
           <Typography className={classes.bottomLabel}>
-            @ 2021 All Rights Reserved. Powered by Vanickel Labs
+          Ⓒ <b>2021</b> PayOrb. All rights reserved
           </Typography>
         </Grid>
         {/* Removing the disclaimer
