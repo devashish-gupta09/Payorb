@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core";
 export const styles = makeStyles((theme) => ({
   container: {
     display:"flex",
-    background: "#2C2C2C",
+    background: "#313131",
     padding: "3em 10em 2em 12em",
     color: "white",
     [theme.breakpoints.down("sm")]: {
@@ -20,6 +20,11 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       paddingTop: "0.5em",
     },
+  },
+  hover:{
+    '&:hover': {
+      color: "#00D4FF",
+     } ,
   },
   companyTabs: {
     "& > p": {
@@ -50,6 +55,9 @@ export const styles = makeStyles((theme) => ({
     fontWeight: "500",
     fontSize: "0.8em",
     letterSpacing: "1px",
+    [theme.breakpoints.down("sm")]: {
+      display:"none",
+    },
   },
 
   logo: {
@@ -73,6 +81,29 @@ export const styles = makeStyles((theme) => ({
       padding: "1.5em 0",
     },
   },
+  getInTouchMobile:{
+    [theme.breakpoints.down("sm")]: {
+      marginRight:"10em",
+    },
+  },
+  scroll:{
+    float:"right",
+  },
+  mobile:{
+    [theme.breakpoints.down("sm")]: {
+      paddingTop:"8em",
+      textAlign:"center",
+      display:'none',
+    },
+  },
+  bottomLabelMobile:{
+    display:'none',
+    textAlign:"center",
+    marginTop:"2em",
+    [theme.breakpoints.down("sm")]:{
+      display:"block"
+    },
+  },
   readMore: {
     color: "#71c3de",
     textAlign: "justify",
@@ -80,11 +111,15 @@ export const styles = makeStyles((theme) => ({
   logoContainer: {
     [theme.breakpoints.down("sm")]: {
       paddingBottom: "1em",
-    },
-  },
-  desktop:{
-    [theme.breakpoints.down("sm")]: {
       display:"none",
     },
+  },
+ 
+  scrollIcon:{
+    width:"2em",
+    height:"2em",
+    borderRadius:"20em",
+    backgroundColor:"white",
+    
   },
 }));

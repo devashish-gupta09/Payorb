@@ -7,12 +7,15 @@ import { event, SIGNUP_CLICK } from "../../utils/ga";
 
 import ButtonCapsule from "../ButtonCapsule";
 import { styles } from "./styles";
-
+import Logo from "../Logo";
 function FeatureBookingSection({ content }) {
   const classes = styles();
 
   return (
     <Grid className={classes.container}>
+      <Grid className={classes.logoContainer} justify={"center"}>
+          <Logo width="6em" />
+        </Grid>
       <Typography  variant="h4" className={classes.title}>
         {content.title}
       </Typography>

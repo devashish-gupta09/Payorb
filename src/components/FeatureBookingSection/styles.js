@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
   container: {
-    background:"#2C2C2C",
+    background:"#313131",
     padding: "4em 6em",
     [theme.breakpoints.down("sm")]: {
       height: "fit-content",
@@ -31,5 +31,12 @@ export const styles = makeStyles((theme) => ({
   callMadeIcon: {
     paddingLeft: "0.5em",
     fontSize: "2rem",
+  },
+  logoContainer:{
+    display:"none",
+    [theme.breakpoints.down("sm")]: {
+      display:"block",
+      alignItems:"center",
+    },
   },
 }));

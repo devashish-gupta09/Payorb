@@ -1,10 +1,14 @@
-import { Grid, Link, Typography } from "@material-ui/core";
+import { Grid, Link, Typography , Button} from "@material-ui/core";
 import React from "react";
-
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import { PAGE_PATHS } from "../../constants/paths";
 import Logo from "../Logo";
 
 import { styles } from "./styles";
+
+const handleClick=()=>{
+  window[`scrollTo`]({top:0 ,behavior:"smooth"});
+}
 
 function Footer() {
   const classes = styles();
@@ -15,6 +19,8 @@ function Footer() {
   };
   return (
     <Grid className={classes.container}>
+      {/*<img src="/assets/landing-diagonal-bottomleft.svg" style={{position:"absolute",marginBottom:"0", justify:"left"}}></img>
+      <img src="/assets/landing-diagonal-bottomright.svg" style={{marginBottom:"0", justify:"right",position:"absolute"}}></img>*/}
       <Grid container>
         <Grid item sm={3} className={classes.logoContainer}>
           <Logo width="6em" />
@@ -29,10 +35,10 @@ function Footer() {
           </Typography>
           <Grid className={classes.companyTabs}>
             <Typography>
-              <p><a href="/about">About Us</a></p>
-              <p><a href="/features">Features</a></p>
-              <p><a href="/features">Become a solopreneur</a></p>
-              <p><a href="/features">Blogs</a></p>
+              <p className={classes.hover}><a href="/about">About Us</a></p>
+              <p className={classes.hover}><a href="/features">Features</a></p>
+              <p className={classes.hover}><a href="/features">Become a solopreneur</a></p>
+              <p className={classes.hover}><a href="/features">Blogs</a></p>
             </Typography>
           </Grid>
         </Grid>
@@ -46,9 +52,9 @@ function Footer() {
           </Typography>
           <Grid className={classes.companyTabs}>
             <Typography>
-              <p><a href={PAGE_PATHS.POLICY_TERMS_AND_CONDS}>Terms & Conditions</a></p>
-              <p><a href={PAGE_PATHS.POLICY_PRIVACY}>Privacy Policy</a></p>
-              <p><a href="/features">Contact</a></p>
+              <p className={classes.hover}><a href={PAGE_PATHS.POLICY_TERMS_AND_CONDS}>Terms & Conditions</a></p>
+              <p className={classes.hover}><a href={PAGE_PATHS.POLICY_PRIVACY}>Privacy Policy</a></p>
+              <p className={classes.hover}><a href="/features">Contact</a></p>
             </Typography>
           </Grid>
         </Grid>
@@ -61,20 +67,30 @@ function Footer() {
             Get in Touch
           </Typography>
           <Grid className={classes.companyTabs}>
-            <Typography className={classes.desktop}>
+            <Typography className={classes.getInTouchMobile}>
             <p>Vanickel Labs, 2nd Floor,
             Aparna Towers, Kondapur,
             Hyderabad - 500084</p>
             </Typography>
-            <Typography>
+            <Typography className={classes.mobile}>
             info@payorb.com
             </Typography>
           </Grid>
         </Grid>
+
+        <Button className={classes.scroll} onClick={handleClick}>
+          <Grid className={classes.scrollIcon}>
+            <ArrowDropUpIcon/>
+          </Grid>
+        </Button>
+
         <Grid item sm={12}>
           <Typography className={classes.bottomLabel}>
           Ⓒ <b>2021</b> PayOrb. All rights reserved
           </Typography>
+          <Typography className={classes.bottomLabelMobile}>
+            info@payorb.com
+            </Typography>
         </Grid>
         {/* Removing the disclaimer
         <Grid item sm={12}>

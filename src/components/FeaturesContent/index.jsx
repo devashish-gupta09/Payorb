@@ -17,6 +17,7 @@ function FeaturesContent({ content }) {
         <LandingCarousel urls={content.urls} />
       </Grid> */}
       <Grid className={classes.textContainer}>
+        <Grid item sm={6}>
         <Grid container sx={{ whiteSpace: "nowrap", overflowX: "auto" }}>
           <Typography
             variant="h2"
@@ -51,12 +52,15 @@ function FeaturesContent({ content }) {
           Scroll to Explore
         </Button>
       </Grid>
+      </Grid>
+      <Grid item sm={6}>
       <Grid className={classes.imgContainer}>
         <img
           src="/assets/videosnip.png"
           alt="landing"
           className={classes.image}
         />
+      </Grid>
       </Grid>
     </Grid>
   );

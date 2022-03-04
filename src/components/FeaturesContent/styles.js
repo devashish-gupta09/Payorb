@@ -66,18 +66,12 @@ export const styles = makeStyles((theme) => ({
     },
   },
   imgContainer: {
-    // position: "absolute",
-    // display: "flex",
-    // top: "40%",
-    // right: "6%",
-    width: "50%",
     position: "absolute",    
-    right: "0" ,
-    top: "12em",
-    left: "57vw",
-    minHeight:"75em",
+    right: "2.5em",
+    top: "10em",
+    left: "55em",
     [theme.breakpoints.down("sm")]: {
-      top: "50%",
+      top: "40%",
       display: "contents",
       width: "100%",
       padding: "0em 1em",
@@ -87,7 +81,7 @@ export const styles = makeStyles((theme) => ({
     },
   },
   image: {
-    width: "90%",
+    width: "100%",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       marginTop: "4rem",
@@ -131,6 +125,9 @@ export const styles = makeStyles((theme) => ({
     marginTop: "13em",
     cursor: "pointer",
     paddingLeft: "0",
+    [theme.breakpoints.down("sm")]:{
+      display:"none",
+    },
   },
   scrollIcon: {
     display: "inline-block",

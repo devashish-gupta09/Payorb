@@ -18,10 +18,10 @@ function FeatureBenefitsSection({ content }) {
   const classes = styles();
   return (
     <Grid className={classes.container} container alignItems={"stretch"}>
-      <Grid container justify={"center"}>
+      <Grid container>
         <Grid item sm={4} className={classes.title}>
           <img src="/assets/features/FeatureSection31.svg" style={{position:"absolute",zIndex: "-1"}}/>
-          <Typography className={classes.mainTitle} variant="h2" align="center">
+          <Typography className={classes.mainTitle} variant="h2">
             {content.title}
           </Typography>
           <Grid className={classes.coloredLine}>
