@@ -4,44 +4,66 @@ import { appColors } from "../../../styles/colors";
 
 export const styles = makeStyles((theme) => ({
   container: {
-    flex: 1,
-    borderRadius: "0.75em",
-    padding: "1em 1em 1em 1em",
-    boxShadow: "0px 1em 2em rgba(0, 0, 0, 0.1)",
+    borderRadius: "8px",
+    padding: "0.7em 0.7em 0.7em 0.7em",
+    boxShadow: "0 0 2px 0 rgba(0, 0, 0, 0.25)",
     [theme.breakpoints.down("sm")]: {
-      padding: "2em",
       width: "100%",
-      // width: "80vw",
-      // height: "max-content",
+      padding: "0.5em 0.5em 0.5em 0.5em",
+    },
+  },
+  flexbox: {
+    padding: "1em 0.5em 1em 2em",
+    [theme.breakpoints.down("sm")]: {
+      display: "flex",
+      flexDirection: "row",
+      padding: "1em 0.5em 1em 1em",
     },
   },
   logo: {
-    padding: "3em 0",
+    alignItems: "center",
     [theme.breakpoints.down("sm")]: {
-      padding: "1em 0",
     },
   },
   sectionTitle: {
-    paddingTop: "1.5em",
+    // paddingTop: "1.5em",
     color: appColors.grey,
     letterSpacing: "4%",
     textTransform: "uppercase",
+    [theme.breakpoints.down("sm")]: {
+      paddingTop: 0,
+    },
+  },
+  logoImage: {
+    height: "4em",
+    width: "4em",
+  },
+  textContainer: {
+    padding: "2em 4em",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "2em !important"
+    }
   },
   title: {
-    padding: "0.2em 0.5em 0 0.5em",
+    padding: "1em 0.5em 0.25em 0",
     fontWeight: "bold",
+    fontSize: "1.25em",
     color: "#333333",
+    textAlign: "left",
     height: "max-content",
+    [theme.breakpoints.down("sm")]: {
+      padding: "0",
+      fontSize: "1em"
+    }
   },
   description: {
     fontSize: "1em",
-    textAlign: "center",
-    paddingTop: "7.5%",
-    paddingBottom: "5%",
+    textAlign: "left",
+    paddingBottom: "2%",
     color: appColors.grey,
     [theme.breakpoints.down("sm")]: {
-      paddingTop: "5%",
-      fontSize: "0.9em",
+      paddingTop: "2%",
+      fontSize: "0.75em"
     },
   },
   image: {

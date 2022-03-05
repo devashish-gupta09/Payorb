@@ -3,70 +3,75 @@ import { makeStyles } from "@material-ui/core";
 import { appColors } from "../../../styles/colors";
 
 export const styles = makeStyles((theme) => ({
+  root: {
+    background: "url(/assets/feature-page-section.png)",
+    backgroundSize: "cover",
+    height: "fit-content",
+    width: "100%",
+    padding: "2em 0 4em 0",
+  },
   container: {
-    minHeight: "100vh",
-    maxHeight: "fit-content",
-    padding: "4em 2em 10em 6em",
+    height: "fit-content",
+    width: "100%",
+    padding: "2em 15em 0em 15em",
     [theme.breakpoints.down("sm")]: {
-      minHeight: "fit-content",
-      padding: "2em 1em",
+      padding: "1em 0",
+      width: "100%",
+      justifyContent: "center"
     },
-  },
-  carousel: {
-    overflow: "visible",
-    width: "90vw",
-    height: "30vh",
-    background: "#ffffff",
-    borderRadius: "10px",
-  },
-
-  mobile: {
-    display: "None !important",
-    [theme.breakpoints.down("sm")]: {
-      borderRadius: "10px",
-      display: "flex !important",
-      paddingTop: "1em",
+    [theme.breakpoints.up("xl")]: {
+      padding: "2em 40em 0em 40em",
+      width: "100%",
+      justifyContent: "center",
     },
   },
   desktop: {
-    display: "flex",
+    width: "100%",
     [theme.breakpoints.down("sm")]: {
-      display: "None !important",
-    },
+      justifyContent: "center",
+    }
   },
   navButton: {
     display: "None",
   },
-  carouselIndicatorIcon: {
-    borderRadius: "0.2em",
-    height: "0.3em",
-    width: "2em",
-    backgroundColor: "#333333",
-    margin: "0 0.3em",
+  title: {
+    width: "100%",
+    fontSize: "1.5em",
     [theme.breakpoints.down("sm")]: {
-      margin: "0 0.2em",
-      height: "0.2em",
-      width: "1em",
-    },
+      border: "2px solid",
+      fontSize: "1em"
+    }
   },
-  activeIndicator: {
-    backgroundColor: "rgba(0, 221, 188, 1)",
-  },
-  indicatorButtonContainer: {
-    marginTop: "-4em",
-    padding: "1em 1em 1em 0",
-    width: "105%",
-    [theme.breakpoints.down("sm")]: {
-      marginTop: "-3em",
-    },
-  },
-
   description: {
     color: appColors.grey,
-    paddingBottom: "1em",
+    paddingBottom: "0.5em",
   },
   paragraphContainer: {
     paddingBottom: "4em",
     textAlign: "justify",
+  },
+  sectionTitle: {
+    width: "100%",
+    color: "black",
+    fontWeight: "bolder",
+    textAlign: "center",
+    alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  img: {
+    position: "absolute",
+    right: 0,
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
+  img2: {
+    position: "absolute",
+    left: "0",
+    marginTop: "50vh",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
   },
 }));

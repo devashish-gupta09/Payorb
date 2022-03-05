@@ -35,7 +35,6 @@ const style = makeStyles(() => ({
     textAlign: "justify",
     cursor: "pointer",
   },
-
   disclaimer: {
     textAlign: "justify",
   },

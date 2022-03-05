@@ -10,11 +10,11 @@ export const styles = makeStyles((theme) => ({
     height: "100%",
   },
   img: {
-    position: "relative",
+    position: "absolute",
     display: "inline-block",
     left: "5%",
-    width: "80%",
-    height: "80%",
+    width: "70%",
+    height: "70%",
   },
   box: {
     position: "relative",

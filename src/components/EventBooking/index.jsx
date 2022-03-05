@@ -149,9 +149,9 @@ function EventBooking({ eventLink, vendorId }) {
                     return (
                       <DetailRow key={index} classes={classes} icon={row.icon}>
                         <Typography>
-                          <DangerouslySetInnterHtml
+                          <DangerouslySetInnerHtml
                             text={row.value}
-                          ></DangerouslySetInnterHtml>
+                          ></DangerouslySetInnerHtml>
                         </Typography>
                       </DetailRow>
                     );

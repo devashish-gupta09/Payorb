@@ -1,50 +1,29 @@
-import { Button, Grid, makeStyles, Typography } from "@material-ui/core";
+import { Button, Grid, makeStyles, TextField, Typography } from "@material-ui/core";
 import { MailOutline, Phone, Place } from "@material-ui/icons";
 import { useFormik } from "formik";
 import React from "react";
 
 import { appColors } from "../../../styles/colors";
-import { globalStyles } from "../../../styles/globalStyles";
 import { ALERT_TYPES } from "../../constants/alerts";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { updateUser } from "../../services/auth";
 import ButtonCapsule from "../ButtonCapsule";
-import DashboardCard from "../DashboardCard";
-import DetailRow from "../DetailRow";
-import EditableTextField from "../EditableTextfield";
 import VideoUpload from "../VideoUpload";
 
-// const defaultVideo =
-//   "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/defaults%2FSampleVideo_1280x720_2mb.mp4?alt=media&token=5515d343-06d3-46f5-9b60-8186d0aa4ef9";
-function Details(props) {
-  const globalClasses = globalStyles();
-  const {
-    classes,
-    about,
-    email,
-    phoneNumber,
-    location,
-    vendor,
-    updateProfile,
-    profileData,
-  } = props;
-  const [edit, setEdit] = React.useState(false);
+function ProfileAboutCard({ profileData, vendor, updateProfile }) {
+  const classes = styles();
   const { Alert, showAlert } = useAlertSnackbar();
 
   const formik = useFormik({
     initialValues: {
-      email: email || "",
-      phoneNumber: phoneNumber || "",
-      location: location || "",
-      about: about || "",
+      about: profileData.about || "",
     },
     onSubmit: async (values) => {
       try {
         const res = await updateUser(values);
         if (res?.success) {
-          showAlert("User updated.");
           updateProfile({ ...profileData, ...values });
-          setEdit(false);
+          showAlert("User Updated")
         } else {
           showAlert("User not updated.", ALERT_TYPES.ERROR);
         }
@@ -55,183 +34,43 @@ function Details(props) {
     },
   });
 
-  const handleEditProfile = () => {
-    setEdit(!edit);
-  };
 
   return (
-    <>
+    <Grid className={classes.root}>
       {Alert()}
-      <form onSubmit={formik.handleSubmit}>
-        <Typography className={`${globalClasses.bold}`} gutterBottom>
-          About
-        </Typography>
-
-        {(about || vendor) && (
-          <Grid className={classes.aboutContainer}>
-            <EditableTextField
-              edit={edit}
-              value={
-                about || !vendor || "Please add some information about yourself"
-              }
-              textFieldProps={{
-                fullWidth: true,
-                id: "about",
-                label: "Please add some information about yourself",
-                value: formik.values.about,
-                variant: "outlined",
-                margin: "normal",
-                onChange: formik.handleChange,
-                onBlur: formik.onBlur,
-                multiline: true,
-                rows: "4",
-              }}
-              typographyProps={{
-                className: classes.aboutContainer,
-              }}
-            />
-          </Grid>
-        )}
-
-        {email && vendor && (
-          <DetailRow classes={classes} icon={<MailOutline />}>
-            <EditableTextField
-              edit={edit}
-              value={email || !vendor || `Please add your email`}
-              textFieldProps={{
-                fullWidth: true,
-                id: "email",
-                label: "Email",
-                value: formik.values.email,
-                variant: "outlined",
-                margin: "normal",
-                onChange: formik.handleChange,
-                onBlur: formik.onBlur,
-              }}
-            />
-          </DetailRow>
-        )}
-
-        {phoneNumber && vendor && (
-          <DetailRow classes={classes} icon={<Phone />}>
-            <EditableTextField
-              edit={edit}
-              value={phoneNumber || !vendor || `Please add your phone number`}
-              textFieldProps={{
-                fullWidth: true,
-                id: "phoneNumber",
-                label: "Phone Number",
-                value: formik.values.phoneNumber,
-                variant: "outlined",
-                margin: "normal",
-                onChange: formik.handleChange,
-                onBlur: formik.onBlur,
-              }}
-            />
-          </DetailRow>
-        )}
-
-        {(location || vendor) && (
-          <DetailRow classes={classes} icon={<Place />}>
-            <EditableTextField
-              edit={edit}
-              value={location || !vendor || `Please add your location`}
-              textFieldProps={{
-                fullWidth: true,
-                id: "location",
-                label: "location",
-                value: formik.values.location,
-                variant: "outlined",
-                margin: "normal",
-                onChange: formik.handleChange,
-                onBlur: formik.onBlur,
-              }}
-            />
-          </DetailRow>
-        )}
-
-        {vendor && (
-          <Grid style={{ paddingTop: "1em" }}>
-            {edit ? (
-              <>
-                <Button className={classes.saveButton} type="submit">
-                  Save
-                </Button>
-                <ButtonCapsule
-                  text="Cancel"
-                  buttonStyle={classes.cancelButton}
-                  onClick={handleEditProfile}
-                ></ButtonCapsule>
-              </>
-            ) : (
-              <ButtonCapsule
-                text="Edit Profile"
-                onClick={handleEditProfile}
-              ></ButtonCapsule>
-            )}
-          </Grid>
-        )}
-      </form>
-    </>
-  );
-}
-
-function ProfileAboutCard({ profileData, vendor, updateProfile }) {
-  const classes = styles();
-
-  return (
-    <DashboardCard rootClass={classes.root}>
-      <Grid>
-        <Grid container spacing={5} className={classes.desktop}>
-          <Grid item sm={!profileData.videoLink && !vendor ? 0 : 6}>
-            <Grid className={classes.detailsContainer}>
-              <Details
-                about={profileData.about}
-                email={profileData.email}
-                phoneNumber={profileData.phoneNumber}
-                location={profileData.location}
-                classes={classes}
-                vendor={vendor}
-                profileData={profileData}
-                updateProfile={updateProfile}
-              />
+      <Grid className={classes.detailsContainer}>
+        <form onSubmit={formik.handleSubmit} >
+          <Grid container alignItems="center" justifyContent="space-between" style={{ marginBottom: "1.5em" }}>
+            <Grid>
+              <Typography variant="h6" style={{ fontWeight: "bold" }}>About</Typography>
+            </Grid>
+            <Grid>
+              <ButtonCapsule text="Profile Preview" buttonStyle={`${classes.previewButton}`}></ButtonCapsule>
+              <ButtonCapsule text="Save Profile" buttonStyle={`${classes.saveButton}`} onClick={formik.handleSubmit}></ButtonCapsule>
             </Grid>
           </Grid>
-          <Grid item sm={!profileData.videoLink && !vendor ? 0 : 6}>
-            {/* Need to include a video section over here. */}
-            <VideoUpload
-              vendor={vendor}
-              videoProps={{
-                src: profileData.videoLink,
-              }}
-            />
+          <Grid style={{ background: "#ECEDF4", padding: "1em", borderRadius: "5px", opacity: 0.6 }}>
+            <TextField id="about" multiline fullWidth value={formik.values.about} onChange={formik.handleChange} onBlur={formik.onBlur} maxRow={8} minRow={8} InputProps={{ disableUnderline: true }} placeholder="Please add some information about yourself" />
+            <Grid container justifyContent="flex-end" style={{ padding: "0.5em 0" }}>
+              {formik.values.about.length} / 500 characters
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid className={classes.mobile}>
+        </form>
+
+        <Grid container alignItems="center" justifyContent="space-between" style={{ margin: "1.5em 0" }}>
           <Grid>
-            {/* Need to include a video section over here. */}
-            <VideoUpload
-              vendor={vendor}
-              videoProps={{
-                src: profileData.videoLink,
-              }}
-            />
-          </Grid>
-          <Grid className={classes.mobileDetailsContainer}>
-            <Details
-              about={profileData.about}
-              email={profileData.email}
-              phoneNumber={profileData.phoneNumber}
-              location={profileData.location}
-              classes={classes}
-              vendor={vendor}
-              profileData={profileData}
-              updateProfile={updateProfile}
-            />
+            <Typography variant="h6" style={{ fontWeight: "bold" }}>Introduction Video</Typography>
           </Grid>
         </Grid>
-      </Grid>
-    </DashboardCard>
+
+        <VideoUpload
+          vendor={vendor}
+          videoProps={{
+            src: profileData.videoLink,
+          }}
+        />
+      </Grid >
+    </Grid >
   );
 }
 
@@ -240,7 +79,7 @@ const styles = makeStyles((theme) => ({
     borderRadius: "0.8em",
     padding: "2em",
     [theme.breakpoints.down("sm")]: {
-      padding: "0",
+      padding: "0"
     },
   },
   logo: {
@@ -264,6 +103,16 @@ const styles = makeStyles((theme) => ({
       display: "none !important",
     },
   },
+  previewButton: {
+    boxShadow: "none",
+    background: "linear-gradient(178.83deg, #68FDF3 1%, #00D4FF 183.74%)"
+  },
+  saveButton: {
+    boxShadow: "none",
+    background: "rgba(38, 214, 108, 1)",
+    color: appColors.white,
+    marginLeft: "0.5em"
+  },
   mobile: {
     display: "none",
     [theme.breakpoints.down("sm")]: {
@@ -276,9 +125,7 @@ const styles = makeStyles((theme) => ({
     padding: "2em 1em",
   },
   detailsContainer: {
-    [theme.breakpoints.down("sm")]: {
-      width: "100%",
-    },
+    width: "100%"
   },
   aboutContainer: {
     paddingBottom: "1em",
