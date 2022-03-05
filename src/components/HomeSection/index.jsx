@@ -50,7 +50,7 @@ function HomeSection({ content }) {
       </Grid>
       <Grid className={classes.imgContainer}>
         <img
-          src="/assets/features/landing-image.svg"
+          src="/assets/landing-group.png"
           alt="landing"
           className={classes.image}
         />
