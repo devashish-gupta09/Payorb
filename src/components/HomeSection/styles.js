@@ -29,6 +29,12 @@ export const styles = makeStyles((theme) => ({
   },
   titleSection1: {
     [theme.breakpoints.down("sm")]: {
+      fontSize: "1.6em",
+      textAlign: "center",
+    },
+  },
+  titleSection1: {
+    [theme.breakpoints.down("sm")]: {
       fontSize: "1.25em",
       width: "100%",
     },
@@ -48,6 +54,45 @@ export const styles = makeStyles((theme) => ({
     color: "black",
     width: "100%",
     fontWeight: "400",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      fontWeight: "500",
+      padding: "0.6em 0.5em",
+      textAlign: "center",
+    },
+  },
+  imgContainer: {
+    display: "inline",
+    position: "absolute",
+    width: "43.875em",
+    height: "29.25em",
+    right: "2.5em",
+    bottom: "0",
+    [theme.breakpoints.down("sm")]: {
+      top: "50%",
+      display: "contents",
+      width: "100%",
+      float: "left",
+      padding: "0em 1em",
+    },
+  },
+  image: {
+    width: "90%",
+    bottom: "0",
+    position: "absolute",
+    height: "300px",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      marginTop: "4rem",
+      padding: "1em 1em",
+    },
+  },
+  buttonContain: {
+    position: "relative",
+    width: "100%",
+    height: "3em",
+    top: "3em",
+
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       fontWeight: "500",
