@@ -3,76 +3,53 @@ import { makeStyles } from "@material-ui/core";
 import { appColors } from "../../../styles/colors";
 
 export const styles = makeStyles((theme) => ({
-  container: {
-    minHeight: "33em",
+  root: {
+    background: "url(/assets/feature-page-section.png)",
+    backgroundSize: "cover",
+    height: "fit-content",
     width: "100%",
-    justifyContent: "center",
-    maxHeight: "fit-content",
-    padding: "4em 2em 6em 3em",
+    padding: "2em 0 4em 0",
+  },
+  container: {
+    height: "fit-content",
+    width: "100%",
+    padding: "2em 15em 0em 15em",
     [theme.breakpoints.down("sm")]: {
-      //minHeight: "fit-content",
-      padding: "2em 1em",
-      width: "100%"
+      padding: "1em 0",
+      width: "100%",
+      justifyContent: "center"
+    },
+    [theme.breakpoints.up("xl")]: {
+      padding: "2em 40em 0em 40em",
+      width: "100%",
+      justifyContent: "center",
     },
   },
-  carousel: {
-    overflow: "visible",
-    width: "90vw",
-    height: "30vh",
-    background: "#ffffff",
-    borderRadius: "10px",
-  },
-
-  /*mobile: {
-    display: "none !important",
-    [theme.breakpoints.down("sm")]: {
-      borderRadius: "10px",
-      display: "flex !important",
-      paddingTop: "1em",
-    },
-  },*/
   desktop: {
-    width: "100em",
-    /*[theme.breakpoints.down("sm")]: {
-      display: "None !important",
-    },*/
+    width: "100%",
+    [theme.breakpoints.down("sm")]: {
+      justifyContent: "center",
+    }
   },
   navButton: {
     display: "None",
   },
-  carouselIndicatorIcon: {
-    borderRadius: "0.2em",
-    height: "0.3em",
-    width: "2em",
-    backgroundColor: "#333333",
-    margin: "0 0.3em",
+  title: {
+    width: "100%",
+    fontSize: "1.5em",
     [theme.breakpoints.down("sm")]: {
-      margin: "0 0.2em",
-      height: "0.2em",
-      width: "1em",
-    },
-  },
-  activeIndicator: {
-    backgroundColor: "rgba(0, 221, 188, 1)",
-  },
-  indicatorButtonContainer: {
-    marginTop: "-4em",
-    padding: "1em 1em 1em 0",
-    width: "105%",
-    [theme.breakpoints.down("sm")]: {
-      marginTop: "-3em",
-    },
+      border: "2px solid",
+      fontSize: "1em"
+    }
   },
   description: {
     color: appColors.grey,
     paddingBottom: "0.5em",
   },
-
   paragraphContainer: {
     paddingBottom: "4em",
     textAlign: "justify",
   },
-
   sectionTitle: {
     width: "100%",
     color: "black",

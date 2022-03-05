@@ -8,20 +8,19 @@ function LandingSectionCard({ image, title, description }) {
   const classes = styles();
   return (
     <Card className={classes.container}>
-      <Grid className={classes.flexbox}   container spacing={1}>
-        <Grid item sm={4}>
-        <Grid className={classes.logo} container justify="center">
-          {/* <img className={classes.image} src={image}></img> */}
-          <Image src={image} height={"90em"} width={"90em"} quality={"75"}></Image>
+      <Grid className={classes.flexbox} container spacing={1} alignItems="center" >
+        <Grid item xs={2}>
+          <Grid className={classes.logo} container justifyContent={"center"} alignItems="center">
+            <img src={image} className={classes.logoImage} quality={"75"} />
+          </Grid>
         </Grid>
-        </Grid>
-        <Grid item sm={8} >
-        <Typography className={classes.title} variant="h6" align="center">
-          {title}
-        </Typography>
-        {description && (
-          <Typography className={classes.description}>{description}</Typography>
-        )}
+        <Grid item xs={10} className={classes.textContainer}>
+          <Typography className={classes.title}>
+            {title}
+          </Typography>
+          {description && (
+            <Typography className={classes.description}>{description}</Typography>
+          )}
         </Grid>
       </Grid>
     </Card>

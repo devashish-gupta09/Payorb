@@ -1,10 +1,15 @@
-import { Grid, Link, Typography } from "@material-ui/core";
+import { Grid, Link, Typography, Button } from "@material-ui/core";
 import React from "react";
-
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import { PAGE_PATHS } from "../../constants/paths";
 import Logo from "../Logo";
 
 import { styles } from "./styles";
+import FeatureBookingSection from "../FeatureBookingSection";
+
+const handleClick = () => {
+  window[`scrollTo`]({ top: 0, behavior: "smooth" });
+}
 
 function Footer() {
   const classes = styles();
@@ -13,82 +18,82 @@ function Footer() {
   const handleReadMore = () => {
     setReadMore(!readMore);
   };
+
   return (
-    <Grid className={classes.container}>
-      <Grid container>
-        <Grid item sm={3} className={classes.logoContainer}>
-          <Logo width="6em" />
-        </Grid>
-        <Grid item sm={3} className={classes.companyContainer}>
-          <Typography
-            className={classes.companySectionTitle}
-            variant={"h6"}
-            gutterBottom
-          >
-            Links
+    <Grid container className={classes.container}>
+      <FeatureBookingSection />
+      <Grid item sm={3} className={classes.logoContainer}>
+        <Logo width="8em" />
+      </Grid>
+      <Grid item sm={3} className={classes.companyContainer}>
+        <Typography
+          className={classes.companySectionTitle}
+          variant={"h6"}
+          gutterBottom
+        >
+          Links
+        </Typography>
+        <Grid className={classes.companyTabs}>
+          <Typography>
+            <p className={classes.hover}><a href="/about">About Us</a></p>
+            <p className={classes.hover}><a href="/features">Features</a></p>
+            <p className={classes.hover}><a href="/features">Become a solopreneur</a></p>
+            <p className={classes.hover}><a href="/features">Blogs</a></p>
           </Typography>
-          <Grid className={classes.companyTabs}>
-            <Typography>
-              <p><a href="/about">About Us</a></p>
-              <p><a href="/features">Features</a></p>
-              <p><a href="/features">Become a solopreneur</a></p>
-              <p><a href="/features">Blogs</a></p>
-            </Typography>
-          </Grid>
         </Grid>
-        <Grid item sm={3}>
-          <Typography
-            className={classes.companySectionTitle}
-            variant={"h6"}
-            gutterBottom
-          >
-            Company
+      </Grid>
+      <Grid item sm={3}>
+        <Typography
+          className={classes.companySectionTitle}
+          variant={"h6"}
+          gutterBottom
+        >
+          Company
+        </Typography>
+        <Grid className={classes.companyTabs}>
+          <Typography>
+            <p className={classes.hover}><a href={PAGE_PATHS.POLICY_TERMS_AND_CONDS}>Terms & Conditions</a></p>
+            <p className={classes.hover}><a href={PAGE_PATHS.POLICY_PRIVACY}>Privacy Policy</a></p>
+            <p className={classes.hover}><a href="/features">Contact</a></p>
           </Typography>
-          <Grid className={classes.companyTabs}>
-            <Typography>
-              <p><a href={PAGE_PATHS.POLICY_TERMS_AND_CONDS}>Terms & Conditions</a></p>
-              <p><a href={PAGE_PATHS.POLICY_PRIVACY}>Privacy Policy</a></p>
-              <p><a href="/features">Contact</a></p>
-            </Typography>
-          </Grid>
         </Grid>
-        <Grid item sm={3}>
-          <Typography
-            className={classes.companySectionTitle}
-            variant={"h6"}
-            gutterBottom
-          >
-            Get in Touch
-          </Typography>
-          <Grid className={classes.companyTabs}>
-            <Typography className={classes.desktop}>
+      </Grid>
+      <Grid item sm={3}>
+        <Typography
+          className={classes.companySectionTitle}
+          variant={"h6"}
+          gutterBottom
+        >
+          Get in Touch
+        </Typography>
+        <Grid className={classes.companyTabs}>
+          <Typography className={classes.getInTouchMobile}>
             <p>Vanickel Labs, 2nd Floor,
-            Aparna Towers, Kondapur,
-            Hyderabad - 500084</p>
-            </Typography>
-            <Typography>
+              Aparna Towers, Kondapur,
+              Hyderabad - 500084</p>
+          </Typography>
+          <Typography className={classes.mobile}>
             info@payorb.com
-            </Typography>
-          </Grid>
-        </Grid>
-        <Grid item sm={12}>
-          <Typography className={classes.bottomLabel}>
-            @ 2021 All Rights Reserved. Powered by Vanickel Labs
           </Typography>
         </Grid>
-        {/* Removing the disclaimer
-        <Grid item sm={12}>
-          <Typography className={classes.disclaimer}>
-            Disclaimer :{" "}
-            {webDisclaimer.substr(0, readMore ? webDisclaimer.length - 1 : 562)}
-            <span onClick={handleReadMore} className={classes.readMore}>
-              {readMore ? "Show Less" : "Show More"}
-            </span>
-          </Typography>
+      </Grid>
+
+      <Button className={classes.scroll} onClick={handleClick}>
+        <Grid className={classes.scrollIcon}>
+          <ArrowDropUpIcon />
         </Grid>
-        */}
+      </Button>
+
+      <Grid item sm={12}>
+        <Typography className={classes.bottomLabel}>
+          Ⓒ <b>2021</b> PayOrb. All rights reserved
+        </Typography>
+        <Typography className={classes.bottomLabelMobile}>
+          info@payorb.com
+        </Typography>
       </Grid>
     </Grid>
+
   );
 }
 

@@ -4,34 +4,29 @@ import { appColors } from "../../../styles/colors";
 
 export const styles = makeStyles((theme) => ({
   container: {
-    //borderRadius: "0.5em",
+    borderRadius: "8px",
     padding: "0.7em 0.7em 0.7em 0.7em",
-    borderStyle:"solid",
-    borderWidth:"0.05em",
-    borderColor:"rgba(0, 0, 0, 0.25)",
-    //boxShadow: "0px 0em 2em rgba(0, 0, 0, 0.25)",
-    //boxShadow: "0px 1em 2em rgba(0, 0, 0, 0.1)",
+    boxShadow: "0 0 2px 0 rgba(0, 0, 0, 0.25)",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
-      // width: "80vw",
-      // height: "max-content",
       padding: "0.5em 0.5em 0.5em 0.5em",
     },
   },
-  flexbox:{
+  flexbox: {
+    padding: "1em 0.5em 1em 2em",
     [theme.breakpoints.down("sm")]: {
-    display:"flex",
-    flexDirection:"column",
+      display: "flex",
+      flexDirection: "row",
+      padding: "1em 0.5em 1em 1em",
     },
   },
   logo: {
-    padding: "1em 0",
+    alignItems: "center",
     [theme.breakpoints.down("sm")]: {
-      padding: "0em 0",
     },
   },
   sectionTitle: {
-    paddingTop: "1.5em",
+    // paddingTop: "1.5em",
     color: appColors.grey,
     letterSpacing: "4%",
     textTransform: "uppercase",
@@ -39,26 +34,36 @@ export const styles = makeStyles((theme) => ({
       paddingTop: 0,
     },
   },
+  logoImage: {
+    height: "4em",
+    width: "4em",
+  },
+  textContainer: {
+    padding: "2em 4em",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "2em !important"
+    }
+  },
   title: {
-    padding: "1.5em 0.5em 0 0",
+    padding: "1em 0.5em 0.25em 0",
     fontWeight: "bold",
-    fontSize:"1.3em",
+    fontSize: "1.25em",
     color: "#333333",
-    textAlign:"left",
+    textAlign: "left",
     height: "max-content",
-    [theme.breakpoints.down("sm")]: { 
-      padding: "0.7em 0.5em 0 0",
-    },
+    [theme.breakpoints.down("sm")]: {
+      padding: "0",
+      fontSize: "1em"
+    }
   },
   description: {
-    fontSize:"1vw",
+    fontSize: "1em",
     textAlign: "left",
-    paddingTop: "5%",
     paddingBottom: "2%",
     color: appColors.grey,
     [theme.breakpoints.down("sm")]: {
       paddingTop: "2%",
-      fontSize: "0.9em",
+      fontSize: "0.75em"
     },
   },
   image: {

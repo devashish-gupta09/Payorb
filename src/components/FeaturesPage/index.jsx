@@ -9,15 +9,11 @@ import FeatureBenefitsSection from "../FeatureBenefitsSection";
 
 function FeaturesPage({ content }) {
   return (
-    <Grid>
+    <Grid style={{ width: "100vw" }}>
       <LandingHeader />
       <FeaturesContent content={content.home} />
       <FeatureSection content={content.feature} />
-      {/*<UserRegistrationSection content={content.userRegistration} />
-        <EventRegistrationSection content={content.eventRegistration} />*/}
-      <FeatureBenefitsSection content={content.userBenefits}/>
-      {/* <ClientReviewSection content={content.clientReview} /> */}
-      <FeatureBookingSection content={content.getStarted} />
+      <FeatureBenefitsSection content={content.userBenefits} />
       <Footer />
     </Grid>
   );
