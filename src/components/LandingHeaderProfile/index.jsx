@@ -72,13 +72,13 @@ function LandingHeaderProfile({ handleLinkClick }) {
             }}
             className={classes.list}
           >
-            Sign Up for Vendor
+            Sign Up as Vendor
           </li>
         ) : (
           <Link href={PAGE_PATHS.SIGNUP}>
             <ButtonCapsule
               buttonStyle={classes.btnCapSpacing}
-              text="Sign Up For Vendor"
+              text="Sign Up as Vendor"
               icon={<CallMadeIcon />}
             ></ButtonCapsule>
           </Link>
@@ -132,13 +132,13 @@ function LandingHeaderProfile({ handleLinkClick }) {
             }}
             className={classes.list}
           >
-            Sign Up for Vendor
+            Sign Up as Vendor
           </li>
         ) : (
           <Link href={PAGE_PATHS.SIGNUP}>
             <ButtonCapsule
               buttonStyle={classes.btnCapSpacing}
-              text="Sign Up For Vendor"
+              text="Sign Up as Vendor"
               icon={<CallMadeIcon />}
             ></ButtonCapsule>
           </Link>

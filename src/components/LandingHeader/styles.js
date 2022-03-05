@@ -45,12 +45,15 @@ export const styles = makeStyles((theme) => ({
       listStyleType: "None",
       padding: "1em 0",
       color: appColors.grey,
-      letterSpacing: "1px",
+      letterSpacing: "0.5px",
     },
   },
   drawerItemContainer: {
     padding: "0 1.5em",
-    width: "95vw",
+    width: "100vw",
+    [theme.breakpoints.down("sm")]: {
+      width: "100% !important",
+    },
   },
   drawerTitleContainer: { padding: "3em 0 2em 0" },
   drawerClose: { color: "black" },
