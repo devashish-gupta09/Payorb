@@ -1,6 +1,4 @@
 import { makeStyles, Grid } from "@material-ui/core";
-import { Grid } from "@material-ui/core";
-import { makeStyles, Grid } from "@material-ui/core";
 import React from "react";
 
 import EventRegistrationSection from "../EventRegistrationSection";
