@@ -9,15 +9,20 @@ export const styles = makeStyles((theme) => ({
     height: "fit-content",
     width: "100%",
     padding: "2em 0 4em 0",
+    margin: "0 auto",
+    [theme.breakpoints.down("sm")]: {
+      background: "none",
+    },
   },
   container: {
     height: "fit-content",
     width: "100%",
-    padding: "2em 15em 0em 15em",
+    padding: "2em 5em 0em 5em",
+    margin: "0 auto",
     [theme.breakpoints.down("sm")]: {
       padding: "1em 0",
       width: "100%",
-      justifyContent: "center"
+      justifyContent: "center",
     },
     [theme.breakpoints.up("xl")]: {
       padding: "2em 40em 0em 40em",
@@ -29,7 +34,7 @@ export const styles = makeStyles((theme) => ({
     width: "100%",
     [theme.breakpoints.down("sm")]: {
       justifyContent: "center",
-    }
+    },
   },
   navButton: {
     display: "None",
@@ -39,8 +44,8 @@ export const styles = makeStyles((theme) => ({
     fontSize: "1.5em",
     [theme.breakpoints.down("sm")]: {
       border: "2px solid",
-      fontSize: "1em"
-    }
+      fontSize: "1em",
+    },
   },
   description: {
     color: appColors.grey,

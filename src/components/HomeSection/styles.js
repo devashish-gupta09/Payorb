@@ -4,10 +4,10 @@ export const styles = makeStyles((theme) => ({
   container: {
     height: "90vh",
     position: "relative",
-    overflowX: "hidden",
+    overflow: "hidden",
   },
   textContainer: {
-    padding: "15em 4em 4em 4em",
+    padding: "4em 4em 4em 4em",
     width: "50%",
     [theme.breakpoints.down("sm")]: {
       top: "15%",
@@ -95,8 +95,10 @@ export const styles = makeStyles((theme) => ({
 
     [theme.breakpoints.down("sm")]: {
       width: "100%",
+      top: "0",
       fontWeight: "500",
-      padding: "0.6em 0.5em",
+      justifyContent: "center",
+      // padding: "0.6em 0.5em",
       textAlign: "center",
     },
   },
@@ -117,7 +119,7 @@ export const styles = makeStyles((theme) => ({
   },
   image: {
     width: "90%",
-    bottom: "0",
+    bottom: "3em",
     position: "absolute",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
@@ -125,33 +127,18 @@ export const styles = makeStyles((theme) => ({
       padding: "1em 1em",
     },
   },
-  buttonContain: {
-    position: "relative",
-    width: "100%",
-    height: "3em",
-    top: "3em",
-
-    [theme.breakpoints.down("sm")]: {
-      justifyContent: "center",
-    },
-  },
   buttonSpacing: {
     padding: "0 1.5em",
   },
   capsuleButton: {
+    padding: "0.75em 1.25em",
+    marginRight: "1em",
     background: "linear-gradient(178.83deg, #68FDF3 1%, #00D4FF 183.74%)",
-    borderRadius: "2em",
-    fontWeight: "600",
+    boxShadow: "none",
     fontSize: "0.8em",
-    marginTop: "1.6em",
-    padding: "0.5em 1em",
-
     [theme.breakpoints.down("sm")]: {
-      alignItems: "center",
-      fontSize: "0.65em",
-      fontWeight: "600",
-      marginTop: "0",
-      padding: "0.75em 1.5em",
+      padding: "0.3em 1em",
+      fontSize: "0.7em",
     },
   },
   callMadeIcon: {
@@ -159,9 +146,12 @@ export const styles = makeStyles((theme) => ({
     fontSize: "2rem",
   },
   scroll: {
-    marginTop: "13em",
+    marginTop: "10em",
     cursor: "pointer",
     paddingLeft: "0",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
   },
   scrollIcon: {
     display: "inline-block",

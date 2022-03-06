@@ -81,39 +81,53 @@ export const getFeaturesContent = async () => {
     features: [
       {
         title: "Online Presence",
-        description: "Dynamically architect real-time web services for installed base systems",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
         image: "/assets/features/onlinePresence.svg",
       },
 
       {
         title: "Unlimited service listings",
-        description: "Dynamically architect real-time web services for installed base systems",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
         image: "/assets/features/UnlimitedServiceListing.svg",
       },
       {
         title: "Bookings & Payments",
-        description: "Dynamically architect real-time web services for installed base systems",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
 
         image: "/assets/features/Bookings&Payments.svg",
       },
       {
         title: "Verified Reviews",
-        description: "Dynamically architect real-time web services for installed base systems",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
         image: "/assets/features/VerifiedReview.svg",
       },
       {
         title: "Business Dashboards",
-        description: "Dynamically architect real-time web services for installed base systems",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
         image: "/assets/features/BusinessDashboard.svg",
       },
       {
         title: "One Click Promotions",
-        description: "Dynamically architect real-time web services for installed base systems",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
         image: "/assets/features/OneClickPromotions.svg",
       },
     ],
   };
   // }
+};
+
+export const getWhyChooseUsContent = async () => {
+  return {
+    title: "Why choose PayOrb?",
+    subtitle:
+      "The desire for having a more flexible and fulfilling career path has led to Freelancing & solo entrepreneurship supplementing and complementing existing 9-5 worklife.",
+  };
 };
 
 export const getEventRegistrationContent = async () => {
@@ -133,7 +147,8 @@ export const getEventRegistrationContent = async () => {
       "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
     sectionTitle: "Event Registration",
     title: "Complete Business Dashboard",
-    description: "Track every penny flowing in and each customer joining your network, in real time",
+    description:
+      "Track every penny flowing in and each customer joining your network, in real time",
     image:
       "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2FDashboard.jpg?alt=media&token=29ff26b6-abae-4d67-bb57-19f718417be4",
   };
@@ -203,21 +218,24 @@ export const getClientReviewContent = async () => {
 };
 
 export const getUserBenefits = async () => {
+  return {
+    title: "Why choose Payorb?",
+    contentSection1:
+      "Professionally incentivize future-proof data whereas out-of-the-box action items. Appropriately administrate client-centric testing procedures vis-a-vis inexpensive methodologies. Conveniently morph vertical ROI via focused value. Continually productize resource sucking processes before covalent web services. Holisticly empower sticky customer service with sticky bandwidth.",
+    contentSection2:
+      "Distinctively supply granular collaboration and idea-sharing through effective information. Progressively monetize functionalized results without equity invested vortals. Progressively harness value-added systems through backward-compatible markets. Conveniently morph interactive synergy via cutting-edge manufactured products. Interactively supply proactive scenarios and fully tested functionalities.",
+    contentSection3:
+      "Dynamically drive progressive experiences after parallel paradigms. Enthusiastically predominate prospective technology and alternative channels.",
+    contentSection4:
+      "Professionally incentivize future-proof data whereas out-of-the-box action items. Appropriately administrate client-centric testing procedures vis-a-vis inexpensive methodologies. Conveniently morph vertical ROI via focused value. Continually productize resource sucking processes before ",
+  };
+};
 
-  return{
-    title:"Why choose Payorb?",
-    contentSection1: "Professionally incentivize future-proof data whereas out-of-the-box action items. Appropriately administrate client-centric testing procedures vis-a-vis inexpensive methodologies. Conveniently morph vertical ROI via focused value. Continually productize resource sucking processes before covalent web services. Holisticly empower sticky customer service with sticky bandwidth.",
-    contentSection2: "Distinctively supply granular collaboration and idea-sharing through effective information. Progressively monetize functionalized results without equity invested vortals. Progressively harness value-added systems through backward-compatible markets. Conveniently morph interactive synergy via cutting-edge manufactured products. Interactively supply proactive scenarios and fully tested functionalities.",
-    contentSection3: "Dynamically drive progressive experiences after parallel paradigms. Enthusiastically predominate prospective technology and alternative channels.",
-    contentSection4: "Professionally incentivize future-proof data whereas out-of-the-box action items. Appropriately administrate client-centric testing procedures vis-a-vis inexpensive methodologies. Conveniently morph vertical ROI via focused value. Continually productize resource sucking processes before ",
-  }
-}
-
-export const getFeatureBookings= async () =>{
-  return{
-    title:"People who are ready to book events"
-  }
-}
+export const getFeatureBookings = async () => {
+  return {
+    title: "People who are ready to book events",
+  };
+};
 
 export const getGrowthContent = async () => {
   // try {

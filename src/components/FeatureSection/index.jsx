@@ -1,8 +1,6 @@
 import { Grid, Typography } from "@material-ui/core";
 import React from "react";
-import Carousel from "react-material-ui-carousel";
-import SectionCard from "../LandingSectionCard";
-import SectionContent from "../LandingSectionContent";
+import FeatureSectionCard from "../FeaturesSectionCard";
 import { styles } from "./styles";
 
 const ColoredLine = () => (
@@ -22,19 +20,19 @@ function FeatureSection({ content }) {
     <Grid className={classes.root}>
       <Typography variant="h4" className={classes.sectionTitle}>
         {content.title}
-      </Typography >
+      </Typography>
       <ColoredLine />
-      <Grid className={classes.container} container alignItems={"center"}>
+      <Grid className={classes.container} alignItems={"center"}>
         <Grid
           className={classes.desktop}
           container
-          alignItems={"stretch"}
+          // alignItems={"stretch"}
           spacing={3}
         >
           {content.features.map((feature, index) => {
             return (
-              <Grid container item sm={6} key={index}>
-                <SectionCard
+              <Grid item sm={4} key={index}>
+                <FeatureSectionCard
                   image={feature.image}
                   title={feature.title}
                   description={feature.description}

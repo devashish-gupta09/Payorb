@@ -5,9 +5,11 @@ import EventRegistrationSection from "../EventRegistrationSection";
 import FeatureSection from "../FeatureSection";
 import GrowthSection from "../GrowthSection";
 import HomeSection from "../HomeSection";
+import HowItWorksSection from "../HowItWorksSection";
 import Footer from "../LandingFooter";
 import LandingHeader from "../LandingHeader";
 import UserRegistrationSection from "../UserRegistrationSection";
+// import WhyChooseUsSection from "./WhyChooseUsSection";
 
 function Landing({ content }) {
   const classes = styles();
@@ -18,8 +20,9 @@ function Landing({ content }) {
         <LandingHeader />
         <HomeSection content={content.home} />
       </Grid>
-      {/* <HowItWorksSection content={content.howItWorks} /> */}
+      <HowItWorksSection content={content.howItWorks} />
       <FeatureSection content={content.feature} />
+      {/* <WhyChooseUsSection content={content.whyChooseUs} /> */}
       <UserRegistrationSection content={content.userRegistration} />
       <EventRegistrationSection content={content.eventRegistration} />
       {/* <ClientReviewSection content={content.clientReview} /> */}
