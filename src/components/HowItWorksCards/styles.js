@@ -13,12 +13,16 @@ export const styles = makeStyles((theme) => ({
     position: "relative",
     display: "inline-block",
     left: "5%",
-    width: "80px",
-    height: "80px",
+    width: "80%",
+    height: "80%",
+    [theme.breakpoints.down("sm")]: {
+      width: "80px",
+      height: "80px",
+    },
   },
   img: {
-    width: "100%",
-    height: "100%",
+    width: "80%",
+    height: "80%",
     [theme.breakpoints.down("sm")]: {
       width: "60px",
       height: "60px",

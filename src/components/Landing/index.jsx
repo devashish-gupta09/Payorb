@@ -8,6 +8,7 @@ import HomeSection from "../HomeSection";
 import HowItWorksSection from "../HowItWorksSection";
 import Footer from "../LandingFooter";
 import LandingHeader from "../LandingHeader";
+import PricingSection from "../PricingSection";
 import UserRegistrationSection from "../UserRegistrationSection";
 // import WhyChooseUsSection from "./WhyChooseUsSection";
 
@@ -23,6 +24,7 @@ function Landing({ content }) {
       <HowItWorksSection content={content.howItWorks} />
       <FeatureSection content={content.feature} />
       {/* <WhyChooseUsSection content={content.whyChooseUs} /> */}
+      <PricingSection content={content.pricing} />
       <UserRegistrationSection content={content.userRegistration} />
       <EventRegistrationSection content={content.eventRegistration} />
       {/* <ClientReviewSection content={content.clientReview} /> */}

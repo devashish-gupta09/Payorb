@@ -130,6 +130,33 @@ export const getWhyChooseUsContent = async () => {
   };
 };
 
+export const getPricingContent = async () => {
+  return {
+    title: "Our Pricing",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
+    img: "/assets/pricing/pricing-img.svg",
+    plans: [
+      {
+        feature:
+          "Collaboratively extend end-to-end quality vectors via client-centric catalysts for change. Phosfluorescently.",
+      },
+      {
+        feature: "Lorem ipsum dolor sit amet.",
+      },
+      {
+        feature: "Consectetur adipiscing elit.",
+      },
+      {
+        feature: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      },
+      {
+        feature: "Lorem ipsum dolor sit amet.",
+      },
+    ],
+  };
+};
+
 export const getEventRegistrationContent = async () => {
   // try {
   //   const res = await axios.get(`${CMS_URL}/event-registration`);
