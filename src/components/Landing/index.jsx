@@ -44,7 +44,8 @@ const styles = makeStyles((theme) => ({
     top: 0,
     bottom: 0,
     [theme.breakpoints.down("sm")]: {
-      backgroundImage: `url("/assets/homepage-1.png")`,
+      background: `#F0FFFE`,
+      width: "100vw",
     },
   },
 }));

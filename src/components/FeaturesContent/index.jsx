@@ -42,7 +42,7 @@ function FeaturesContent({ content }) {
             </Button>
           </Link>
         </Grid>
-        <Button className={classes.scroll} onclick="window.scrollBy(0, 100)">
+        <Button className={classes.scroll} onClick="window.scrollBy(0, 100)">
           <Grid className={classes.scrollIcon}>
             <ArrowDownwardIcon />
           </Grid>
