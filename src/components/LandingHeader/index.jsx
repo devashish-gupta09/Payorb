@@ -237,18 +237,6 @@ function LandingHeader() {
                 </Button>
               )}
             </Link>
-            <Link href={PAGE_PATHS.ABOUT}>
-              <Button
-                onClick={() =>
-                  event({
-                    action: SOLOPRENEUR_CLICK,
-                  })
-                }
-                className={classes.buttonSpacing}
-              >
-                Become a Solopreneur
-              </Button>
-            </Link>
 
             <LandingHeaderProfile />
           </Grid>
