@@ -1,16 +1,13 @@
 import { makeStyles, Grid } from "@material-ui/core";
 import React from "react";
 
-import EventRegistrationSection from "../EventRegistrationSection";
-import FeatureSection from "../FeatureSection";
-import GrowthSection from "../GrowthSection";
+import FeatureSectionHome from "../FeatureSectionHome";
 import HomeSection from "../HomeSection";
 import HowItWorksSection from "../HowItWorksSection";
 import Footer from "../LandingFooter";
 import LandingHeader from "../LandingHeader";
 import PricingSection from "../PricingSection";
-import UserRegistrationSection from "../UserRegistrationSection";
-// import WhyChooseUsSection from "./WhyChooseUsSection";
+import WhyChooseUsSection from "../WhyChooseUsSection";
 
 function Landing({ content }) {
   const classes = styles();
@@ -22,13 +19,13 @@ function Landing({ content }) {
         <HomeSection content={content.home} />
       </Grid>
       <HowItWorksSection content={content.howItWorks} />
-      <FeatureSection content={content.feature} />
-      {/* <WhyChooseUsSection content={content.whyChooseUs} /> */}
+      <FeatureSectionHome content={content.feature} />
+      <WhyChooseUsSection content={content.whyChooseUs} />
       <PricingSection content={content.pricing} />
-      <UserRegistrationSection content={content.userRegistration} />
-      <EventRegistrationSection content={content.eventRegistration} />
+      {/* <UserRegistrationSection content={content.userRegistration} />
+      <EventRegistrationSection content={content.eventRegistration} /> */}
       {/* <ClientReviewSection content={content.clientReview} /> */}
-      <GrowthSection content={content.growth} />
+      {/* <GrowthSection content={content.growth} /> */}
       <Footer />
     </Grid>
   );

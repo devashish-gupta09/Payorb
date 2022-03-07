@@ -9,16 +9,11 @@ export const styles = makeStyles((theme) => ({
     height: "fit-content",
     width: "100%",
     padding: "2em 0 4em 0",
-    margin: "0 auto",
-    [theme.breakpoints.down("sm")]: {
-      background: "none",
-    },
   },
   container: {
     height: "fit-content",
     width: "100%",
-    padding: "2em 5em 0em 5em",
-    margin: "0 auto",
+    padding: "2em 15em 0em 15em",
     [theme.breakpoints.down("sm")]: {
       padding: "1em 0",
       width: "100%",

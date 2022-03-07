@@ -27,5 +27,8 @@ export const styles = makeStyles((theme) => ({
   description: {
     width: "50vw",
     padding: "0.5em",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
   },
 }));

@@ -1,5 +1,6 @@
 import { Box, Container, Typography } from "@material-ui/core";
 import React from "react";
+import WhyUsCarousel from "../WhyUsCarousel";
 
 import { styles } from "./styles";
 
@@ -30,6 +31,7 @@ function WhyChooseUsSection({ content }) {
       >
         {content.subtitle}
       </Typography>
+      <WhyUsCarousel />
     </Box>
   );
 }

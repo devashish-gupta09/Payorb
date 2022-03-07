@@ -1,12 +1,16 @@
 import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
+  bg: {
+    margin: "0",
+    background: "url(/assets/howItWorksBG.svg) no-repeat center center",
+  },
   container: {
     height: "100vh",
     maxHeight: "fit-content",
     padding: "4em 2em 10em 2em",
     [theme.breakpoints.down("sm")]: {
-      minHeight: "fit-content",
+      height: "fit-content",
       padding: "2em 1em",
     },
   },
@@ -29,6 +33,7 @@ export const styles = makeStyles((theme) => ({
       width: "100%",
       height: "fit-content",
       margin: "0 auto",
+      paddingBottom: "3em",
     },
   },
   videoImg: {

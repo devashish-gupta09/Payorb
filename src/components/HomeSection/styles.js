@@ -123,7 +123,6 @@ export const styles = makeStyles((theme) => ({
     position: "absolute",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
-      marginTop: "4rem",
       padding: "1em 1em",
     },
   },

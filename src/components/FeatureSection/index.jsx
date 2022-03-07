@@ -1,6 +1,7 @@
 import { Grid, Typography } from "@material-ui/core";
 import React from "react";
-import FeatureSectionCard from "../FeaturesSectionCard";
+import SectionCard from "../LandingSectionCard";
+import SectionContent from "../LandingSectionContent";
 import { styles } from "./styles";
 
 const ColoredLine = () => (
@@ -22,17 +23,17 @@ function FeatureSection({ content }) {
         {content.title}
       </Typography>
       <ColoredLine />
-      <Grid className={classes.container} alignItems={"center"}>
+      <Grid className={classes.container} container alignItems={"center"}>
         <Grid
           className={classes.desktop}
           container
-          // alignItems={"stretch"}
+          alignItems={"stretch"}
           spacing={3}
         >
           {content.features.map((feature, index) => {
             return (
-              <Grid item sm={4} key={index}>
-                <FeatureSectionCard
+              <Grid container item sm={6} key={index}>
+                <SectionCard
                   image={feature.image}
                   title={feature.title}
                   description={feature.description}
