@@ -30,7 +30,6 @@ export const styles = makeStyles((theme) => ({
   },
   buttonContainer: {
     width: "fit-content",
-    border: "2px solid green",
     [theme.breakpoints.down("sm")]: {
       display: "None",
     },
