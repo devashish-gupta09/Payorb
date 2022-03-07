@@ -11,6 +11,8 @@ import {
   getHowItWorksContent,
   getUserRegistrationContent,
   getGrowthContent,
+  getWhyChooseUsContent,
+  getPricingContent,
 } from "../src/services/landing";
 
 export default function Index({ landing }) {
@@ -26,6 +28,8 @@ export async function getStaticProps({ params, preview = null }) {
   const home = await getHomeContent();
   const howItWorks = await getHowItWorksContent();
   const feature = await getFeaturesContent();
+  const whyChooseUs = await getWhyChooseUsContent();
+  const pricing = await getPricingContent();
   const userRegistration = await getUserRegistrationContent();
   const eventRegistration = await getEventRegistrationContent();
   const clientReview = await getClientReviewContent();
@@ -37,6 +41,8 @@ export async function getStaticProps({ params, preview = null }) {
         home,
         howItWorks,
         feature,
+        whyChooseUs,
+        pricing,
         userRegistration,
         eventRegistration,
         clientReview,
