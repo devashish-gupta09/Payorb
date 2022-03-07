@@ -13,7 +13,7 @@ export const styles = makeStyles((theme) => ({
     }
   },
   textContainer: {
-    padding: "15em 4em 4em 4em",
+    padding: "4em 4em 4em 4em",
     width: "50%",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
@@ -97,6 +97,7 @@ export const styles = makeStyles((theme) => ({
     top: "3em",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
+      top: "0",
       fontWeight: "500",
       paddingLeft: "1.25em",
       textAlign: "center",
@@ -117,7 +118,7 @@ export const styles = makeStyles((theme) => ({
   },
   image: {
     width: "90%",
-    bottom: "0",
+    bottom: "3em",
     position: "absolute",
     [theme.breakpoints.down("sm")]: {
       width: "400px",
@@ -139,9 +140,10 @@ export const styles = makeStyles((theme) => ({
     padding: "0 1.5em",
   },
   capsuleButton: {
+    padding: "0.75em 1.25em",
+    marginRight: "1em",
     background: "linear-gradient(178.83deg, #68FDF3 1%, #00D4FF 183.74%)",
-    borderRadius: "2em",
-    fontWeight: "600",
+    boxShadow: "none",
     fontSize: "0.8em",
     marginTop: "1.6em",
     padding: "0.5em 1em",
@@ -158,7 +160,7 @@ export const styles = makeStyles((theme) => ({
     fontSize: "2em",
   },
   scroll: {
-    marginTop: "13em",
+    marginTop: "10em",
     cursor: "pointer",
     paddingLeft: "0",
     [theme.breakpoints.down("sm")]: {

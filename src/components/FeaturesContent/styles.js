@@ -10,6 +10,7 @@ export const styles = makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     display: "flex",
     [theme.breakpoints.down('sm')]: {
+      display: "block",
       height: "70vh",
       backgroundRepeat: "no-repeat",
       backgroundSize: "contain",
@@ -18,7 +19,7 @@ export const styles = makeStyles((theme) => ({
   },
   textContainer: {
     padding: "15em 4em 4em 4em",
-    width: "50%",  
+    width: "50%",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       height: "fit-content",

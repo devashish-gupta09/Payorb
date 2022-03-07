@@ -1,6 +1,5 @@
 import { Grid, Typography } from "@material-ui/core";
 import React from "react";
-import Carousel from "react-material-ui-carousel";
 import SectionCard from "../LandingSectionCard";
 import SectionContent from "../LandingSectionContent";
 import { styles } from "./styles";
@@ -22,7 +21,7 @@ function FeatureSection({ content }) {
     <Grid className={classes.root}>
       <Typography variant="h4" className={classes.sectionTitle}>
         {content.title}
-      </Typography >
+      </Typography>
       <ColoredLine />
       <Grid className={classes.container} container alignItems={"center"}>
         <Grid

@@ -49,78 +49,54 @@ function LandingHeader() {
           </Grid>
 
           <Grid className={classes.drawerList}>
-            {router.pathname === PAGE_PATHS.HOME ? (
-              <li
-                onClick={() => {
-                  handleClick(PAGE_PATHS.HOME);
-                }}
-                className={classes.buttonActive}
-              >
-                Home
-              </li>
-            ) : (
-              <li
-                onClick={() => {
-                  handleClick(PAGE_PATHS.HOME);
-                }}
-              >
-                Home
-              </li>
-            )}
-            {router.pathname === PAGE_PATHS.FEATURES ? (
-              <li
-                onClick={() => {
-                  handleClick(PAGE_PATHS.FEATURES);
-                }}
-                className={classes.buttonActive}
-              >
-                Features
-              </li>
-            ) : (
-              <li
-                onClick={() => {
-                  handleClick(PAGE_PATHS.FEATURES);
-                }}
-              >
-                Features
-              </li>
-            )}
-            {router.pathname === PAGE_PATHS.ABOUT ? (
-              <li
-                onClick={() => {
-                  handleClick(PAGE_PATHS.ABOUT);
-                }}
-                className={classes.buttonActive}
-              >
-                About Us
-              </li>
-            ) : (
-              <li
-                onClick={() => {
-                  handleClick(PAGE_PATHS.ABOUT);
-                }}
-              >
-                About Us
-              </li>
-            )}
-            {router.pathname === PAGE_PATHS.SOLOPRENEUR ? (
-              <li
-                onClick={() => {
-                  handleClick(PAGE_PATHS.SOLOPRENEUR);
-                }}
-                className={classes.buttonActive}
-              >
-                Become a Solopreneur
-              </li>
-            ) : (
-              <li
-                onClick={() => {
-                  handleClick(PAGE_PATHS.SOLOPRENEUR);
-                }}
-              >
-                Become a Solopreneur
-              </li>
-            )}
+            <li
+              onClick={() => {
+                handleClick(PAGE_PATHS.HOME);
+              }}
+              className={
+                router.pathname === PAGE_PATHS.HOME
+                  ? classes.buttonActive
+                  : classes.buttonSpacing
+              }
+            >
+              Home
+            </li>
+            <li
+              onClick={() => {
+                handleClick(PAGE_PATHS.FEATURES);
+              }}
+              className={
+                router.pathname === PAGE_PATHS.FEATURES
+                  ? classes.buttonActive
+                  : classes.buttonSpacing
+              }
+            >
+              Features
+            </li>
+            <li
+              onClick={() => {
+                handleClick(PAGE_PATHS.ABOUT);
+              }}
+              className={
+                router.pathname === PAGE_PATHS.ABOUT
+                  ? classes.buttonActive
+                  : classes.buttonSpacing
+              }
+            >
+              About Us
+            </li>
+            <li
+              onClick={() => {
+                handleClick(PAGE_PATHS.SOLOPRENEUR);
+              }}
+              className={
+                router.pathname === PAGE_PATHS.SOLOPRENEUR
+                  ? classes.buttonActive
+                  : classes.buttonSpacing
+              }
+            >
+              Become a Solopreneur
+            </li>
 
             <LandingHeaderProfile handleLinkClick={handleClick} />
           </Grid>
@@ -138,79 +114,52 @@ function LandingHeader() {
             justify="space-evenly"
           >
             <Link href={PAGE_PATHS.HOME}>
-              {router.pathname === PAGE_PATHS.HOME ? (
-                <Button
-                  onClick={() =>
-                    event({
-                      action: HOME_CLICK,
-                    })
-                  }
-                  className={classes.buttonActive}
-                >
-                  Home
-                </Button>
-              ) : (
-                <Button
-                  onClick={() =>
-                    event({
-                      action: HOME_CLICK,
-                    })
-                  }
-                  className={classes.buttonSpacing}
-                >
-                  Home
-                </Button>
-              )}
+              <Button
+                onClick={() =>
+                  event({
+                    action: HOME_CLICK,
+                  })
+                }
+                className={
+                  router.pathname === PAGE_PATHS.HOME
+                    ? classes.buttonActive
+                    : classes.buttonSpacing
+                }
+              >
+                Home
+              </Button>
             </Link>
             <Link href={PAGE_PATHS.FEATURES}>
-              {router.pathname === PAGE_PATHS.FEATURES ? (
-                <Button
-                  onClick={() =>
-                    event({
-                      action: FEATURES_CLICK,
-                    })
-                  }
-                  className={classes.buttonActive}
-                >
-                  Features
-                </Button>
-              ) : (
-                <Button
-                  onClick={() =>
-                    event({
-                      action: FEATURES_CLICK,
-                    })
-                  }
-                  className={classes.buttonSpacing}
-                >
-                  Features
-                </Button>
-              )}
+              <Button
+                onClick={() =>
+                  event({
+                    action: FEATURES_CLICK,
+                  })
+                }
+                className={
+                  router.pathname === PAGE_PATHS.FEATURES
+                    ? classes.buttonActive
+                    : classes.buttonSpacing
+                }
+              >
+                Features
+              </Button>
             </Link>
             <Link href={PAGE_PATHS.ABOUT}>
-              {router.pathname === PAGE_PATHS.ABOUT ? (
-                <Button
-                  onClick={() =>
-                    event({
-                      action: ABOUT_CLICK,
-                    })
-                  }
-                  className={classes.buttonActive}
-                >
-                  About Us
-                </Button>
-              ) : (
-                <Button
-                  onClick={() =>
-                    event({
-                      action: ABOUT_CLICK,
-                    })
-                  }
-                  className={classes.buttonSpacing}
-                >
-                  About Us
-                </Button>
-              )}
+              <Button
+                onClick={() =>
+                  event({
+                    action: ABOUT_CLICK,
+                  })
+                }
+                className={
+                  router.pathname === PAGE_PATHS.ABOUT
+                    ? classes.buttonActive
+                    : classes.buttonSpacing
+                }
+              >
+                About Us
+              </Button>
             </Link>
             <Link href={PAGE_PATHS.SOLOPRENEUR}>
               {router.pathname === PAGE_PATHS.SOLOPRENEUR ? (
