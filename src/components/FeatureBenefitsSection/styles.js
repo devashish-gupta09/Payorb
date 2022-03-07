@@ -2,7 +2,8 @@ import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
   container: {
-    background: "linear-gradient(180deg, #BCF4F1 0%, rgba(0, 212, 255, 0.33) 157.68%)",
+    background:
+      "linear-gradient(180deg, #BCF4F1 0%, rgba(0, 212, 255, 0.33) 157.68%)",
     padding: "4em 4em 5em 5em",
     [theme.breakpoints.down("sm")]: {
       height: "fit-content",
@@ -43,7 +44,7 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       textAlign: "center",
       alignItems: "center",
-      padding: "1em"
+      padding: "1em",
     },
   },
   mainTitle: {
@@ -53,7 +54,7 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       fontSize: "1.7em",
-      textAlign: "center"
+      textAlign: "center",
     },
   },
   coloredLine: {
@@ -63,7 +64,7 @@ export const styles = makeStyles((theme) => ({
       background: "black",
       display: "block",
       width: "4em",
-      height: "0.25em"
-    }
-  }
+      height: "0.25em",
+    },
+  },
 }));

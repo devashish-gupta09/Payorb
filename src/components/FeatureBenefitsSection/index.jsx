@@ -17,14 +17,28 @@ const ColoredLine = ({ color }) => (
 function FeatureBenefitsSection({ content }) {
   const classes = styles();
   return (
-    <Grid className={classes.container} container >
-      <Grid item sm={4} className={classes.title} container alignItems="center" justifyContent="center">
+    <Grid className={classes.container} container>
+      <Grid
+        item
+        sm={4}
+        className={classes.title}
+        container
+        alignItems="center"
+        justifyContent="center"
+      >
         <Typography className={classes.mainTitle} variant="h4">
           {content.title}
         </Typography>
         <Grid className={classes.coloredLine}></Grid>
       </Grid>
-      <Grid container item sm={8} className={classes.description} alignItems={"center"} justifyContent={"center"}>
+      <Grid
+        container
+        item
+        sm={8}
+        className={classes.description}
+        alignItems={"center"}
+        justifyContent={"center"}
+      >
         <Typography>
           <p>{content.contentSection1}</p>
           <p>{content.contentSection2}</p>
@@ -32,8 +46,7 @@ function FeatureBenefitsSection({ content }) {
           <p>{content.contentSection4}</p>
         </Typography>
       </Grid>
-
-    </Grid >
+    </Grid>
   );
 }
 

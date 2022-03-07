@@ -1,6 +1,6 @@
 import { Grid, Link, Typography, Button } from "@material-ui/core";
 import React from "react";
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import { PAGE_PATHS } from "../../constants/paths";
 import Logo from "../Logo";
 
@@ -9,7 +9,7 @@ import FeatureBookingSection from "../FeatureBookingSection";
 
 const handleClick = () => {
   window[`scrollTo`]({ top: 0, behavior: "smooth" });
-}
+};
 
 function Footer() {
   const classes = styles();
@@ -35,10 +35,18 @@ function Footer() {
         </Typography>
         <Grid className={classes.companyTabs}>
           <Typography>
-            <p className={classes.hover}><a href="/about">About Us</a></p>
-            <p className={classes.hover}><a href="/features">Features</a></p>
-            <p className={classes.hover}><a href="/features">Become a solopreneur</a></p>
-            <p className={classes.hover}><a href="/features">Blogs</a></p>
+            <p className={classes.hover}>
+              <a href="/about">About Us</a>
+            </p>
+            <p className={classes.hover}>
+              <a href="/features">Features</a>
+            </p>
+            <p className={classes.hover}>
+              <a href="/features">Become a solopreneur</a>
+            </p>
+            <p className={classes.hover}>
+              <a href="/features">Blogs</a>
+            </p>
           </Typography>
         </Grid>
       </Grid>
@@ -52,9 +60,15 @@ function Footer() {
         </Typography>
         <Grid className={classes.companyTabs}>
           <Typography>
-            <p className={classes.hover}><a href={PAGE_PATHS.POLICY_TERMS_AND_CONDS}>Terms & Conditions</a></p>
-            <p className={classes.hover}><a href={PAGE_PATHS.POLICY_PRIVACY}>Privacy Policy</a></p>
-            <p className={classes.hover}><a href="/features">Contact</a></p>
+            <p className={classes.hover}>
+              <a href={PAGE_PATHS.POLICY_TERMS_AND_CONDS}>Terms & Conditions</a>
+            </p>
+            <p className={classes.hover}>
+              <a href={PAGE_PATHS.POLICY_PRIVACY}>Privacy Policy</a>
+            </p>
+            <p className={classes.hover}>
+              <a href="/features">Contact</a>
+            </p>
           </Typography>
         </Grid>
       </Grid>
@@ -68,13 +82,13 @@ function Footer() {
         </Typography>
         <Grid className={classes.companyTabs}>
           <Typography className={classes.getInTouchMobile}>
-            <p>Vanickel Labs, 2nd Floor, <br />
+            <p>
+              Vanickel Labs, 2nd Floor, <br />
               Aparna Towers, Kondapur, <br />
-              Hyderabad - 500084</p>
+              Hyderabad - 500084
+            </p>
           </Typography>
-          <Typography className={classes.mobile}>
-            info@payorb.com
-          </Typography>
+          <Typography className={classes.mobile}>info@payorb.com</Typography>
         </Grid>
       </Grid>
 
@@ -93,7 +107,6 @@ function Footer() {
         </Typography>
       </Grid>
     </Grid>
-
   );
 }
 

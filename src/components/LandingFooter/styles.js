@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
   container: {
-    background: 'url(/assets/footer-bg.png)',
+    background: "url(/assets/footer-bg.png)",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
@@ -22,11 +22,11 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       paddingTop: "0.5em",
       paddingBottom: "0.75em",
-      fontSize: "0.75em"
+      fontSize: "0.75em",
     },
   },
   hover: {
-    '&:hover': {
+    "&:hover": {
       color: "#00D4FF",
     },
   },
@@ -39,8 +39,8 @@ export const styles = makeStyles((theme) => ({
       letterSpacing: "0.075em",
       [theme.breakpoints.down("sm")]: {
         fontSize: "0.75em",
-        fontWeight: "100"
-      }
+        fontWeight: "100",
+      },
     },
   },
   officeAddress: { padding: "1em 0" },
@@ -99,15 +99,15 @@ export const styles = makeStyles((theme) => ({
   },
   mobile: {
     [theme.breakpoints.down("sm")]: {
-      display: 'none',
+      display: "none",
     },
   },
   bottomLabelMobile: {
-    display: 'none',
+    display: "none",
     textAlign: "center",
     marginTop: "2em",
     [theme.breakpoints.down("sm")]: {
-      display: "block"
+      display: "block",
     },
   },
   readMore: {
@@ -129,11 +129,11 @@ export const styles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     "& > svg": {
-      fontSize: "2em"
+      fontSize: "2em",
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down("sm")]: {
       position: "absolute",
-      right: 10
-    }
+      right: 10,
+    },
   },
 }));

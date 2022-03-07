@@ -13,11 +13,10 @@ import {
 
 export default function Features({ landing }) {
   return (
-      <Grid backgroundColor={"blue"}>
+    <Grid backgroundColor={"blue"}>
       <PageTitle title="Payorb | Features" />
       <FeaturesPage content={landing} />
-      </Grid>
-
+    </Grid>
   );
 }
 

@@ -21,7 +21,9 @@ function FeatureBookingSection() {
           <Button
             className={classes.capsuleButton}
             onClick={() =>
-              event({ action: SIGNUP_CLICK, params: { location: "header" } })}>
+              event({ action: SIGNUP_CLICK, params: { location: "header" } })
+            }
+          >
             Get Started
             <CallMadeIcon className={classes.callMadeIcon} />
           </Button>

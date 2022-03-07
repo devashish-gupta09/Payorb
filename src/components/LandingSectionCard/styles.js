@@ -22,8 +22,7 @@ export const styles = makeStyles((theme) => ({
   },
   logo: {
     alignItems: "center",
-    [theme.breakpoints.down("sm")]: {
-    },
+    [theme.breakpoints.down("sm")]: {},
   },
   sectionTitle: {
     // paddingTop: "1.5em",
@@ -41,8 +40,8 @@ export const styles = makeStyles((theme) => ({
   textContainer: {
     padding: "2em 4em",
     [theme.breakpoints.down("sm")]: {
-      paddingLeft: "2em !important"
-    }
+      paddingLeft: "2em !important",
+    },
   },
   title: {
     padding: "1em 0.5em 0.25em 0",
@@ -53,8 +52,8 @@ export const styles = makeStyles((theme) => ({
     height: "max-content",
     [theme.breakpoints.down("sm")]: {
       padding: "0",
-      fontSize: "1em"
-    }
+      fontSize: "1em",
+    },
   },
   description: {
     fontSize: "1em",
@@ -63,7 +62,7 @@ export const styles = makeStyles((theme) => ({
     color: appColors.grey,
     [theme.breakpoints.down("sm")]: {
       paddingTop: "2%",
-      fontSize: "0.75em"
+      fontSize: "0.75em",
     },
   },
   image: {

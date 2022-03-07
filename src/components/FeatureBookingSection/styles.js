@@ -15,8 +15,8 @@ export const styles = makeStyles((theme) => ({
     color: "white",
     [theme.breakpoints.down("sm")]: {
       paddingBottom: "1em",
-      fontSize: "1.25em"
-    }
+      fontSize: "1.25em",
+    },
   },
   capsuleButton: {
     background: "linear-gradient(178.83deg, #68FDF3 1%, #00D4FF 183.74%)",
@@ -41,7 +41,7 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       display: "flex",
       justifyContent: "center",
-      paddingBottom: "2em"
+      paddingBottom: "2em",
     },
   },
 }));

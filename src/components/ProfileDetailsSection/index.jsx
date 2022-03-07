@@ -8,11 +8,6 @@ import { styles } from "./styles";
 
 function ProfileDetailsSection({ profileData, vendor, updateProfile }) {
   const classes = styles();
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   return (
     <Grid className={classes.container}>

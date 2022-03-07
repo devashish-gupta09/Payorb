@@ -112,11 +112,12 @@ function ProfileReviewSection(props) {
         >
           {reviews.map((feature, index) => {
             return (
-              <Grid style={{ height: "20em", width: "100%", background: "yellow" }} />
+              <Grid
+                style={{ height: "20em", width: "100%", background: "yellow" }}
+              />
             );
           })}
         </Carousel>
-
 
         <Grid container justify="flex-end" style={{ paddingRight: "0.5em" }}>
           {reviews.length > 4 ? (
@@ -131,12 +132,10 @@ function ProfileReviewSection(props) {
             </Button>
           ) : null}
         </Grid>
-      </Grid >
+      </Grid>
     );
   }
 }
-
-
 
 const styles = makeStyles((theme) => ({
   container: {
@@ -153,15 +152,13 @@ const styles = makeStyles((theme) => ({
   reviewerLabel: {
     color: appColors.grey,
     paddingTop: "0.5em",
-    reviewTime: {
-    },
+    reviewTime: {},
     color: appColors.grey,
     [theme.breakpoints.down("sm")]: {
       fontSize: "1em",
     },
   },
   carouselIndicatorIcon: {
-
     [theme.breakpoints.down("sm")]: {
       borderRadius: "50%",
       height: "0.5em",

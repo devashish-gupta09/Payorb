@@ -148,7 +148,7 @@ function VendorSalesGraph() {
   }
 
   if (eventData) {
-    console.log(eventData)
+    console.log(eventData);
     return (
       <Grid className={classes.root}>
         <Typography

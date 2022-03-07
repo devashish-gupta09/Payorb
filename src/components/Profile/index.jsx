@@ -1,41 +1,20 @@
 import { Fade, Grid, List, ListItem } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
 import React from "react";
 
 import ProfileDetailsSection from "../ProfileDetailsSection";
 import { ProfileHeader } from "../ProfileHeader";
 import { ProfileImageGallery } from "../ProfileImageGallery";
 import ProfileInfoCard from "../ProfileInfoCard";
-import ProfilePageCarausel from "../ProfilePageCarausel";
-import ProfilePaymentSection from "../ProfilePaymentSection";
+import { ProfileNavBar } from "../ProfileNavBar";
 import ProfileReviewSection from "../ProfileReviewSection";
 
-const Box = ({ num }) => {
-  const [state, setState] = React.useState(num);
-
-  return <div>child state ${state}</div>;
-};
-
-const App = () => {
-  const [state, setState] = React.useState();
-
-  return (
-    <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <button onClick={() => setState(Math.random(10))}>Click Me</button>
-      <div>parent state: {state}</div>
-      <Box num={state} />
-    </div>
-  );
-};
-
-
 export default function Profile({ profileData }) {
-
   const [profileInfo, setProfileInfo] = React.useState(profileData);
   const updateProfileInfo = (data) => {
     setProfileInfo({ ...data });
   };
-
+  const classes = styles();
   return (
     <Fade in={true} timeout={500}>
       <Grid>
@@ -44,17 +23,9 @@ export default function Profile({ profileData }) {
           updateProfile={updateProfileInfo}
           vendor={true}
         />
-
         <Grid style={{ position: "relative" }}>
-          <Grid style={{ position: "absolute", width: "100%", height: "fit-content", paddingLeft: "50%", boxShadow: "0px 0px 7px rgba(0, 0, 0, 0.25)" }}>
-            <Grid>
-              <List style={{ overflow: "hidden", color: "#929292", padding: "0" }}>
-                <ListItem style={{ display: "inline-block", width: "fit-content", padding: "1em 1.5em", borderBottom: "3.5px solid #008EFF", fontWeight: "bold", color: "#008EFF" }}>Profile</ListItem>
-                <ListItem style={{ display: "inline-block", width: "fit-content", padding: "1em 1.5em", }}>Reviews</ListItem>
-                <ListItem style={{ display: "inline-block", width: "fit-content", padding: "1em 1.5em", }}>Payments</ListItem>
-                <ListItem style={{ display: "inline-block", width: "fit-content", padding: "1em 1.5em", }}>Payments</ListItem>
-              </List>
-            </Grid>
+          <Grid className={classes.navbarDesktop}>
+            <ProfileNavBar />
           </Grid>
           <Grid container alignItems="stretch">
             <ProfileInfoCard
@@ -62,6 +33,9 @@ export default function Profile({ profileData }) {
               updateProfile={updateProfileInfo}
               vendor={true}
             />
+            <Grid className={classes.navbarMobile}>
+              <ProfileNavBar />
+            </Grid>
             <ProfileDetailsSection
               profileData={profileInfo}
               updateProfile={updateProfileInfo}
@@ -70,7 +44,11 @@ export default function Profile({ profileData }) {
           </Grid>
         </Grid>
 
-        <ProfileImageGallery profileData={profileInfo} vendor={true} updateProfile={updateProfileInfo} />
+        <ProfileImageGallery
+          profileData={profileInfo}
+          vendor={true}
+          updateProfile={updateProfileInfo}
+        />
 
         <ProfileReviewSection />
 
@@ -82,3 +60,24 @@ export default function Profile({ profileData }) {
     </Fade>
   );
 }
+
+const styles = makeStyles((theme) => ({
+  navbarMobile: {
+    display: "none",
+    [theme.breakpoints.down("sm")]: {
+      display: "flex",
+      width: "100%",
+      boxShadow: "0 6px 8px -8px rgb(0 0 0 / 25%)",
+    },
+  },
+  navbarDesktop: {
+    position: "absolute",
+    width: "100%",
+    height: "fit-content",
+    paddingLeft: "45%",
+    boxShadow: "0 6px 8px -8px rgb(0 0 0 / 25%)",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
+}));

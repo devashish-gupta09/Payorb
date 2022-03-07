@@ -16,13 +16,13 @@ export const styles = makeStyles((theme) => ({
   profileInfoCardContainer: {
     width: "35%",
     [theme.breakpoints.down("sm")]: {
-      width: "100%"
+      width: "100%",
     },
   },
   profileName: {
     fontSize: "2em",
     [theme.breakpoints.down("sm")]: {
-      fontSize: "1.5em"
+      fontSize: "1.5em",
     },
   },
   profileImageContainer: {
@@ -38,13 +38,13 @@ export const styles = makeStyles((theme) => ({
       width: "8em",
       marginTop: "-5.5em",
       height: "7.25em",
-      marginLeft: "1.5em"
+      marginLeft: "1.5em",
     },
   },
   profileDetailsContainer: {
     padding: "8.5em 6em",
     [theme.breakpoints.down("sm")]: {
-      padding: "6.5em 1.5em"
+      padding: "6.5em 1.5em 1.5em 1.5em",
     },
   },
   titleCardProfileContainer: {
