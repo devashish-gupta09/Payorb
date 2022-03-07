@@ -5,8 +5,6 @@ import Link from "next/link";
 import React from "react";
 
 import { event, SIGNUP_CLICK } from "../../utils/ga";
-
-// import LandingCarousel from "../LandingCarousel";
 import { styles } from "./styles";
 
 function FeaturesContent({ content }) {
@@ -14,15 +12,14 @@ function FeaturesContent({ content }) {
   return (
     <Grid className={classes.container}>
       <Grid className={classes.textContainer}>
-        <Grid item sm={6}>
         <Grid container sx={{ whiteSpace: "nowrap", overflowX: "auto" }}>
           <Typography
             variant="h2"
             className={`${classes.titleSection} ${classes.titleSection1}`}
           >
-            {content.titleSection1}
-            <Typography variant="h2" className={`${classes.aquaText}`}>
-              &nbsp;{content.titleSection2}
+            {content.titleSection1}&nbsp;{" "}
+            <Typography className={`${classes.aquaText} `}>
+              {content.titleSection2}
             </Typography>
           </Typography>
         </Grid>
@@ -42,24 +39,29 @@ function FeaturesContent({ content }) {
             </Button>
           </Link>
         </Grid>
-        <Button className={classes.scroll} onClick="window.scrollBy(0, 100)">
+        {/* Todo : Fix scroll */}
+        <Button className={classes.scroll} onClick={() => window.scrollBy({
+          top: window.innerHeight,
+          behavior: 'smooth'
+        })}>
           <Grid className={classes.scrollIcon}>
             <ArrowDownwardIcon />
           </Grid>
           Scroll to Explore
         </Button>
       </Grid>
-      </Grid>
-      <Grid item sm={6}>
-      <Grid className={classes.imgContainer}>
-        <img
-          src="/assets/videosnip.png"
-          alt="landing"
-          className={classes.image}
-        />
-      </Grid>
-      </Grid>
     </Grid>
+
+    //   <Grid item sm={6}>
+    //     <Grid className={classes.imgContainer}>
+    //       <img
+    //         src="/assets/videosnip.png"
+    //         alt="landing"
+    //         className={classes.image}
+    //       />
+    //     </Grid>
+    //   </Grid>
+    // </Grid>
   );
 }
 
