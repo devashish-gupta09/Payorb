@@ -39,7 +39,6 @@ function FeaturesContent({ content }) {
             </Button>
           </Link>
         </Grid>
-        {/* Todo : Fix scroll */}
         <Button className={classes.scroll} onClick={() => window.scrollBy({
           top: window.innerHeight,
           behavior: 'smooth'
@@ -49,19 +48,16 @@ function FeaturesContent({ content }) {
           </Grid>
           Scroll to Explore
         </Button>
+
+      </Grid>
+      <Grid className={classes.imgContainer}>
+        <img
+          src="/assets/videosnip.png"
+          alt="landing"
+          className={classes.image}
+        />
       </Grid>
     </Grid>
-
-    //   <Grid item sm={6}>
-    //     <Grid className={classes.imgContainer}>
-    //       <img
-    //         src="/assets/videosnip.png"
-    //         alt="landing"
-    //         className={classes.image}
-    //       />
-    //     </Grid>
-    //   </Grid>
-    // </Grid>
   );
 }
 
