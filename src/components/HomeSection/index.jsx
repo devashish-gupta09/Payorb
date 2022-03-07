@@ -41,7 +41,8 @@ function HomeSection({ content }) {
             </Button>
           </Link>
         </Grid>
-        <Button className={classes.scroll} onclick="window.scrollBy(0, 100)">
+        {/* Todo : Fix scroll */}
+        <Button className={classes.scroll} onClick={() => window.scrollBy(0, 700)}>
           <Grid className={classes.scrollIcon}>
             <ArrowDownwardIcon />
           </Grid>
