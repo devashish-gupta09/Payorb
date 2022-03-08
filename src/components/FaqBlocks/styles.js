@@ -34,6 +34,7 @@ export const styles = makeStyles((theme) => ({
     },
   },
   faqBlockAns: {
+    backgroundColor: "#fff",
     display: "block",
     padding: "1em 0 1em 3.5em",
     [theme.breakpoints.down("sm")]: {
