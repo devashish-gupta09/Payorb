@@ -28,14 +28,6 @@ function SigningBanner({ content }) {
             {`${content.titleSection2}`}
           </Typography>
         </Grid>
-
-        {/* <Typography
-          gutterBottom
-          variant="h4"
-          className={`${classes.titleSection}`}
-        >
-          {content.titleSection3}
-        </Typography> */}
       </div>
     </Grid>
   );

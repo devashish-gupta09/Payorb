@@ -32,17 +32,6 @@ function FaqBlocks({ ques, ans }) {
           {ans}
         </Typography>
       </Box>
-
-      {/* <div className="header" {...getToggleProps()}>
-        {isExpanded ? "Collapse" : "Expand"}
-      </div>
-      <div {...getCollapseProps()}>
-        <div className="content">
-          Now you can see the hidden content. <br />
-          <br />
-          Click again to hide...
-        </div>
-      </div> */}
     </Box>
   );
 }

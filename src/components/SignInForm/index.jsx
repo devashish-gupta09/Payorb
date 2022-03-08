@@ -202,9 +202,7 @@ function SigninForm() {
   return (
     <Grid className={classes.container}>
       {Alert()}
-      <Typography variant={"h4"} className={classes.sectionTitle}>
-        Sign In
-      </Typography>
+      <Typography variant={"h4"}>Sign In</Typography>
       <Typography variant={"h4"} className={classes.title}>
         Welcome back
       </Typography>

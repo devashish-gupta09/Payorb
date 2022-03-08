@@ -4,7 +4,7 @@ import PageTitle from "../src/components/PageTitle";
 
 import SigningHeader from "../src/components/SigningHeader";
 import SignUpContainer from "../src/components/SignUpContainer";
-import { getHomeContent } from "../src/services/landing";
+import { getSignInContent } from "../src/services/landing";
 
 export default function SignUp({ content }) {
   return (
@@ -17,14 +17,13 @@ export default function SignUp({ content }) {
 }
 
 export async function getStaticProps({ params, preview = null }) {
-  const home = await getHomeContent();
+  const home = await getSignInContent();
 
   return {
     props: {
       content: {
         titleSection1: home.titleSection1,
         titleSection2: home.titleSection2,
-        titleSection3: home.titleSection3,
       },
     },
   };

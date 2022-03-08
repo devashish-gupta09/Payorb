@@ -45,26 +45,6 @@ function SignInHeaderProfile({ handleLinkClick }) {
   if (loading && userContext.userState !== "UNAUTHENTICATED") {
     return (
       <>
-        {/* {matches ? } */}
-
-        {/* {matches ? (
-          <li
-            onClick={() => {
-              handleLinkClick(PAGE_PATHS.SIGNIN);
-            }}
-            className={classes.list}
-          >
-            Sign In
-          </li>
-        ) : (
-          <Link href={PAGE_PATHS.SIGNIN}>
-            <ButtonCapsule
-              buttonStyle={classes.buttonSpacing}
-              text="Sign In"
-            ></ButtonCapsule>
-          </Link>
-        )} */}
-
         {matches ? (
           <li
             onClick={() => {
@@ -105,26 +85,6 @@ function SignInHeaderProfile({ handleLinkClick }) {
   } else {
     return (
       <>
-        {/* {matches ? } */}
-        {/* 
-        {matches ? (
-          <li
-            onClick={() => {
-              handleLinkClick(PAGE_PATHS.SIGNIN);
-            }}
-            className={classes.list}
-          >
-            Sign In
-          </li>
-        ) : (
-          <Link href={PAGE_PATHS.SIGNIN}>
-            <ButtonCapsule
-              buttonStyle={classes.buttonSpacing}
-              text="Sign In"
-            ></ButtonCapsule>
-          </Link>
-        )} */}
-
         {matches ? (
           <li
             onClick={() => {

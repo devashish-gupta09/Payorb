@@ -21,7 +21,6 @@ export const styles = makeStyles((theme) => ({
   faqBlockHeading: {
     display: "flex",
     flexDirection: "row",
-    // justifyContent: "space-between",
     padding: "1em",
   },
   faqQuesTextBox: {
