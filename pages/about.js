@@ -1,7 +1,5 @@
 import { Grid } from "@material-ui/core";
-
 import * as React from "react";
-
 import AboutView from "../src/components/AboutView";
 import PageTitle from "../src/components/PageTitle";
 import {
@@ -10,7 +8,7 @@ import {
   getPayOrbStory,
   getFoundersData,
   getAdvisorsData,
-} from "../src/services/landing";
+} from "../src/services/aboutUs";
 
 export default function About({ landing }) {
   return (

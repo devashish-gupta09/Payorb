@@ -2,17 +2,6 @@ import { Grid, Typography } from "@material-ui/core";
 import React from "react";
 import { styles } from "./styles";
 
-const ColoredLine = ({ color }) => (
-  <hr
-    style={{
-      color: "#00D4FF",
-      backgroundColor: "#00D4FF",
-      height: "0.30vw",
-      width: "7vw",
-      marginBottom:"1em",
-    }}
-  />
-);
 function AboutFounders({ content }) {
   const classes = styles();
   return (
@@ -24,7 +13,7 @@ function AboutFounders({ content }) {
         </Typography>
       </Grid>
 
-      <ColoredLine />
+      <hr className={classes.divider}/>
 
       {/*Array of founders with their images, title and description mapped*/}
       <Grid container className={classes.founderContainer}>

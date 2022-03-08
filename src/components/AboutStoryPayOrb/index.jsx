@@ -2,17 +2,7 @@ import { Grid, Typography } from "@material-ui/core";
 import React from "react";
 import { styles } from "./styles";
 
-const ColoredLine = ({ color }) => (
-  <hr
-    style={{
-      color: "black",
-      backgroundColor: "black",
-      height: "0.30vw",
-      width: "7em",
-      marginBottom:"1em",
-    }}
-  />
-);
+
 function AboutStoryPayOrb({ content }) {
   const classes = styles();
   return (
@@ -23,7 +13,7 @@ function AboutStoryPayOrb({ content }) {
           {content.title}
         </Typography>
       </Grid>
-      <ColoredLine />
+      <hr className={classes.divider}/>
       <Grid container className={classes.description} alignItems={"center"} justifyContent={"center"}>
         <Typography>
           <p>{content.section1}</p>

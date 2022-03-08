@@ -14,13 +14,14 @@ export const styles = makeStyles((theme) => ({
   },
   mainTitle:{
       fontWeight:"bold",
+      fontSize:"2.3em",
   },
   title: {
     color: "#000000",
     alignItems: "center",
     fontWeight:"bold",
     [theme.breakpoints.down("sm")]: {
-      padding: "1em 0",
+      padding: "1em -0.2em",
     },
   },
   founderContainer:{
@@ -37,5 +38,23 @@ export const styles = makeStyles((theme) => ({
   founderTitle:{
       fontSize:"1em",
       fontWeight:"300",
+  },
+  founder:{
+    [theme.breakpoints.down("sm")]:{
+      marginTop:"1.3em",  
+    }
+  },
+  divider:{
+    color: "#00D4FF",
+    backgroundColor: "#00D4FF",
+    height: "0.3em",
+    width: "7vw",
+    marginBottom:"1em",
+    [theme.breakpoints.down("sm")]:{
+      color:"black",
+      backgroundColor:"black",
+      width:"4em",
+      height: "0.2em",
+    }
   }
 }));

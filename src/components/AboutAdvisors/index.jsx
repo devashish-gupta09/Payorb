@@ -1,18 +1,8 @@
 import { Grid, Typography } from "@material-ui/core";
 import React from "react";
 import { styles } from "./styles";
+import Carousel from "react-material-ui-carousel";
 
-const ColoredLine = ({ color }) => (
-  <hr
-    style={{
-      color: "#00D4FF",
-      backgroundColor: "#00D4FF",
-      height: "0.30vw",
-      width: "7vw",
-      marginBottom:"1em",
-    }}
-  />
-);
 function AboutAdvisors({ content }) {
   const classes = styles();
   return (
@@ -24,18 +14,43 @@ function AboutAdvisors({ content }) {
         </Typography>
       </Grid>
 
-      <ColoredLine />
+      <hr className={classes.divider}/>
 
+
+      <Grid container className={classes.advisorCarouselMobile} >
+          <Carousel>
+          {content.details.map((advisor, index) => {
+          return (
+              <Grid container justifyContent={"center"}>
+                    <Grid item className={classes.imgContainer} justifyContent={"center"}>
+                        <img src={advisor.image} className={classes.img}/>
+                    </Grid>
+                    <Grid item className={classes.advisor}> 
+                        <Typography className={classes.advisorName} >{advisor.name} </Typography> 
+                        <Typography className={classes.advisorTitle} > {advisor.title} </Typography>
+                        <Typography className={classes.advisorDescription}> {advisor.description} </Typography> 
+                    </Grid>
+                </Grid>
+                );
+        })}
+          </Carousel>
+         </Grid> 
+
+
+
+       
       {/*Array of advisors with their images, title and description mapped*/}
-      <Grid container className={classes.advisorContainer}>
+      <Grid container className={classes.advisorContainer} spacing={"4"}>
         {content.details.map((advisor, index) => {
           return (
             <Grid key={index} item sm={4} >
-              <Grid className={classes.advisor}>
-                  <img src={advisor.image}/>
-                  <Typography className={classes.advisorName}>{advisor.name} </Typography> 
-                <Typography className={classes.advisorTitle}> {advisor.title} </Typography>
-                <Typography className={classes.advisorTitle}> {advisor.description} </Typography> 
+                 <Grid className={classes.imgContainer}>
+                        <img src={advisor.image}/>
+                  </Grid>
+                <Grid className={classes.advisor}> 
+                <Typography className={classes.advisorName} >{advisor.name} </Typography> 
+                <Typography className={classes.advisorTitle} > {advisor.title} </Typography>
+                <Typography className={classes.advisorDescription}> {advisor.description} </Typography> 
               </Grid>
             </Grid>
           );

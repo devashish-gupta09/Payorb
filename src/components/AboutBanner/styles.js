@@ -9,6 +9,9 @@ export const styles = makeStyles((theme) => ({
     justifyContent: "center",
     [theme.breakpoints.down("sm")]: {
       width: "100% !important",
+      height:"60vh",
+      background:"#F0FFFE",
+      alignItems:"center",
     },
   },
   textContainer: {
@@ -33,7 +36,7 @@ export const styles = makeStyles((theme) => ({
     width: "100%",
     textAlign: "center",
     [theme.breakpoints.down("sm")]: {
-        fontSize: "1.25em",
+        fontSize: "1.4em",
     },
   },
   aquaText: {
