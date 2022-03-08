@@ -1,15 +1,9 @@
 import { makeStyles } from "@material-ui/core";
 
-import { appColors } from "../../../styles/colors";
-
 export const styles = makeStyles((theme) => ({
-  sectionTitle: {
-    letterSpacing: "1px",
-    paddingBottom: "0.5em",
-    color: appColors.grey,
-  },
   getOtp: {
     width: "80%",
+    background: "linear-gradient(178.83deg, #68FDF3 1%, #00D4FF 183.74%)",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
@@ -22,6 +16,7 @@ export const styles = makeStyles((theme) => ({
   },
   textInput: {
     margin: "0.75em 0",
+    borderRadius: "2em",
     color: "#BDBDBD",
     [theme.breakpoints.down("sm")]: {
       marginBottom: "0.75em",
@@ -54,19 +49,29 @@ export const styles = makeStyles((theme) => ({
     color: "#333333",
   },
   signinButton: {
-    background: "linear-gradient(115.52deg, #BDF5F2 0%, #79DFDF 100%)",
+    background: "linear-gradient(178.83deg, #68FDF3 1%, #00D4FF 183.74%)",
     borderRadius: "2em",
     padding: "0.75em 1em",
-    boxShadow: "0px 9px 20px 0px rgb(89 207 165 / 75%)",
     textTransform: "Capitalize",
+    color: "#000000 !important",
   },
-  socialMediaButtons: {
+  googleButton: {
     textTransform: "Capitalize",
     borderRadius: "2em",
     fontWeight: "bold",
     padding: "0.75em 1em",
-    margin: "1em 0",
-    boxShadow: "0px 9px 20px 0px rgb(161 172 168 / 75%)",
+    margin: "0.5em 0",
+    boxShadow: "0px 0px 4px rgba(0, 0, 0, 0.25)",
+  },
+  facebookButton: {
+    color: "#fff",
+    textTransform: "Capitalize",
+    background: "#008EFF",
+    borderRadius: "2em",
+    fontWeight: "bold",
+    padding: "0.75em 1em",
+    margin: "0.5em 0",
+    boxShadow: "0px 0px 4px rgba(0, 0, 0, 0.25)",
   },
   orText: {
     padding: "2em 0",
@@ -74,5 +79,10 @@ export const styles = makeStyles((theme) => ({
   },
   signupMessage: {
     padding: "1em 0",
+  },
+  signupText: {
+    color: "#008EFF",
+    textDecoration: "underline",
+    display: "inline",
   },
 }));

@@ -202,7 +202,9 @@ function SigninForm() {
   return (
     <Grid className={classes.container}>
       {Alert()}
-      <Typography className={classes.sectionTitle}>SIGN IN</Typography>
+      <Typography variant={"h4"} className={classes.sectionTitle}>
+        Sign In
+      </Typography>
       <Typography variant={"h4"} className={classes.title}>
         Welcome back
       </Typography>
@@ -336,7 +338,7 @@ function SigninForm() {
           </Typography>
 
           <Button
-            className={classes.socialMediaButtons}
+            className={classes.googleButton}
             startIcon={
               <img
                 src={"../assets/googleSignup.png"}
@@ -349,7 +351,7 @@ function SigninForm() {
           </Button>
 
           <Button
-            className={classes.socialMediaButtons}
+            className={classes.facebookButton}
             startIcon={
               <img
                 src={"../assets/facebookSignup.png"}
@@ -358,11 +360,13 @@ function SigninForm() {
             }
             onClick={() => handleFederatedSignIn(AUTH_PROVIDERS.FACEBOOK)}
           >
-            Sign in with Facebook
+            Connect with Facebook
           </Button>
           <Typography align="center" className={classes.signupMessage}>
             {`Don't have an account ? `}
-            <Link href={PAGE_PATHS.SIGNUP}>Sign Up</Link>
+            <Link href={PAGE_PATHS.SIGNUP}>
+              <Typography className={classes.signupText}>Sign Up</Typography>
+            </Link>
           </Typography>
         </FormControl>
       </form>

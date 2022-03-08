@@ -182,6 +182,13 @@ export const getFaqsContent = async () => {
   };
 };
 
+export const getSignInContent = async () => {
+  return {
+    titleSection1: "One Platform",
+    titleSection2: "Infinite Opportunities!",
+  };
+};
+
 export const getEventRegistrationContent = async () => {
   // try {
   //   const res = await axios.get(`${CMS_URL}/event-registration`);
