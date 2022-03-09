@@ -9,7 +9,7 @@ import {
   getUserBenefits,
 } from "../src/services/features";
 
-export default function Features({ landing }) {
+export default function Features({ features }) {
   return (
       <Grid backgroundColor={"blue"}>
       <PageTitle title="Payorb | Features" />

@@ -2,7 +2,7 @@ export const PAGE_PATHS = {
   HOME: "/",
   ABOUT: "/about",
   FEATURES: "/features",
-  SOLOPRENEUR: "/solo-prenuer",
+  SOLOPRENEUR: "/soloprenuer",
   SIGNUP: "/signup",
   SIGNIN: "/signin",
   LANDING: "/",

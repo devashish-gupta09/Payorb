@@ -10,11 +10,11 @@ import {
   getAdvisorsData,
 } from "../src/services/aboutUs";
 
-export default function About({ landing }) {
+export default function About({ about }) {
   return (
       <Grid backgroundColor={"blue"}>
       <PageTitle title="Payorb | About Us" />
-      <AboutView content={landing} />
+      <AboutView content={about} />
       </Grid>
 
   );
@@ -29,7 +29,7 @@ export async function getStaticProps({ params, preview = null }) {
 
   return {
     props: {
-      landing: {
+      about: {
         home,
         vision,
         story,

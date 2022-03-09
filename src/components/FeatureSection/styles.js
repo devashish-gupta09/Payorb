@@ -17,7 +17,7 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       padding: "1em 0",
       width: "100%",
-      justifyContent: "center"
+      justifyContent: "center",
     },
     [theme.breakpoints.up("xl")]: {
       padding: "2em 40em 0em 40em",
@@ -29,7 +29,7 @@ export const styles = makeStyles((theme) => ({
     width: "100%",
     [theme.breakpoints.down("sm")]: {
       justifyContent: "center",
-    }
+    },
   },
   navButton: {
     display: "None",
@@ -39,8 +39,8 @@ export const styles = makeStyles((theme) => ({
     fontSize: "1.5em",
     [theme.breakpoints.down("sm")]: {
       border: "2px solid",
-      fontSize: "1em"
-    }
+      fontSize: "1em",
+    },
   },
   description: {
     color: appColors.grey,

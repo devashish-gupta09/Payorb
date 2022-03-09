@@ -53,6 +53,41 @@ export const getHowItWorksContent = async () => {
 };
 
 
+export const getWhyChooseUsContent = async () => {
+  return {
+    title: "Why choose PayOrb?",
+    subtitle:
+      "The desire for having a more flexible and fulfilling career path has led to Freelancing & solo entrepreneurship supplementing and complementing existing 9-5 worklife.",
+  };
+};
+
+export const getPricingContent = async () => {
+  return {
+    title: "Our Pricing",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
+    img: "/assets/pricing/pricing-img.svg",
+    plans: [
+      {
+        feature:
+          "Collaboratively extend end-to-end quality vectors via client-centric catalysts for change. Phosfluorescently.",
+      },
+      {
+        feature: "Lorem ipsum dolor sit amet.",
+      },
+      {
+        feature: "Consectetur adipiscing elit.",
+      },
+      {
+        feature: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      },
+      {
+        feature: "Lorem ipsum dolor sit amet.",
+      },
+    ],
+  };
+};
+
 export const getEventRegistrationContent = async () => {
   // try {
   //   const res = await axios.get(`${CMS_URL}/event-registration`);
@@ -70,7 +105,8 @@ export const getEventRegistrationContent = async () => {
       "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
     sectionTitle: "Event Registration",
     title: "Complete Business Dashboard",
-    description: "Track every penny flowing in and each customer joining your network, in real time",
+    description:
+      "Track every penny flowing in and each customer joining your network, in real time",
     image:
       "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2FDashboard.jpg?alt=media&token=29ff26b6-abae-4d67-bb57-19f718417be4",
   };

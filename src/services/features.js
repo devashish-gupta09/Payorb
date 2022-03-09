@@ -92,7 +92,6 @@ export const getFeaturesContent = async () => {
 
   
 export const getUserBenefits = async () => {
-
     return{
       title:"Why choose Payorb?",
       contentSection1: "Professionally incentivize future-proof data whereas out-of-the-box action items. Appropriately administrate client-centric testing procedures vis-a-vis inexpensive methodologies. Conveniently morph vertical ROI via focused value. Continually productize resource sucking processes before covalent web services. Holisticly empower sticky customer service with sticky bandwidth.",

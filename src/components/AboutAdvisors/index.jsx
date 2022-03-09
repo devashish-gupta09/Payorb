@@ -18,7 +18,18 @@ function AboutAdvisors({ content }) {
 
 
       <Grid container className={classes.advisorCarouselMobile} >
-          <Carousel>
+          <Carousel
+            interval={2500}
+            fullHeightHover={false}
+            navButtonsProps={{          // Change the colors and radius of the actual buttons. THIS STYLES BOTH BUTTONS
+              style: {
+                  backgroundColor: 'black',
+                  opacity:"0.2",
+                  borderRadius: "2em",
+                  marginTop:"-2em",
+              }
+          }} 
+          >
           {content.details.map((advisor, index) => {
           return (
               <Grid container justifyContent={"center"}>
@@ -40,7 +51,7 @@ function AboutAdvisors({ content }) {
 
        
       {/*Array of advisors with their images, title and description mapped*/}
-      <Grid container className={classes.advisorContainer} spacing={"4"}>
+      <Grid container className={classes.advisorContainer} spacing={4}>
         {content.details.map((advisor, index) => {
           return (
             <Grid key={index} item sm={4} >

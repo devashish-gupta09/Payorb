@@ -5,8 +5,8 @@ import Link from "next/link";
 import React from "react";
 
 import { event, SIGNUP_CLICK } from "../../utils/ga";
+import ButtonCapsule from "../ButtonCapsule";
 
-// import LandingCarousel from "../LandingCarousel";
 import { styles } from "./styles";
 
 function HomeSection({ content }) {
@@ -30,18 +30,21 @@ function HomeSection({ content }) {
         </Typography>
         <Grid container className={classes.buttonContain}>
           <Link href={"/signup"}>
-            <Button
-              className={classes.capsuleButton}
+            <ButtonCapsule
+              buttonStyle={classes.capsuleButton}
+              text="Get Started"
               onClick={() =>
                 event({ action: SIGNUP_CLICK, params: { location: "header" } })
               }
-            >
-              Get Started
-              <CallMadeIcon className={classes.callMadeIcon} />
-            </Button>
+              icon={<CallMadeIcon className={classes.callMadeIcon} />}
+            />
           </Link>
         </Grid>
-        <Button className={classes.scroll} onclick="window.scrollBy(0, 100)">
+        {/* Todo : Fix scroll */}
+        <Button className={classes.scroll} onClick={() => window.scrollBy({
+          top: window.innerHeight,
+          behavior: 'smooth'
+        })}>
           <Grid className={classes.scrollIcon}>
             <ArrowDownwardIcon />
           </Grid>
