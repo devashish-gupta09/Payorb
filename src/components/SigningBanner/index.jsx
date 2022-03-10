@@ -13,7 +13,7 @@ function SigningBanner({ content }) {
         justify="center"
         alignItems="center"
       >
-        <img className={classes.image} src={"../assets/signing.png"}></img>
+        {/* <img className={classes.image} src={"../assets/signing.png"}></img> */}
       </Grid>
 
       <div className={classes.titleSectionContainer}>

@@ -3,8 +3,10 @@ import { makeStyles } from "@material-ui/core";
 export const styles = makeStyles((theme) => ({
   container: {
     height: "100%",
-    background: "linear-gradient(115.52deg, #BDF5F2 0%, #79DFDF 100%)",
     padding: "2em",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
     [theme.breakpoints.down("sm")]: {
       padding: "1em",
       height: "fit-content",
@@ -31,6 +33,8 @@ export const styles = makeStyles((theme) => ({
   },
   titleSectionContainer: {
     paddingLeft: "1em",
+    width: "75%",
+    marginLeft: "11.5em",
   },
   boldText: {
     fontWeight: "bold",

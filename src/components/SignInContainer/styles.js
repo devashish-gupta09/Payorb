@@ -21,7 +21,7 @@ export const styles = makeStyles((theme) => ({
   imageTop: {
     display: "None",
     [theme.breakpoints.down("sm")]: {
-      display: "contents",
+      display: "none",
       height: "min-content",
     },
   },
