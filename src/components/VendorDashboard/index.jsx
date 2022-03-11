@@ -57,7 +57,7 @@ function VendorDashboard() {
         return (
           <>
             <PageTitle title="Payorb | Profile" />
-            <Profile profileData={profileData} />;
+            <Profile profileData={profileData} />
           </>
         );
       }

@@ -8,6 +8,8 @@ import {
 
 import { useFormik } from "formik";
 import React, { useState } from "react";
+import useMobileDetect from "use-mobile-detect-hook"
+
 
 import { appColors } from "../../../styles/colors";
 import { globalStyles } from "../../../styles/globalStyles";
@@ -20,8 +22,6 @@ import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { updateUser } from "../../services/auth";
 import ButtonCapsule from "../ButtonCapsule";
 import Capsule from "../Capsule";
-
-import DashboardCard from "../DashboardCard";
 
 function getPaymentSectionValues(paymentDetails) {
   return {
@@ -60,6 +60,7 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
   const { dispatch } = useUserAuthDetails();
   const { Alert, showAlert } = useAlertSnackbar();
   const [edit, setEdit] = useState();
+  const {isMobile} = useMobileDetect()
   const formik = useFormik({
     initialValues: getPaymentSectionValues(profileData.paymentDetails),
     onSubmit: async (values) => {
@@ -91,7 +92,7 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
   const globalClasses = globalStyles();
 
   return (
-    <DashboardCard rootClass={classes.root}>
+    <Grid className={classes.root}>
       {Alert()}
       <Grid container>
         <Typography
@@ -108,12 +109,12 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
         }}
         container
       >
-        {/* <Typography variant="p" gutterBottom>
+        <Typography variant="p" gutterBottom className={classes.description}>
           Fill this information to get paid for your events and services
-        </Typography> */}
+        </Typography>
       </Grid>
       <form onSubmit={formik.handleSubmit}>
-        <Grid container spacing={5}>
+        <Grid container spacing={isMobile ? 0 : 5} >
           <Grid container item sm={6} spacing={5}>
             <Grid container item sm={6}>
               <TextField
@@ -182,7 +183,7 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
               />
             </Grid>
           </Grid>
-          <Grid container item sm={6}>
+          <Grid container item sm={6} className={classes.bankAddrContainer}>
             <TextField
               disabled={!edit}
               multiline
@@ -233,7 +234,7 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
           </Grid>
         </Grid>
       </form>
-    </DashboardCard>
+    </Grid>
   );
 }
 
@@ -248,7 +249,14 @@ const styles = makeStyles((theme) => ({
       padding: "1.5em 1em",
     },
   },
-  infoRowRoot: { paddingLeft: "1em", width: "80%" },
+  description:{
+    width:"fit-content", 
+    background:"rgba(255, 206, 49, 0.17)",
+    border: "1px solid rgb(255, 206, 49)", 
+    padding:"0.5em", 
+    borderRadius:"5px"
+  },
+  infoRowRoot: { paddingLeft: "1em", width:"fit-content" },
   infoRow: {
     padding: "1em 0",
     width: "100%",
@@ -289,6 +297,11 @@ const styles = makeStyles((theme) => ({
       margin: "1.5em 0 0.5em 0",
     },
   },
+  bankAddrContainer:{
+    [theme.breakpoints.down('sm')]:{
+      paddingTop:"2em"
+    }
+  }
 }));
 
 export default ProfilePaymentSection;
