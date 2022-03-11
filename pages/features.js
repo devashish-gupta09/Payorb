@@ -1,7 +1,5 @@
 import { Grid } from "@material-ui/core";
-
 import * as React from "react";
-
 import FeaturesPage from "../src/components/FeaturesPage";
 import PageTitle from "../src/components/PageTitle";
 import {
@@ -9,13 +7,13 @@ import {
   getHomeContent,
   getFeatureBookings,
   getUserBenefits,
-} from "../src/services/landing";
+} from "../src/services/features";
 
-export default function Features({ landing }) {
+export default function Features({ features }) {
   return (
       <Grid backgroundColor={"blue"}>
       <PageTitle title="Payorb | Features" />
-      <FeaturesPage content={landing} />
+      <FeaturesPage content={features} />
       </Grid>
 
   );
@@ -29,7 +27,7 @@ export async function getStaticProps({ params, preview = null }) {
 
   return {
     props: {
-      landing: {
+      features: {
         home,
         feature,
         userBenefits,
