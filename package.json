@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "format": "prettier --write --ext .jsx --ext .js 'src/**/*' 'pages/**/*'",
+    "format:check": "yarn run format --check",
     "lint:fix": "eslint --fix --ext .jsx --ext .js 'src/**/*'",
     "lint": "eslint --ext .jsx --ext .js 'src/**/*'"
   },
