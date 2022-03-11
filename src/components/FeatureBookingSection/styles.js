@@ -6,13 +6,17 @@ export const styles = makeStyles((theme) => ({
     paddingBottom: "3em",
     [theme.breakpoints.down("sm")]: {
       height: "fit-content",
-      padding: "2em 1em",
+      padding: "1em",
     },
   },
   title: {
     textAlign: "center",
     justifyContent: "center",
     color: "white",
+    [theme.breakpoints.down("sm")]: {
+      paddingBottom: "1em",
+      fontSize: "1.25em",
+    },
   },
   capsuleButton: {
     background: "linear-gradient(178.83deg, #68FDF3 1%, #00D4FF 183.74%)",
@@ -25,7 +29,7 @@ export const styles = makeStyles((theme) => ({
       fontSize: "0.65em",
       fontWeight: "600",
       marginTop: "0",
-      padding: "0.5em 0.75em",
+      padding: "0.5em 2em",
     },
   },
   callMadeIcon: {
@@ -35,8 +39,9 @@ export const styles = makeStyles((theme) => ({
   logoContainer: {
     display: "none",
     [theme.breakpoints.down("sm")]: {
-      display: "block",
-      alignItems: "center",
+      display: "flex",
+      justifyContent: "center",
+      paddingBottom: "2em",
     },
   },
 }));

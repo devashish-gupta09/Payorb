@@ -1,13 +1,14 @@
 import { makeStyles, Grid } from "@material-ui/core";
 import React from "react";
+import FaqsSection from "../FAQsSection";
 
-import EventRegistrationSection from "../EventRegistrationSection";
-import FeatureSection from "../FeatureSection";
-import GrowthSection from "../GrowthSection";
+import FeatureSectionHome from "../FeatureSectionHome";
 import HomeSection from "../HomeSection";
+import HowItWorksSection from "../HowItWorksSection";
 import Footer from "../LandingFooter";
 import LandingHeader from "../LandingHeader";
-import UserRegistrationSection from "../UserRegistrationSection";
+import PricingSection from "../PricingSection";
+import WhyChooseUsSection from "../WhyChooseUsSection";
 
 function Landing({ content }) {
   const classes = styles();
@@ -18,12 +19,15 @@ function Landing({ content }) {
         <LandingHeader />
         <HomeSection content={content.home} />
       </Grid>
-      {/* <HowItWorksSection content={content.howItWorks} /> */}
-      <FeatureSection content={content.feature} />
-      <UserRegistrationSection content={content.userRegistration} />
-      <EventRegistrationSection content={content.eventRegistration} />
+      <HowItWorksSection content={content.howItWorks} />
+      <FeatureSectionHome content={content.feature} />
+      <WhyChooseUsSection content={content.whyChooseUs} />
+      <PricingSection content={content.pricing} />
+      <FaqsSection content={content.faqs} />
+      {/* <UserRegistrationSection content={content.userRegistration} />
+      <EventRegistrationSection content={content.eventRegistration} /> */}
       {/* <ClientReviewSection content={content.clientReview} /> */}
-      <GrowthSection content={content.growth} />
+      {/* <GrowthSection content={content.growth} /> */}
       <Footer />
     </Grid>
   );
@@ -44,7 +48,8 @@ const styles = makeStyles((theme) => ({
     top: 0,
     bottom: 0,
     [theme.breakpoints.down("sm")]: {
-      backgroundImage: `url("/assets/homepage-1.png")`,
+      background: `#F0FFFE`,
+      width: "100vw",
     },
   },
 }));

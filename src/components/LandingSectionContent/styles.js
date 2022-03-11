@@ -16,9 +16,9 @@ export const styles = makeStyles((theme) => ({
     },
   },
   title: {
-    justifyContent:"center",
-    alignContent:"center",
-    alignIitems:"center",
+    justifyContent: "center",
+    alignContent: "center",
+    alignIitems: "center",
     padding: "0.2em 1em 0.5em 0",
     fontWeight: "bold",
     color: "#333333",

@@ -2,10 +2,7 @@ import { Grid, Button, Typography } from "@material-ui/core";
 import CallMadeIcon from "@material-ui/icons/CallMade";
 import React from "react";
 import Link from "next/link";
-import { PAGE_PATHS } from "../../constants/paths";
 import { event, SIGNUP_CLICK } from "../../utils/ga";
-
-import ButtonCapsule from "../ButtonCapsule";
 import { styles } from "./styles";
 import Logo from "../Logo";
 function FeatureBookingSection() {
@@ -13,8 +10,8 @@ function FeatureBookingSection() {
 
   return (
     <Grid className={classes.container}>
-      <Grid className={classes.logoContainer} justify={"center"}>
-        <Logo width="6em" />
+      <Grid className={classes.logoContainer}>
+        <Logo width="7em" />
       </Grid>
       <Typography variant="h4" className={classes.title}>
         People who are ready to book events!
@@ -24,7 +21,9 @@ function FeatureBookingSection() {
           <Button
             className={classes.capsuleButton}
             onClick={() =>
-              event({ action: SIGNUP_CLICK, params: { location: "header" } })}>
+              event({ action: SIGNUP_CLICK, params: { location: "header" } })
+            }
+          >
             Get Started
             <CallMadeIcon className={classes.callMadeIcon} />
           </Button>

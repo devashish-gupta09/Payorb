@@ -54,7 +54,7 @@ function EventCard({ event, handleEventDelete }) {
   const { state } = useUserAuthDetails();
   const [deleteBtn, setDelete] = React.useState(false);
   const isTabletOrMobile = useMediaQuery({ maxWidth: 900 });
-console.log(state)
+  console.log(state);
   const handleClone = () => setClone(true);
   const handleCloneFromClose = () => setClone(false);
 

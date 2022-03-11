@@ -8,6 +8,7 @@ import {
 
 import { useFormik } from "formik";
 import React, { useState } from "react";
+import useMobileDetect from "use-mobile-detect-hook";
 
 import { appColors } from "../../../styles/colors";
 import { globalStyles } from "../../../styles/globalStyles";
@@ -20,8 +21,6 @@ import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { updateUser } from "../../services/auth";
 import ButtonCapsule from "../ButtonCapsule";
 import Capsule from "../Capsule";
-
-import DashboardCard from "../DashboardCard";
 
 function getPaymentSectionValues(paymentDetails) {
   return {
@@ -60,6 +59,7 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
   const { dispatch } = useUserAuthDetails();
   const { Alert, showAlert } = useAlertSnackbar();
   const [edit, setEdit] = useState();
+  const { isMobile } = useMobileDetect();
   const formik = useFormik({
     initialValues: getPaymentSectionValues(profileData.paymentDetails),
     onSubmit: async (values) => {
@@ -91,30 +91,30 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
   const globalClasses = globalStyles();
 
   return (
-    <DashboardCard rootClass={classes.root}>
+    <Grid className={classes.root}>
       {Alert()}
       <Grid container>
         <Typography
           className={`${globalClasses.bold} ${classes.sectionTitle}`}
           gutterBottom
         >
-          Payment Section
+          Payment
         </Typography>
         {getPaymentDetailsStatus(profileData.paymentDetails)}
       </Grid>
       <Grid
         style={{
-          paddingBottom: "2em",
+          padding: "1em 0 2em 0",
         }}
         container
       >
-        <Typography variant="p" gutterBottom>
+        <Typography variant="p" gutterBottom className={classes.description}>
           Fill this information to get paid for your events and services
         </Typography>
       </Grid>
       <form onSubmit={formik.handleSubmit}>
-        <Grid container spacing={5}>
-          <Grid container item sm={6} spacing={5}>
+        <Grid container spacing={isMobile() ? 0 : 5}>
+          <Grid container item sm={6} spacing={isMobile() ? 0 : 5}>
             <Grid container item sm={6}>
               <TextField
                 disabled={!edit}
@@ -182,7 +182,7 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
               />
             </Grid>
           </Grid>
-          <Grid container item sm={6}>
+          <Grid container item sm={6} className={classes.bankAddrContainer}>
             <TextField
               disabled={!edit}
               multiline
@@ -233,7 +233,7 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
           </Grid>
         </Grid>
       </form>
-    </DashboardCard>
+    </Grid>
   );
 }
 
@@ -243,12 +243,19 @@ const styles = makeStyles((theme) => ({
   },
   root: {
     borderRadius: "0.8em",
-    padding: "2em",
+    padding: "2em 8em",
     [theme.breakpoints.down("sm")]: {
       padding: "1.5em 1em",
     },
   },
-  infoRowRoot: { paddingLeft: "1em", width: "80%" },
+  description: {
+    width: "fit-content",
+    background: "rgba(255, 206, 49, 0.17)",
+    border: "1px solid rgb(255, 206, 49)",
+    padding: "0.5em",
+    borderRadius: "5px",
+  },
+  infoRowRoot: { paddingLeft: "1em", width: "fit-content" },
   infoRow: {
     padding: "1em 0",
     width: "100%",
@@ -264,19 +271,23 @@ const styles = makeStyles((theme) => ({
   reviewTime: {
     color: appColors.grey,
   },
-
   textInput: {
     color: "#BDBDBD",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
+      marginBottom: "1em",
     },
   },
   saveButtonContainer: {
-    padding: "1.5em",
+    padding: "2.5em 1em 1em 1em",
+    [theme.breakpoints.down("sm")]: {
+      padding: "1em 1em 1em 2.5em",
+    },
   },
   saveButton: {
-    width: "30%",
+    width: "20%",
     fontWeight: "bold",
+    marginRight: "2em",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
@@ -287,6 +298,13 @@ const styles = makeStyles((theme) => ({
   cancelButton: {
     [theme.breakpoints.down("sm")]: {
       margin: "1.5em 0 0.5em 0",
+    },
+  },
+  bankAddrContainer: {
+    paddingLeft: "4em",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: 0,
+      paddingTop: 0,
     },
   },
 }));
