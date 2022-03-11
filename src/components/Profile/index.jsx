@@ -8,6 +8,7 @@ import { ProfileImageGallery } from "../ProfileImageGallery";
 import ProfileInfoCard from "../ProfileInfoCard";
 import { ProfileNavBar } from "../ProfileNavBar";
 import ProfileReviewSection from "../ProfileReviewSection";
+import ProfilePaymentSection from "../ProfilePaymentSection";
 
 export default function Profile({ profileData }) {
   const [profileInfo, setProfileInfo] = React.useState(profileData);
@@ -52,10 +53,10 @@ export default function Profile({ profileData }) {
 
         <ProfileReviewSection />
 
-        {/* <ProfilePaymentSection
+        <ProfilePaymentSection
           profileData={profileInfo}
           updateProfile={updateProfileInfo}
-        /> */}
+        />
       </Grid>
     </Fade>
   );

@@ -47,6 +47,7 @@ const styles = makeStyles((theme) => ({
     boxShadow: "0 0 5px 0 rgba(0,0,0,0.25)",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
+      height: "15em",
     },
   },
   editButton: {

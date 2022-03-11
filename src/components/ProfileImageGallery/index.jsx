@@ -49,9 +49,9 @@ export const ProfileImageGallery = ({ profileInfo, vendor, updateProfile }) => {
 
 const styles = makeStyles((theme) => ({
   root: {
-    padding: "2em 4em",
+    padding: "2em 6em",
     [theme.breakpoints.down("sm")]: {
-      padding: "2em 2em",
+      padding: "1em",
     },
   },
   cardContainer: {

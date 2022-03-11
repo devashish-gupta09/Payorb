@@ -98,7 +98,7 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
           className={`${globalClasses.bold} ${classes.sectionTitle}`}
           gutterBottom
         >
-          Payment Section
+          Payment
         </Typography>
         {getPaymentDetailsStatus(profileData.paymentDetails)}
       </Grid>
@@ -108,9 +108,9 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
         }}
         container
       >
-        <Typography variant="p" gutterBottom>
+        {/* <Typography variant="p" gutterBottom>
           Fill this information to get paid for your events and services
-        </Typography>
+        </Typography> */}
       </Grid>
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={5}>

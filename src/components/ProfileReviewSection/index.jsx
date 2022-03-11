@@ -22,7 +22,6 @@ import { VendorReviewCard } from "../VendorReviewCard";
 
 function ProfileReviewSection(props) {
   const classes = styles();
-  const globalClasses = globalStyles();
   const [reviews, setReviews] = React.useState();
   const [lastDoc, setLastDoc] = React.useState();
   const [loadMore, setLoadMore] = React.useState();
@@ -84,9 +83,14 @@ function ProfileReviewSection(props) {
 
   if (reviews) {
     return (
-      <Grid>
+      <Grid className={classes.container}>
+        <Typography
+          style={{ fontSize: "1.25em", fontWeight: "bold", paddingBottom: "1em" }}
+        >
+          Reviews
+        </Typography>
         {Alert()}
-        <Grid container style={{ minHeight: "400px" }}>
+        <Grid container className={classes.desktop} style={{ minHeight: "400px" }} spacing={5}>
           {reviews && reviews.length > 0 ? (
             reviews.map((review, index) => {
               return (
@@ -101,6 +105,7 @@ function ProfileReviewSection(props) {
         </Grid>
 
         <Carousel
+          className={classes.mobile}
           autoPlay={false}
           IndicatorIcon={<Grid></Grid>}
           indicatorIconButtonProps={{
@@ -110,16 +115,18 @@ function ProfileReviewSection(props) {
             className: `${classes.activeIndicator}`,
           }}
         >
-          {reviews.map((feature, index) => {
+          {reviews.map((review, index) => {
             return (
-              <Grid
-                style={{ height: "20em", width: "100%", background: "yellow" }}
-              />
+              <VendorReviewCard review={review} />
             );
           })}
         </Carousel>
 
-        <Grid container justify="flex-end" style={{ paddingRight: "0.5em" }}>
+        {/* <Grid
+          container
+          justifyContent="flex-end"
+          style={{ paddingRight: "0.5em" }}
+        >
           {reviews.length > 4 ? (
             <Button onClick={handleLoadMore} variant="outlined">
               {loadMore ? (
@@ -131,21 +138,35 @@ function ProfileReviewSection(props) {
               Load More
             </Button>
           ) : null}
-        </Grid>
+        </Grid> */}
       </Grid>
     );
   }
 }
 
 const styles = makeStyles((theme) => ({
+  desktop: {
+    display: "flex",
+    [theme.breakpoints.down("sm")]: {
+      display: "none"
+    }
+  },
+  mobile: {
+    display: "none",
+    [theme.breakpoints.down("sm")]: {
+      display: "block"
+    }
+  },
   container: {
-    padding: 0,
+    padding: "4em 8em",
+    background: "#F6F6FA",
+    [theme.breakpoints.down("sm")]: {
+      padding: "1em"
+    }
   },
   infoRowCard: {
     width: "100%",
-    boxShadow: "0 0 5px 0 rgba(0,0,0,0.25)",
     [theme.breakpoints.down("sm")]: {
-      // padding: "1em",
       fontSize: "0.75em",
     },
   },

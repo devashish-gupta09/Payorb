@@ -83,7 +83,6 @@ export const styles = makeStyles((theme) => ({
     bottom: "0",
     position: "absolute",
     height: "300px",
-    border: "2px solid green",
     [theme.breakpoints.down("sm")]: {
       width: "80vw !important",
       marginTop: "4rem",

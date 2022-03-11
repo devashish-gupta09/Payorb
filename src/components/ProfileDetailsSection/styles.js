@@ -5,7 +5,7 @@ import { appColors } from "../../../styles/colors";
 export const styles = makeStyles((theme) => ({
   container: {
     width: "65%",
-    padding: "4em 2em 0 0",
+    padding: "4em 4em 0 0",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       padding: "3em 1em 2em 1em",
