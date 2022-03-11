@@ -9,7 +9,7 @@ import VendorDashboard from "../../../src/components/VendorDashboard";
 export default function Vendor() {
   const user = React.useContext(Context);
   return (
-    <Grid style={{border:"2px"}}>
+    <Grid>
       {user ? <VendorDashboard></VendorDashboard> : <FallbackLoading />}
     </Grid>
   );

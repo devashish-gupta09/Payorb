@@ -128,7 +128,7 @@ function VendorDashboard() {
         <UserAuthDetailsProvider>
           <Grid>
             <VendorDashboardHeader profileData={profileData} />
-            <AuthAlertBanner />
+            {/* <AuthAlertBanner /> */}
             <VendorDashboardContainer>
               {getComponent(profileData)}
             </VendorDashboardContainer>

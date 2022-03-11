@@ -30,6 +30,7 @@ export const styles = makeStyles((theme) => ({
   },
   buttonContainer: {
     width: "fit-content",
+    overflow:"hidden",
     [theme.breakpoints.down("sm")]: {
       display: "None",
     },
@@ -57,4 +58,9 @@ export const styles = makeStyles((theme) => ({
   },
   drawerTitleContainer: { padding: "3em 0 2em 0" },
   drawerClose: { color: "black" },
+  desktop:{
+    [theme.breakpoints.down("sm")]:{
+      display:"none",
+    }
+  }
 }));

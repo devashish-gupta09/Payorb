@@ -4,13 +4,14 @@ import React from "react";
 import Landing from "../src/components/Landing";
 import PageTitle from "../src/components/PageTitle";
 import {
-  getClientReviewContent,
-  getEventRegistrationContent,
+  // getClientReviewContent,
+  // getEventRegistrationContent,
+  getFaqsContent,
   getFeaturesContent,
   getHomeContent,
   getHowItWorksContent,
-  getUserRegistrationContent,
-  getGrowthContent,
+  // getUserRegistrationContent,
+  // getGrowthContent,
   getWhyChooseUsContent,
   getPricingContent,
 } from "../src/services/landing";
@@ -30,10 +31,11 @@ export async function getStaticProps({ params, preview = null }) {
   const feature = await getFeaturesContent();
   const whyChooseUs = await getWhyChooseUsContent();
   const pricing = await getPricingContent();
-  const userRegistration = await getUserRegistrationContent();
-  const eventRegistration = await getEventRegistrationContent();
-  const clientReview = await getClientReviewContent();
-  const growth = await getGrowthContent();
+  const faqs = await getFaqsContent();
+  // const userRegistration = await getUserRegistrationContent();
+  // const eventRegistration = await getEventRegistrationContent();
+  // const clientReview = await getClientReviewContent();
+  // const growth = await getGrowthContent();
 
   return {
     props: {
@@ -43,10 +45,11 @@ export async function getStaticProps({ params, preview = null }) {
         feature,
         whyChooseUs,
         pricing,
-        userRegistration,
-        eventRegistration,
-        clientReview,
-        growth,
+        faqs,
+        // userRegistration,
+        // eventRegistration,
+        // clientReview,
+        // growth,
       },
     },
   };
