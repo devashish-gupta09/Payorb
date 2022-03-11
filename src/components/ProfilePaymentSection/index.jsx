@@ -8,8 +8,7 @@ import {
 
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import useMobileDetect from "use-mobile-detect-hook"
-
+import useMobileDetect from "use-mobile-detect-hook";
 
 import { appColors } from "../../../styles/colors";
 import { globalStyles } from "../../../styles/globalStyles";
@@ -60,7 +59,7 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
   const { dispatch } = useUserAuthDetails();
   const { Alert, showAlert } = useAlertSnackbar();
   const [edit, setEdit] = useState();
-  const {isMobile} = useMobileDetect()
+  const { isMobile } = useMobileDetect();
   const formik = useFormik({
     initialValues: getPaymentSectionValues(profileData.paymentDetails),
     onSubmit: async (values) => {
@@ -105,7 +104,7 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
       </Grid>
       <Grid
         style={{
-          paddingBottom: "2em",
+          padding: "1em 0 2em 0",
         }}
         container
       >
@@ -114,8 +113,8 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
         </Typography>
       </Grid>
       <form onSubmit={formik.handleSubmit}>
-        <Grid container spacing={isMobile ? 0 : 5} >
-          <Grid container item sm={6} spacing={5}>
+        <Grid container spacing={isMobile() ? 0 : 5}>
+          <Grid container item sm={6} spacing={isMobile() ? 0 : 5}>
             <Grid container item sm={6}>
               <TextField
                 disabled={!edit}
@@ -244,19 +243,19 @@ const styles = makeStyles((theme) => ({
   },
   root: {
     borderRadius: "0.8em",
-    padding: "2em",
+    padding: "2em 8em",
     [theme.breakpoints.down("sm")]: {
       padding: "1.5em 1em",
     },
   },
-  description:{
-    width:"fit-content", 
-    background:"rgba(255, 206, 49, 0.17)",
-    border: "1px solid rgb(255, 206, 49)", 
-    padding:"0.5em", 
-    borderRadius:"5px"
+  description: {
+    width: "fit-content",
+    background: "rgba(255, 206, 49, 0.17)",
+    border: "1px solid rgb(255, 206, 49)",
+    padding: "0.5em",
+    borderRadius: "5px",
   },
-  infoRowRoot: { paddingLeft: "1em", width:"fit-content" },
+  infoRowRoot: { paddingLeft: "1em", width: "fit-content" },
   infoRow: {
     padding: "1em 0",
     width: "100%",
@@ -272,19 +271,23 @@ const styles = makeStyles((theme) => ({
   reviewTime: {
     color: appColors.grey,
   },
-
   textInput: {
     color: "#BDBDBD",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
+      marginBottom: "1em",
     },
   },
   saveButtonContainer: {
-    padding: "1.5em",
+    padding: "2.5em 1em 1em 1em",
+    [theme.breakpoints.down("sm")]: {
+      padding: "1em 1em 1em 2.5em",
+    },
   },
   saveButton: {
-    width: "30%",
+    width: "20%",
     fontWeight: "bold",
+    marginRight: "2em",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
@@ -297,11 +300,13 @@ const styles = makeStyles((theme) => ({
       margin: "1.5em 0 0.5em 0",
     },
   },
-  bankAddrContainer:{
-    [theme.breakpoints.down('sm')]:{
-      paddingTop:"2em"
-    }
-  }
+  bankAddrContainer: {
+    paddingLeft: "4em",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: 0,
+      paddingTop: 0,
+    },
+  },
 }));
 
 export default ProfilePaymentSection;

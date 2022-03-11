@@ -10,6 +10,7 @@ import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { getUser } from "../../services/auth";
 import { delay } from "../../utils/dateTime";
 import { buildVendorDashboardUrl } from "../../utils/url";
+import { AppFooter } from "../AppFooter";
 import AuthAlertBanner from "../AuthAlertBanner";
 import { Context } from "../AuthenticationContext";
 import VendorDashboardHeader from "../DashboardHeader";
@@ -131,6 +132,7 @@ function VendorDashboard() {
             <VendorDashboardContainer>
               {getComponent(profileData)}
             </VendorDashboardContainer>
+            <AppFooter />
           </Grid>
         </UserAuthDetailsProvider>
       )}

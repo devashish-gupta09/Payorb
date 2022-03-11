@@ -85,12 +85,21 @@ function ProfileReviewSection(props) {
     return (
       <Grid className={classes.container}>
         <Typography
-          style={{ fontSize: "1.25em", fontWeight: "bold", paddingBottom: "1em" }}
+          style={{
+            fontSize: "1.25em",
+            fontWeight: "bold",
+            paddingBottom: "1em",
+          }}
         >
           Reviews
         </Typography>
         {Alert()}
-        <Grid container className={classes.desktop} style={{ minHeight: "400px" }} spacing={5}>
+        <Grid
+          container
+          className={classes.desktop}
+          style={{ minHeight: "400px" }}
+          spacing={5}
+        >
           {reviews && reviews.length > 0 ? (
             reviews.map((review, index) => {
               return (
@@ -116,9 +125,7 @@ function ProfileReviewSection(props) {
           }}
         >
           {reviews.map((review, index) => {
-            return (
-              <VendorReviewCard review={review} />
-            );
+            return <VendorReviewCard review={review} />;
           })}
         </Carousel>
 
@@ -148,21 +155,21 @@ const styles = makeStyles((theme) => ({
   desktop: {
     display: "flex",
     [theme.breakpoints.down("sm")]: {
-      display: "none"
-    }
+      display: "none",
+    },
   },
   mobile: {
     display: "none",
     [theme.breakpoints.down("sm")]: {
-      display: "block"
-    }
+      display: "block",
+    },
   },
   container: {
     padding: "4em 8em",
     background: "#F6F6FA",
     [theme.breakpoints.down("sm")]: {
-      padding: "1em"
-    }
+      padding: "1em",
+    },
   },
   infoRowCard: {
     width: "100%",
