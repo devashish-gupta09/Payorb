@@ -9,9 +9,9 @@ export const styles = makeStyles((theme) => ({
     justifyContent: "center",
     [theme.breakpoints.down("sm")]: {
       width: "100% !important",
-      height:"70vh",
-      background:"#F0FFFE",
-      alignItems:"center",
+      height: "70vh",
+      background: "#F0FFFE",
+      alignItems: "center",
     },
   },
   textContainer: {
@@ -22,7 +22,7 @@ export const styles = makeStyles((theme) => ({
     width: "100%",
     alignItems: "center",
     [theme.breakpoints.down("sm")]: {
-      display:"none",
+      display: "none",
       top: "15%",
       left: "0%",
       padding: "1em 1em",
@@ -37,7 +37,7 @@ export const styles = makeStyles((theme) => ({
     width: "100%",
     textAlign: "center",
     [theme.breakpoints.down("sm")]: {
-        fontSize: "1.4em",
+      fontSize: "1.4em",
     },
   },
   aquaText: {
@@ -52,30 +52,29 @@ export const styles = makeStyles((theme) => ({
     width: "100%",
     fontSize: "1em",
     textAlign: "center",
-    marginTop:"-0.5em",
+    marginTop: "-0.5em",
     [theme.breakpoints.down("sm")]: {
       fontSize: "0.9em",
       fontWeight: "500",
       padding: "0.6em 0.5em",
     },
   },
-  imgContainer:{
-      justifyContent:"center",
-      alignItems:"center",
-      marginTop:"3.5em",
+  imgContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "3.5em",
   },
-  image:{
-      marginTop:"2em",
-      maxWidth:"50vw",
-      [theme.breakpoints.down("sm")]: {
-        display:"none",
-      },
-  },
-  imageMobile:{
-      display:"none",
+  image: {
+    marginTop: "2em",
+    maxWidth: "50vw",
     [theme.breakpoints.down("sm")]: {
-        display:"block",
-      },
-  }
- 
+      display: "none",
+    },
+  },
+  imageMobile: {
+    display: "none",
+    [theme.breakpoints.down("sm")]: {
+      display: "block",
+    },
+  },
 }));

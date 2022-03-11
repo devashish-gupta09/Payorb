@@ -126,7 +126,7 @@ function VendorDashboard() {
         <FallbackLoading />
       ) : (
         <UserAuthDetailsProvider>
-          <Grid>
+          <Grid style={{ border: "2px solid" }}>
             <VendorDashboardHeader profileData={profileData} />
             {/* <AuthAlertBanner /> */}
             <VendorDashboardContainer>

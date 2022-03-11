@@ -52,7 +52,6 @@ export const getHowItWorksContent = async () => {
   };
 };
 
-
 export const getWhyChooseUsContent = async () => {
   return {
     title: "Why choose PayOrb?",
@@ -252,7 +251,6 @@ export const getGrowthContent = async () => {
   };
 };
 
- 
 export const getFeaturesContent = async () => {
   // try {
   //   const res = await axios.get(`${CMS_URL}/feature-section`);
@@ -282,38 +280,43 @@ export const getFeaturesContent = async () => {
     features: [
       {
         title: "Online Presence",
-        description: "Dynamically architect real-time web services for installed base systems",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
         image: "/assets/features/onlinePresence.svg",
       },
 
       {
         title: "Unlimited service listings",
-        description: "Dynamically architect real-time web services for installed base systems",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
         image: "/assets/features/UnlimitedServiceListing.svg",
       },
       {
         title: "Bookings & Payments",
-        description: "Dynamically architect real-time web services for installed base systems",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
 
         image: "/assets/features/Bookings&Payments.svg",
       },
       {
         title: "Verified Reviews",
-        description: "Dynamically architect real-time web services for installed base systems",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
         image: "/assets/features/VerifiedReview.svg",
       },
       {
         title: "Business Dashboards",
-        description: "Dynamically architect real-time web services for installed base systems",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
         image: "/assets/features/BusinessDashboard.svg",
       },
       {
         title: "One Click Promotions",
-        description: "Dynamically architect real-time web services for installed base systems",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
         image: "/assets/features/OneClickPromotions.svg",
       },
     ],
   };
   // }
 };
-
