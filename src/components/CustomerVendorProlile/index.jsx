@@ -6,14 +6,18 @@ import { getUser } from "../../services/auth";
 import CustomerVendorProfileEvents from "../CustomerVendorProfileEvents";
 import PageTitle from "../PageTitle";
 import ProfileDetailsSection from "../ProfileDetailsSection";
+import { ProfileHeader } from "../ProfileHeader";
+import { ProfileImageGallery } from "../ProfileImageGallery";
 import ProfileInfoCard from "../ProfileInfoCard";
 import ProfilePageCarausel from "../ProfilePageCarausel";
+import { ProfileSectionSubNav } from "../ProfileSectionSubNav";
 import SkeletonLoading from "../SkeletonLoading";
 
 function CustomerVendorProfile({ userUID }) {
   const router = useRouter();
   const [loading, setLoading] = React.useState(true);
   const [profileData, setProfileData] = React.useState();
+  const classes = styles();
 
   React.useEffect(() => {
     getUser({ vendorId: router.query.vendorId })
@@ -38,13 +42,19 @@ function CustomerVendorProfile({ userUID }) {
     return (
       <Grid>
         <PageTitle title="Payorb | Profile" />
-        <ProfileInfoCard profileData={profileData} vendor={false} />
-        <ProfileDetailsSection profileData={profileData} vendor={false} />
-        {profileData.carauselAssets &&
-        profileData.carauselAssets.length &&
-        profileData.carauselAssets.filter((a) => a.link && a.type).length ? (
-          <ProfilePageCarausel profileData={profileData} vendor={false} />
-        ) : null}
+        <ProfileHeader profileData={profileData} vendor={false} />
+        <Grid style={{ position: "relative" }}>
+          <Grid className={classes.subNavContainer}>
+            <Grid>
+              <ProfileSectionSubNav />
+            </Grid>
+          </Grid>
+          <Grid container alignItems="stretch">
+            <ProfileInfoCard profileData={profileData} vendor={false} />
+            <ProfileDetailsSection profileData={profileData} vendor={false} />
+          </Grid>
+        </Grid>
+        <ProfileImageGallery profileData={profileData} vendor={false} />
         <CustomerVendorProfileEvents userUID={profileData.userUID} />
       </Grid>
     );
@@ -53,6 +63,14 @@ function CustomerVendorProfile({ userUID }) {
   return <h1>Something went wrong</h1>;
 }
 
-const styles = makeStyles((theme) => ({}));
+const styles = makeStyles((theme) => ({
+  subNavContainer: {
+    position: "absolute",
+    width: "100%",
+    height: "fit-content",
+    paddingLeft: "50%",
+    boxShadow: "0px 0px 7px rgba(0, 0, 0, 0.25)",
+  },
+}));
 
 export default CustomerVendorProfile;
