@@ -15,13 +15,13 @@ export const styles = makeStyles((theme) => ({
   imageRight: {
     flex: 1,
     [theme.breakpoints.down("sm")]: {
-      display: "None",
+      display: "none",
     },
   },
   imageTop: {
     display: "None",
     [theme.breakpoints.down("sm")]: {
-      display: "contents",
+      display: "none",
       height: "min-content",
     },
   },

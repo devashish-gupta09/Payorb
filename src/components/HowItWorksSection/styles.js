@@ -4,6 +4,7 @@ export const styles = makeStyles((theme) => ({
   bg: {
     margin: "0",
     background: "url(/assets/howItWorksBG.svg) no-repeat center center",
+    backgroundSize: "cover",
   },
   container: {
     height: "100vh",

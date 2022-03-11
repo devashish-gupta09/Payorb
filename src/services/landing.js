@@ -157,6 +157,38 @@ export const getPricingContent = async () => {
   };
 };
 
+export const getFaqsContent = async () => {
+  return {
+    title: "FAQ's",
+    image: "/assets/faqs/faq-img.svg",
+    faqs: [
+      {
+        ques: "She met humoured sir breeding her. Six curiosity day assurance bed necessary.",
+        ans: "Relation so in confined smallest children unpacked delicate. Why sir end believe uncivil respect. Always get adieus nature day course for common. My little garret repair to desire he esteem.",
+      },
+      {
+        ques: "And excellence partiality estimating terminated day everything?",
+        ans: "Relation so in confined smallest children unpacked delicate. Why sir end believe uncivil respect. Always get adieus nature day course for common. My little garret repair to desire he esteem.",
+      },
+      {
+        ques: "Latter person am secure of estate genius at?",
+        ans: "Relation so in confined smallest children unpacked delicate. Why sir end believe uncivil respect. Always get adieus nature day course for common. My little garret repair to desire he esteem.",
+      },
+      {
+        ques: "Whatever landlord yourself at by pleasure of children be?",
+        ans: "Relation so in confined smallest children unpacked delicate. Why sir end believe uncivil respect. Always get adieus nature day course for common. My little garret repair to desire he esteem.",
+      },
+    ],
+  };
+};
+
+export const getSignInContent = async () => {
+  return {
+    titleSection1: "One Platform",
+    titleSection2: "Infinite Opportunities!",
+  };
+};
+
 export const getEventRegistrationContent = async () => {
   // try {
   //   const res = await axios.get(`${CMS_URL}/event-registration`);

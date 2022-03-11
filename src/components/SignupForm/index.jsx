@@ -229,7 +229,7 @@ function SignUpForm() {
   return (
     <Grid className={classes.container}>
       {Alert()}
-      <Typography className={classes.sectionTitle}>SIGN UP</Typography>
+      <Typography variant={"h4"}>Sign Up</Typography>
       <Typography variant={"h4"} className={classes.title}>
         Get Started
       </Typography>
@@ -463,7 +463,7 @@ function SignUpForm() {
               <Button
                 fullWidth
                 disabled={!tAndC}
-                className={classes.socialMediaButtons}
+                className={classes.googleButton}
                 startIcon={
                   <img
                     src={"../assets/googleSignup.png"}
@@ -482,7 +482,7 @@ function SignUpForm() {
               <Button
                 fullWidth
                 disabled={!tAndC}
-                className={classes.socialMediaButtons}
+                className={classes.facebookButton}
                 startIcon={
                   <img
                     src={"../assets/facebookSignup.png"}
@@ -498,7 +498,9 @@ function SignUpForm() {
 
           <Typography align="center" className={classes.signupMessage}>
             Already have an account?{" "}
-            <Link href={PAGE_PATHS.SIGNIN}>Sign In</Link>
+            <Link href={PAGE_PATHS.SIGNIN}>
+              <Typography className={classes.signupText}>Sign In</Typography>
+            </Link>
           </Typography>
         </Grid>
       </form>
