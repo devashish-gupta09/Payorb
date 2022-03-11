@@ -1,5 +1,5 @@
-import { Button, Grid, makeStyles, Typography } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
+import { Button, Grid, makeStyles, Typography } from "@material-ui/core";
 import * as React from "react";
 import ButtonCapsule from "../ButtonCapsule";
 import { ProfileImageGalleryCard } from "./ProfileImageGalleryCard";
@@ -17,7 +17,11 @@ const DEFAULT_IMAGE = [
   },
 ];
 
-export const ProfileImageGallery = ({ profileInfo, vendor, updateProfile }) => {
+export const ProfileImageGallery = ({
+  profileInfo,
+  vendor = true,
+  updateProfile,
+}) => {
   const classes = styles();
 
   const [images, setImages] = React.useState(DEFAULT_IMAGE);
@@ -40,9 +44,19 @@ export const ProfileImageGallery = ({ profileInfo, vendor, updateProfile }) => {
           </Grid>
         ))}
       </Grid>
-      <Grid container justifyContent="center" className={classes.addMoreButton}>
-        <ButtonCapsule text={"Add More"} icon={<Add />} iconBefore={true} />
-      </Grid>
+      {vendor ? (
+        <Grid
+          container
+          justifyContent="center"
+          className={classes.addMoreButton}
+        >
+          <ButtonCapsule text={"Add More"} icon={<Add />} iconBefore={true} />
+        </Grid>
+      ) : (
+        <Grid container justifyContent="center" className={classes.viewMore}>
+          <ButtonCapsule text={"View More"} />
+        </Grid>
+      )}
     </Grid>
   );
 };
@@ -69,12 +83,15 @@ const styles = makeStyles((theme) => ({
       padding: "0 !important",
     },
   },
-
   addMoreButton: {
     padding: "3em",
   },
   title: {
     fontWeight: "bold",
     marginBottom: "1em",
+  },
+  viewMore: {
+    padding: "2em 2.5em",
+    "& > button": { background: "#FFFFFF", border: "2px solid" },
   },
 }));

@@ -11,11 +11,9 @@ import React from "react";
 import Carousel from "react-material-ui-carousel";
 
 import { appColors } from "../../../styles/colors";
-import { globalStyles } from "../../../styles/globalStyles";
 import { ALERT_TYPES } from "../../constants/alerts";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { getReviewsForVendor } from "../../services/review";
-import { getTimeDiff } from "../../utils/dateTime";
 import DashboardCard from "../DashboardCard";
 import ReadMore from "../ReadMore";
 import { VendorReviewCard } from "../VendorReviewCard";

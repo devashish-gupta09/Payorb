@@ -85,14 +85,16 @@ const ProfileHeader = ({ profileData, updateProfile, vendor }) => {
             buttonStyle={`${classes.backButton}`}
           />
         </Grid>
-        <Grid>
-          <IconButton className={classes.editButton}>
-            <Edit></Edit>
-          </IconButton>
-          <IconButton className={classes.deleteButton}>
-            <Delete></Delete>
-          </IconButton>
-        </Grid>
+        {vendor ? (
+          <Grid>
+            <IconButton className={classes.editButton}>
+              <Edit></Edit>
+            </IconButton>
+            <IconButton className={classes.deleteButton}>
+              <Delete></Delete>
+            </IconButton>
+          </Grid>
+        ) : null}
       </Grid>
     </Grid>
   );

@@ -16,7 +16,7 @@ import { updateUser } from "../../services/auth";
 import ButtonCapsule from "../ButtonCapsule";
 import VideoUpload from "../VideoUpload";
 
-function ProfileAboutCard({ profileData, vendor, updateProfile }) {
+function ProfileAboutCard({ profileData, vendor = true, updateProfile }) {
   const classes = styles();
   const { Alert, showAlert } = useAlertSnackbar();
 
@@ -56,21 +56,23 @@ function ProfileAboutCard({ profileData, vendor, updateProfile }) {
                 About
               </Typography>
             </Grid>
-            <Grid>
-              <ButtonCapsule
-                text="Profile Preview"
-                buttonStyle={`${classes.previewButton}`}
-              ></ButtonCapsule>
-              <ButtonCapsule
-                text="Save Profile"
-                buttonStyle={`${classes.saveButton}`}
-                onClick={formik.handleSubmit}
-              ></ButtonCapsule>
-            </Grid>
+            {vendor ? (
+              <Grid>
+                <ButtonCapsule
+                  text="Profile Preview"
+                  buttonStyle={`${classes.previewButton}`}
+                ></ButtonCapsule>
+                <ButtonCapsule
+                  text="Save Profile"
+                  buttonStyle={`${classes.saveButton}`}
+                  onClick={formik.handleSubmit}
+                ></ButtonCapsule>
+              </Grid>
+            ) : null}
           </Grid>
           <Grid
             style={{
-              background: "#ECEDF4",
+              background: vendor ? "#ECEDF4" : "#FFFFFF",
               padding: "1em",
               borderRadius: "5px",
               opacity: 0.6,
@@ -88,13 +90,15 @@ function ProfileAboutCard({ profileData, vendor, updateProfile }) {
               InputProps={{ disableUnderline: true }}
               placeholder="Please add some information about yourself"
             />
-            <Grid
-              container
-              justifyContent="flex-end"
-              style={{ padding: "0.5em 0" }}
-            >
-              {formik.values.about.length} / 500 characters
-            </Grid>
+            {vendor ? (
+              <Grid
+                container
+                justifyContent="flex-end"
+                style={{ padding: "0.5em 0" }}
+              >
+                {formik.values.about.length} / 500 characters
+              </Grid>
+            ) : null}
           </Grid>
         </form>
 

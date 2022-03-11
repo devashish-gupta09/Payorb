@@ -7,11 +7,12 @@ export const EditableTextFieldV2 = ({
   textFieldProps,
   containerPadding,
   startIcon,
+  disable = false,
 }) => {
   const [editable, setEditable] = useState(false);
 
   const toggleEdit = () => {
-    setEditable(!editable);
+    if (!disable) setEditable(!editable);
   };
 
   return (
@@ -29,7 +30,7 @@ export const EditableTextFieldV2 = ({
               {startIcon}
             </InputAdornment>
           ),
-          endAdornment: (
+          endAdornment: !disable ? (
             <InputAdornment
               position="end"
               style={{ height: "100%", marginTop: "-0.1em", color: "grey" }}
@@ -37,7 +38,7 @@ export const EditableTextFieldV2 = ({
             >
               <Edit />
             </InputAdornment>
-          ),
+          ) : null,
         }}
         inputProps={{
           style: {

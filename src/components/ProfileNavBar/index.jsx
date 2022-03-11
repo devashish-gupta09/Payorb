@@ -2,7 +2,7 @@ import { Grid, List, ListItem, makeStyles, Tabs, Tab } from "@material-ui/core";
 
 import useMobileDetect from "use-mobile-detect-hook";
 
-function ProfileNavBar() {
+function ProfileNavBar({ vendor = true }) {
   const classes = styles();
   const detectMobile = useMobileDetect();
   return (
@@ -13,6 +13,7 @@ function ProfileNavBar() {
       <Tab label="Profile"></Tab>
       <Tab label="Reviews"></Tab>
       <Tab label="Payments"></Tab>
+      {!vendor ? <Tab label="Events"></Tab> : null}
     </Tabs>
   );
 }

@@ -9,8 +9,9 @@ import ProfileDetailsSection from "../ProfileDetailsSection";
 import { ProfileHeader } from "../ProfileHeader";
 import { ProfileImageGallery } from "../ProfileImageGallery";
 import ProfileInfoCard from "../ProfileInfoCard";
+import { ProfileNavBar } from "../ProfileNavBar";
 import ProfilePageCarausel from "../ProfilePageCarausel";
-import { ProfileSectionSubNav } from "../ProfileSectionSubNav";
+import ProfileReviewSection from "../ProfileReviewSection";
 import SkeletonLoading from "../SkeletonLoading";
 
 function CustomerVendorProfile({ userUID }) {
@@ -44,18 +45,21 @@ function CustomerVendorProfile({ userUID }) {
         <PageTitle title="Payorb | Profile" />
         <ProfileHeader profileData={profileData} vendor={false} />
         <Grid style={{ position: "relative" }}>
-          <Grid className={classes.subNavContainer}>
-            <Grid>
-              <ProfileSectionSubNav />
-            </Grid>
+          <Grid className={classes.navbarDesktop}>
+            <ProfileNavBar vendor={false} />
           </Grid>
           <Grid container alignItems="stretch">
             <ProfileInfoCard profileData={profileData} vendor={false} />
+            <Grid className={classes.navbarMobile}>
+              <ProfileNavBar vendor={false} />
+            </Grid>
             <ProfileDetailsSection profileData={profileData} vendor={false} />
           </Grid>
         </Grid>
         <ProfileImageGallery profileData={profileData} vendor={false} />
-        <CustomerVendorProfileEvents userUID={profileData.userUID} />
+        <ProfileReviewSection />
+        {/* To be done! */}
+        {/* <CustomerVendorProfileEvents userUID={profileData.userUID} /> */}
       </Grid>
     );
   }
@@ -64,12 +68,23 @@ function CustomerVendorProfile({ userUID }) {
 }
 
 const styles = makeStyles((theme) => ({
-  subNavContainer: {
+  navbarMobile: {
+    display: "none",
+    [theme.breakpoints.down("sm")]: {
+      display: "flex",
+      width: "100%",
+      boxShadow: "0 6px 8px -8px rgb(0 0 0 / 25%)",
+    },
+  },
+  navbarDesktop: {
     position: "absolute",
     width: "100%",
     height: "fit-content",
-    paddingLeft: "50%",
-    boxShadow: "0px 0px 7px rgba(0, 0, 0, 0.25)",
+    paddingLeft: "45%",
+    boxShadow: "0 6px 8px -8px rgb(0 0 0 / 25%)",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
   },
 }));
 

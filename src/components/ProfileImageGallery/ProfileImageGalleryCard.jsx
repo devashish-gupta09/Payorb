@@ -3,7 +3,7 @@ import { Delete, Edit } from "@material-ui/icons";
 import { appColors } from "../../../styles/colors";
 import ReadMore from "../ReadMore";
 
-export const ProfileImageGalleryCard = ({ link, type = "image" }) => {
+export const ProfileImageGalleryCard = ({ link, type = "image", vendor }) => {
   const classes = styles();
   return (
     <Grid className={classes.root}>
@@ -18,16 +18,18 @@ export const ProfileImageGalleryCard = ({ link, type = "image" }) => {
           Designer Portfolios That Take Design to the Next Level
         </Typography>
       </Grid>
-      <Grid className={classes.toolkit}>
-        <Grid>
-          <IconButton size="small" className={classes.editButton}>
-            <Edit></Edit>
-          </IconButton>
-          <IconButton size="small" className={classes.deleteButton}>
-            <Delete></Delete>
-          </IconButton>
+      {vendor ? (
+        <Grid className={classes.toolkit}>
+          <Grid>
+            <IconButton size="small" className={classes.editButton}>
+              <Edit></Edit>
+            </IconButton>
+            <IconButton size="small" className={classes.deleteButton}>
+              <Delete></Delete>
+            </IconButton>
+          </Grid>
         </Grid>
-      </Grid>
+      ) : null}
     </Grid>
   );
 };
