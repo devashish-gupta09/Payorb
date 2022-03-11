@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "format": "prettier --write --ext .jsx --ext .js 'src/**/*' 'pages/**/*'",
+    "format:check": "yarn run format --check",
     "lint:fix": "eslint --fix --ext .jsx --ext .js 'src/**/*'",
     "lint": "eslint --ext .jsx --ext .js 'src/**/*'"
   },
@@ -55,6 +56,7 @@
     "react-responsive": "^9.0.0-beta.4",
     "react-responsive-carousel": "^3.2.23",
     "react-swipeable-views": "^0.14.0",
+    "use-mobile-detect-hook": "^1.0.4",
     "uuid": "^8.3.2",
     "webpack": "^5.65.0",
     "yup": "^0.32.9"

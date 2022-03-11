@@ -1,10 +1,10 @@
 import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
-
-  outerContainer:{
-    background: "linear-gradient(180deg, #BCF4F1 0%, rgba(0, 212, 255, 0.33) 157.68%)",
-  },  
+  outerContainer: {
+    background:
+      "linear-gradient(180deg, #BCF4F1 0%, rgba(0, 212, 255, 0.33) 157.68%)",
+  },
   container: {
     backgroundImage: "url(/assets/aboutUs/StoryBg.svg)",
     backgroundSize: "contain",
@@ -14,15 +14,15 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       height: "fit-content",
       padding: "2em 1em",
-      background:"none",
+      background: "none",
     },
   },
-  mainTitle:{
-      fontWeight:"bold",
-      fontSize:"2.1em",
-      [theme.breakpoints.down("sm")]: {
-        fontSize:"1.8em"
-      },
+  mainTitle: {
+    fontWeight: "bold",
+    fontSize: "2.1em",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1.8em",
+    },
   },
   image: {
     width: "50em",
@@ -39,7 +39,7 @@ export const styles = makeStyles((theme) => ({
   title: {
     color: "#000000",
     alignItems: "center",
-    fontWeight:"bold",
+    fontWeight: "bold",
     [theme.breakpoints.down("sm")]: {
       padding: "1em -0.2em",
     },
@@ -51,62 +51,61 @@ export const styles = makeStyles((theme) => ({
       padding: "1em",
     },
   },
-  divider:{
-    color:"black",
-    backgroundColor:"black",
+  divider: {
+    color: "black",
+    backgroundColor: "black",
     height: "0.3em",
     width: "7vw",
-    marginBottom:"1em",
-    [theme.breakpoints.down("sm")]:{
-      width:"4em",
+    marginBottom: "1em",
+    [theme.breakpoints.down("sm")]: {
+      width: "4em",
       height: "0.2em",
-    }
+    },
   },
-  desktop:{
-    display:"block",
-    margin:"0 3em 0 3em",
-    [theme.breakpoints.down("sm")]:{
-        display:"none",
-      }
+  desktop: {
+    display: "block",
+    margin: "0 3em 0 3em",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
   },
-  mobileView:{
-      display:"none",
-    [theme.breakpoints.down("sm")]:{
-        display:"block",
-      }
+  mobileView: {
+    display: "none",
+    [theme.breakpoints.down("sm")]: {
+      display: "block",
+    },
   },
-  multipleCards:{
-      marginTop:"1.5em",
+  multipleCards: {
+    marginTop: "1.5em",
   },
-  headline:{
-    fontSize:"1.2em",
-    fontWeight:"bold",
-    [theme.breakpoints.down("sm")]:{
-        fontSize:"1em",
-      }
+  headline: {
+    fontSize: "1.2em",
+    fontWeight: "bold",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1em",
+    },
   },
-  buttonContain:{
-      marginTop:"2em",
-      color:"#718096",
-     
+  buttonContain: {
+    marginTop: "2em",
+    color: "#718096",
   },
-  readMore:{
-    justifyContent:"right",
-    float:"right",
-    right:"0",
-    fontSize:"0.5em",
+  readMore: {
+    justifyContent: "right",
+    float: "right",
+    right: "0",
+    fontSize: "0.5em",
   },
-  descriptionText:{
-    fontSize:"0.8em",
-    marginTop:"1em",
-    [theme.breakpoints.down("sm")]:{
-        fontSize:"0.8em",
-      }
+  descriptionText: {
+    fontSize: "0.8em",
+    marginTop: "1em",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.8em",
+    },
   },
-  date:{
-    fontSize:"0.5em"
+  date: {
+    fontSize: "0.5em",
   },
-  bannerContainer:{
-    minHeight:"10em",
+  bannerContainer: {
+    minHeight: "10em",
   },
 }));

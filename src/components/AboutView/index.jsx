@@ -11,13 +11,13 @@ import AboutAdvisors from "../AboutAdvisors";
 function AboutView({ content }) {
   return (
     <Grid style={{ width: "100vw" }}>
-      <LandingHeader/>
+      <LandingHeader />
       <AboutBanner content={content.home} />
       <AboutVision content={content.vision} />
       <AboutStoryPayOrb content={content.story} />
-      <AboutFounders content={content.founders}/>
-      <AboutAdvisors content={content.advisors}/>
-      <Footer/>
+      <AboutFounders content={content.founders} />
+      <AboutAdvisors content={content.advisors} />
+      <Footer />
     </Grid>
   );
 }

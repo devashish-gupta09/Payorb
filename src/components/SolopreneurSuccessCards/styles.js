@@ -1,12 +1,11 @@
 import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
-
-  cardContainer:{
-      marginTop:"1em",
+  cardContainer: {
+    marginTop: "1em",
     [theme.breakpoints.down("sm")]: {
-        margin:"0 1.5em 0 1.5em",
-      },
+      margin: "0 1.5em 0 1.5em",
+    },
   },
   desktop: {
     [theme.breakpoints.down("sm")]: {
@@ -16,7 +15,7 @@ export const styles = makeStyles((theme) => ({
   title: {
     color: "#000000",
     alignItems: "center",
-    fontWeight:"bold",
+    fontWeight: "bold",
     [theme.breakpoints.down("sm")]: {
       padding: "1em -0.2em",
     },
@@ -28,46 +27,45 @@ export const styles = makeStyles((theme) => ({
       padding: "1em",
     },
   },
-  divider:{
-    color:"black",
-    backgroundColor:"black",
+  divider: {
+    color: "black",
+    backgroundColor: "black",
     height: "0.3em",
     width: "7vw",
-    marginBottom:"1em",
-    [theme.breakpoints.down("sm")]:{
-      width:"4em",
+    marginBottom: "1em",
+    [theme.breakpoints.down("sm")]: {
+      width: "4em",
       height: "0.2em",
-    }
+    },
   },
-  context:{
-    padding:"0.5em 1.5em 1em 1.5em",
+  context: {
+    padding: "0.5em 1.5em 1em 1.5em",
   },
-  headline:{
-    fontSize:"1.2em",
-    fontWeight:"bold",
-    [theme.breakpoints.down("sm")]:{
-        fontSize:"1em",
-      }
+  headline: {
+    fontSize: "1.2em",
+    fontWeight: "bold",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1em",
+    },
   },
-  buttonContain:{
-      marginTop:"2em",
-      color:"#718096",
-     
+  buttonContain: {
+    marginTop: "2em",
+    color: "#718096",
   },
-  readMore:{
-    justifyContent:"right",
-    float:"right",
-    right:"0",
-    fontSize:"0.5em",
+  readMore: {
+    justifyContent: "right",
+    float: "right",
+    right: "0",
+    fontSize: "0.5em",
   },
-  descriptionText:{
-    fontSize:"0.8em",
-    marginTop:"1em",
-    [theme.breakpoints.down("sm")]:{
-        fontSize:"0.8em",
-      }
+  descriptionText: {
+    fontSize: "0.8em",
+    marginTop: "1em",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.8em",
+    },
   },
-  date:{
-    fontSize:"0.5em"
+  date: {
+    fontSize: "0.5em",
   },
 }));

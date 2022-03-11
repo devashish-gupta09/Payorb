@@ -11,12 +11,12 @@ import SolopreneurLife from "../SolopreneurLife";
 function SolopreneurView({ content }) {
   return (
     <Grid style={{ width: "100vw" }}>
-      <LandingHeader/>
+      <LandingHeader />
       <SolopreneurBanner content={content.home} />
       <SolopreneurAdvantages content={content.banner} />
       <SolopreneurSuccess content={content.stories} />
-      <SolopreneurLife content={content.life}/>
-      <Footer/>
+      <SolopreneurLife content={content.life} />
+      <Footer />
     </Grid>
   );
 }

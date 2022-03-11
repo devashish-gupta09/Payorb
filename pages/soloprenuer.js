@@ -11,11 +11,10 @@ import {
 
 export default function About({ solopreneur }) {
   return (
-      <Grid backgroundColor={"blue"}>
+    <Grid backgroundColor={"blue"}>
       <PageTitle title="Payorb | Solopreneur" />
       <SolopreneurView content={solopreneur} />
-      </Grid>
-
+    </Grid>
   );
 }
 
@@ -23,7 +22,7 @@ export async function getStaticProps({ params, preview = null }) {
   const home = await getHomeContent();
   const banner = await getSolopreneurAdvantages();
   const stories = await getSolopreneurStories();
-  const life= await getSolopreneurLife();
+  const life = await getSolopreneurLife();
 
   return {
     props: {

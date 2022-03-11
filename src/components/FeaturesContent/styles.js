@@ -9,13 +9,13 @@ export const styles = makeStyles((theme) => ({
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     display: "flex",
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down("sm")]: {
       display: "block",
       height: "70vh",
       backgroundRepeat: "no-repeat",
       backgroundSize: "contain",
-      backgroundImage: "url(/assets/mobile-home-bg.png)"
-    }
+      backgroundImage: "url(/assets/mobile-home-bg.png)",
+    },
   },
   textContainer: {
     padding: "15em 4em 4em 4em",
@@ -61,7 +61,7 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       textAlign: "center",
       width: "100%",
-      fontSize: "1.5em"
+      fontSize: "1.5em",
     },
   },
   descriptionText: {
@@ -84,7 +84,7 @@ export const styles = makeStyles((theme) => ({
       justifyContent: "center",
       height: "fit-content",
       top: 0,
-      marginTop: "2em"
+      marginTop: "2em",
     },
   },
   buttonSpacing: {
@@ -114,8 +114,8 @@ export const styles = makeStyles((theme) => ({
     cursor: "pointer",
     paddingLeft: "0",
     [theme.breakpoints.down("sm")]: {
-      display: "none"
-    }
+      display: "none",
+    },
   },
   scrollIcon: {
     display: "inline-block",
@@ -130,13 +130,13 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       padding: "1.75em",
-    }
+    },
   },
   image: {
     width: "80%",
     border: "2px solid #00D4FF",
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down("sm")]: {
       width: "100%",
-    }
-  }
+    },
+  },
 }));

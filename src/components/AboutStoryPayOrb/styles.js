@@ -1,10 +1,10 @@
 import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
-
-  outerContainer:{
-    background: "linear-gradient(180deg, #BCF4F1 0%, rgba(0, 212, 255, 0.33) 157.68%)",
-  },  
+  outerContainer: {
+    background:
+      "linear-gradient(180deg, #BCF4F1 0%, rgba(0, 212, 255, 0.33) 157.68%)",
+  },
   container: {
     backgroundImage: "url(/assets/aboutUs/StoryBg.svg)",
     backgroundSize: "contain",
@@ -14,12 +14,12 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       height: "fit-content",
       padding: "2em 1em",
-      background:"none",
+      background: "none",
     },
   },
-  mainTitle:{
-      fontWeight:"bold",
-      fontSize:"2.1em",
+  mainTitle: {
+    fontWeight: "bold",
+    fontSize: "2.1em",
   },
   image: {
     width: "50em",
@@ -36,7 +36,7 @@ export const styles = makeStyles((theme) => ({
   title: {
     color: "#000000",
     alignItems: "center",
-    fontWeight:"bold",
+    fontWeight: "bold",
     [theme.breakpoints.down("sm")]: {
       padding: "1em -0.2em",
     },
@@ -48,15 +48,15 @@ export const styles = makeStyles((theme) => ({
       padding: "1em",
     },
   },
-  divider:{
-    color:"black",
-    backgroundColor:"black",
+  divider: {
+    color: "black",
+    backgroundColor: "black",
     height: "0.3em",
     width: "7vw",
-    marginBottom:"1em",
-    [theme.breakpoints.down("sm")]:{
-      width:"4em",
+    marginBottom: "1em",
+    [theme.breakpoints.down("sm")]: {
+      width: "4em",
       height: "0.2em",
-    }
-  }
+    },
+  },
 }));
