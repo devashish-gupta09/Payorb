@@ -6,7 +6,7 @@ import ProfileReviewSection from "../ProfileReviewSection";
 import TabPanel from "../TabPanel";
 import { styles } from "./styles";
 
-function ProfileDetailsSection({ profileData, vendor, updateProfile }) {
+function ProfileDetailsSection({ profileData, vendor = true, updateProfile }) {
   const classes = styles();
 
   return (

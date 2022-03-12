@@ -15,6 +15,7 @@ export const styles = makeStyles((theme) => ({
   },
   profileInfoCardContainer: {
     width: "35%",
+    position: "relative",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
@@ -74,5 +75,43 @@ export const styles = makeStyles((theme) => ({
   cancelButton: {
     margin: "0 0.5em",
     background: "#BDBDBD",
+  },
+  customerProfileVendorDetails: {
+    width: "65%",
+    maxWidth: "27.5em",
+    height: "fit-content",
+    marginLeft: "auto",
+    marginRight: "auto",
+    background: "#F6F6FA",
+    padding: "4em 2em 2em 2em",
+    position: "absolute",
+    borderRadius: "5px",
+    top: "4em",
+    zIndex: "-1",
+    left: 0,
+    right: 0,
+    [theme.breakpoints.down("sm")]: {
+      position: "inherit",
+      width: "100%",
+      justifyContent: "flex-start",
+      padding: "1.5em",
+    },
+  },
+  publicProfileName: {
+    fontSize: "2em",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1.75em",
+    },
+  },
+  publicVendorDetailsRowLogo: {
+    margin: "0.35em",
+  },
+  publicVendorDetailsRowContainer: {
+    paddingBottom: "1em",
+    fontSize: "1.25em",
+    [theme.breakpoints.down("sm")]: {
+      paddingBottom: "0",
+      fontSize: "1em",
+    },
   },
 }));

@@ -7,7 +7,7 @@ import { EVENT_TYPES } from "../../constants/events";
 import { PAGE_PATHS } from "../../constants/paths";
 import CustomerEvents from "../CustomerEvents";
 import CustomerEventScheduler from "../CustomerEventScheduler";
-import CustomerVendorProfile from "../CustomerVendorProlile";
+import CustomerVendorProfile from "../CustomerVendorProfile";
 import CustomerViewHeader from "../CustomerViewHeader";
 import EventBooking from "../EventBooking";
 import DashboardContainer from "../VendorDashboardContainer";
