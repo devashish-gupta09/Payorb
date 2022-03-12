@@ -32,7 +32,7 @@ export const AppFooter = () => {
 
 const styles = makeStyles((theme) => ({
   root: {
-    width: "100vw",
+    width: "100%",
     padding: "1.25em 0",
     background: "#E1E1E1",
   },
