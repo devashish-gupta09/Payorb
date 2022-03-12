@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
-
   outerContainer:{
     background: "linear-gradient(180deg, #BCF4F1 0%, rgba(0, 212, 255, 0.33) 157.68%)",
   },  
