@@ -1,5 +1,4 @@
 import React from "react";
-import { render } from "react-dom";
 import { Button, Grid, makeStyles, Typography, Card } from "@material-ui/core";
 import CreateIcon from "@material-ui/icons/Create";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
