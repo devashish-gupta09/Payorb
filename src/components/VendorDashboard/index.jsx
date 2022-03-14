@@ -134,7 +134,7 @@ function VendorDashboard() {
             <VendorDashboardHeader profileData={profileData} />
             <Grid container className={classes.dashboard}>
               <Grid item className={classes.sidebar}>
-                <VendorDashboardSidebar />
+                <VendorDashboardSidebar profileData={profileData} />
               </Grid>
               <Grid item className={classes.mainContainer}>
                 <VendorDashboardContainer>

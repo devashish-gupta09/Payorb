@@ -150,10 +150,10 @@ function VendorDashboardHeader({ profileData }) {
                 >
                   <Tab
                     className={isActive("events") && classes.activeLink}
-                    label="Events"
+                    label="Home"
                     value={0}
                   />
-                  <Tab
+                  {/* <Tab
                     className={isActive("financials") && classes.activeLink}
                     label="Financials"
                     values={1}
@@ -162,7 +162,7 @@ function VendorDashboardHeader({ profileData }) {
                     className={isActive("customers") && classes.activeLink}
                     label="Customers"
                     values={2}
-                  />
+                  /> */}
                 </Tabs>
               </Grid>
             </Grid>

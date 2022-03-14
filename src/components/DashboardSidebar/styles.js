@@ -1,7 +1,5 @@
 import { makeStyles } from "@material-ui/core";
 
-import { appColors } from "../../../styles/colors";
-
 export const styles = makeStyles((theme) => ({
   container: {
     backgroundColor: "white",
@@ -27,7 +25,7 @@ export const styles = makeStyles((theme) => ({
   content: {
     height: "calc(90vh)",
     background: "#F6F6FA",
-    paddingTop: "12em",
+    paddingTop: "15em",
   },
   activeTab: {
     textAlign: "left",

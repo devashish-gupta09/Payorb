@@ -4,11 +4,11 @@ import React from "react";
 
 import { buildVendorDashboardUrl, getVendorIdFromUrl } from "../../utils/url";
 
+import ProfileSectionSidebar from "../DashboardProfile";
 import { styles } from "./styles";
 
-function VendorDashboardSidebar() {
+function VendorDashboardSidebar({ profileData }) {
   const classes = styles();
-
   const router = useRouter();
   const [currentTab, setCurrentTab] = React.useState(false);
 
@@ -59,21 +59,11 @@ function VendorDashboardSidebar() {
   return (
     <Box className={classes.container}>
       <Box className={classes.header}>
-        <Box>
-          <img
-            src="https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/assets%2Fprofile.jpg?alt=media&token=eea58cd4-50ea-4525-93fb-e7fe83350b59"
-            alt="logo"
-            className={classes.avatar}
-          />
-        </Box>
-        <Box>
-          <Typography className={classes.name} variant="h6" align="center">
-            Aditya Tandon
-          </Typography>
-          <Typography variant="body1" align="center">
-            Senior UX Designer
-          </Typography>
-        </Box>
+        <ProfileSectionSidebar
+          name={profileData.name}
+          image={profileData.profileImgUrl}
+          occupation={profileData.occupation}
+        />
       </Box>
       <Box className={classes.content}>
         <Box className={classes.tabs}>
@@ -97,7 +87,16 @@ function VendorDashboardSidebar() {
                   className={
                     (isActive("events") && classes.activeLink) || classes.btn
                   }
-                  label="Events"
+                  label={
+                    <div>
+                      <img
+                        src="/assets/sidebar/event-icon.svg"
+                        alt="events"
+                        style={{ verticalAlign: "middle", paddingRight: "1em" }}
+                      />
+                      Events
+                    </div>
+                  }
                   value={0}
                 />
                 <Tab
@@ -105,14 +104,32 @@ function VendorDashboardSidebar() {
                     (isActive("financials") && classes.activeLink) ||
                     classes.btn
                   }
-                  label="Financials"
+                  label={
+                    <div>
+                      <img
+                        src="/assets/sidebar/finance-icon.svg"
+                        alt="financial"
+                        style={{ verticalAlign: "middle", paddingRight: "1em" }}
+                      />
+                      Financials
+                    </div>
+                  }
                   values={1}
                 />
                 <Tab
                   className={
                     (isActive("customers") && classes.activeLink) || classes.btn
                   }
-                  label="Customers"
+                  label={
+                    <div>
+                      <img
+                        src="/assets/sidebar/customers-icon.svg"
+                        alt="customers"
+                        style={{ verticalAlign: "middle", paddingRight: "1em" }}
+                      />
+                      Customers
+                    </div>
+                  }
                   values={2}
                 />
                 <Tab
@@ -120,7 +137,17 @@ function VendorDashboardSidebar() {
                     (isActive("promotions") && classes.activeLink) ||
                     classes.btn
                   }
-                  label="Promotions"
+                  iconPosition="start"
+                  label={
+                    <div>
+                      <img
+                        src="/assets/sidebar/promotion-icon.svg"
+                        alt="promotions"
+                        style={{ verticalAlign: "middle", paddingRight: "1em" }}
+                      />
+                      Promotions
+                    </div>
+                  }
                   values={3}
                 />
                 <Tab
@@ -128,7 +155,20 @@ function VendorDashboardSidebar() {
                     (isActive("myschedule") && classes.activeLink) ||
                     classes.btn
                   }
-                  label="My Schedule"
+                  label={
+                    <div>
+                      <img
+                        src="/assets/sidebar/schedule-icon.svg"
+                        alt="my-schedule"
+                        style={{
+                          verticalAlign: "middle",
+                          paddingRight: "1em",
+                          alignItems: "left",
+                        }}
+                      />
+                      My Schedule
+                    </div>
+                  }
                   values={4}
                 />
               </Tabs>
