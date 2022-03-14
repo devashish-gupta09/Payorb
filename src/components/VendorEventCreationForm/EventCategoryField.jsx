@@ -31,15 +31,13 @@ export const EventCategoryField = ({ formik, checkDisabled }) => {
 
   return (
     <>
-      <FormLabel>Event Category</FormLabel>
-
       <Select
         displayEmpty
         variant="outlined"
         id="type"
         value={formik.values.category}
         onChange={handleEventCategoryChange}
-        style={{ width: "100%", margin: "0.5em 0" }}
+        style={{ width: "100%", margin: "0.5em 0", background: "#ECEDF4" }}
         error={formik.touched.category && Boolean(formik.errors.category)}
         helperText={formik.touched.name && formik.errors.name}
         disabled={checkDisabled()}
@@ -50,13 +48,13 @@ export const EventCategoryField = ({ formik, checkDisabled }) => {
         {Object.keys(EVENT_CATEGORY).map((eventCategory) => {
           return (
             <MenuItem key={eventCategory} value={eventCategory}>
-              <em>{EVENT_CATEGORY[eventCategory]}</em>
+              {EVENT_CATEGORY[eventCategory]}
             </MenuItem>
           );
         })}
         {!Object.keys(EVENT_CATEGORY).includes(formik.values.category) ? (
           <MenuItem key={formik.values.category} value={formik.values.category}>
-            <em>{formik.values.category}</em>
+            {formik.values.category}
           </MenuItem>
         ) : null}
       </Select>

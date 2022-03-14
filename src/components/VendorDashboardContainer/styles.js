@@ -6,7 +6,7 @@ export const styles = makeStyles((theme) => ({
   container: {
     minWidth: "100%",
     maxWidth: "95vw",
-    minHeight: "90vh",
+    minHeight: "fit-content",
     maxHeight: "max-content",
     [theme.breakpoints.between("sm", "md")]: {
       padding: "2em 2em",
