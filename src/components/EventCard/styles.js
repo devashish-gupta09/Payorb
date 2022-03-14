@@ -113,20 +113,21 @@ export const styles = makeStyles((theme) => ({
   topBannerButton: {
     borderRadius: "2em",
     background: "#008EFF",
-    fontSize: "0.5em",
+    fontSize: "0.6em",
     color: "white",
     height: "2.5em",
 
   },
   cooking: {
-    background: "#1ECE7A"
+    background: "#1ECE7A",
+    marginRight:"0.5em",
     // right: "74%"
   },
   topBanner: {
     //position: "absolute",
     justifyContent: "right",
     right: "24em",
-    marginTop:"-16em",
+    marginTop:"-12em",
   },
   sideBar: {
     display: "flex",
@@ -136,7 +137,7 @@ export const styles = makeStyles((theme) => ({
   dateAndTime: {
     color: "#68FDF3",
     background: "rgba(0,0,0,0.5)",
-    marginTop: "-1.5em",
+    marginTop: "-2.2em",
     marginBottom: "0.3em",
     //left
     padding: "0 0.5em 0 0.5em"

@@ -38,7 +38,7 @@ function EventsViewList({ events, handleEventDelete, showOpen }) {
           .filter((e) => isEventPastDate(e))
           .map((event, index) => {
             return (
-              <Grid key={index} item sm={12}>
+              <Grid key={index} item sm={6}>
                 <EventCard
                   event={event}
                   handleEventDelete={handleEventDelete}

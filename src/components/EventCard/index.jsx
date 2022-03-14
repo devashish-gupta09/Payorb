@@ -142,11 +142,12 @@ console.log(state)
           onClose={handleShareDialogClose}
         />
       )}
-        
+      <Grid container justify={"space-evenly"}>
+        <Grid item xs={6}>
         <Card className={classes.cardContainer}>
           
         <img
-            src={event.photoUrl || DEFAULT_EVENT_IMAGE}
+            src={event.photoUrl || "/assets/vendorEventsCard/defaultImg.svg"}
             alt="vendor-event"
             width="400em"
           />
@@ -181,6 +182,8 @@ console.log(state)
           </Grid>
           <Grid item xs={6}>
             <Typography className={classes.bottomText}>
+            <img src="/assets/vendorEventsCard/time.svg"></img>
+                {"  "}
               12:00 PM - 2:00 PM
             </Typography>
           </Grid>
@@ -233,8 +236,8 @@ console.log(state)
         </Grid>
       </Grid>
         </Card>
-        
-      
+        </Grid>
+      </Grid>
     {/* {  <Grid container alignItems={"stretch"}>
         <Grid item sm={3} className={classes.imageContainer}>
           <EventImageContainer url={event.photoUrl || DEFAULT_EVENT_IMAGE} />      
