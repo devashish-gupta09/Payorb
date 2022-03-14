@@ -16,7 +16,7 @@ export const AppFooter = () => {
         </Grid>
       </Grid>
       <Grid justifyContent="center">
-        <p className={classes.copyright}>
+        <p className={classes.copyright} style={{ fontSize: "0.75em" }}>
           @ 2021 All Rights Reserved. Powered by Vanickel Labs
         </p>
       </Grid>
@@ -24,7 +24,7 @@ export const AppFooter = () => {
         <span style={{ paddingRight: "1em", color: "#AAAAAA" }}>
           Powered by
         </span>{" "}
-        <Logo width={"5em"} dark={true} />
+        <Logo width={"4.5em"} dark={true} />
       </Grid>
     </Grid>
   );
@@ -33,7 +33,7 @@ export const AppFooter = () => {
 const styles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    padding: "1.25em 0",
+    padding: "0.25em 0",
     background: "#E1E1E1",
   },
   copyright: {

@@ -34,6 +34,7 @@ function OneTimeDateSelector({ formik, checkDisabled, edit }) {
             }}
             InputProps={{
               style: {
+                background: "#ECEDF4",
                 padding: 0,
               },
             }}
