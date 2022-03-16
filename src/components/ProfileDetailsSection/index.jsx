@@ -6,13 +6,8 @@ import ProfileReviewSection from "../ProfileReviewSection";
 import TabPanel from "../TabPanel";
 import { styles } from "./styles";
 
-function ProfileDetailsSection({ profileData, vendor, updateProfile }) {
+function ProfileDetailsSection({ profileData, vendor = true, updateProfile }) {
   const classes = styles();
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   return (
     <Grid className={classes.container}>

@@ -26,7 +26,7 @@ const EventImageContainer = ({ url }) => {
       ref={imageContainerRef}
     >
       <img style={{ height: imgHeight }} src={url} />
-     </div>
+    </div>
   );
 };
 

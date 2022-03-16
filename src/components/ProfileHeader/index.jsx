@@ -19,8 +19,8 @@ const styles = makeStyles((theme) => ({
     width: "100%",
     padding: "1em 2.5em",
     [theme.breakpoints.down("sm")]: {
-      padding: "1em 1.5em"
-    }
+      padding: "1em 1.5em",
+    },
   },
   backButton: {
     background: "#FFFFFF",
@@ -34,7 +34,7 @@ const styles = makeStyles((theme) => ({
     background: "#FFFFFF",
     boxShadow: "none",
     color: "#FC6767",
-    marginLeft: "0.5em"
+    marginLeft: "0.5em",
   },
   defaultBackgroundContainer: {
     background: "linear-gradient(90deg, #BCF4F1 0%, #00D4FF 177.56%)",
@@ -47,38 +47,57 @@ const styles = makeStyles((theme) => ({
     color: "#FFFFFF",
     opacity: "0.35",
     [theme.breakpoints.down("sm")]: {
-      fontSize: "2em"
-    }
-  }
+      fontSize: "2em",
+    },
+  },
 }));
 
 const ProfileHeader = ({ profileData, updateProfile, vendor }) => {
   const classes = styles();
-  return <Grid className={classes.root}>
-    <Grid className={classes.base}>
-      {profileData?.bannerImageUrl ? (<Grid>Hey</Grid>) : (<Grid container justifyContent="center" alignItems="center" className={classes.defaultBackgroundContainer}>
-        <Typography className={classes.defaultBannerText}>Add a cover pic</Typography>
-      </Grid>)}
-    </Grid>
-    <Grid container justifyContent="space-between" className={classes.buttonLayer}>
-      <Grid>
-        <ButtonCapsule
-          text=" Back"
-          icon={<ArrowBack style={{ fontSize: "1.25em" }} />}
-          iconBefore={true}
-          buttonStyle={`${classes.backButton}`}
-        />
+  return (
+    <Grid className={classes.root}>
+      <Grid className={classes.base}>
+        {profileData?.bannerImageUrl ? (
+          <Grid>Hey</Grid>
+        ) : (
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="center"
+            className={classes.defaultBackgroundContainer}
+          >
+            <Typography className={classes.defaultBannerText}>
+              Add a cover pic
+            </Typography>
+          </Grid>
+        )}
       </Grid>
-      <Grid>
-        <IconButton
-          className={classes.editButton}
-        ><Edit></Edit></IconButton>
-        <IconButton
-          className={classes.deleteButton}
-        ><Delete></Delete></IconButton>
+      <Grid
+        container
+        justifyContent="space-between"
+        className={classes.buttonLayer}
+      >
+        <Grid>
+          <ButtonCapsule
+            text=" Back"
+            icon={<ArrowBack style={{ fontSize: "1.25em" }} />}
+            iconBefore={true}
+            buttonStyle={`${classes.backButton}`}
+          />
+        </Grid>
+        {vendor ? (
+          <Grid>
+            <IconButton className={classes.editButton}>
+              <Edit></Edit>
+            </IconButton>
+            <IconButton className={classes.deleteButton}>
+              <Delete></Delete>
+            </IconButton>
+          </Grid>
+        ) : null}
       </Grid>
     </Grid>
-  </Grid>;
+  );
 };
 
 export { ProfileHeader };

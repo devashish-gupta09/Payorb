@@ -1,9 +1,13 @@
+import { Grid, Typography, useTheme } from "@material-ui/core";
 import {
-  Grid,
-  Typography,
-  useTheme,
-} from "@material-ui/core";
-import { ContactPhone, FiberManualRecord, LocationOn, Mail, WorkOutline } from "@material-ui/icons";
+  ContactPhone,
+  FiberManualRecord,
+  LocationOn,
+  LocationOnOutlined,
+  Mail,
+  MailOutlined,
+  WorkOutline,
+} from "@material-ui/icons";
 import { useFormik } from "formik";
 
 import React from "react";
@@ -19,7 +23,6 @@ import { styles } from "./styles";
 function ProfileInfoCard({ profileData, vendor, updateProfile }) {
   const classes = styles();
   const globalClasses = globalStyles();
-  const theme = useTheme();
   const { Alert, showAlert } = useAlertSnackbar();
 
   const formik = useFormik({
@@ -48,7 +51,7 @@ function ProfileInfoCard({ profileData, vendor, updateProfile }) {
   return (
     <Grid className={classes.profileInfoCardContainer}>
       {Alert()}
-      < form onSubmit={formik.handleSubmit} >
+      <form onSubmit={formik.handleSubmit}>
         <Grid style={{ position: "relative" }}>
           <Grid className={classes.profileImageContainer}>
             <ImageProfileUpload
@@ -61,107 +64,211 @@ function ProfileInfoCard({ profileData, vendor, updateProfile }) {
             />
           </Grid>
           <Grid className={classes.profileDetailsContainer}>
-            <Grid container justifyContent="center">
-              <Typography
-                className={`${globalClasses.boldSixHundred} ${classes.profileName}`} gutterBottom
-              >
-                {profileData.name}
-              </Typography>
-            </Grid>
-            <EditableTextFieldV2
-              containerPadding="0.75em 0"
-              label="Occupation"
-              startIcon={<WorkOutline />}
-              textFieldProps={
-                {
-                  id: "occupation",
-                  value: formik.values.occupation ?? "Add occupation",
-                  variant: "filled",
-                  margin: "dense",
-                  fullWidth: true,
-                  onChange: formik.handleChange,
-                  onBlur: formik.onBlur
-                }
-              }
-            />
-            <EditableTextFieldV2
-              containerPadding="0.75em 0"
-              label="Email ID"
-              startIcon={<Mail />}
-              textFieldProps={
-                {
-                  id: "email",
-                  value: formik.values.email ?? "Add email",
-                  variant: "filled",
-                  margin: "dense",
-                  fullWidth: true,
-                  onChange: formik.handleChange,
-                  onBlur: formik.onBlur
-                }
-              }
-            />
-            <EditableTextFieldV2
-              containerPadding="0.75em 0"
-              label="Contact Number"
-              startIcon={<ContactPhone />}
-              textFieldProps={
-                {
-                  id: "phoneNumber",
-                  value: formik.values.phoneNumber ?? "Add contact number",
-                  variant: "filled",
-                  margin: "dense",
-                  fullWidth: true,
-                  onChange: formik.handleChange,
-                  onBlur: formik.onBlur
-                }
-              }
-            />
-            <EditableTextFieldV2
-              containerPadding="0.75em 0"
-              label="Location"
-              startIcon={<LocationOn />}
-              textFieldProps={
-                {
-                  id: "location",
-                  value: formik.values.location ?? "Add Your Location",
-                  variant: "filled",
-                  margin: "dense",
-                  fullWidth: true,
-                  onChange: formik.handleChange,
-                  onBlur: formik.onBlur
-                }
-              }
-            />
-            <Grid style={{ padding: "0.75em 0" }}>
-              <Typography gutterBottom style={{ fontWeight: "bold" }}>
-                Accounts
-              </Typography>
+            {vendor ? (
+              <>
+                <Grid container justifyContent="center">
+                  <Typography
+                    className={`${globalClasses.boldSixHundred} ${classes.profileName}`}
+                    gutterBottom
+                  >
+                    {profileData.name}
+                  </Typography>
+                </Grid>
+                <EditableTextFieldV2
+                  containerPadding="0.75em 0"
+                  label="Occupation"
+                  startIcon={<WorkOutline />}
+                  disable={!vendor}
+                  textFieldProps={{
+                    id: "occupation",
+                    value: formik.values.occupation ?? "Add occupation",
+                    variant: "filled",
+                    margin: "dense",
+                    fullWidth: true,
+                    onChange: formik.handleChange,
+                    onBlur: formik.onBlur,
+                  }}
+                />
+                <EditableTextFieldV2
+                  containerPadding="0.75em 0"
+                  label="Email ID"
+                  startIcon={<Mail />}
+                  disable={!vendor}
+                  textFieldProps={{
+                    id: "email",
+                    value: formik.values.email ?? "Add email",
+                    variant: "filled",
+                    margin: "dense",
+                    fullWidth: true,
+                    onChange: formik.handleChange,
+                    onBlur: formik.onBlur,
+                  }}
+                />
+                <EditableTextFieldV2
+                  containerPadding="0.75em 0"
+                  label="Contact Number"
+                  startIcon={<ContactPhone />}
+                  disable={!vendor}
+                  textFieldProps={{
+                    id: "phoneNumber",
+                    value: formik.values.phoneNumber ?? "Add contact number",
+                    variant: "filled",
+                    margin: "dense",
+                    fullWidth: true,
+                    onChange: formik.handleChange,
+                    onBlur: formik.onBlur,
+                  }}
+                />
+                <EditableTextFieldV2
+                  containerPadding="0.75em 0"
+                  label="Location"
+                  startIcon={<LocationOn />}
+                  disable={!vendor}
+                  textFieldProps={{
+                    id: "location",
+                    value: formik.values.location ?? "Add Your Location",
+                    variant: "filled",
+                    margin: "dense",
+                    fullWidth: true,
+                    onChange: formik.handleChange,
+                    onBlur: formik.onBlur,
+                  }}
+                />
+                <Grid style={{ padding: "0.75em 0" }}>
+                  <Typography gutterBottom style={{ fontWeight: "bold" }}>
+                    Accounts
+                  </Typography>
 
-              <Grid container spacing={1} justifyContent="space-between">
-                <Grid item xs={6}>
-                  <Grid style={{ background: "rgba(30, 206, 122, 0.1)", width: "100%", border: "2px solid #00B25D", height: "5.5em", borderRadius: "3px", boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.25)" }}>
-                    <Typography align="center" style={{ color: "#00B25D", paddingTop: "0.25em" }}><FiberManualRecord style={{ fontSize: "0.5em" }} /> Connected</Typography>
-                    <Grid container alignItems="center" justifyContent="center"><img src='../assets/google-meet.png' style={{ height: "1.25em", marginTop: "1em" }} /></Grid>
+                  <Grid container spacing={1} justifyContent="space-between">
+                    <Grid item xs={6}>
+                      <Grid
+                        style={{
+                          background: "rgba(30, 206, 122, 0.1)",
+                          width: "100%",
+                          border: "2px solid #00B25D",
+                          height: "5.5em",
+                          borderRadius: "3px",
+                          boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.25)",
+                        }}
+                      >
+                        <Typography
+                          align="center"
+                          style={{ color: "#00B25D", paddingTop: "0.25em" }}
+                        >
+                          <FiberManualRecord style={{ fontSize: "0.5em" }} />{" "}
+                          Connected
+                        </Typography>
+                        <Grid
+                          container
+                          alignItems="center"
+                          justifyContent="center"
+                        >
+                          <img
+                            src="../assets/google-meet.png"
+                            style={{ height: "1.25em", marginTop: "1em" }}
+                          />
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Grid
+                        style={{
+                          background: "rgba(30, 206, 122, 0.1)",
+                          width: "100%",
+                          border: "2px solid #00B25D",
+                          height: "5.5em",
+                          borderRadius: "3px",
+                          boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.25)",
+                        }}
+                      >
+                        <Typography
+                          align="center"
+                          style={{ color: "#00B25D", paddingTop: "0.25em" }}
+                        >
+                          <FiberManualRecord style={{ fontSize: "0.5em" }} />{" "}
+                          Connected
+                        </Typography>
+                        <Grid
+                          container
+                          alignItems="center"
+                          justifyContent="center"
+                        >
+                          <img
+                            src="../assets/zoom.png"
+                            style={{ height: "1.5em", marginTop: "1em" }}
+                          />
+                        </Grid>
+                      </Grid>
+                    </Grid>
                   </Grid>
 
-                </Grid>
-                <Grid item xs={6}>
-                  <Grid style={{ background: "rgba(30, 206, 122, 0.1)", width: "100%", border: "2px solid #00B25D", height: "5.5em", borderRadius: "3px", boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.25)" }}>
-                    <Typography align="center" style={{ color: "#00B25D", paddingTop: "0.25em" }}><FiberManualRecord style={{ fontSize: "0.5em" }} /> Connected</Typography>
-                    <Grid container alignItems="center" justifyContent="center"><img src='../assets/zoom.png' style={{ height: "1.5em", marginTop: "1em" }} /></Grid>
+                  <Grid
+                    style={{
+                      background: "rgba(255, 206, 49, 0.17)",
+                      width: "100%",
+                      border: "2px solid #FFCE31",
+                      borderRadius: "3px",
+                      marginTop: "1.25em",
+                      padding: "1em",
+                    }}
+                  >
+                    NOTE: By connecting accounts you allow google to manage
+                    calendar/google-meet
                   </Grid>
                 </Grid>
-              </Grid>
-
-              <Grid style={{ background: "rgba(255, 206, 49, 0.17)", width: "100%", border: "2px solid #FFCE31", borderRadius: "3px", marginTop: "1.25em", padding: "1em" }}>
-                NOTE: By connecting accounts you allow google to manage calendar/google-meet
-              </Grid>
-
-            </Grid>
+              </>
+            ) : (
+              <>
+                <Grid
+                  container
+                  justifyContent="center"
+                  className={classes.customerProfileVendorDetails}
+                >
+                  <Typography
+                    className={`${globalClasses.boldSixHundred} ${classes.publicProfileName}`}
+                    gutterBottom
+                  >
+                    {profileData.name}
+                  </Typography>
+                  <Grid>
+                    <Grid
+                      container
+                      alignItems="center"
+                      className={classes.publicVendorDetailsRowContainer}
+                    >
+                      <WorkOutline
+                        className={classes.publicVendorDetailsRowLogo}
+                      />
+                      {profileData.occupation}
+                    </Grid>
+                    <Grid
+                      container
+                      alignItems="center"
+                      className={classes.publicVendorDetailsRowContainer}
+                    >
+                      <MailOutlined
+                        className={classes.publicVendorDetailsRowLogo}
+                      />{" "}
+                      {profileData.email}
+                    </Grid>
+                    <Grid
+                      container
+                      alignItems="center"
+                      className={classes.publicVendorDetailsRowContainer}
+                    >
+                      <LocationOnOutlined
+                        className={classes.publicVendorDetailsRowLogo}
+                      />{" "}
+                      {profileData.location}
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </>
+            )}
           </Grid>
         </Grid>
-      </form >
-    </Grid >
+      </form>
+    </Grid>
   );
 }
 

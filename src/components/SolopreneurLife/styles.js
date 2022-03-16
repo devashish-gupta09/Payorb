@@ -9,12 +9,12 @@ export const styles = makeStyles((theme) => ({
       padding: "2em 1em",
     },
   },
-  mainTitle:{
-      fontWeight:"bold",
-      fontSize:"2.1em",
-      [theme.breakpoints.down("sm")]: {
-        fontSize:"1.8em"
-      },
+  mainTitle: {
+    fontWeight: "bold",
+    fontSize: "2.1em",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1.8em",
+    },
   },
   image: {
     width: "50em",
@@ -31,8 +31,8 @@ export const styles = makeStyles((theme) => ({
   title: {
     color: "#000000",
     alignItems: "center",
-    textAlign:"center",
-    fontWeight:"bold",
+    textAlign: "center",
+    fontWeight: "bold",
     [theme.breakpoints.down("sm")]: {
       padding: "1em -0.2em",
     },
@@ -44,22 +44,22 @@ export const styles = makeStyles((theme) => ({
       padding: "1em",
     },
   },
-  divider:{
+  divider: {
     color: "#00D4FF",
     backgroundColor: "#00D4FF",
     height: "0.3em",
     width: "5em",
-    marginBottom:"1em",
-    [theme.breakpoints.down("sm")]:{
-      width:"4em",
+    marginBottom: "1em",
+    [theme.breakpoints.down("sm")]: {
+      width: "4em",
       height: "0.2em",
-    }
+    },
   },
   buttonContain: {
     position: "relative",
     width: "100%",
     height: "3em",
-    top:"1.3em",
+    top: "1.3em",
     [theme.breakpoints.down("sm")]: {
       justifyContent: "center",
     },
@@ -80,5 +80,4 @@ export const styles = makeStyles((theme) => ({
       padding: "0.75em 1.5em",
     },
   },
-  
 }));

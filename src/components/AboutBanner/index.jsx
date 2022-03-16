@@ -9,16 +9,16 @@ function AboutBanner({ content }) {
   const classes = styles();
   return (
     <Grid className={classes.container}>
-       <Grid className={classes.textContainer}>
-          <Typography variant={"h2"} className={classes.titleSection}>
-             {content.titleSection1}
-            <Typography variant={"h2"} className={classes.aquaText}>
+      <Grid className={classes.textContainer}>
+        <Typography variant={"h2"} className={classes.titleSection}>
+          {content.titleSection1}
+          <Typography variant={"h2"} className={classes.aquaText}>
             {content.titleSection2}
-            </Typography>
           </Typography>
+        </Typography>
         <Typography variant={"h6"} className={classes.descriptionText}>
           {content.description}
-        </Typography>      
+        </Typography>
       </Grid>
     </Grid>
   );

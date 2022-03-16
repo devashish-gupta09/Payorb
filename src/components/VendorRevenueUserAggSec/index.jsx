@@ -55,40 +55,48 @@ function VendorRevenueUserAggSec() {
           Dashboard
         </Typography>
 
-        <Grid container className={classes.fix} spacing={2}>
-          <Grid item sm={6} container spacing={matches ? 0 : 3}>
-            <Grid item xs={6} className={classes.leftContainer}>
+      
+          <Grid item sm={8} xs={12} container spacing={matches ? 1 : 3} className={classes.fix}>
+            <Grid item xs={12} sm={5} className={`${classes.box} ${classes.leftTopContainer}`}>
+      
               <ValueCard
-                title={`Rs. ${numeral(stats.totalRevenue).format("0,0")}`}
+                title={`₹ ${numeral(stats.totalRevenue).format("0,0")}`}
                 subTitle={"Total Revenue"}
+                photo={"/assets/vendorDashboard/yearlyTotalRevenue.svg"}
+                bottomText={"This year"}
               />
+
             </Grid>
-            <Grid item xs={6} className={classes.rightContainer}>
+            <Grid item xs={12} sm={5} className={`${classes.box} ${classes.rightTopContainer}`}>
               <ValueCard
                 title={`${numeral(stats.totalCustomers).format("0,0")}`}
                 subTitle={"Total Bookings"}
+                photo={"/assets/vendorDashboard/yearlyTotalBookings.svg"}
+                bottomText={"This year"}
               />
             </Grid>
-          </Grid>
-          <Grid container item sm={6} spacing={matches ? 0 : 3}>
-            <Grid item xs={6} className={classes.leftContainer}>
+            <Grid item xs={12} sm={5} className={`${classes.box} ${classes.leftBottomContainer}`}>
               <ValueCard
-                title={`Rs. ${numeral(stats.lastMonthSummary.revenue).format(
+                title={`₹ ${numeral(stats.lastMonthSummary.revenue).format(
                   "0,0"
                 )}`}
                 subTitle={`Total Revenue (last month)`}
+                photo={"/assets/vendorDashboard/totalRevenue.svg"}
+                bottomText={"Last Month"}
               />
             </Grid>
-            <Grid item xs={6} className={classes.rightContainer}>
+            <Grid item xs={12} sm={5} className={`${classes.box} ${classes.rightBottomContainer}`}>
               <ValueCard
                 title={`${numeral(stats.lastMonthSummary.customers).format(
                   "0,0"
                 )}`}
                 subTitle={"Total bookings (last month)"}
+                photo={"/assets/vendorDashboard/totalBookings.svg"}
+                bottomText={"Last Month"}
               />
             </Grid>
           </Grid>
-        </Grid>
+        
       </Grid>
     );
   }
@@ -106,13 +114,33 @@ const styles = makeStyles((theme) => ({
   },
   fix: {
     // padding: "0.5em",
+    justifyContent:"center",
   },
-  leftContainer: {
+  box:{
+   boxShadow:" 0px 0px 10px rgba(0, 0, 0, 0.1)",
+   borderRadius:"0.4em",
+   margin:"0.4em", 
+  },
+  leftTopContainer: {
+    borderTop: "0.3em solid #465DD6",
     [theme.breakpoints.down("sm")]: {
       paddingRight: "0.5em",
     },
   },
-  rightContainer: {
+  rightTopContainer: {
+    borderTop: "0.3em solid #FFB648",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "0.5em",
+    },
+  },
+  leftBottomContainer: {
+    borderTop: "0.3em solid #FF007F",
+    [theme.breakpoints.down("sm")]: {
+      paddingRight: "0.5em",
+    },
+  },
+  rightBottomContainer: {
+    borderTop: "0.3em solid #4BDE97",
     [theme.breakpoints.down("sm")]: {
       paddingLeft: "0.5em",
     },

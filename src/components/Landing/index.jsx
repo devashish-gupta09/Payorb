@@ -1,5 +1,6 @@
 import { makeStyles, Grid } from "@material-ui/core";
 import React from "react";
+import FaqsSection from "../FAQsSection";
 
 import FeatureSectionHome from "../FeatureSectionHome";
 import HomeSection from "../HomeSection";
@@ -22,6 +23,7 @@ function Landing({ content }) {
       <FeatureSectionHome content={content.feature} />
       <WhyChooseUsSection content={content.whyChooseUs} />
       <PricingSection content={content.pricing} />
+      <FaqsSection content={content.faqs} />
       {/* <UserRegistrationSection content={content.userRegistration} />
       <EventRegistrationSection content={content.eventRegistration} /> */}
       {/* <ClientReviewSection content={content.clientReview} /> */}

@@ -7,7 +7,14 @@ import {
   Tooltip,
   Typography,
 } from "@material-ui/core";
-import { CloudUpload, Delete, DeleteOutline, Edit, Info, Movie } from "@material-ui/icons";
+import {
+  CloudUpload,
+  Delete,
+  DeleteOutline,
+  Edit,
+  Info,
+  Movie,
+} from "@material-ui/icons";
 import React from "react";
 import "cropperjs/dist/cropper.css";
 
@@ -23,7 +30,7 @@ import { withStyles } from "@material-ui/styles";
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
     backgroundColor: theme.palette.common.white,
-    color: 'rgba(0, 0, 0, 0.87)',
+    color: "rgba(0, 0, 0, 0.87)",
     boxShadow: theme.shadows[1],
     fontSize: "0.75em",
   },
@@ -125,26 +132,33 @@ function VideoUpload({ videoProps, vendor }) {
 
       <div className={classes.imageContainer}>
         {vendor && (
-          <div
-            className={classes.editDiv}
-          >
-            <LightTooltip arrow={true} title={
-              <Grid>
-                <ul>
-                  <li>Size of the video should be less than 5 MB</li>
-                  <li>
-                    Duration of video should be less than <b>1:00 mins</b>
-                  </li>
-                </ul>
-              </Grid>
-            }>
+          <div className={classes.editDiv}>
+            <LightTooltip
+              arrow={true}
+              title={
+                <Grid>
+                  <ul>
+                    <li>Size of the video should be less than 5 MB</li>
+                    <li>
+                      Duration of video should be less than <b>1:00 mins</b>
+                    </li>
+                  </ul>
+                </Grid>
+              }
+            >
               <Info />
             </LightTooltip>
-            <Edit style={{ color: "#008EFF", marginLeft: "0.5em" }} onClick={() => {
-              handleDialog(true);
-            }} />
-            {savedUrl || videoProps.src ? <DeleteOutline style={{ color: "#FC6767", marginLeft: "0.5em" }} /> : null}
-
+            <Edit
+              style={{ color: "#008EFF", marginLeft: "0.5em" }}
+              onClick={() => {
+                handleDialog(true);
+              }}
+            />
+            {savedUrl || videoProps.src ? (
+              <DeleteOutline
+                style={{ color: "#FC6767", marginLeft: "0.5em" }}
+              />
+            ) : null}
           </div>
         )}
 
@@ -204,7 +218,7 @@ const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       border: 0,
       borderRadius: "8px",
-      minHeight: "fit-content"
+      minHeight: "fit-content",
     },
   },
   videoPreview: {

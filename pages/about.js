@@ -12,11 +12,10 @@ import {
 
 export default function About({ about }) {
   return (
-      <Grid backgroundColor={"blue"}>
+    <Grid backgroundColor={"blue"}>
       <PageTitle title="Payorb | About Us" />
       <AboutView content={about} />
-      </Grid>
-
+    </Grid>
   );
 }
 
@@ -24,8 +23,8 @@ export async function getStaticProps({ params, preview = null }) {
   const home = await getHomeContent();
   const vision = await getVision();
   const story = await getPayOrbStory();
-  const founders= await getFoundersData();
-  const advisors= await getAdvisorsData();
+  const founders = await getFoundersData();
+  const advisors = await getAdvisorsData();
 
   return {
     props: {

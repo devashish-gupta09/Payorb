@@ -32,11 +32,13 @@ function ReadMore({ percent, text, textProps }) {
 const style = makeStyles(() => ({
   readMore: {
     color: "blue",
-    textAlign: "justify",
     cursor: "pointer",
+    fontSize: "1em",
+    marginTop: "0.24em"
   },
   disclaimer: {
-    textAlign: "justify",
+    fontSize: "1em",
+    marginTop: "0.24em"
   },
 }));
 

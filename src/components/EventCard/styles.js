@@ -101,14 +101,16 @@ export const styles = makeStyles((theme) => ({
     fontSize: "1em"
   },
   bottomTextContainer: {
-    marginTop: "0.5em"
+    marginTop: "0.5em",
   },
   bottomText: {
     fontSize: "0.6em",
-    marginTop: "0.5em",
     fontWeight: "bold",
+    
+    display:"flex",
+    //alignContent:"center",
+    alignSelf:"center",
     alignItems:"center",
-    //textAlign: "center"
   },
   topBannerButton: {
     borderRadius: "2em",
@@ -140,15 +142,17 @@ export const styles = makeStyles((theme) => ({
     marginTop: "-2.2em",
     marginBottom: "0.3em",
     //left
-    padding: "0 0.5em 0 0.5em"
+    padding: "0 0.5em 0 1.5em",
+    alignItems:"center",
+
   },
   icon: {
     background: "white",
     color: "#008EFF",
     borderRadius: "2em",
-    fontSize: "medium",
     padding: "0.2em",
-    marginTop: "0.2em"
+    marginTop: "0.2em",
+    marginRight:"0.2em",
   },
   deleteIcon: {
     color: "#FC6767"

@@ -30,8 +30,8 @@ export const styles = makeStyles((theme) => ({
     width: "5%",
     [theme.breakpoints.down("sm")]: {
       width: "35%",
-      marginLeft:"1em",
-      marginTop:"0.8em",
+      marginLeft: "1em",
+      marginTop: "0.8em",
     },
   },
 }));

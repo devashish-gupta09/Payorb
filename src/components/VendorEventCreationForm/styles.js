@@ -7,7 +7,7 @@ export const styles = makeStyles((theme) => ({
   container: {
     background: "white",
     borderRadius: "10px",
-    padding: "1em 2em",
+    padding: "2em 2em 1em 2em",
     [theme.breakpoints.down("sm")]: {
       padding: "1em",
     },
@@ -16,16 +16,19 @@ export const styles = makeStyles((theme) => ({
     height: "100%",
   },
   leftContainer: {
-    padding: "2em",
+    padding: "0.5em 2em 0 2em",
     [theme.breakpoints.down("sm")]: {
       padding: "0",
     },
   },
   rightContainer: {
-    padding: "2em 2em 2em 0",
+    padding: "0em 2em",
     [theme.breakpoints.down("sm")]: {
       padding: "2em 0",
     },
+  },
+  typeContainer: {
+    border: "4px solid",
   },
   modal: {
     padding: "5em",
@@ -34,15 +37,14 @@ export const styles = makeStyles((theme) => ({
     },
   },
   textInput: {
-    margin: "0.75em 0",
-    color: "#BDBDBD",
+    borderRadius: "4px",
     [theme.breakpoints.down("sm")]: {
       marginBottom: "0.75em",
       width: "100%",
     },
   },
   titleContainer: {
-    padding: "1em 2em 0 2em",
+    paddingBottom: "1em",
     [theme.breakpoints.down("sm")]: {
       padding: "0 0 2em 0",
     },
@@ -54,6 +56,7 @@ export const styles = makeStyles((theme) => ({
   },
   editTitle: {
     paddingLeft: "0.5em",
+    fontWeight: "bold",
     [theme.breakpoints.down("sm")]: {
       paddingLeft: "1em",
     },

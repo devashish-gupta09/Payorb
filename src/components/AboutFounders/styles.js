@@ -12,49 +12,48 @@ export const styles = makeStyles((theme) => ({
       padding: "2em 1em",
     },
   },
-  mainTitle:{
-      fontWeight:"bold",
-      fontSize:"2.3em",
+  mainTitle: {
+    fontWeight: "bold",
+    fontSize: "2.3em",
   },
   title: {
     color: "#000000",
     alignItems: "center",
-    fontWeight:"bold",
+    fontWeight: "bold",
     [theme.breakpoints.down("sm")]: {
       padding: "1em -0.2em",
     },
   },
-  founderContainer:{
-    marginTop:"2em",
-    justifyContent:"center",
-    alignItems:"center",
-    textAlign:"center",
-
+  founderContainer: {
+    marginTop: "2em",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
   },
-  founderName:{
-      fontSize:"1.3em",
-      fontWeight:"bolder",
+  founderName: {
+    fontSize: "1.3em",
+    fontWeight: "bolder",
   },
-  founderTitle:{
-      fontSize:"1em",
-      fontWeight:"300",
+  founderTitle: {
+    fontSize: "1em",
+    fontWeight: "300",
   },
-  founder:{
-    [theme.breakpoints.down("sm")]:{
-      marginTop:"1.3em",  
-    }
+  founder: {
+    [theme.breakpoints.down("sm")]: {
+      marginTop: "1.3em",
+    },
   },
-  divider:{
+  divider: {
     color: "#00D4FF",
     backgroundColor: "#00D4FF",
     height: "0.3em",
     width: "7vw",
-    marginBottom:"1em",
-    [theme.breakpoints.down("sm")]:{
-      color:"black",
-      backgroundColor:"black",
-      width:"4em",
+    marginBottom: "1em",
+    [theme.breakpoints.down("sm")]: {
+      color: "black",
+      backgroundColor: "black",
+      width: "4em",
       height: "0.2em",
-    }
-  }
+    },
+  },
 }));

@@ -1,9 +1,15 @@
-import { Button, Drawer, Grid, Toolbar, Typography,Icon } from "@material-ui/core";
+import {
+  Button,
+  Drawer,
+  Grid,
+  Toolbar,
+  Typography,
+  Icon,
+} from "@material-ui/core";
 import { Close, Menu } from "@material-ui/icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-
 
 import { PAGE_PATHS } from "../../constants/paths";
 import {
@@ -35,7 +41,7 @@ function LandingHeader() {
   };
 
   return (
-    <CustomHeader >
+    <CustomHeader>
       <Drawer anchor={"left"} open={appMenu} onClose={toggleDrawer}>
         <Grid className={classes.drawerItemContainer}>
           <Grid
@@ -43,7 +49,6 @@ function LandingHeader() {
             justify={"space-between"}
             className={classes.drawerTitleContainer}
           >
-           
             <Logo redirectToHome={true} dark={true} width={"5em"} />
             <Typography className={classes.drawerClose} onClick={toggleDrawer}>
               <Close />
@@ -106,18 +111,21 @@ function LandingHeader() {
       </Drawer>
 
       <Toolbar>
-
-          <Grid className={classes.menuButtonContainer}>
-                  <Icon classeName={classes.iconRoot}>
-                  <img className={classes.imageIcon} src="/assets/menuBar.svg" onClick={toggleDrawer}/>
-                  </Icon>
-                  <Logo redirectToHome={true} dark={true} width={"6em"}></Logo>
-          </Grid>
+        <Grid className={classes.menuButtonContainer}>
+          <Icon classeName={classes.iconRoot}>
+            <img
+              className={classes.imageIcon}
+              src="/assets/menuBar.svg"
+              onClick={toggleDrawer}
+            />
+          </Icon>
+          <Logo redirectToHome={true} dark={true} width={"6em"}></Logo>
+        </Grid>
         <Grid container sm={12} justify="space-between" alignItems="center">
           {/* Will be replaced with logo */}
-          
+
           <Grid className={classes.desktop}>
-          <Logo redirectToHome={true} dark={true} width={"6em"}></Logo>
+            <Logo redirectToHome={true} dark={true} width={"6em"}></Logo>
           </Grid>
 
           <Grid
@@ -201,7 +209,6 @@ function LandingHeader() {
 
             <LandingHeaderProfile />
           </Grid>
-          
         </Grid>
       </Toolbar>
     </CustomHeader>

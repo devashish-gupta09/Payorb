@@ -5,12 +5,12 @@ export const styles = makeStyles((theme) => ({
     height: "90vh",
     position: "relative",
     overflowX: "hidden",
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down("sm")]: {
       height: "75vh",
       backgroundRepeat: "no-repeat",
       backgroundSize: "contain",
-      backgroundImage: "url(/assets/mobile-home-bg.png)"
-    }
+      backgroundImage: "url(/assets/mobile-home-bg.png)",
+    },
   },
   textContainer: {
     padding: "4em 4em 4em 4em",
@@ -32,7 +32,7 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.6em",
       textAlign: "center",
-      paddingLeft: "1.2em"
+      paddingLeft: "1.2em",
     },
   },
   titleSection1: {
@@ -56,7 +56,7 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       textAlign: "center",
       width: "100%",
-      fontSize: "1.5em"
+      fontSize: "1.5em",
     },
   },
   descriptionText: {
@@ -83,7 +83,6 @@ export const styles = makeStyles((theme) => ({
     bottom: "0",
     position: "absolute",
     height: "300px",
-    border: "2px solid green",
     [theme.breakpoints.down("sm")]: {
       width: "80vw !important",
       marginTop: "4rem",
@@ -113,7 +112,7 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       height: "20em",
       width: "100%",
-      right: "0"
+      right: "0",
     },
   },
   image: {
@@ -133,7 +132,7 @@ export const styles = makeStyles((theme) => ({
       justifyContent: "center",
       height: "fit-content",
       top: 0,
-      marginTop: "2em"
+      marginTop: "2em",
     },
   },
   buttonSpacing: {
@@ -164,8 +163,8 @@ export const styles = makeStyles((theme) => ({
     cursor: "pointer",
     paddingLeft: "0",
     [theme.breakpoints.down("sm")]: {
-      display: "none"
-    }
+      display: "none",
+    },
   },
   scrollIcon: {
     display: "inline-block",

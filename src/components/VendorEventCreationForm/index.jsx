@@ -21,6 +21,7 @@ import {
   Switch,
   DialogContentText,
 } from "@material-ui/core";
+import { CheckCircle } from "@material-ui/icons";
 import {
   KeyboardDatePicker,
   KeyboardTimePicker,
@@ -110,7 +111,6 @@ function VendorEventCreationForm({
   trialClass,
 }) {
   const classes = styles();
-  const globalClasses = globalStyles();
   const router = useRouter();
   const [dialog, setDialog] = React.useState({ display: false, text: "" });
   const [dateError, setDateError] = React.useState(null);
@@ -120,7 +120,6 @@ function VendorEventCreationForm({
   const [croppedImg, setCroppedImage] = React.useState();
   const theme = useTheme();
   const [eventsLoading, setEventsLoading] = React.useState(false);
-  const [urlIsValid, setUrlIsValid] = React.useState(true);
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
   const { Alert, showAlert } = useAlertSnackbar();
   const [loader, setLoader] = React.useState(false);
@@ -438,6 +437,7 @@ function VendorEventCreationForm({
     const hours = parseFloat(parseFloat(event.target.value).toFixed(1));
     formik.setFieldValue("slotDuration", hours);
   };
+
   React.useEffect(() => {
     if (event && clone && !edit) {
       formik.setFieldValue(
@@ -469,7 +469,15 @@ function VendorEventCreationForm({
   }, [edit]);
 
   return (
-    <Grid style={{ width: "100%" }}>
+    <Grid
+      style={{
+        width: "100%",
+        padding: "0em 10%",
+        background: "url(/assets/create-event-bg.svg)",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       <PageTitle title="Payorb | Create Event" />
       {Alert()}
       <PostEventCreationDialog
@@ -484,48 +492,53 @@ function VendorEventCreationForm({
             <Typography>{dialog.text}</Typography>
           </DialogContent>
         </Dialog>
+
         <Grid
           container
-          justify="space-between"
-          alignItems="center"
-          className={classes.titleContainer}
+          style={{ width: "100%", padding: "4em" }}
+          alignItems="flex-start"
         >
-          {edit ? (
-            <Typography
-              className={`${globalStyles.bold} ${classes.editTitle}`}
-              variant={"h3"}
-            >
-              Edit Event
-            </Typography>
-          ) : clone ? (
-            <Grid>
-              <Typography className={`${globalStyles.bold}`} variant={"h3"}>
-                Clone Event
-              </Typography>
-            </Grid>
-          ) : (
-            <Grid>
-              <Typography className={`${globalStyles.bold}`} variant={"h3"}>
-                Create Event
-              </Typography>
-            </Grid>
-          )}
-          <Grid>
-            <Button
-              style={{
-                background: "white",
-                padding: "0.5em 1.5em",
-                borderRadius: "10px",
-              }}
-              onClick={handleCancel}
-            >
-              Cancel
-            </Button>
-          </Grid>
-        </Grid>
-        <Grid container style={{ width: "100%" }} alignItems="stretch">
           <Grid item sm={8} className={classes.leftContainer}>
-            <Grid container className={classes.container}>
+            <Grid
+              container
+              className={classes.container}
+              alignItems="stretch"
+              spacing="2"
+            >
+              <Grid
+                container
+                justify="space-between"
+                alignItems="center"
+                className={classes.titleContainer}
+              >
+                {edit ? (
+                  <Typography
+                    className={`${globalStyles.bold} ${classes.editTitle}`}
+                    variant={"h5"}
+                  >
+                    Edit Event
+                  </Typography>
+                ) : clone ? (
+                  <Grid>
+                    <Typography
+                      className={`${globalStyles.bold}`}
+                      variant={"h5"}
+                    >
+                      Clone Event
+                    </Typography>
+                  </Grid>
+                ) : (
+                  <Grid>
+                    <Typography
+                      className={`${globalStyles.boldSixHundred}`}
+                      variant={"h5"}
+                    >
+                      Create Event
+                    </Typography>
+                  </Grid>
+                )}
+              </Grid>
+
               {/* EVENT NAME FIELD */}
               <Grid item sm={12} container>
                 <TextField
@@ -533,7 +546,11 @@ function VendorEventCreationForm({
                   className={classes.textInput}
                   id="name"
                   label={"Event Name"}
-                  variant="outlined"
+                  variant="filled"
+                  InputProps={{
+                    style: { background: "#ECEDF4", borderRadius: "4px" },
+                    disableUnderline: true,
+                  }}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.name}
@@ -587,83 +604,24 @@ function VendorEventCreationForm({
                 )
               ) : null}
 
-              {/* EVENT TYPE FIELD */}
-              <Grid container item sm={12} spacing={3} alignItems="center">
-                <Grid
-                  item
-                  sm={7}
-                  style={{ width: "100%", marginBottom: "0.5em" }}
+              {/* EVENT TYPE AND CATEGORY FIELD */}
+              <Grid item sm={6} style={{ width: "100%" }}>
+                <EventCategoryField
+                  formik={formik}
+                  checkDisabled={checkDisabled}
+                />
+              </Grid>
+              <Grid item sm={6} style={{ width: "100%" }}>
+                <EventTypeSelect
+                  formik={formik}
+                  checkDisabled={checkDisabled}
+                  handleEventTypeChange={handleEventTypeChange}
+                />
+                <FormHelperText
+                  error={formik.touched.type && Boolean(formik.errors.type)}
                 >
-                  <FormLabel>Event Type</FormLabel>
-
-                  <Select
-                    displayEmpty
-                    variant="outlined"
-                    id="type"
-                    value={formik.values.type}
-                    onChange={handleEventTypeChange}
-                    style={{ width: "100%", marginTop: "0.5em" }}
-                    error={formik.touched.type && Boolean(formik.errors.type)}
-                    disabled={checkDisabled()}
-                  >
-                    <MenuItem value={""}>
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={EVENT_TYPES.ONE_ON_ONE}>
-                      {"One on One"}
-                    </MenuItem>
-                    <MenuItem value={EVENT_TYPES.ONE_TIME}>
-                      {"One time"}
-                    </MenuItem>
-                  </Select>
-                  <FormHelperText
-                    error={formik.touched.type && Boolean(formik.errors.type)}
-                  >
-                    {formik.touched.type && formik.errors.type}
-                  </FormHelperText>
-
-                  {formik.values.type === EVENT_TYPES.ONE_ON_ONE && (
-                    <Grid>
-                      <Tooltip
-                        title={
-                          "Please choose a valid slot duration for your event. [Eg: 1, 2, 1.5 etc]. Clients would be able book these slots."
-                        }
-                      >
-                        <TextField
-                          fullWidth
-                          className={classes.textInput}
-                          type="number"
-                          id="slotDuration"
-                          label={"Slot duration (in hrs)"}
-                          variant="outlined"
-                          onChange={handleSlotDurationChange}
-                          onBlur={formik.handleBlur}
-                          value={formik.values.slotDuration}
-                          error={
-                            formik.touched.slotDuration &&
-                            Boolean(formik.errors.slotDuration)
-                          }
-                          helperText={
-                            formik.touched.slotDuration &&
-                            formik.errors.slotDuration
-                          }
-                        />
-                      </Tooltip>
-                    </Grid>
-                  )}
-                </Grid>
-                <Grid item sm={5}>
-                  <Typography className={globalClasses.bold500} gutterBottom>
-                    {formik.values.type
-                      .toLocaleUpperCase()
-                      .split("_")
-                      .toString()
-                      .replaceAll(",", " ") || "Please select an event"}
-                  </Typography>
-                  <Typography>
-                    {getEventTypeDescription(formik.values.type)}
-                  </Typography>
-                </Grid>
+                  {formik.touched.type && formik.errors.type}
+                </FormHelperText>
               </Grid>
 
               {/* EVENT DATES */}
@@ -689,67 +647,12 @@ function VendorEventCreationForm({
                 )}
               </Grid>
               {/* EVENT DATES */}
-              <Grid item sm={12} container style={{ width: "100%" }}>
+              {/* <Grid item sm={12} container style={{ width: "100%" }}>
                 <p style={{ color: "#ff0000" }}>{dateError}</p>
-              </Grid>
-              {/* LOCATION AND CATEGORY */}
-              <Grid item sm={12}>
-                <Grid container spacing={3} alignItems="flex-start">
-                  {/* CATEGORY */}
-                  <Grid item sm={6} style={{ width: "100%" }}>
-                    <EventCategoryField
-                      formik={formik}
-                      checkDisabled={checkDisabled}
-                    />
-                  </Grid>
+              </Grid> */}
 
-                  {/* LOCATION */}
-                  {formik.values.mode !== EVENT_MODES.ONLINE ? (
-                    <Grid item sm={6} style={{ width: "100%" }}>
-                      <FormLabel>Location</FormLabel>
-
-                      <TextField
-                        fullWidth
-                        className={classes.textInput}
-                        id="location"
-                        variant="outlined"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.location}
-                        error={
-                          formik.touched.location &&
-                          Boolean(formik.errors.location)
-                        }
-                        helperText={
-                          formik.touched.location && formik.errors.location
-                        }
-                        disabled={checkDisabled()}
-                      />
-                    </Grid>
-                  ) : null}
-                </Grid>
-              </Grid>
-
-              {/* EVENT ADDRESS FIELD */}
-              {formik.values.mode !== EVENT_MODES.ONLINE ? (
-                <Grid item sm={12} container>
-                  <TextField
-                    fullWidth
-                    className={classes.textInput}
-                    id="address"
-                    label={"Event Address"}
-                    variant="outlined"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.address}
-                    error={
-                      formik.touched.address && Boolean(formik.errors.address)
-                    }
-                    helperText={formik.touched.address && formik.errors.address}
-                  />
-                </Grid>
-              ) : null}
               {/* <Grid item sm={12} container spacing={2}> */}
+
               {/* EVENT DESCRIPTION FIELD */}
               <Grid item sm={12} style={{ width: "100%" }}>
                 <TextField
@@ -766,6 +669,9 @@ function VendorEventCreationForm({
                     formik.touched.description &&
                     Boolean(formik.errors.description)
                   }
+                  InputProps={{
+                    style: { background: "#ECEDF4" },
+                  }}
                   helperText={
                     formik.touched.description && formik.errors.description
                   }
@@ -789,16 +695,11 @@ function VendorEventCreationForm({
                     formik.touched.privateMessage &&
                     Boolean(formik.errors.privateMessage)
                   }
-                  helperText={
-                    formik.errors.privateMessage
-                      ? formik.errors.privateMessage
-                      : "Customers will receive this message on email after they complete their purchase"
-                  }
                   rows={customMessageRows}
                   FormHelperTextProps={{ className: classes.helperText }}
                 />
               </Grid>
-              {/* </Grid> */}
+
               {/* EVENT MODE AND TICKET PRICE */}
               <Grid item sm={12} container>
                 {/* EVENT MODE */}
@@ -816,12 +717,12 @@ function VendorEventCreationForm({
                       <FormControlLabel
                         value={EVENT_MODES.ONLINE}
                         control={<Radio />}
-                        label="Online"
+                        label="Online Event"
                       />
                       <FormControlLabel
                         value={EVENT_MODES.OFFLINE}
                         control={<Radio />}
-                        label="Offline"
+                        label="Offline Event"
                       />
                     </RadioGroup>
                   </FormControl>
@@ -844,139 +745,146 @@ function VendorEventCreationForm({
                     disabled={formik.values.trialClass || checkDisabled()}
                   />
                 </Grid>
-                <Grid item sm={12}>
-                  <Grid container alignItems="center">
-                    <Grid item sm={6}>
-                      <FormControlLabel
-                        control={
-                          <Switch
-                            id="earlyBird"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            checked={formik.values.earlyBird}
-                            error={
-                              formik.touched.earlyBird &&
-                              Boolean(formik.errors.earlyBird)
-                            }
-                            helperText={
-                              formik.touched.earlyBird &&
-                              formik.errors.earlyBird
-                            }
-                            disabled={
-                              checkDisabled() || formik.values.trialClass
-                            }
-                          />
-                        }
-                        label={"Early Bird"}
-                      />
-                    </Grid>
-                    {formik.values.earlyBird ? (
-                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <Grid
-                          item
-                          sm={6}
-                          container
-                          spacing={1}
-                          alignItems="center"
-                        >
-                          <Grid item xs={6}>
-                            <KeyboardDatePicker
-                              disablePast={true}
-                              KeyboardButtonProps={{
-                                style: {
-                                  paddingLeft: "0.2em",
-                                  paddingRight: "0.4em",
-                                },
-                              }}
-                              InputProps={{
-                                style: {
-                                  padding: 0,
-                                },
-                              }}
-                              inputVariant="outlined"
-                              margin="normal"
-                              id="earlyBirdEndDate"
-                              label="Offer End Date"
-                              format="dd/MM/yyyy"
-                              value={formik.values.earlyBirdDeadline}
-                              onChange={handleEarlyBirdDeadlineChange}
-                              helperText={
-                                formik.touched.earlyBirdDeadline &&
-                                formik.errors.earlyBirdDeadline
-                              }
-                              error={
-                                formik.touched.earlyBirdDeadline &&
-                                Boolean(formik.errors.earlyBirdDeadline)
-                              }
-                              disabled={checkDisabled()}
-                            />
+              </Grid>
 
-                            {/* </FormControl> */}
-                          </Grid>
-                          <Grid item xs={6}>
-                            <KeyboardTimePicker
-                              KeyboardButtonProps={{
-                                style: {
-                                  paddingLeft: "0.2em",
-                                  paddingRight: "0.4em",
-                                },
-                              }}
-                              InputProps={{
-                                style: {
-                                  padding: 0,
-                                },
-                              }}
-                              inputVariant="outlined"
-                              margin="normal"
-                              id="time-picker"
-                              label="Offer End Time"
-                              value={formik.values.earlyBirdDeadline}
-                              onChange={handleEarlyBirdDeadlineChange}
-                              helperText={
-                                formik.touched.earlyBirdDeadline &&
-                                formik.errors.earlyBirdDeadline
-                              }
-                              error={
-                                formik.touched.earlyBirdDeadline &&
-                                Boolean(formik.errors.earlyBirdDeadline)
-                              }
-                              disabled={checkDisabled()}
-                            />
-                          </Grid>
-                        </Grid>
-                      </MuiPickersUtilsProvider>
-                    ) : null}
-                  </Grid>
+              {/* ------------------------------------------------------------ */}
+
+              {/* EVENT ADDRESS FIELD */}
+              {formik.values.mode !== EVENT_MODES.ONLINE ? (
+                <Grid item sm={12} container>
+                  <TextField
+                    fullWidth
+                    className={classes.textInput}
+                    id="address"
+                    label={"Event Address"}
+                    variant="outlined"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.address}
+                    error={
+                      formik.touched.address && Boolean(formik.errors.address)
+                    }
+                    helperText={formik.touched.address && formik.errors.address}
+                  />
                 </Grid>
-                <Grid item sm={12}>
-                  <Grid container spacing={3} alignItems="center">
-                    {formik.values.earlyBird ? (
-                      <>
-                        <Grid item sm={6}>
-                          <TextField
-                            type="number"
-                            fullWidth
-                            className={classes.textInput}
-                            id="earlyBirdPrice"
-                            label={"Early bird price"}
-                            variant="outlined"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.earlyBirdPrice}
-                            error={
-                              formik.touched.earlyBirdPrice &&
-                              Boolean(formik.errors.earlyBirdPrice)
-                            }
-                            helperText={
-                              formik.touched.earlyBirdPrice &&
-                              formik.errors.earlyBirdPrice
-                            }
-                          />
-                        </Grid>
-                      </>
-                    ) : null}
-                  </Grid>
-                </Grid>
+              ) : null}
+
+              {/* Early Bird */}
+
+              <Grid item container sm={8} alignItems="center">
+                <b>Early Bird</b>
+                <Switch
+                  id="earlyBird"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  checked={formik.values.earlyBird}
+                  error={
+                    formik.touched.earlyBird && Boolean(formik.errors.earlyBird)
+                  }
+                  helperText={
+                    formik.touched.earlyBird && formik.errors.earlyBird
+                  }
+                  disabled={checkDisabled() || formik.values.trialClass}
+                />
+              </Grid>
+              <Grid item sm={4}>
+                {formik.values.earlyBird ? (
+                  <TextField
+                    type="number"
+                    fullWidth
+                    className={classes.textInput}
+                    id="earlyBirdPrice"
+                    label={"Early bird price"}
+                    variant="outlined"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.earlyBirdPrice}
+                    error={
+                      formik.touched.earlyBirdPrice &&
+                      Boolean(formik.errors.earlyBirdPrice)
+                    }
+                    helperText={
+                      formik.touched.earlyBirdPrice &&
+                      formik.errors.earlyBirdPrice
+                    }
+                  />
+                ) : null}
+              </Grid>
+              <Grid item sm={8}>
+                {formik.values.earlyBird ? (
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <Grid
+                      item
+                      sm={12}
+                      container
+                      spacing={1}
+                      alignItems="center"
+                    >
+                      <Grid item xs={6}>
+                        <KeyboardDatePicker
+                          disablePast={true}
+                          KeyboardButtonProps={{
+                            style: {
+                              paddingLeft: "0.2em",
+                              paddingRight: "0.4em",
+                            },
+                          }}
+                          InputProps={{
+                            style: {
+                              padding: 0,
+                            },
+                          }}
+                          inputVariant="outlined"
+                          margin="normal"
+                          id="earlyBirdEndDate"
+                          label="Offer End Date"
+                          format="dd/MM/yyyy"
+                          value={formik.values.earlyBirdDeadline}
+                          onChange={handleEarlyBirdDeadlineChange}
+                          helperText={
+                            formik.touched.earlyBirdDeadline &&
+                            formik.errors.earlyBirdDeadline
+                          }
+                          error={
+                            formik.touched.earlyBirdDeadline &&
+                            Boolean(formik.errors.earlyBirdDeadline)
+                          }
+                          disabled={checkDisabled()}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <KeyboardTimePicker
+                          KeyboardButtonProps={{
+                            style: {
+                              paddingLeft: "0.2em",
+                              paddingRight: "0.4em",
+                            },
+                          }}
+                          InputProps={{
+                            style: {
+                              padding: 0,
+                            },
+                          }}
+                          inputVariant="outlined"
+                          margin="normal"
+                          id="time-picker"
+                          label="Offer End Time"
+                          value={formik.values.earlyBirdDeadline}
+                          onChange={handleEarlyBirdDeadlineChange}
+                          helperText={
+                            formik.touched.earlyBirdDeadline &&
+                            formik.errors.earlyBirdDeadline
+                          }
+                          error={
+                            formik.touched.earlyBirdDeadline &&
+                            Boolean(formik.errors.earlyBirdDeadline)
+                          }
+                          disabled={checkDisabled()}
+                        />
+                      </Grid>
+                    </Grid>
+                  </MuiPickersUtilsProvider>
+                ) : null}
               </Grid>
             </Grid>
           </Grid>
@@ -984,7 +892,11 @@ function VendorEventCreationForm({
           <Grid item sm={4} className={classes.rightContainer}>
             <Grid className={`${classes.container} ${classes.containerSave}`}>
               <FormControl variant="outlined">
-                <FormLabel>Upload Event Cover Photo</FormLabel>
+                <FormLabel>
+                  <Typography variant="h6" style={{ fontWeight: "bold" }}>
+                    Event Cover
+                  </Typography>
+                </FormLabel>
 
                 <ImageEventUpload
                   croppedImg={croppedImg}
@@ -997,52 +909,60 @@ function VendorEventCreationForm({
               </FormControl>
 
               {formik.values.type !== EVENT_TYPES.ONE_ON_ONE && (
+                <FormControl style={{ width: "100%", marginBottom: "1em" }}>
+                  <FormLabel style={{ paddingBottom: "0.5em" }}>
+                    Number of Tickets
+                  </FormLabel>
+                  <TextField
+                    fullWidth
+                    className={classes.textInput}
+                    id="totalTickets"
+                    type="number"
+                    variant="filled"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.totalTickets}
+                    error={
+                      formik.touched.totalTickets &&
+                      Boolean(formik.errors.totalTickets)
+                    }
+                    helperText={
+                      formik.touched.totalTickets && formik.errors.totalTickets
+                    }
+                    disabled={checkDisabled()}
+                  />
+                </FormControl>
+              )}
+
+              <FormControl style={{ width: "100%", marginBottom: "1em" }}>
+                <FormLabel style={{ paddingBottom: "0.5em" }}>
+                  Event Link
+                </FormLabel>
                 <TextField
                   fullWidth
                   className={classes.textInput}
-                  id="totalTickets"
-                  type="number"
-                  label={"Number of tickets"}
-                  variant="outlined"
+                  id="url"
+                  variant="filled"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.totalTickets}
-                  error={
-                    formik.touched.totalTickets &&
-                    Boolean(formik.errors.totalTickets)
-                  }
+                  value={formik.values.url}
+                  error={formik.touched.url && Boolean(formik.errors.url)}
                   helperText={
-                    formik.touched.totalTickets && formik.errors.totalTickets
+                    formik.errors.url
+                      ? formik.errors.url
+                      : edit
+                      ? ""
+                      : "You can also personalize your event link, e.g. YogaWithNeha, CookieBakingWorkshop"
                   }
-                  disabled={checkDisabled()}
+                  FormHelperTextProps={{ className: classes.helperText }}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">payorb/</InputAdornment>
+                    ),
+                  }}
+                  disabled={edit}
                 />
-              )}
-
-              <TextField
-                fullWidth
-                className={classes.textInput}
-                id="url"
-                label={"Event Link"}
-                variant="outlined"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.url}
-                error={formik.touched.url && Boolean(formik.errors.url)}
-                helperText={
-                  formik.errors.url
-                    ? formik.errors.url
-                    : edit
-                    ? ""
-                    : "You can also personalize your event link, e.g. YogaWithNeha, CookieBakingWorkshop"
-                }
-                FormHelperTextProps={{ className: classes.helperText }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">payorb/</InputAdornment>
-                  ),
-                }}
-                disabled={edit}
-              />
+              </FormControl>
 
               <ButtonCapsule
                 disabled={loader || dateError || formik.errors.url}
@@ -1064,5 +984,100 @@ function VendorEventCreationForm({
     </Grid>
   );
 }
+
+const EventTypeSelectSender = ({ value }) => {
+  switch (value) {
+    case EVENT_TYPES.ONE_ON_ONE:
+      return <Typography>One On One</Typography>;
+    case EVENT_TYPES.ONE_TIME:
+      return <Typography>One Time</Typography>;
+    default:
+      return "Event Type";
+  }
+};
+
+const EventTypeSelect = ({ formik, checkDisabled, handleEventTypeChange }) => {
+  return (
+    <>
+      <Select
+        displayEmpty
+        variant="outlined"
+        id="type"
+        value={formik.values.type}
+        onChange={handleEventTypeChange}
+        style={{
+          width: "100%",
+          marginTop: "0.5em",
+          background: "#ECEDF4",
+          "&:hover": {
+            background: "pink",
+          },
+        }}
+        error={formik.touched.type && Boolean(formik.errors.type)}
+        disabled={checkDisabled()}
+        renderValue={() => <EventTypeSelectSender value={formik.values.type} />}
+      >
+        <MenuItem value={""}>None</MenuItem>
+        <MenuItem value={EVENT_TYPES.ONE_TIME}>
+          <Grid
+            container
+            style={
+              formik.values.type === EVENT_TYPES.ONE_TIME
+                ? {
+                    padding: "0.5em",
+                  }
+                : { padding: "0.5em 0.5em 0.5em 2em" }
+            }
+          >
+            {formik.values.type === EVENT_TYPES.ONE_TIME && (
+              <Grid item>
+                <CheckCircle
+                  style={{ color: "#0061FE", marginRight: "0.35em" }}
+                />
+              </Grid>
+            )}
+
+            <Grid item>
+              <Typography>One Time</Typography>
+              <Typography>
+                Fixed schedule of event / service. <br></br>Open to one or more
+                clients.
+              </Typography>
+            </Grid>
+          </Grid>
+        </MenuItem>
+        <MenuItem value={EVENT_TYPES.ONE_ON_ONE}>
+          <Grid
+            container
+            style={
+              formik.values.type === EVENT_TYPES.ONE_ON_ONE
+                ? {
+                    padding: "0.5em",
+                  }
+                : { padding: "0.5em 0.5em 0.5em 2em" }
+            }
+          >
+            {formik.values.type === EVENT_TYPES.ONE_ON_ONE && (
+              <Grid item>
+                <CheckCircle
+                  style={{ color: "#0061FE", marginRight: "0.35em" }}
+                />
+              </Grid>
+            )}
+
+            <Grid>
+              <Typography>One on One</Typography>
+              <Typography>
+                Clients can book individual service
+                <br /> sessions with you from calender <br />
+                availability
+              </Typography>
+            </Grid>
+          </Grid>
+        </MenuItem>
+      </Select>
+    </>
+  );
+};
 
 export default VendorEventCreationForm;

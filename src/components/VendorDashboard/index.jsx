@@ -10,6 +10,7 @@ import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { getUser } from "../../services/auth";
 import { delay } from "../../utils/dateTime";
 import { buildVendorDashboardUrl } from "../../utils/url";
+import { AppFooter } from "../AppFooter";
 import AuthAlertBanner from "../AuthAlertBanner";
 import { Context } from "../AuthenticationContext";
 import VendorDashboardHeader from "../DashboardHeader";
@@ -57,7 +58,7 @@ function VendorDashboard() {
         return (
           <>
             <PageTitle title="Payorb | Profile" />
-            <Profile profileData={profileData} />;
+            <Profile profileData={profileData} />
           </>
         );
       }
@@ -125,13 +126,14 @@ function VendorDashboard() {
         <FallbackLoading />
       ) : (
         <UserAuthDetailsProvider>
-          <Grid>
+          <Grid style={{ border: "2px solid" }}>
             <VendorDashboardHeader profileData={profileData} />
             {/* Commented for the time being
             {<AuthAlertBanner />} */}
             <VendorDashboardContainer>
               {getComponent(profileData)}
             </VendorDashboardContainer>
+            <AppFooter />
           </Grid>
         </UserAuthDetailsProvider>
       )}

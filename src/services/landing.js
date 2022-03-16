@@ -52,7 +52,6 @@ export const getHowItWorksContent = async () => {
   };
 };
 
-
 export const getWhyChooseUsContent = async () => {
   return {
     title: "Why choose PayOrb?",
@@ -85,6 +84,38 @@ export const getPricingContent = async () => {
         feature: "Lorem ipsum dolor sit amet.",
       },
     ],
+  };
+};
+
+export const getFaqsContent = async () => {
+  return {
+    title: "FAQ's",
+    image: "/assets/faqs/faq-img.svg",
+    faqs: [
+      {
+        ques: "She met humoured sir breeding her. Six curiosity day assurance bed necessary.",
+        ans: "Relation so in confined smallest children unpacked delicate. Why sir end believe uncivil respect. Always get adieus nature day course for common. My little garret repair to desire he esteem.",
+      },
+      {
+        ques: "And excellence partiality estimating terminated day everything?",
+        ans: "Relation so in confined smallest children unpacked delicate. Why sir end believe uncivil respect. Always get adieus nature day course for common. My little garret repair to desire he esteem.",
+      },
+      {
+        ques: "Latter person am secure of estate genius at?",
+        ans: "Relation so in confined smallest children unpacked delicate. Why sir end believe uncivil respect. Always get adieus nature day course for common. My little garret repair to desire he esteem.",
+      },
+      {
+        ques: "Whatever landlord yourself at by pleasure of children be?",
+        ans: "Relation so in confined smallest children unpacked delicate. Why sir end believe uncivil respect. Always get adieus nature day course for common. My little garret repair to desire he esteem.",
+      },
+    ],
+  };
+};
+
+export const getSignInContent = async () => {
+  return {
+    titleSection1: "One Platform",
+    titleSection2: "Infinite Opportunities!",
   };
 };
 
@@ -220,7 +251,6 @@ export const getGrowthContent = async () => {
   };
 };
 
- 
 export const getFeaturesContent = async () => {
   // try {
   //   const res = await axios.get(`${CMS_URL}/feature-section`);
@@ -250,38 +280,43 @@ export const getFeaturesContent = async () => {
     features: [
       {
         title: "Online Presence",
-        description: "Dynamically architect real-time web services for installed base systems",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
         image: "/assets/features/onlinePresence.svg",
       },
 
       {
         title: "Unlimited service listings",
-        description: "Dynamically architect real-time web services for installed base systems",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
         image: "/assets/features/UnlimitedServiceListing.svg",
       },
       {
         title: "Bookings & Payments",
-        description: "Dynamically architect real-time web services for installed base systems",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
 
         image: "/assets/features/Bookings&Payments.svg",
       },
       {
         title: "Verified Reviews",
-        description: "Dynamically architect real-time web services for installed base systems",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
         image: "/assets/features/VerifiedReview.svg",
       },
       {
         title: "Business Dashboards",
-        description: "Dynamically architect real-time web services for installed base systems",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
         image: "/assets/features/BusinessDashboard.svg",
       },
       {
         title: "One Click Promotions",
-        description: "Dynamically architect real-time web services for installed base systems",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
         image: "/assets/features/OneClickPromotions.svg",
       },
     ],
   };
   // }
 };
-
