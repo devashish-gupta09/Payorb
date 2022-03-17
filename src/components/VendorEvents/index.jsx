@@ -6,6 +6,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@material-ui/core";
+import { isEventPastDate } from "../../utils/events";
 import { Add, DateRange, List } from "@material-ui/icons";
 import { useRouter } from "next/router";
 import React from "react";
@@ -186,37 +187,48 @@ function VendorEvents() {
           <Grid className={classes.container}>
             {events.length > 0 ? (
               <div style={!desktop ? { paddingBottom: "13vh" } : {}}>
-                <Grid className={classes.events}>
-                  <Typography variant="h6" style={{ marginBottom: "0.5em" }}>
+                
+               
+
+                  {buttonColorOpen == classes.blue ?(
+                     <Grid className={classes.events}>
+                  <Typography variant="h6" style={{ marginBottom: "0.5em", fontSize:"1em", marginLeft:"1em"  }}>
                     Open Events
+      ({events.filter((e) => !isEventPastDate(e)).length})
                   </Typography>
                   <EventsViewList
                     showOpen={true}
                     events={events}
                     handleEventDelete={handleEventDelete}
                   />
-
-                  <Typography variant="h6" style={{ marginBottom: "0.5em" }}>
-                    Completed Events
-                  </Typography>
-                  <EventsViewList
-                    showOpen={false}
-                    events={events}
-                    handleEventDelete={handleEventDelete}
-                  />
-                </Grid>
-                <Grid
-                  style={{ marginBottom: "1em" }}
-                  container
-                  alignItems="center"
-                  justify="center"
-                >
-                  {loadMore ? (
-                    <Button onClick={loadMoreEvents}>Load more</Button>
-                  ) : (
-                    <Typography>All events loaded. </Typography>
-                  )}
-                </Grid>
+                   </Grid>
+                      ):(
+                        <Grid className={classes.events}>
+                         <Typography variant="h6" style={{ marginBottom: "0.5em", marginLeft:"1em" , fontSize:"1em",}}>
+                          Completed Events  ({events.filter((e) => isEventPastDate(e)).length})
+                          </Typography>
+                          <EventsViewList
+                          showOpen={false}
+                          events={events}
+                          handleEventDelete={handleEventDelete}
+                          />
+                          </Grid>
+                      )}
+                  
+                 
+               
+                  <Grid
+                    style={{ marginBottom: "1em" }}
+                    container
+                    alignItems="center"
+                    justify="center"
+                  >
+                    {loadMore ? (
+                      <Button onClick={loadMoreEvents}>Load more</Button>
+                    ) : (
+                      <Typography>All events loaded</Typography>
+                    )}
+                  </Grid>
               </div>
             ) : (
               <Grid container justifyContent="center" alignItems="center">
@@ -293,9 +305,9 @@ const styles = makeStyles((theme) => ({
   blue: {
     fontSize: "0.9em",
     background: "linear-gradient(180deg, #68FDF3 0%, #00D4FF 219.05%);",
-    padding: "0.13em 1.44em",
+    padding: "0.10em 1.44em",
     borderRadius: "2em",
-    marginBottom:"0.2em",
+    marginBottom:"0.3em",
   },
   white: {
     padding: "0.5em 1.9em",
