@@ -2,6 +2,8 @@ import { Grid } from "@material-ui/core";
 import { useRouter } from "next/router";
 import React from "react";
 
+import { styles } from "./styles";
+
 import { ALERT_TYPES } from "../../constants/alerts";
 
 import { PAGE_PATHS } from "../../constants/paths";
@@ -14,6 +16,7 @@ import { AppFooter } from "../AppFooter";
 import AuthAlertBanner from "../AuthAlertBanner";
 import { Context } from "../AuthenticationContext";
 import VendorDashboardHeader from "../DashboardHeader";
+import VendorDashboardSidebar from "../DashboardSidebar";
 import FallbackLoading from "../FallbackLoading";
 import FallbackPage from "../FallbackPage";
 import PageTitle from "../PageTitle";
@@ -25,6 +28,7 @@ import VendorEvents from "../VendorEvents";
 import VendorFinancials from "../VendorFinancials";
 
 function VendorDashboard() {
+  const classes = styles();
   const router = useRouter();
   const userContext = React.useContext(Context);
   const [loading, setLoading] = React.useState(true);
@@ -106,14 +110,6 @@ function VendorDashboard() {
           await delay(750);
           router.replace(PAGE_PATHS.SIGNUP);
         });
-      // } else {
-      //   showAlert("Access Denied");
-      //   delay(1000).then(async () => {
-      //     showAlert("Redirecting to home page");
-      //     await delay(500);
-      //     router.replace(PAGE_PATHS.LANDING);
-      //   });
-      // }
     } else if (userContext.userState === "UNAUTHENTICATED") {
       router.replace(PAGE_PATHS.SIGNUP);
     }
@@ -126,12 +122,15 @@ function VendorDashboard() {
         <FallbackLoading />
       ) : (
         <UserAuthDetailsProvider>
-          <Grid style={{ border: "2px solid" }}>
-            <VendorDashboardHeader profileData={profileData} />
-            {/* <AuthAlertBanner /> */}
-            <VendorDashboardContainer>
-              {getComponent(profileData)}
-            </VendorDashboardContainer>
+          <Grid container className={classes.dashboard}>
+            <Grid item className={classes.sidebar}>
+              <VendorDashboardSidebar profileData={profileData} />
+            </Grid>
+            <Grid item className={classes.mainContainer}>
+              <VendorDashboardContainer>
+                {getComponent(profileData)}
+              </VendorDashboardContainer>
+            </Grid>
             <AppFooter />
           </Grid>
         </UserAuthDetailsProvider>

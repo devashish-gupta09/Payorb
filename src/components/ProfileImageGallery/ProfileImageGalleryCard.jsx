@@ -1,35 +1,58 @@
 import { Grid, IconButton, makeStyles, Typography } from "@material-ui/core";
-import { Delete, Edit } from "@material-ui/icons";
+import { Add, Delete, Edit } from "@material-ui/icons";
 import { appColors } from "../../../styles/colors";
 import ReadMore from "../ReadMore";
 
-export const ProfileImageGalleryCard = ({ link, type = "image", vendor }) => {
+export const ProfileImageGalleryCard = ({
+  asset,
+  vendor,
+  profileInfo,
+  index,
+}) => {
   const classes = styles();
   return (
     <Grid className={classes.root}>
-      <Grid
-        className={classes.cardImage}
-        style={{ backgroundImage: `url(${link})` }}
-      />
-      <Grid container className={classes.imageTitle} alignItems="center">
-        <Typography className={classes.imageTitleText}>
-          Inspiring
-          UasdfsfsadfadsfsadfsadfadsfadsfasdfsafsafasdfsadfsadfsadfsadfI/UX
-          Designer Portfolios That Take Design to the Next Level
-        </Typography>
-      </Grid>
-      {vendor ? (
-        <Grid className={classes.toolkit}>
-          <Grid>
-            <IconButton size="small" className={classes.editButton}>
-              <Edit></Edit>
-            </IconButton>
-            <IconButton size="small" className={classes.deleteButton}>
-              <Delete></Delete>
-            </IconButton>
+      {asset ? (
+        <>
+          <Grid
+            className={classes.cardImage}
+            style={{ backgroundImage: `url(${asset.link})` }}
+          />{" "}
+          <Grid container className={classes.imageTitle} alignItems="center">
+            <Typography className={classes.imageTitleText}>
+              {asset.title}
+            </Typography>
+          </Grid>
+          {vendor ? (
+            <Grid className={classes.toolkit}>
+              <Grid>
+                <IconButton size="small" className={classes.editButton}>
+                  <Edit></Edit>
+                </IconButton>
+                <IconButton size="small" className={classes.deleteButton}>
+                  <Delete></Delete>
+                </IconButton>
+              </Grid>
+            </Grid>
+          ) : null}
+        </>
+      ) : (
+        <Grid
+          className={classes.nonAssetCard}
+          container
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Grid
+            className={classes.addButton}
+            container
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Add style={{ fontWeight: 600 }} />
           </Grid>
         </Grid>
-      ) : null}
+      )}
     </Grid>
   );
 };
@@ -42,8 +65,22 @@ const styles = makeStyles((theme) => ({
       padding: "0 !important",
     },
   },
+  addButton: {
+    height: "2.5em",
+    width: "2.5em",
+    borderRadius: "50%",
+    border: "5px solid rgba(221, 221, 221, 1)",
+    color: "rgba(221, 221, 221, 1)",
+    fontSize: "2em",
+  },
+  nonAssetCard: {
+    width: "100%",
+    minHeight: "15em",
+    borderRadius: "5px",
+    background: "rgba(236, 237, 244, 1)",
+  },
   cardImage: {
-    height: "20em",
+    height: "15em",
     backgroundSize: "cover",
     borderRadius: "5px",
     boxShadow: "0 0 5px 0 rgba(0,0,0,0.25)",

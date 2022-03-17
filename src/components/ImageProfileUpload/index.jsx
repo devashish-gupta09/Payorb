@@ -104,6 +104,7 @@ function ImageProfileUpload({ imageProps, vendor }) {
               title="Select profile image"
               imagePath={croppedImg || imageProps.src}
               handleDataUrl={handleDataUrl}
+              cropperAspectRatio={1}
             />
 
             <Grid

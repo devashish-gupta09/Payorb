@@ -17,48 +17,50 @@ export default function Profile({ profileData }) {
   };
   const classes = styles();
   return (
-    <Fade in={true} timeout={500}>
-      <Grid>
-        <ProfileHeader
-          profileData={profileInfo}
-          updateProfile={updateProfileInfo}
-          vendor={true}
-        />
-        <Grid style={{ position: "relative" }}>
-          <Grid className={classes.navbarDesktop}>
+    <Grid>
+      <ProfileHeader
+        profileData={profileInfo}
+        updateProfile={updateProfileInfo}
+        isVendor={true}
+      />
+      <Grid style={{ position: "relative" }}>
+        <Grid className={classes.navbarDesktop}>
+          <ProfileNavBar />
+        </Grid>
+        <Grid container alignItems="stretch">
+          <ProfileInfoCard
+            profileData={profileInfo}
+            updateProfile={updateProfileInfo}
+            vendor={true}
+          />
+          <Grid className={classes.navbarMobile}>
             <ProfileNavBar />
           </Grid>
-          <Grid container alignItems="stretch">
-            <ProfileInfoCard
-              profileData={profileInfo}
-              updateProfile={updateProfileInfo}
-              vendor={true}
-            />
-            <Grid className={classes.navbarMobile}>
-              <ProfileNavBar />
-            </Grid>
-            <ProfileDetailsSection
-              profileData={profileInfo}
-              updateProfile={updateProfileInfo}
-              vendor={true}
-            />
-          </Grid>
+          <ProfileDetailsSection
+            profileData={profileInfo}
+            updateProfile={updateProfileInfo}
+            vendor={true}
+          />
         </Grid>
-
+      </Grid>
+      <div id="gallery">
         <ProfileImageGallery
           profileData={profileInfo}
           vendor={true}
           updateProfile={updateProfileInfo}
         />
-
+      </div>
+      <div id="review">
         <ProfileReviewSection />
+      </div>
 
+      <div id={"payment"}>
         <ProfilePaymentSection
           profileData={profileInfo}
           updateProfile={updateProfileInfo}
         />
-      </Grid>
-    </Fade>
+      </div>
+    </Grid>
   );
 }
 

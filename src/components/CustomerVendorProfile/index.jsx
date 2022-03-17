@@ -56,8 +56,13 @@ function CustomerVendorProfile({ userUID }) {
             <ProfileDetailsSection profileData={profileData} vendor={false} />
           </Grid>
         </Grid>
-        <ProfileImageGallery profileData={profileData} vendor={false} />
-        <ProfileReviewSection />
+        <div id="gallery">
+          <ProfileImageGallery profileData={profileData} vendor={false} />
+        </div>
+        <div id="review">
+          <ProfileReviewSection />
+        </div>
+
         {/* To be done! */}
         {/* <CustomerVendorProfileEvents userUID={profileData.userUID} /> */}
       </Grid>

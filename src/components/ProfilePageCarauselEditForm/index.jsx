@@ -141,7 +141,6 @@ const ProfilePageCarauselEditForm = ({
             message = "User cancelled file upload";
             break;
         }
-
         setProgress(false);
         showAlert(message, ALERT_TYPES.ERROR);
       },

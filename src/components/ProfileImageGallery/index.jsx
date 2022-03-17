@@ -4,19 +4,6 @@ import * as React from "react";
 import ButtonCapsule from "../ButtonCapsule";
 import { ProfileImageGalleryCard } from "./ProfileImageGalleryCard";
 
-const PROFILE_IMAGES_LIMIT = 10;
-const DEFAULT_IMAGE = [
-  {
-    link: "https://mir-s3-cdn-cf.behance.net/project_modules/fs/31b14965947199.5b05899e2ebb5.jpg",
-  },
-  {
-    link: "https://mir-s3-cdn-cf.behance.net/project_modules/fs/31b14965947199.5b05899e2ebb5.jpg",
-  },
-  {
-    link: "https://mir-s3-cdn-cf.behance.net/project_modules/fs/31b14965947199.5b05899e2ebb5.jpg",
-  },
-];
-
 export const ProfileImageGallery = ({
   profileInfo,
   vendor = true,
@@ -24,11 +11,15 @@ export const ProfileImageGallery = ({
 }) => {
   const classes = styles();
 
-  const [images, setImages] = React.useState(DEFAULT_IMAGE);
+  const [assets, setAssets] = React.useState([]);
+  const [emptyAssets, setEmptyAssets] = React.useState([]);
 
   React.useEffect(() => {
     if (profileInfo?.carauselAssets?.length) {
-      setImages([]);
+      setAssets([profileInfo.carauselAssets]);
+      setEmptyAssets(Array(profileInfo.carauselAssets.length - 6));
+    } else {
+      setEmptyAssets([0, 0, 0, 0, 0, 0]);
     }
   }, [profileInfo]);
 
@@ -38,12 +29,44 @@ export const ProfileImageGallery = ({
         Gallery
       </Typography>
       <Grid container spacing={4} className={classes.cardContainer}>
-        {images.map(({ link }) => (
-          <Grid item sm={4} xs={12} className={classes.cardContainerRoot}>
-            <ProfileImageGalleryCard link={link} type={"image"} />
-          </Grid>
-        ))}
+        {assets.length >= 6 &&
+          assets.slice(0, 6).map((asset, index) => {
+            return (
+              <Grid item sm={4} xs={12} className={classes.cardContainerRoot}>
+                <ProfileImageGalleryCard
+                  key={index}
+                  index={index}
+                  link={asset.link}
+                  type={asset.type}
+                />
+              </Grid>
+            );
+          })}
+
+        {assets.length < 6 &&
+          assets.map((asset, index) => {
+            return (
+              <Grid item sm={4} xs={12} className={classes.cardContainerRoot}>
+                <ProfileImageGalleryCard
+                  index={index}
+                  asset={asset}
+                  profileInfo={profileInfo}
+                  isVendor={vendor}
+                />
+              </Grid>
+            );
+          })}
+
+        {assets.length < 6 &&
+          emptyAssets.map(() => {
+            return (
+              <Grid item sm={4} xs={12} className={classes.cardContainerRoot}>
+                <ProfileImageGalleryCard />
+              </Grid>
+            );
+          })}
       </Grid>
+
       {vendor ? (
         <Grid
           container
