@@ -5,11 +5,30 @@ export const styles = makeStyles((theme) => ({
     backgroundColor: "white",
     height: "calc(100vh - 88px)",
   },
+  drawer: {
+    height: "600px",
+  },
+  wideScreen: {
+    display: "flex",
+    [theme.breakpoints.down("sm")]: {
+      display: "None",
+    },
+  },
+  mobile: {
+    display: "None",
+    [theme.breakpoints.down("sm")]: {
+      display: "flex",
+      position: "absolute",
+    },
+  },
   header: {
     height: "calc(10vh)",
     display: "grid",
     alignItems: "center",
     justifyContent: "center",
+    [theme.breakpoints.down("sm")]: {
+      display: "None",
+    },
   },
   avatar: {
     display: "block",
@@ -26,6 +45,10 @@ export const styles = makeStyles((theme) => ({
     height: "calc(90vh)",
     background: "#F6F6FA",
     paddingTop: "15em",
+    display: "block",
+    [theme.breakpoints.down("sm")]: {
+      display: "None",
+    },
   },
   activeTab: {
     textAlign: "left",

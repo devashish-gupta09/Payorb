@@ -5,6 +5,7 @@ import {
   Tooltip,
   Typography,
 } from "@material-ui/core";
+import WorkOutlineIcon from "@material-ui/icons/WorkOutline";
 import React from "react";
 
 function ProfileSectionSidebar({ image, name, occupation }) {
@@ -29,6 +30,9 @@ function ProfileSectionSidebar({ image, name, occupation }) {
             {name ? name : "Welcome User"}
           </Typography>
           <Typography variant="body1" align="center">
+            <WorkOutlineIcon
+              style={{ verticalAlign: "middle", marginRight: "0.5em" }}
+            />
             {occupation ? occupation : "Occupation"}
           </Typography>
         </Box>

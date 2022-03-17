@@ -110,14 +110,6 @@ function VendorDashboard() {
           await delay(750);
           router.replace(PAGE_PATHS.SIGNUP);
         });
-      // } else {
-      //   showAlert("Access Denied");
-      //   delay(1000).then(async () => {
-      //     showAlert("Redirecting to home page");
-      //     await delay(500);
-      //     router.replace(PAGE_PATHS.LANDING);
-      //   });
-      // }
     } else if (userContext.userState === "UNAUTHENTICATED") {
       router.replace(PAGE_PATHS.SIGNUP);
     }
@@ -142,7 +134,7 @@ function VendorDashboard() {
                 </VendorDashboardContainer>
               </Grid>
             </Grid>
-            {/* <AuthAlertBanner /> */}
+            <AuthAlertBanner />
             <AppFooter />
           </Grid>
         </UserAuthDetailsProvider>

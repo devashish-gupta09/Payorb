@@ -18,6 +18,9 @@ export const styles = makeStyles((theme) => ({
     width: "20vw",
   },
   mainContainer: {
-    width: "calc(100% - 20vw)",
+    width: "100vw",
+    [theme.breakpoints.up("sm")]: {
+      width: "calc(100% - 20vw)",
+    },
   },
 }));
