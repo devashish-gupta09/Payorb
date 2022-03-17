@@ -18,7 +18,7 @@ function ImageSelectAndCrop({
   imagePath,
   handleDataUrl,
   title = "Select image",
-  // cropperAspectRatio = 1,
+  cropperAspectRatio,
 }) {
   const classes = styles();
   const [imgSrc, setImgSrc] = React.useState(imagePath);
@@ -103,7 +103,7 @@ function ImageSelectAndCrop({
         guides={true}
         ref={cropperRef}
         crop={handleOnCrop}
-        // aspectRatio={cropperAspectRatio}
+        aspectRatio={cropperAspectRatio ?? NaN}
       />
     </div>
   );

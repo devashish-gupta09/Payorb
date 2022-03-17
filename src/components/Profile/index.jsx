@@ -21,7 +21,7 @@ export default function Profile({ profileData }) {
       <ProfileHeader
         profileData={profileInfo}
         updateProfile={updateProfileInfo}
-        vendor={true}
+        isVendor={true}
       />
       <Grid style={{ position: "relative" }}>
         <Grid className={classes.navbarDesktop}>

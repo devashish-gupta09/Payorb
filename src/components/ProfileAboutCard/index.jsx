@@ -158,6 +158,7 @@ const styles = makeStyles((theme) => ({
   previewButton: {
     boxShadow: "none",
     background: "linear-gradient(178.83deg, #68FDF3 1%, #00D4FF 183.74%)",
+    padding: "0.35em 1em",
     [theme.breakpoints.down("sm")]: {
       padding: "0.5em 1em",
       fontSize: "0.75em",
@@ -168,6 +169,7 @@ const styles = makeStyles((theme) => ({
     background: "rgba(38, 214, 108, 1)",
     color: appColors.white,
     marginLeft: "0.5em",
+    padding: "0.35em 1em",
     [theme.breakpoints.down("sm")]: {
       padding: "0.5em 1em",
       fontSize: "0.75em",
