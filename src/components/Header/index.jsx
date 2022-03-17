@@ -15,6 +15,10 @@ const styles = makeStyles((theme) => ({
     backgroundColor: "transparent",
     padding: "1rem 2.5em 0.5rem 2.5em",
     [theme.breakpoints.down("sm")]: {
+      zIndex: "1301",
+      position: "fixed",
+      top: "0",
+      backgroundColor: "white",
       padding: "0.5em 1em",
     },
     boxShadow: "none",

@@ -10,4 +10,17 @@ export const styles = makeStyles((theme) => ({
       padding: "2em 1em",
     },
   },
+  dashboard: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  sidebar: {
+    width: "20vw",
+  },
+  mainContainer: {
+    width: "100vw",
+    [theme.breakpoints.up("sm")]: {
+      width: "calc(100% - 20vw)",
+    },
+  },
 }));
