@@ -22,6 +22,7 @@ import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
 import EventsViewList from "../EventsViewList";
 import PageTitle from "../PageTitle";
+import CallMadeIcon from '@material-ui/icons/CallMade';
 
 import VendorEventsCalenderView from "../VendorEventsCalenderView";
 
@@ -40,6 +41,17 @@ function VendorEvents() {
   });
   const [loadMore, setLoadMore] = React.useState(true);
   const router = useRouter();
+
+  const [buttonColorOpen, setOpen] = React.useState(classes.blue);
+  const [buttonColorClosed, setClosed] = React.useState(classes.white);
+  const btnCompleted = () => {
+    setOpen(classes.white);
+    setClosed(classes.blue);
+  };
+  const btnOpen = () => {
+    setOpen(classes.blue);
+    setClosed(classes.white);
+  };
 
   const handleCreateEvent = (trialClass) => {
     if (trialClass) {
@@ -123,33 +135,48 @@ function VendorEvents() {
     <Grid className={classes.root}>
       <PageTitle title="Payorb | Events" />
       {Alert()}
-      <Grid container justify="space-between" style={{ padding: "1em 0px" }}>
-        <Button onClick={toggleView}>
+
+        
+      <Grid container justify={"flex-end"} style={{ padding: "1em 0px"}}>
+        {/* {<Button onClick={toggleView}>
           {!listView ? <List /> : <DateRange />}
-        </Button>
-        {desktop && (
-          <div style={{ display: "flex" }}>
-            <Button
-              style={{
-                background: "white",
-                padding: "0.5em 1.5em",
-                borderRadius: "10px",
-                marginLeft: "1em",
-              }}
-              onClick={() => handleCreateEvent(false)}
+        </Button>} */}
+         <Grid
+              container
+              justifyContent={"center"}
+              className={classes.buttonContainer}
+              justify={"space-evenly"}
             >
-              Create Event
-            </Button>
+          <Button className={buttonColorOpen} value={"open"} onClick={btnOpen}>
+            Open
+          </Button>
+          <Button
+            className={buttonColorClosed}
+            value={"completed"}
+            onClick={btnCompleted}
+          >
+            Completed
+          </Button>
+          </Grid>
+    
+        {desktop && (
+          <div style={{ display: "flex", maxHeight:"2.5em"}}>
             <Button
               style={{
-                marginLeft: "1em",
-                background: "white",
-                padding: "0.5em 1.5em",
-                borderRadius: "10px",
+                background: "#EFEFEF",
+                padding: "0.5em 1em",
+                borderRadius: "2em",
+                marginRight:"0.2em"
               }}
               onClick={() => handleCreateEvent(true)}
             >
-              Create Trial Event
+              Create Trial Event <CallMadeIcon/>
+            </Button>
+            <Button
+              className={classes.createAnEvent}
+              onClick={() => handleCreateEvent(false)}
+            >
+              Create an Event <CallMadeIcon/>
             </Button>
           </div>
         )}
@@ -192,9 +219,12 @@ function VendorEvents() {
                 </Grid>
               </div>
             ) : (
-              <Typography variant="h5">
-                No past events found. Start creating new events...
-              </Typography>
+              <Grid container justifyContent="center" alignItems="center">
+                <img src="/assets/vendorEvents/noPastEvents.svg" className={classes.imgContainer}/>
+                <Typography variant="h6" className={classes.noEventMsg}>
+                  No past events found. Start creating new events...
+                </Typography>
+              </Grid>
             )}
           </Grid>
         ) : (
@@ -211,17 +241,21 @@ function VendorEvents() {
         <Grid container justify="center" alignItems="center">
           <DashboardCard rootClass={classes.createEventCard}>
             <Grid container justify="center" alignItems="center">
+              <Grid item xs={6}>
               <ButtonCapsule
-                text="Create New Event"
+                text="CREATE AN EVENT"
                 buttonStyle={classes.createEventButton}
                 onClick={() => handleCreateEvent(false)}
               />
+              </Grid>
+              <Grid item xs={6}>
               <ButtonCapsule
-                buttonStyle={classes.createEventButton}
+                buttonStyle={`${classes.createEventButton} ${classes.greyColor}` }
                 onClick={() => handleCreateEvent(true)}
-                text="Create Trial Event"
+                text="CREATE TRIAL EVENT"
               ></ButtonCapsule>
-            </Grid>
+              </Grid>
+                  </Grid>
           </DashboardCard>
         </Grid>
       )}
@@ -230,6 +264,53 @@ function VendorEvents() {
 }
 
 const styles = makeStyles((theme) => ({
+  greyColor:{
+    background:"#EFEFEF",
+  },
+  createAnEvent:{
+      padding: "0.5em 1em",
+      fontSize: "0.9em",
+      background: "linear-gradient(180deg, #68FDF3 0%, #00D4FF 219.05%);",
+      borderRadius: "2em",
+      right:"0",
+  },
+  buttonContainer: {
+    display:"flex",
+    width: "14em",
+    color: "black",
+    height: "2.3em",
+    borderRadius: "3em",
+    backgroundColor: "white",
+    border: "solid",
+    borderWidth: "0.08em",
+    marginRight:"7.5em",
+    marginTop:"3em",
+    [theme.breakpoints.down("sm")]:{
+      justifyContent:"center",
+      marginRight:"5em",
+    }
+  },
+  blue: {
+    fontSize: "0.9em",
+    background: "linear-gradient(180deg, #68FDF3 0%, #00D4FF 219.05%);",
+    padding: "0.13em 1.44em",
+    borderRadius: "2em",
+    marginBottom:"0.2em",
+  },
+  white: {
+    padding: "0.5em 1.9em",
+    borderRadius: "2em"
+  },
+  noEventMsg:{
+    position:"absolute",
+    textAlign:"center",
+    justifyContent:"center",
+    fontSize:"1em",
+    bottom:"6em",
+    [theme.breakpoints.down("sm")]:{
+      bottom:"12em"
+    }
+  },
   root: {
     padding: "1em 0",
     minHeight: "80vh",
@@ -269,6 +350,7 @@ const styles = makeStyles((theme) => ({
   createEventButton: {
     width: "25%",
     padding: "0.75em 0",
+    borderRadius:"0",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
@@ -289,6 +371,17 @@ const styles = makeStyles((theme) => ({
     marginRight: "0.3em",
     border: "1px solid grey",
   },
+  imgContainer:{
+    position: "absolute",
+    margin: "auto",
+    top: "6em",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    [theme.breakpoints.down("sm")]:{
+      top:0,
+    }
+  }
 }));
 
 export default VendorEvents;

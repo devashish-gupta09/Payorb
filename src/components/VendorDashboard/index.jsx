@@ -129,6 +129,8 @@ function VendorDashboard() {
           <Grid style={{ border: "2px solid" }}>
             <VendorDashboardHeader profileData={profileData} />
             {/* <AuthAlertBanner /> */}
+            {/* Commented for the time being
+            {<AuthAlertBanner />} */}
             <VendorDashboardContainer>
               {getComponent(profileData)}
             </VendorDashboardContainer>

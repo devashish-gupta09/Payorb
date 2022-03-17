@@ -5,6 +5,7 @@ import {
   IconButton,
   Tooltip,
   Typography,
+  Card,
 } from "@material-ui/core";
 import { DeleteRounded, Share, FileCopy } from "@material-ui/icons";
 import React from "react";
@@ -26,6 +27,11 @@ import PostEventCreationDialog from "../PostEventCreationDialog";
 import ReadMore from "../ReadMore";
 import VendorEventCreationForm from "../VendorEventCreationForm";
 import { styles } from "./styles";
+import CreateIcon from "@material-ui/icons/Create";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
+import ShareIcon from "@material-ui/icons/Share";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 export function EventCardDate({ classes, startDate, endDate }) {
   return (
@@ -136,15 +142,107 @@ function EventCard({ event, handleEventDelete }) {
           onClose={handleShareDialogClose}
         />
       )}
+        
+        <Card className={classes.cardContainer}>
+          
+        <img
+            src={event.photoUrl || DEFAULT_EVENT_IMAGE}
+            alt="vendor-event"
+            width="400em"
+          />
 
-      <Grid container alignItems={"stretch"}>
-        <Grid item sm={3} className={classes.imageContainer}>
-          <EventImageContainer url={event.photoUrl || DEFAULT_EVENT_IMAGE} />
+      <Grid container className={classes.imgContainer}>
+        <Grid container justifyContent="right" className={classes.topBanner}>
+          <Button className={`${classes.topBannerButton} ${classes.cooking}`}>
+            Cooking
+          </Button>
+          <Button className={classes.topBannerButton}>Booking Open</Button>
+          <Grid className={classes.sideBar}>
+            <MoreVertIcon />
+            <CreateIcon className={classes.icon} />
+            <DeleteOutlineIcon
+              className={`${classes.icon} ${classes.deleteIcon}`}
+              onClick={enableDelete}
+                        disabled={event.orders.length > 0}
+            />
+            <AddToPhotosIcon
+              className={`${classes.icon} ${classes.AddToPhotosIcon}`}
+            />
+            <ShareIcon className={`${classes.icon} ${classes.shareIcon}`} />
+          </Grid>
         </Grid>
+        <Grid container className={classes.dateAndTime}>
+          <Grid item xs={6}>
+            <Typography className={classes.bottomText}>
+                <img src="/assets/vendorEventsCard/calender.svg"></img>
+                {"  "}
+                {event.startDate}
+            </Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography className={classes.bottomText}>
+              12:00 PM - 2:00 PM
+            </Typography>
+          </Grid>
+        </Grid>
+      </Grid>
 
-        <Grid className={classes.eventDetailContainer} item sm={9}>
+
+      <Grid
+        container
+        justify={"space-between"}
+        className={classes.textContainer}
+      >
+        <Grid container justify={"space-between"}>
+          <Grid item xs={8}>
+            <Typography className={classes.headline}>
+              {event.name}
+            </Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography className={classes.cost}>{event.trialClass ? "Trial Class" : <>&#8377; {event.price}</>}</Typography>
+          </Grid>
+        </Grid>
+        <Typography className={classes.descriptionText}>
+            <ReadMore percent={20} text={event.description} className={classes.descriptionText} />
+        </Typography>
+
+        <Grid
+          container
+          justify={"space-between"}
+          className={classes.bottomTextContainer}
+        >
+          <Grid item xs={4}>
+            <Typography className={classes.bottomText}>
+              Event Type <br />{formatEventType(event.type)}
+            </Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography className={classes.bottomText}>
+              Sold out Seats
+              <br /> {event.orders ? event.orders.length : 0}
+                  {event.type === EVENT_TYPES.ONE_TIME &&
+                    `/${event.totalTickets}`}
+            </Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography className={classes.bottomText}>
+              Total Revenue <br /> {`${event.revenue ? event.revenue : "0.0"}`}
+            </Typography>
+          </Grid>
+        </Grid>
+      </Grid>
+        </Card>
+        
+      
+    {/* {  <Grid container alignItems={"stretch"}>
+        <Grid item sm={3} className={classes.imageContainer}>
+          <EventImageContainer url={event.photoUrl || DEFAULT_EVENT_IMAGE} />      
+        </Grid> 
+
+        <Grid className={classes.eventDetailContainer} item sm={9}>             
           <Grid container>
-            {/* First Row - Event name and Booking Dates */}
+            {/* First Row - Event name and Booking Dates 
             <Grid item sm={10} style={{ width: "100%" }}>
               <Typography className={`${globalClasses.bold} ${classes.title}`}>
                 {event.name}
@@ -153,8 +251,9 @@ function EventCard({ event, handleEventDelete }) {
                 <ReadMore percent={10} text={event.description} />
               </Grid>
             </Grid>
+            */ }
 
-            {/* Date and month section */}
+            {/* Date and month section 
             <Grid
               item
               sm={2}
@@ -237,7 +336,7 @@ function EventCard({ event, handleEventDelete }) {
             ) : null}
           </Grid>
 
-          {/* third Row : Event Type and General information */}
+          {/* third Row : Event Type and General information 
           <Grid container>
             <Grid item container sm={8} xs={8} md={8} lg={8} xl={8}>
               <Grid
@@ -356,9 +455,11 @@ function EventCard({ event, handleEventDelete }) {
             ) : null}
           </Grid>
         </Grid>
-      </Grid>
+      </Grid>} */}
     </DashboardCard>
   );
 }
+
+
 
 export default EventCard;
