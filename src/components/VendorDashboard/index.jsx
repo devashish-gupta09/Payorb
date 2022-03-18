@@ -124,17 +124,23 @@ function VendorDashboard() {
         <UserAuthDetailsProvider>
           <Grid style={{ border: "2px solid" }}>
             <VendorDashboardHeader profileData={profileData} />
-            <Grid container className={classes.dashboard}>
-              <Grid item className={classes.sidebar}>
-                <VendorDashboardSidebar profileData={profileData} />
+            {router.pathname == `/vendor/[vendorId]` ? (
+              <VendorDashboardContainer>
+                {getComponent(profileData)}
+              </VendorDashboardContainer>
+            ) : (
+              <Grid container className={classes.dashboard}>
+                <Grid item className={classes.sidebar}>
+                  <VendorDashboardSidebar profileData={profileData} />
+                </Grid>
+                <Grid item className={classes.mainContainer}>
+                  <VendorDashboardContainer>
+                    {getComponent(profileData)}
+                  </VendorDashboardContainer>
+                </Grid>
               </Grid>
-              <Grid item className={classes.mainContainer}>
-                <VendorDashboardContainer>
-                  {getComponent(profileData)}
-                </VendorDashboardContainer>
-              </Grid>
-            </Grid>
-            <AuthAlertBanner />
+            )}
+            {/* <AuthAlertBanner /> */}
             <AppFooter />
           </Grid>
         </UserAuthDetailsProvider>
