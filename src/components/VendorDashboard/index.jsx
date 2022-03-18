@@ -122,6 +122,7 @@ function VendorDashboard() {
         <FallbackLoading />
       ) : (
         <UserAuthDetailsProvider>
+          {/* <VendorDashboardHeader profileData={profileData} /> */}
           <Grid container className={classes.dashboard}>
             <Grid item className={classes.sidebar}>
               <VendorDashboardSidebar profileData={profileData} />
