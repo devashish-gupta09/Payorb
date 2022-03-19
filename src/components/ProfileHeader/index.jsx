@@ -99,9 +99,6 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
     const user = auth.getUser();
 
     const firebaseStorageObj = firebase.storage();
-    if (process.env.NODE_ENV === "development") {
-      firebaseStorageObj.useEmulator("localhost", 9199);
-    }
     const ref = firebaseStorageObj.ref();
     const childRef = ref.child(
       `/profile-banner/${user.uid}.${type.split("/")[1]}`
@@ -140,9 +137,8 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
       },
       () => {
         task.snapshot.ref.getDownloadURL().then(async (res) => {
-          showAlert(res);
-          setProgress(false);
           await delay(2000);
+          setProgress(false);
           setCroppedImage(dataUrl);
           handleDialog(false);
         });
@@ -151,9 +147,8 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
   };
 
   const handleBannerDelete = async () => {
-    console.log("Handle Banner Delete");
     try {
-      await updateUser({ ...profileData, bannerImgUrl: "" });
+      await updateUser({ bannerImgUrl: "" });
       showAlert("Banner image deleted");
     } catch (err) {
       showAlert("Banner image failed to delete");
@@ -164,10 +159,10 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
 
   return (
     <Grid className={classes.root}>
+      {Alert()}
       {dialogOpen && (
         <Dialog open={dialogOpen} onClose={() => handleDialog(false)}>
           <DialogContent className={classes.dialogContentContainer}>
-            {Alert()}
             <ImageSelectAndCrop
               title="Select banner image"
               imagePath={
@@ -256,12 +251,14 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
             >
               <Edit></Edit>
             </IconButton>
-            <IconButton
-              className={classes.deleteButton}
-              onClick={handleBannerDelete}
-            >
-              <Delete></Delete>
-            </IconButton>
+            {profileData?.bannerImgUrl ? (
+              <IconButton
+                className={classes.deleteButton}
+                onClick={handleBannerDelete}
+              >
+                <Delete></Delete>
+              </IconButton>
+            ) : null}
           </Grid>
         ) : null}
       </Grid>

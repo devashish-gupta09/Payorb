@@ -4,10 +4,9 @@ import { appColors } from "../../../styles/colors";
 
 export const styles = makeStyles((theme) => ({
   profileImage: {
-    height: "12.5em",
     borderRadius: "50%",
-    width: "12.5em",
-    border: "4px solid white",
+    width: "12em",
+    border: "7px solid white",
     [theme.breakpoints.down("sm")]: {
       width: "10em",
       height: "10em",
@@ -16,8 +15,10 @@ export const styles = makeStyles((theme) => ({
   profileInfoCardContainer: {
     width: "35%",
     position: "relative",
+    paddingLeft: "2em",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
+      paddingLeft: 0,
     },
   },
   profileName: {
@@ -28,7 +29,7 @@ export const styles = makeStyles((theme) => ({
   },
   profileImageContainer: {
     height: "12em",
-    width: "10.5em",
+    width: "12.5em",
     position: "absolute",
     marginTop: "-7.5em",
     left: 0,
@@ -43,7 +44,7 @@ export const styles = makeStyles((theme) => ({
     },
   },
   profileDetailsContainer: {
-    padding: "8.5em 6em",
+    padding: "8.5em 12.5% 4em 15%",
     [theme.breakpoints.down("sm")]: {
       padding: "6.5em 1.5em 1.5em 1.5em",
     },

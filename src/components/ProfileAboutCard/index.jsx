@@ -116,10 +116,12 @@ function ProfileAboutCard({ profileData, vendor = true, updateProfile }) {
         </Grid>
 
         <VideoUpload
-          vendor={vendor}
+          isVendor={vendor}
+          profileData={profileData}
           videoProps={{
             src: profileData.videoLink,
           }}
+          updateProfile={updateProfile}
         />
       </Grid>
     </Grid>

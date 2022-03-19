@@ -25,8 +25,6 @@ function ProfileInfoCard({ profileData, vendor, updateProfile }) {
   const globalClasses = globalStyles();
   const { Alert, showAlert } = useAlertSnackbar();
 
-  console.log(profileData, vendor);
-
   const formik = useFormik({
     initialValues: {
       occupation: profileData.occupation || "",
