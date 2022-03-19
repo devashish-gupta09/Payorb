@@ -28,10 +28,11 @@ import ReadMore from "../ReadMore";
 import VendorEventCreationForm from "../VendorEventCreationForm";
 import { styles } from "./styles";
 import CreateIcon from "@material-ui/icons/Create";
-import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
-import ShareIcon from "@material-ui/icons/Share";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import ShareIcon from "@material-ui/icons/Share";
 
 export function EventCardDate({ classes, startDate, endDate }) {
   return (
@@ -142,100 +143,107 @@ function EventCard({ event, handleEventDelete }) {
           onClose={handleShareDialogClose}
         />
       )}
-        
-        <Card className={classes.cardContainer}>
-          
-        <img
-            src={event.photoUrl || DEFAULT_EVENT_IMAGE}
-            alt="vendor-event"
-            width="400em"
-          />
 
-      <Grid container className={classes.imgContainer}>
-        <Grid container justifyContent="right" className={classes.topBanner}>
-          <Button className={`${classes.topBannerButton} ${classes.cooking}`}>
-            Cooking
-          </Button>
-          <Button className={classes.topBannerButton}>Booking Open</Button>
-          <Grid className={classes.sideBar}>
-            <MoreVertIcon />
-            <CreateIcon className={classes.icon} />
-            <DeleteOutlineIcon
-              className={`${classes.icon} ${classes.deleteIcon}`}
-              onClick={enableDelete}
-                        disabled={event.orders.length > 0}
-            />
-            <AddToPhotosIcon
-              className={`${classes.icon} ${classes.AddToPhotosIcon}`}
-            />
-            <ShareIcon className={`${classes.icon} ${classes.shareIcon}`} />
+      <Card className={classes.cardContainer}>
+        <img
+          src={event.photoUrl || DEFAULT_EVENT_IMAGE}
+          alt="vendor-event"
+          width="520"
+          height="260"
+          className={classes.image}
+        />
+
+        <Grid container className={classes.imgContainer}>
+          <Grid container justifyContent="right" className={classes.topBanner}>
+            <Button className={`${classes.topBannerButton} ${classes.cooking}`}>
+              Cooking
+            </Button>
+            <Button className={classes.topBannerButton}>Booking Open</Button>
+            <Grid className={classes.sideBar}>
+              <MoreVertIcon className={classes.icon} />
+              <CreateIcon className={classes.icon} />
+              <DeleteOutlineIcon
+                className={`${classes.icon} ${classes.deleteIcon}`}
+                onClick={enableDelete}
+                disabled={event.orders.length > 0}
+              />
+              <AddToPhotosIcon
+                className={`${classes.icon} ${classes.AddToPhotosIcon}`}
+              />
+              <ShareIcon className={`${classes.icon} ${classes.shareIcon}`} />
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid container className={classes.dateAndTime}>
-          <Grid item xs={6}>
-            <Typography className={classes.bottomText}>
+          <Grid container className={classes.dateAndTime}>
+            <Grid item xs={6}>
+              <Typography className={classes.bottomText}>
                 <img src="/assets/vendorEventsCard/calender.svg"></img>
                 {"  "}
-                {event.startDate}
-            </Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography className={classes.bottomText}>
-              12:00 PM - 2:00 PM
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-
-
-      <Grid
-        container
-        justify={"space-between"}
-        className={classes.textContainer}
-      >
-        <Grid container justify={"space-between"}>
-          <Grid item xs={8}>
-            <Typography className={classes.headline}>
-              {event.name}
-            </Typography>
-          </Grid>
-          <Grid item xs={4}>
-            <Typography className={classes.cost}>{event.trialClass ? "Trial Class" : <>&#8377; {event.price}</>}</Typography>
+                <span className={classes.date}>{event.startDate}</span>
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography className={classes.bottomText}>
+                <AccessTimeIcon />
+                {"  "}
+                <span className={classes.date}>12:00 PM - 2:00 PM</span>
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
-        <Typography className={classes.descriptionText}>
-            <ReadMore percent={20} text={event.description} className={classes.descriptionText} />
-        </Typography>
 
         <Grid
           container
           justify={"space-between"}
-          className={classes.bottomTextContainer}
+          className={classes.textContainer}
         >
-          <Grid item xs={4}>
-            <Typography className={classes.bottomText}>
-              Event Type <br />{formatEventType(event.type)}
-            </Typography>
+          <Grid container justify={"space-between"}>
+            <Grid item xs={8}>
+              <Typography className={classes.headline}>{event.name}</Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography className={classes.cost}>
+                {event.trialClass ? "Trial Class" : <>&#8377; {event.price}</>}
+              </Typography>
+            </Grid>
           </Grid>
-          <Grid item xs={4}>
-            <Typography className={classes.bottomText}>
-              Sold out Seats
-              <br /> {event.orders ? event.orders.length : 0}
-                  {event.type === EVENT_TYPES.ONE_TIME &&
-                    `/${event.totalTickets}`}
-            </Typography>
-          </Grid>
-          <Grid item xs={4}>
-            <Typography className={classes.bottomText}>
-              Total Revenue <br /> {`${event.revenue ? event.revenue : "0.0"}`}
-            </Typography>
+          <Typography className={classes.descriptionText}>
+            <ReadMore
+              percent={20}
+              text={event.description}
+              className={classes.descriptionText}
+            />
+          </Typography>
+
+          <Grid
+            container
+            justify={"space-between"}
+            className={classes.bottomTextContainer}
+          >
+            <Grid item xs={4}>
+              <Typography className={classes.bottomText}>
+                Event Type <br />
+                {formatEventType(event.type)}
+              </Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography className={classes.bottomText}>
+                Sold out Seats
+                <br /> {event.orders ? event.orders.length : 0}
+                {event.type === EVENT_TYPES.ONE_TIME &&
+                  `/${event.totalTickets}`}
+              </Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography className={classes.bottomText}>
+                Total Revenue <br />{" "}
+                {`${event.revenue ? event.revenue : "0.0"}`}
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-        </Card>
-        
-      
-    {/* {  <Grid container alignItems={"stretch"}>
+      </Card>
+
+      {/* {  <Grid container alignItems={"stretch"}>
         <Grid item sm={3} className={classes.imageContainer}>
           <EventImageContainer url={event.photoUrl || DEFAULT_EVENT_IMAGE} />      
         </Grid> 
@@ -251,9 +259,9 @@ function EventCard({ event, handleEventDelete }) {
                 <ReadMore percent={10} text={event.description} />
               </Grid>
             </Grid>
-            */ }
+            */}
 
-            {/* Date and month section 
+      {/* Date and month section 
             <Grid
               item
               sm={2}
@@ -459,7 +467,5 @@ function EventCard({ event, handleEventDelete }) {
     </DashboardCard>
   );
 }
-
-
 
 export default EventCard;

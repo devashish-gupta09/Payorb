@@ -5,6 +5,7 @@ import { appColors } from "../../../styles/colors";
 export const styles = makeStyles((theme) => ({
   root: {
     padding: "0",
+    display: "inline-block",
   },
   title: {
     fontSize: "1.6em",
@@ -18,6 +19,7 @@ export const styles = makeStyles((theme) => ({
     width: "100%",
     display: "flex",
     alignItems: "center",
+    borderRadius: "8px 8px 0px 0px",
     [theme.breakpoints.down("sm")]: {
       padding: 0,
     },
@@ -82,80 +84,97 @@ export const styles = makeStyles((theme) => ({
     },
   },
   cardContainer: {
-    width: "25em"
+    display: "inline",
+    // width: "25em",
+    borderRadius: "8px 8px 0px 0px",
   },
   headline: {
     fontWeight: "bold",
-    fontSize: "1em"
+    fontSize: "1em",
+  },
+  imgContainer: {
+    width: "520px",
+    borderRadius: "8px 8px 0px 0px",
+  },
+  image: {
+    borderRadius: "8px 8px 0px 0px",
   },
   textContainer: {
-    padding: "0.4em 1em 0.6em 1.2em"
+    width: "520px",
+    padding: "0.4em 1em 0.6em 1.2em",
+    boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.25)",
+    borderRadius: "8px",
   },
   descriptionText: {
-    fontSize: "0.7em",
-    marginTop: "0.24em"
+    fontSize: "0.2em",
+    marginTop: "0.24em",
   },
   cost: {
     float: "right",
     fontWeight: "bold",
-    fontSize: "1em"
+    fontSize: "1em",
   },
   bottomTextContainer: {
-    marginTop: "0.5em"
+    marginTop: "0.5em",
   },
   bottomText: {
-    fontSize: "0.6em",
+    fontSize: "0.8em",
     marginTop: "0.5em",
     fontWeight: "bold",
-    alignItems:"center",
+    alignItems: "center",
+    verticalAlign: "middle",
     //textAlign: "center"
   },
   topBannerButton: {
     borderRadius: "2em",
     background: "#008EFF",
-    fontSize: "0.5em",
+    fontSize: "0.6em",
+    padding: "0.5em 1em",
+    margin: "0 0.5em",
     color: "white",
     height: "2.5em",
-
   },
   cooking: {
-    background: "#1ECE7A"
+    background: "#1ECE7A",
     // right: "74%"
   },
   topBanner: {
     //position: "absolute",
     justifyContent: "right",
     right: "24em",
-    marginTop:"-16em",
+    marginTop: "-16em",
   },
   sideBar: {
     display: "flex",
     flexDirection: "column",
-    color: "white"
+    color: "white",
   },
   dateAndTime: {
     color: "#68FDF3",
     background: "rgba(0,0,0,0.5)",
     marginTop: "-1.5em",
-    marginBottom: "0.3em",
+    // marginBottom: "0.3em",
     //left
-    padding: "0 0.5em 0 0.5em"
+    padding: "0 0.5em 0 0.5em",
   },
   icon: {
     background: "white",
     color: "#008EFF",
     borderRadius: "2em",
-    fontSize: "medium",
+    fontSize: "1.5em",
     padding: "0.2em",
-    marginTop: "0.2em"
+    margin: "0.2em 0.5em 0em 0.5em",
   },
   deleteIcon: {
-    color: "#FC6767"
+    color: "#FC6767",
   },
   AddToPhotosIcon: {
-    color: "#FFB648"
+    color: "#FFB648",
   },
   shareIcon: {
-    color: "#1ECE7A"
-  }
+    color: "#1ECE7A",
+  },
+  date: {
+    verticalAlign: "super",
+  },
 }));
