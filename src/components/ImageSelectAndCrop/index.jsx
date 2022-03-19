@@ -30,6 +30,7 @@ function ImageSelectAndCrop({
   const onInputChange = (e) => {
     // Uploading a single file
     if (e.target.files.length === 1) {
+      console.log("Shajdhdjkshdjkash");
       if (e.target.files[0].size > 3145728) {
         showAlert("Max image size < 3 MB", ALERT_TYPES.ERROR);
         return;

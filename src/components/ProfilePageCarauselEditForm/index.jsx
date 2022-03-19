@@ -64,6 +64,8 @@ const ProfilePageCarauselEditForm = ({
   carauselAssets,
   updateProfile,
   profileData,
+  showForm,
+  close,
 }) => {
   const classes = styles();
   const [value, setValue] = React.useState(0);
@@ -96,6 +98,8 @@ const ProfilePageCarauselEditForm = ({
   };
 
   const handleUpload = () => {
+    setProgress(true);
+    showAlert("Uploading Image");
     const hash = createHash("sha256");
     hash.update(v4());
 
@@ -121,7 +125,6 @@ const ProfilePageCarauselEditForm = ({
       },
     });
 
-    setProgress(true);
     task.on(
       "state_changed",
       (snapshot) => {
@@ -146,8 +149,7 @@ const ProfilePageCarauselEditForm = ({
       },
       () => {
         task.snapshot.ref.getDownloadURL().then(async (downloadURL) => {
-          showAlert("Image saved");
-          setProgress(false);
+          showAlert("Image Uploaded");
           await delay(2000);
           setCroppedImage(downloadURL);
           setData({
@@ -155,11 +157,12 @@ const ProfilePageCarauselEditForm = ({
             type: "image",
             title: data.title ? data.title : "",
           });
-          handleSave({
+          await handleSave({
             link: downloadURL,
             type: "image",
             title: data.title ? data.title : "",
           });
+          setProgress(false);
         });
       }
     );
@@ -173,7 +176,8 @@ const ProfilePageCarauselEditForm = ({
       if (res?.success) {
         showAlert("User updated.");
         updateProfile({ ...profileData, carauselAssets: temp });
-        setEditIndex(false);
+        setEditIndex(temp.length);
+        close();
       } else {
         showAlert("User not updated.", ALERT_TYPES.ERROR);
       }
@@ -182,17 +186,23 @@ const ProfilePageCarauselEditForm = ({
       showAlert("User not updated", ALERT_TYPES.ERROR);
     }
   };
+
   const handleChangeIndex = (index) => {
     setValue(index);
   };
+
+  const handleDialogClose = (index) => {
+    setEditIndex(profileData.carauselAssets.length);
+  };
   return (
     <Dialog
-      open={true}
-      onClose={null}
+      open={showForm}
+      onClose={handleDialogClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
       <div>
+        <span>Current Edit EIDnex:{index}</span>
         <AppBar position="static" color="default">
           <Tabs
             value={value}
@@ -223,7 +233,7 @@ const ProfilePageCarauselEditForm = ({
               value={data.type === "video" ? data.link : ""}
             />
             <DialogActions>
-              <Button onClick={() => setEditIndex(false)}>Cancel</Button>
+              <Button onClick={close}>Cancel</Button>
               <Button onClick={() => handleSave(data)}>SAVE</Button>
             </DialogActions>
           </TabPanel>
@@ -238,6 +248,7 @@ const ProfilePageCarauselEditForm = ({
               title="Select image to upload"
               imagePath={croppedImg}
               handleDataUrl={handleDataUrl}
+              cropperAspectRatio={1.33}
             />
             <TextField
               fullWidth
@@ -251,7 +262,7 @@ const ProfilePageCarauselEditForm = ({
               helperText={imageTitle.error}
             />
             <DialogActions>
-              <Button onClick={() => setEditIndex(false)}>Cancel</Button>
+              <Button onClick={close}>Cancel</Button>
               <Button onClick={() => handleUpload()}>
                 {progressLoader ? (
                   <CircularProgress
