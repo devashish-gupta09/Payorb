@@ -23,7 +23,7 @@ export default function Profile({ profileData }) {
         updateProfile={updateProfileInfo}
         isVendor={true}
       />
-      <Grid style={{ position: "relative"}}>
+      <Grid style={{ position: "relative" }}>
         <Grid className={classes.navbarDesktop}>
           <ProfileNavBar />
         </Grid>

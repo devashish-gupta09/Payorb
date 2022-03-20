@@ -23,15 +23,24 @@ import { updateUser } from "../../services/auth";
 
 const styles = makeStyles((theme) => ({
   root: {
-    height: "13.5em",
-    width: "100%",
+    "--heightA": "100%",
+    height: "calc(100vh/2.56)",
+    width: "100vw",
     backgroundColor: "pink",
     position: "relative",
+    [theme.breakpoints.down("sm")]: {
+      height: "25vh",
+    },
   },
   base: {
     position: "absolute",
     width: "100%",
     height: "100%",
+  },
+  bannerImg: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
   },
   buttonLayer: {
     position: "absolute",
@@ -140,6 +149,7 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
           await delay(2000);
           setProgress(false);
           setCroppedImage(dataUrl);
+          updateProfile({ ...profileData, bannerImgUrl: res });
           handleDialog(false);
         });
       }
@@ -149,6 +159,7 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
   const handleBannerDelete = async () => {
     try {
       await updateUser({ bannerImgUrl: "" });
+      updateProfile({ ...profileData, bannerImgUrl: "" });
       showAlert("Banner image deleted");
     } catch (err) {
       showAlert("Banner image failed to delete");
@@ -171,7 +182,7 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
                 "/assets/profile-banner-default.png"
               }
               handleDataUrl={handleDataUrl}
-              cropperAspectRatio={6.5}
+              cropperAspectRatio={4.5}
             />
 
             <Grid
@@ -211,10 +222,7 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
       )}
       <Grid className={classes.base}>
         {profileData?.bannerImgUrl ? (
-          <img
-            src={profileData.bannerImgUrl}
-            style={{ width: "100%", height: "100%" }}
-          />
+          <img src={profileData.bannerImgUrl} className={classes.bannerImg} />
         ) : (
           <Grid
             container

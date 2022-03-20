@@ -202,7 +202,6 @@ const ProfilePageCarauselEditForm = ({
       aria-describedby="alert-dialog-description"
     >
       <div>
-        <span>Current Edit EIDnex:{index}</span>
         <AppBar position="static" color="default">
           <Tabs
             value={value}

@@ -102,27 +102,31 @@ function ProfileAboutCard({ profileData, vendor = true, updateProfile }) {
           </Grid>
         </form>
 
-        <Grid
-          container
-          alignItems="center"
-          justifyContent="space-between"
-          style={{ margin: "1.5em 0" }}
-        >
-          <Grid>
-            <Typography variant="h6" style={{ fontWeight: "bold" }}>
-              Introduction Video
-            </Typography>
-          </Grid>
-        </Grid>
-
-        <VideoUpload
-          isVendor={vendor}
-          profileData={profileData}
-          videoProps={{
-            src: profileData.videoLink,
-          }}
-          updateProfile={updateProfile}
-        />
+        {profileData.videoLink || vendor ? (
+          <>
+            {" "}
+            <Grid
+              container
+              alignItems="center"
+              justifyContent="space-between"
+              style={{ margin: "1.5em 0" }}
+            >
+              <Grid>
+                <Typography variant="h6" style={{ fontWeight: "bold" }}>
+                  Introduction Video
+                </Typography>
+              </Grid>
+            </Grid>
+            <VideoUpload
+              isVendor={vendor}
+              profileData={profileData}
+              videoProps={{
+                src: profileData.videoLink,
+              }}
+              updateProfile={updateProfile}
+            />
+          </>
+        ) : null}
       </Grid>
     </Grid>
   );

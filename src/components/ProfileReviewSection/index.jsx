@@ -31,7 +31,7 @@ function ProfileReviewSection(props) {
       getReviewsForVendor({ vendorId: router.query.vendorId, limit: "5" })
         .then((res) => {
           if (res.success) {
-            setReviews([]);
+            setReviews(res.data.reviews);
             setLastDoc(res.data.lastReview);
           } else {
             showAlert(res.error);

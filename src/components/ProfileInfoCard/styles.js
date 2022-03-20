@@ -7,6 +7,7 @@ export const styles = makeStyles((theme) => ({
     borderRadius: "50%",
     width: "12em",
     border: "7px solid white",
+    objectFit: "cover",
     [theme.breakpoints.down("sm")]: {
       width: "10em",
       height: "10em",
@@ -78,13 +79,13 @@ export const styles = makeStyles((theme) => ({
     background: "#BDBDBD",
   },
   customerProfileVendorDetails: {
-    width: "65%",
+    width: "85%",
     maxWidth: "27.5em",
     height: "fit-content",
     marginLeft: "auto",
     marginRight: "auto",
     background: "#F6F6FA",
-    padding: "4em 2em 2em 2em",
+    padding: "4em 1.5% 2em 1.5%",
     position: "absolute",
     borderRadius: "5px",
     top: "4em",
@@ -99,17 +100,19 @@ export const styles = makeStyles((theme) => ({
     },
   },
   publicProfileName: {
-    fontSize: "2em",
+    fontSize: "1.75rem",
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.75em",
     },
   },
   publicVendorDetailsRowLogo: {
     margin: "0.35em",
+    [theme.breakpoints.down("sm")]: {
+      margin: "0.2em 0.25em 0.2em 0em",
+    },
   },
   publicVendorDetailsRowContainer: {
-    paddingBottom: "1em",
-    fontSize: "1.25em",
+    fontSize: "1.15em",
     [theme.breakpoints.down("sm")]: {
       paddingBottom: "0",
       fontSize: "1em",

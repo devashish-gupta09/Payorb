@@ -101,73 +101,100 @@ export const ProfileImageGallery = ({
         showForm={showForm}
         close={closeFormDialog}
       />
-      <Grid container spacing={4} className={classes.cardContainer}>
-        {assets.length >= defaultGridSize &&
-          assets.slice(0, defaultGridSize).map((asset, index) => {
-            return (
-              <Grid item sm={4} xs={12} className={classes.cardContainerRoot}>
-                <ProfileImageGalleryCard
-                  key={index}
-                  index={index}
-                  asset={asset}
-                  profileInfo={profileInfo}
-                  isVendor={vendor}
-                  updateProfile={updateProfile}
-                  openDialog={openFormDialogForSingleAsset}
-                  handleImageDelete={handleDelete}
-                />
-              </Grid>
-            );
-          })}
 
-        {assets.length < defaultGridSize &&
-          assets.map((asset, index) => {
-            return (
-              <Grid item sm={4} xs={12} className={classes.cardContainerRoot}>
-                <ProfileImageGalleryCard
-                  key={index}
-                  index={index}
-                  profileInfo={profileInfo}
-                  isVendor={vendor}
-                  updateProfile={updateProfile}
-                  openDialog={openFormDialogForSingleAsset}
-                  handleImageDelete={handleDelete}
-                />
-              </Grid>
-            );
-          })}
+      {profileInfo?.carauselAssets?.length || vendor ? (
+        <>
+          <Grid container spacing={4} className={classes.cardContainer}>
+            {assets.length >= defaultGridSize &&
+              assets.slice(0, defaultGridSize).map((asset, index) => {
+                return (
+                  <Grid
+                    item
+                    sm={4}
+                    xs={12}
+                    className={classes.cardContainerRoot}
+                  >
+                    <ProfileImageGalleryCard
+                      key={index}
+                      index={index}
+                      asset={asset}
+                      profileInfo={profileInfo}
+                      isVendor={vendor}
+                      updateProfile={updateProfile}
+                      openDialog={openFormDialogForSingleAsset}
+                      handleImageDelete={handleDelete}
+                    />
+                  </Grid>
+                );
+              })}
 
-        {assets.length < defaultGridSize &&
-          emptyAssets.map(() => {
-            return (
-              <Grid item sm={4} xs={12} className={classes.cardContainerRoot}>
-                <ProfileImageGalleryCard
-                  profileInfo={profileInfo}
-                  openDialog={openFormDialogForSingleAsset}
-                />
-              </Grid>
-            );
-          })}
-      </Grid>
-      <Grid container justifyContent="center" className={classes.addMoreButton}>
-        {vendor ? (
-          <ButtonCapsule
-            text={"Add More"}
-            icon={<Add />}
-            iconBefore={true}
-            onClick={openFormDialog}
-          />
-        ) : null}
+            {assets.length < defaultGridSize &&
+              assets.map((asset, index) => {
+                return (
+                  <Grid
+                    item
+                    sm={4}
+                    xs={12}
+                    className={classes.cardContainerRoot}
+                  >
+                    <ProfileImageGalleryCard
+                      key={index}
+                      index={index}
+                      profileInfo={profileInfo}
+                      isVendor={vendor}
+                      updateProfile={updateProfile}
+                      openDialog={openFormDialogForSingleAsset}
+                      handleImageDelete={handleDelete}
+                    />
+                  </Grid>
+                );
+              })}
 
-        {assets.length > defaultGridSize ? (
-          <Grid className={classes.viewMore}>
-            <ButtonCapsule
-              text={"View More"}
-              onClick={increaseDefaultGridElNum}
-            />
+            {assets.length < defaultGridSize &&
+              vendor &&
+              emptyAssets.map(() => {
+                return (
+                  <Grid
+                    item
+                    sm={4}
+                    xs={12}
+                    className={classes.cardContainerRoot}
+                  >
+                    <ProfileImageGalleryCard
+                      profileInfo={profileInfo}
+                      openDialog={openFormDialogForSingleAsset}
+                    />
+                  </Grid>
+                );
+              })}
           </Grid>
-        ) : null}
-      </Grid>
+          <Grid
+            container
+            justifyContent="center"
+            className={classes.addMoreButton}
+          >
+            {vendor ? (
+              <ButtonCapsule
+                text={"Add More"}
+                icon={<Add />}
+                iconBefore={true}
+                onClick={openFormDialog}
+              />
+            ) : null}
+
+            {assets.length > defaultGridSize ? (
+              <Grid className={classes.viewMore}>
+                <ButtonCapsule
+                  text={"View More"}
+                  onClick={increaseDefaultGridElNum}
+                />
+              </Grid>
+            ) : null}
+          </Grid>
+        </>
+      ) : (
+        <Typography>No images in the gallery</Typography>
+      )}
     </Grid>
   );
 };
