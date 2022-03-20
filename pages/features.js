@@ -11,7 +11,7 @@ import {
 
 export default function Features({ features }) {
   return (
-    <Grid backgroundColor={"blue"}>
+    <Grid>
       <PageTitle title="Payorb | Features" />
       <FeaturesPage content={features} />
     </Grid>

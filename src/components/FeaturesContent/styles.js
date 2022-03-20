@@ -2,28 +2,23 @@ import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
   container: {
-    width: "100vw",
-    height: "fit-content",
-    overflow: "hidden",
-    background: "url(/assets/homepage-1.png)",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    display: "flex",
+    height: "90vh",
+    position: "relative",
+    border: "2px solid",
     [theme.breakpoints.down("sm")]: {
-      display: "block",
-      height: "70vh",
+      height: "75vh",
       backgroundRepeat: "no-repeat",
       backgroundSize: "contain",
       backgroundImage: "url(/assets/mobile-home-bg.png)",
     },
   },
   textContainer: {
-    padding: "15em 4em 4em 4em",
-    width: "50%",
+    padding: "4em 4em 4em 4em",
+    width: "60%",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
-      height: "fit-content",
-      padding: "5em 0 0 0",
+      height: "100%",
+      padding: "5em 1.5em 0 1.5em",
       alignItems: "center",
       display: "flex",
       flexDirection: "column",
@@ -33,19 +28,13 @@ export const styles = makeStyles((theme) => ({
     display: "inline-block",
     color: "black",
     fontWeight: "bolder",
-    paddingBottom: "0.75em",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "1.6em",
-      textAlign: "center",
-      // paddingLeft: "1.2em"
-    },
-  },
-  titleSection1: {
+    paddingBottom: "0.25em",
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.6em",
       textAlign: "center",
     },
   },
+
   titleSection1: {
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.25em",
@@ -68,17 +57,18 @@ export const styles = makeStyles((theme) => ({
     color: "black",
     width: "100%",
     fontWeight: "400",
+    fontSize: "1.25em",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       fontWeight: "500",
-      // paddingLeft: "1.2em",
+      fontSize: "1em",
       textAlign: "center",
     },
   },
   buttonContain: {
     position: "relative",
     width: "100%",
-    height: "3em",
+    height: "fit-content",
     top: "3em",
     [theme.breakpoints.down("sm")]: {
       justifyContent: "center",
@@ -91,9 +81,10 @@ export const styles = makeStyles((theme) => ({
     padding: "0 1.5em",
   },
   capsuleButton: {
+    padding: "0.75em 1.25em",
+    marginRight: "1em",
     background: "linear-gradient(178.83deg, #68FDF3 1%, #00D4FF 183.74%)",
-    borderRadius: "2em",
-    fontWeight: "600",
+    boxShadow: "none",
     fontSize: "0.8em",
     marginTop: "1.6em",
     padding: "0.5em 1em",
@@ -110,7 +101,7 @@ export const styles = makeStyles((theme) => ({
     fontSize: "2em",
   },
   scroll: {
-    marginTop: "13em",
+    marginTop: "10em",
     cursor: "pointer",
     paddingLeft: "0",
     [theme.breakpoints.down("sm")]: {
@@ -123,20 +114,22 @@ export const styles = makeStyles((theme) => ({
     top: "0.3em",
   },
   imgContainer: {
-    width: "50vw",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    display: "inline",
+    position: "absolute",
+    width: "40%",
+    height: "29.25em",
+    right: "5%",
+    top: "0",
+    bottom: "0",
+    border: "3px solid yellow",
     [theme.breakpoints.down("sm")]: {
+      height: "20em",
       width: "100%",
-      padding: "1.75em",
+      right: "0",
     },
   },
   image: {
-    width: "80%",
-    border: "2px solid #00D4FF",
-    [theme.breakpoints.down("sm")]: {
-      width: "100%",
-    },
+    width: "100%",
+    position: "absolute",
   },
 }));
