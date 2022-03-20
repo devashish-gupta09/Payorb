@@ -182,29 +182,20 @@ function LandingHeader() {
               </Button>
             </Link>
             <Link href={PAGE_PATHS.SOLOPRENEUR}>
-              {router.pathname === PAGE_PATHS.SOLOPRENEUR ? (
-                <Button
-                  onClick={() =>
-                    event({
-                      action: SOLOPRENEUR_CLICK,
-                    })
-                  }
-                  className={classes.buttonActive}
-                >
-                  Become a Solopreneur
-                </Button>
-              ) : (
-                <Button
-                  onClick={() =>
-                    event({
-                      action: SOLOPRENEUR_CLICK,
-                    })
-                  }
-                  className={classes.buttonSpacing}
-                >
-                  Become a Solopreneur
-                </Button>
-              )}
+              <Button
+                onClick={() =>
+                  event({
+                    action: SOLOPRENEUR_CLICK,
+                  })
+                }
+                className={
+                  router.pathname === PAGE_PATHS.SOLOPRENEUR
+                    ? classes.buttonActive
+                    : classes.buttonSpacing
+                }
+              >
+                Become a Solopreneur
+              </Button>
             </Link>
 
             <LandingHeaderProfile />

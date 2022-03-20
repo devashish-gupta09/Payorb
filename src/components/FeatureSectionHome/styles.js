@@ -80,26 +80,23 @@ export const styles = makeStyles((theme) => ({
     },
   },
   btn: {
-    position: "relative",
     width: "100%",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    padding: "1em",
-  },
-  btnContainer: {
-    position: "absolute",
-    display: "block",
-    margin: "0 auto",
   },
   capsuleButton: {
-    marginRight: "1em",
     background: "linear-gradient(178.83deg, #68FDF3 1%, #00D4FF 183.74%)",
     boxShadow: "none",
     fontSize: "0.8em",
+    padding: "0.5em 1em",
+    fontWeight: "bold",
     [theme.breakpoints.down("sm")]: {
       padding: "0.3em 1em",
       fontSize: "0.7em",
     },
+  },
+  callMadeIcon: {
+    paddingLeft: "0.25em",
   },
 }));

@@ -2,12 +2,10 @@ import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
   container: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-start ",
     justifyContent: "center",
     width: "100%",
-    height: "100%",
+    padding: "0 3em",
   },
   imgBox: {
     position: "relative",
@@ -21,8 +19,8 @@ export const styles = makeStyles((theme) => ({
     },
   },
   img: {
-    width: "80%",
-    height: "80%",
+    width: "4em",
+    height: "4em",
     [theme.breakpoints.down("sm")]: {
       width: "60px",
       height: "60px",

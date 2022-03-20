@@ -25,7 +25,7 @@ function HomeSection({ content }) {
             </Typography>
           </Typography>
         </Grid>
-        <Typography variant={"h6"} className={classes.descriptionText}>
+        <Typography className={classes.descriptionText}>
           {content.description}
         </Typography>
         <Grid container className={classes.buttonContain}>

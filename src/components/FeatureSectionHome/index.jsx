@@ -13,7 +13,7 @@ const ColoredLine = () => (
     style={{
       border: "0",
       backgroundColor: "#00D4FF",
-      height: "0.25em",
+      height: "0.125em",
       width: "4em",
     }}
   />
@@ -28,12 +28,7 @@ function FeatureSectionHome({ content }) {
       </Typography>
       <ColoredLine />
       <Grid className={classes.container} alignItems={"center"}>
-        <Grid
-          className={classes.desktop}
-          container
-          // alignItems={"stretch"}
-          spacing={3}
-        >
+        <Grid className={classes.desktop} container>
           {content.features.map((feature, index) => {
             return (
               <Grid item sm={4} key={index}>
@@ -47,21 +42,19 @@ function FeatureSectionHome({ content }) {
           })}
         </Grid>
         <Grid className={classes.btn}>
-          <Box className={classes.btnContainer}>
-            <Link href={"/features"}>
-              <ButtonCapsule
-                buttonStyle={classes.capsuleButton}
-                text="MORE INFO"
-                onClick={() =>
-                  event({
-                    action: FEATURES_CLICK,
-                    params: { location: "header" },
-                  })
-                }
-                icon={<CallMadeIcon className={classes.callMadeIcon} />}
-              />
-            </Link>
-          </Box>
+          <Link href={"/features"}>
+            <ButtonCapsule
+              buttonStyle={classes.capsuleButton}
+              text="MORE INFO"
+              onClick={() =>
+                event({
+                  action: FEATURES_CLICK,
+                  params: { location: "header" },
+                })
+              }
+              icon={<CallMadeIcon className={classes.callMadeIcon} />}
+            />
+          </Link>
         </Grid>
       </Grid>
     </Grid>

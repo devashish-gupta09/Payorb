@@ -44,10 +44,9 @@ function LandingHeaderProfile({ handleLinkClick }) {
 
   if (loading && userContext.userState !== "UNAUTHENTICATED") {
     return (
-      <>
-        {/* {matches ? } */}
-
+      <div style={{ paddingLeft: "2em" }}>
         {matches ? (
+          // Mobile Designs
           <li
             onClick={() => {
               handleLinkClick(PAGE_PATHS.SIGNIN);
@@ -57,6 +56,7 @@ function LandingHeaderProfile({ handleLinkClick }) {
             Sign In
           </li>
         ) : (
+          // Desktop
           <Link href={PAGE_PATHS.SIGNIN}>
             <ButtonCapsule
               buttonStyle={classes.buttonSpacing}
@@ -83,7 +83,7 @@ function LandingHeaderProfile({ handleLinkClick }) {
             ></ButtonCapsule>
           </Link>
         )}
-      </>
+      </div>
     );
   }
 
@@ -104,7 +104,7 @@ function LandingHeaderProfile({ handleLinkClick }) {
     );
   } else {
     return (
-      <>
+      <div className={classes.sideBtnContainer}>
         {/* {matches ? } */}
 
         {matches ? (
@@ -143,21 +143,21 @@ function LandingHeaderProfile({ handleLinkClick }) {
             ></ButtonCapsule>
           </Link>
         )}
-      </>
+      </div>
     );
   }
 }
 
 const styles = makeStyles((theme) => ({
   btnCapSpacing: {
-    padding: "0.75em 1em",
+    padding: "0.5em 1em",
     fontWeight: "600",
     background: "white",
     boxShadow: "inset 0px 0px 0px 2px black",
     fontSize: "0.8em",
   },
   buttonSpacing: {
-    padding: "0.75em 1.25em",
+    padding: "0.5em 1.25em",
     marginRight: "1em",
     background: "linear-gradient(178.83deg, #68FDF3 1%, #00D4FF 183.74%)",
     boxShadow: "none",
@@ -168,6 +168,12 @@ const styles = makeStyles((theme) => ({
     padding: "1em 0",
     color: appColors.grey,
     letterSpacing: "1px",
+  },
+  sideBtnContainer: {
+    paddingLeft: "0.75em",
+    [theme.breakpoints.down("sm")]: {
+      padding: "0",
+    },
   },
 }));
 

@@ -18,7 +18,6 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {},
   },
   sectionTitle: {
-    // paddingTop: "1.5em",
     color: appColors.grey,
     letterSpacing: "4%",
     textTransform: "uppercase",
@@ -27,11 +26,12 @@ export const styles = makeStyles((theme) => ({
     },
   },
   logoImage: {
-    height: "6em",
-    width: "6em",
+    height: "4em",
+    width: "fit-content",
+    objectFit: "cover",
   },
   textContainer: {
-    padding: "2em 4em",
+    padding: "1em 4em",
     width: "400px",
     textAlign: "center",
     [theme.breakpoints.down("sm")]: {
