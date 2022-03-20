@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core";
 export const styles = makeStyles((theme) => ({
   container: {
     height: "fit-content",
-    padding: "4em 2em 2em 2em",
+    padding: "2em 2em 2em 2em",
     [theme.breakpoints.down("sm")]: {
       minHeight: "fit-content",
       padding: "2em 1em",

@@ -12,7 +12,7 @@ function FeatureSectionHomeCard({ image, title, description }) {
         justifyContent={"center"}
         alignItems="center"
       >
-        <img src={image} className={classes.logoImage} quality={"75"} />
+        <img src={image} className={classes.logoImage} quality={"90"} />
       </Box>
       <Box item xs={10} className={classes.textContainer}>
         <Typography className={classes.title}>{title}</Typography>

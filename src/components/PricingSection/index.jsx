@@ -14,7 +14,7 @@ const ColoredLine = () => (
     style={{
       border: "0",
       backgroundColor: "#00D4FF",
-      height: "0.25em",
+      height: "0.125em",
       width: "4em",
     }}
   />

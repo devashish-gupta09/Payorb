@@ -14,20 +14,30 @@ function Landing({ content }) {
   const classes = styles();
 
   return (
-    <Grid style={{ padding: "0" }}>
+    <Grid style={{ padding: "0", width: "100vw" }}>
       <Grid className={classes.box}>
-        <LandingHeader />
-        <HomeSection content={content.home} />
+        <Grid
+          style={{
+            position: "absolute",
+            width: "100%",
+          }}
+        >
+          <LandingHeader />
+        </Grid>
+        <Grid
+          style={{
+            paddingTop: "5%",
+            height: "fit-content",
+          }}
+        >
+          <HomeSection content={content.home} />
+        </Grid>
       </Grid>
       <HowItWorksSection content={content.howItWorks} />
       <FeatureSectionHome content={content.feature} />
       <WhyChooseUsSection content={content.whyChooseUs} />
       <PricingSection content={content.pricing} />
       <FaqsSection content={content.faqs} />
-      {/* <UserRegistrationSection content={content.userRegistration} />
-      <EventRegistrationSection content={content.eventRegistration} /> */}
-      {/* <ClientReviewSection content={content.clientReview} /> */}
-      {/* <GrowthSection content={content.growth} /> */}
       <Footer />
     </Grid>
   );
@@ -37,16 +47,15 @@ export default Landing;
 
 const styles = makeStyles((theme) => ({
   box: {
-    backgroundImage: `url("/assets/homepage.png")`,
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    height: "100%",
-    width: "99vw",
+    width: "100%",
     left: 0,
     right: 0,
     top: 0,
     bottom: 0,
+    backgroundImage: `url("/assets/homepage.png")`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
     [theme.breakpoints.down("sm")]: {
       background: `#F0FFFE`,
       width: "100vw",

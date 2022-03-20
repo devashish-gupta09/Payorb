@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
   bg: {
-    margin: "0",
+    paddingBottom: "1em",
     background: "url(/assets/howItWorksBG.svg) no-repeat center center",
     backgroundSize: "cover",
   },
