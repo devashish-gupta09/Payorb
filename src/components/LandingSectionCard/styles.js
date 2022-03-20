@@ -5,7 +5,7 @@ import { appColors } from "../../../styles/colors";
 export const styles = makeStyles((theme) => ({
   container: {
     borderRadius: "8px",
-    padding: "0.7em 0.7em 0.7em 0.7em",
+    padding: "0.7em",
     boxShadow: "0 0 2px 0 rgba(0, 0, 0, 0.25)",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
@@ -13,7 +13,7 @@ export const styles = makeStyles((theme) => ({
     },
   },
   flexbox: {
-    padding: "1em 0.5em 1em 2em",
+    padding: "1em 1em 1em 1em",
     [theme.breakpoints.down("sm")]: {
       display: "flex",
       flexDirection: "row",
@@ -38,6 +38,7 @@ export const styles = makeStyles((theme) => ({
     width: "4em",
   },
   textContainer: {
+    width: "77.5%",
     padding: "2em 4em",
     [theme.breakpoints.down("sm")]: {
       paddingLeft: "2em !important",
@@ -46,7 +47,7 @@ export const styles = makeStyles((theme) => ({
   title: {
     padding: "1em 0.5em 0.25em 0",
     fontWeight: "bold",
-    fontSize: "1.25em",
+    fontSize: "1.15em",
     color: "#333333",
     textAlign: "left",
     height: "max-content",

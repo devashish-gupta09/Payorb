@@ -8,12 +8,12 @@ export const styles = makeStyles((theme) => ({
     backgroundSize: "cover",
     height: "fit-content",
     width: "100%",
-    padding: "2em 0 4em 0",
+    padding: "2em 0",
   },
   container: {
     height: "fit-content",
     width: "100%",
-    padding: "2em 15em 0em 15em",
+    padding: "2em 10% 1em 12.5%",
     [theme.breakpoints.down("sm")]: {
       padding: "1em 0",
       width: "100%",

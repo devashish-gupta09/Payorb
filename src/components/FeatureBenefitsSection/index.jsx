@@ -26,7 +26,7 @@ function FeatureBenefitsSection({ content }) {
         alignItems="center"
         justifyContent="center"
       >
-        <Typography className={classes.mainTitle} variant="h4">
+        <Typography className={classes.mainTitle}>
           {content.title}
         </Typography>
         <Grid className={classes.coloredLine}></Grid>
@@ -39,7 +39,7 @@ function FeatureBenefitsSection({ content }) {
         alignItems={"center"}
         justifyContent={"center"}
       >
-        <Typography>
+        <Typography style={{ fontSize: "0.85em", fontWeight: "500" }}>
           <p>{content.contentSection1}</p>
           <p>{content.contentSection2}</p>
           <p>{content.contentSection3}</p>

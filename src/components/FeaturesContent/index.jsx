@@ -5,6 +5,7 @@ import Link from "next/link";
 import React from "react";
 
 import { event, SIGNUP_CLICK } from "../../utils/ga";
+import ButtonCapsule from "../ButtonCapsule";
 import { styles } from "./styles";
 
 function FeaturesContent({ content }) {
@@ -28,15 +29,14 @@ function FeaturesContent({ content }) {
         </Typography>
         <Grid container className={classes.buttonContain}>
           <Link href={"/signup"}>
-            <Button
-              className={classes.capsuleButton}
+            <ButtonCapsule
+              buttonStyle={classes.capsuleButton}
+              text="Get Started"
               onClick={() =>
                 event({ action: SIGNUP_CLICK, params: { location: "header" } })
               }
-            >
-              Get Started
-              <CallMadeIcon className={classes.callMadeIcon} />
-            </Button>
+              icon={<CallMadeIcon className={classes.callMadeIcon} />}
+            />
           </Link>
         </Grid>
         <Button
