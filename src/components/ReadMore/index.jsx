@@ -34,11 +34,11 @@ const style = makeStyles(() => ({
     color: "blue",
     cursor: "pointer",
     fontSize: "1em",
-    marginTop: "0.24em"
+    marginTop: "0.24em",
   },
   disclaimer: {
     fontSize: "1em",
-    marginTop: "0.24em"
+    marginTop: "0.24em",
   },
 }));
 

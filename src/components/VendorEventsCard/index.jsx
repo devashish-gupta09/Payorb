@@ -95,31 +95,31 @@ function VendorEventsCard({ image, headline, description, date }) {
 
 const styles = makeStyles((theme) => ({
   cardContainer: {
-    width: "25em"
+    width: "25em",
   },
   headline: {
     fontWeight: "bold",
-    fontSize: "1em"
+    fontSize: "1em",
   },
   textContainer: {
-    padding: "0.4em 1em 0.6em 1.2em"
+    padding: "0.4em 1em 0.6em 1.2em",
   },
   descriptionText: {
     fontSize: "0.7em",
-    marginTop: "0.24em"
+    marginTop: "0.24em",
   },
   cost: {
     float: "right",
     fontWeight: "bold",
-    fontSize: "1em"
+    fontSize: "1em",
   },
   bottomTextContainer: {
-    marginTop: "0.5em"
+    marginTop: "0.5em",
   },
   bottomText: {
     fontSize: "0.6em",
     marginTop: "0.5em",
-    fontWeight: "bold"
+    fontWeight: "bold",
     //textAlign: "center"
   },
   topBannerButton: {
@@ -127,10 +127,10 @@ const styles = makeStyles((theme) => ({
     background: "#008EFF",
     fontSize: "0.5em",
     color: "white",
-    height: "2.5em"
+    height: "2.5em",
   },
   cooking: {
-    background: "#1ECE7A"
+    background: "#1ECE7A",
     // right: "74%"
   },
   topBanner: {
@@ -142,7 +142,7 @@ const styles = makeStyles((theme) => ({
   sideBar: {
     display: "flex",
     flexDirection: "column",
-    color: "white"
+    color: "white",
   },
   dateAndTime: {
     color: "#68FDF3",
@@ -150,7 +150,7 @@ const styles = makeStyles((theme) => ({
     marginTop: "-1.5em",
     marginBottom: "0.3em",
     //left
-    padding: "0 0.5em 0 0.5em"
+    padding: "0 0.5em 0 0.5em",
   },
   icon: {
     background: "white",
@@ -158,16 +158,16 @@ const styles = makeStyles((theme) => ({
     borderRadius: "2em",
     fontSize: "medium",
     padding: "0.2em",
-    marginTop: "0.2em"
+    marginTop: "0.2em",
   },
   deleteIcon: {
-    color: "#FC6767"
+    color: "#FC6767",
   },
   AddToPhotosIcon: {
-    color: "#FFB648"
+    color: "#FFB648",
   },
   shareIcon: {
-    color: "#1ECE7A"
-  }
+    color: "#1ECE7A",
+  },
 }));
 export default VendorEventsCard;

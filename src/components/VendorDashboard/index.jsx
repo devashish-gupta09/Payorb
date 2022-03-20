@@ -122,16 +122,25 @@ function VendorDashboard() {
         <FallbackLoading />
       ) : (
         <UserAuthDetailsProvider>
-          <VendorDashboardHeader profileData={profileData} />
-          <Grid container className={classes.dashboard}>
-            <Grid item className={classes.sidebar}>
-              <VendorDashboardSidebar profileData={profileData} />
-            </Grid>
-            <Grid item className={classes.mainContainer}>
+          <Grid>
+            <VendorDashboardHeader profileData={profileData} />
+            {router.pathname == `/vendor/[vendorId]` ? (
               <VendorDashboardContainer>
                 {getComponent(profileData)}
               </VendorDashboardContainer>
-            </Grid>
+            ) : (
+              <Grid container className={classes.dashboard}>
+                <Grid item className={classes.sidebar}>
+                  <VendorDashboardSidebar profileData={profileData} />
+                </Grid>
+                <Grid item className={classes.mainContainer}>
+                  <VendorDashboardContainer>
+                    {getComponent(profileData)}
+                  </VendorDashboardContainer>
+                </Grid>
+              </Grid>
+            )}
+            {/* <AuthAlertBanner /> */}
             <AppFooter />
           </Grid>
         </UserAuthDetailsProvider>

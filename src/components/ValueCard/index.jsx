@@ -1,21 +1,21 @@
-import { makeStyles, Typography,Grid } from "@material-ui/core";
+import { makeStyles, Typography, Grid } from "@material-ui/core";
 import React from "react";
 
 import { appColors } from "../../../styles/colors";
 import DashboardCard from "../DashboardCard";
 
-function ValueCard({ title, subTitle,photo,bottomText }) {
+function ValueCard({ title, subTitle, photo, bottomText }) {
   const classes = styles();
   return (
     <DashboardCard rootClass={classes.container}>
       <Grid container>
-        <Grid item xs={4} >
-        <img src={photo}/>
+        <Grid item xs={4}>
+          <img src={photo} />
         </Grid>
-        <Grid item xs={8} >
-        <Typography className={classes.title}>{title}</Typography>
-        <Typography className={classes.subTitle}>{subTitle}</Typography>
-        <Typography className={classes.bottomText}>{bottomText}</Typography>
+        <Grid item xs={8}>
+          <Typography className={classes.title}>{title}</Typography>
+          <Typography className={classes.subTitle}>{subTitle}</Typography>
+          <Typography className={classes.bottomText}>{bottomText}</Typography>
         </Grid>
       </Grid>
     </DashboardCard>
@@ -45,15 +45,15 @@ const styles = makeStyles((theme) => ({
       fontWeight: "500",
     },
   },
-  bottomText:{
+  bottomText: {
     fontSize: "0.65em",
-    color:appColors.grey,
+    color: appColors.grey,
     [theme.breakpoints.down("sm")]: {
       paddingTop: "0.3em",
       fontSize: "0.6em",
       fontWeight: "500",
     },
-  }
+  },
 }));
 
 export default ValueCard;
