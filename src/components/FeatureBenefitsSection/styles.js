@@ -44,9 +44,10 @@ export const styles = makeStyles((theme) => ({
     margin: "2.5em 0",
     padding: "0em 4em 0em 2em",
     [theme.breakpoints.down("sm")]: {
+      margin: "1em 0",
       textAlign: "center",
       alignItems: "center",
-      padding: "1em",
+      padding: "0 1em",
     },
   },
   mainTitle: {

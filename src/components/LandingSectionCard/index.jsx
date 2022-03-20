@@ -18,11 +18,7 @@ function LandingSectionCard({ image, title, description }) {
         </Grid>
         <Grid item className={classes.textContainer}>
           <Typography className={classes.title}>{title}</Typography>
-          {description && (
-            <Typography className={classes.description}>
-              {description}
-            </Typography>
-          )}
+          <Typography className={classes.description}>{description}</Typography>
         </Grid>
       </Grid>
     </Card>

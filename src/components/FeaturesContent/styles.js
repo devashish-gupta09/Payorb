@@ -5,7 +5,7 @@ export const styles = makeStyles((theme) => ({
     height: "fit-content",
     position: "relative",
     [theme.breakpoints.down("sm")]: {
-      height: "75vh",
+      height: "70vh",
       backgroundRepeat: "no-repeat",
       backgroundSize: "contain",
       backgroundImage: "url(/assets/mobile-home-bg.png)",
@@ -17,7 +17,7 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       height: "100%",
-      padding: "5em 1.5em 0 1.5em",
+      padding: "8em 1.5em 0 1.5em",
       alignItems: "center",
       display: "flex",
       flexDirection: "column",
@@ -122,9 +122,10 @@ export const styles = makeStyles((theme) => ({
     bottom: "0",
     margin: "0",
     [theme.breakpoints.down("sm")]: {
-      height: "20em",
+      // height: "20em",
       width: "100%",
       right: "0",
+      top: "50%",
     },
   },
   image: {

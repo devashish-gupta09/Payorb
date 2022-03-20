@@ -9,7 +9,7 @@ export const styles = makeStyles((theme) => ({
     boxShadow: "0 0 2px 0 rgba(0, 0, 0, 0.25)",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
-      padding: "0.5em 0.5em 0.5em 0.5em",
+      padding: "0.5em 0.5em 0.25em 0.5em",
     },
   },
   flexbox: {
@@ -24,15 +24,6 @@ export const styles = makeStyles((theme) => ({
     alignItems: "center",
     [theme.breakpoints.down("sm")]: {},
   },
-  sectionTitle: {
-    // paddingTop: "1.5em",
-    color: appColors.grey,
-    letterSpacing: "4%",
-    textTransform: "uppercase",
-    [theme.breakpoints.down("sm")]: {
-      paddingTop: 0,
-    },
-  },
   logoImage: {
     height: "4em",
     width: "4em",
@@ -40,9 +31,6 @@ export const styles = makeStyles((theme) => ({
   textContainer: {
     width: "77.5%",
     padding: "2em 4em",
-    [theme.breakpoints.down("sm")]: {
-      paddingLeft: "2em !important",
-    },
   },
   title: {
     padding: "1em 0.5em 0.25em 0",
@@ -62,7 +50,7 @@ export const styles = makeStyles((theme) => ({
     paddingBottom: "2%",
     color: appColors.grey,
     [theme.breakpoints.down("sm")]: {
-      paddingTop: "2%",
+      paddingTop: "0",
       fontSize: "0.75em",
     },
   },
