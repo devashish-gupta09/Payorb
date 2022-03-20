@@ -10,7 +10,7 @@ import FeatureBenefitsSection from "../FeatureBenefitsSection";
 function FeaturesPage({ content }) {
   const classes = styles();
   return (
-    <Grid style={{ width: "100vw", padding: 0 }}>
+    <Grid style={{ padding: 0 }}>
       <Grid className={classes.box}>
         <Grid
           style={{
@@ -24,14 +24,13 @@ function FeaturesPage({ content }) {
           style={{
             paddingTop: "5%",
             height: "fit-content",
-            border: "2px solid purple",
           }}
         >
           <FeaturesContent content={content.home} />
         </Grid>
       </Grid>
-      {/* <FeatureSection content={content.feature} />
-      <FeatureBenefitsSection content={content.userBenefits} /> */}
+      <FeatureSection content={content.feature} />
+      <FeatureBenefitsSection content={content.userBenefits} />
       <Footer />
     </Grid>
   );

@@ -2,9 +2,8 @@ import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
   container: {
-    height: "90vh",
+    height: "fit-content",
     position: "relative",
-    border: "2px solid",
     [theme.breakpoints.down("sm")]: {
       height: "75vh",
       backgroundRepeat: "no-repeat",
@@ -117,11 +116,11 @@ export const styles = makeStyles((theme) => ({
     display: "inline",
     position: "absolute",
     width: "40%",
-    height: "29.25em",
-    right: "5%",
+    height: "100%",
+    right: "2.5%",
     top: "0",
     bottom: "0",
-    border: "3px solid yellow",
+    margin: "0",
     [theme.breakpoints.down("sm")]: {
       height: "20em",
       width: "100%",
@@ -131,5 +130,6 @@ export const styles = makeStyles((theme) => ({
   image: {
     width: "100%",
     position: "absolute",
+    top: "12.5%",
   },
 }));
