@@ -122,7 +122,7 @@ function VendorDashboard() {
         <FallbackLoading />
       ) : (
         <UserAuthDetailsProvider>
-          <Grid style={{ border: "2px solid" }}>
+          <Grid>
             <VendorDashboardHeader profileData={profileData} />
             {router.pathname == `/vendor/[vendorId]` ? (
               <VendorDashboardContainer>

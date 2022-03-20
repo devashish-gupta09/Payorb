@@ -35,14 +35,15 @@ function ProfileInfoCard({ profileData, vendor, updateProfile }) {
     onSubmit: async (values) => {
       try {
         const res = await updateUser(values);
+        console.log(res);
         if (res?.success) {
           showAlert("User updated.");
           updateProfile({ ...profileData, ...values });
-          setEdit(false);
         } else {
           showAlert("User not updated.", ALERT_TYPES.ERROR);
         }
       } catch (err) {
+        console.log("ERROR", err);
         showAlert("User not updated");
       }
     },
@@ -86,7 +87,7 @@ function ProfileInfoCard({ profileData, vendor, updateProfile }) {
                     margin: "dense",
                     fullWidth: true,
                     onChange: formik.handleChange,
-                    onBlur: formik.onBlur,
+                    onBlur: formik.handleSubmit,
                   }}
                 />
                 <EditableTextFieldV2
@@ -101,7 +102,7 @@ function ProfileInfoCard({ profileData, vendor, updateProfile }) {
                     margin: "dense",
                     fullWidth: true,
                     onChange: formik.handleChange,
-                    onBlur: formik.onBlur,
+                    onBlur: formik.handleSubmit,
                   }}
                 />
                 <EditableTextFieldV2
@@ -116,7 +117,7 @@ function ProfileInfoCard({ profileData, vendor, updateProfile }) {
                     margin: "dense",
                     fullWidth: true,
                     onChange: formik.handleChange,
-                    onBlur: formik.onBlur,
+                    onBlur: formik.handleSubmit,
                   }}
                 />
                 <EditableTextFieldV2
@@ -131,7 +132,7 @@ function ProfileInfoCard({ profileData, vendor, updateProfile }) {
                     margin: "dense",
                     fullWidth: true,
                     onChange: formik.handleChange,
-                    onBlur: formik.onBlur,
+                    onBlur: formik.handleSubmit,
                   }}
                 />
                 <Grid style={{ padding: "0.75em 0" }}>

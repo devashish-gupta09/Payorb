@@ -35,6 +35,8 @@ const styles = makeStyles((theme) => ({
     width: "100%",
     padding: "0.25em 0",
     background: "#E1E1E1",
+    position: "sticky",
+    bottom: "0",
   },
   copyright: {
     [theme.breakpoints.down("sm")]: {

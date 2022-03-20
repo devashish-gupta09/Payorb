@@ -4,10 +4,10 @@ import { appColors } from "../../../styles/colors";
 
 export const styles = makeStyles((theme) => ({
   profileImage: {
-    height: "12.5em",
     borderRadius: "50%",
-    width: "12.5em",
-    border: "4px solid white",
+    width: "12em",
+    border: "7px solid white",
+    objectFit: "cover",
     [theme.breakpoints.down("sm")]: {
       width: "10em",
       height: "10em",
@@ -16,8 +16,10 @@ export const styles = makeStyles((theme) => ({
   profileInfoCardContainer: {
     width: "35%",
     position: "relative",
+    paddingLeft: "2em",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
+      paddingLeft: 0,
     },
   },
   profileName: {
@@ -28,7 +30,7 @@ export const styles = makeStyles((theme) => ({
   },
   profileImageContainer: {
     height: "12em",
-    width: "10.5em",
+    width: "12.5em",
     position: "absolute",
     marginTop: "-7.5em",
     left: 0,
@@ -43,7 +45,7 @@ export const styles = makeStyles((theme) => ({
     },
   },
   profileDetailsContainer: {
-    padding: "8.5em 6em",
+    padding: "8.5em 12.5% 4em 15%",
     [theme.breakpoints.down("sm")]: {
       padding: "6.5em 1.5em 1.5em 1.5em",
     },
@@ -77,13 +79,13 @@ export const styles = makeStyles((theme) => ({
     background: "#BDBDBD",
   },
   customerProfileVendorDetails: {
-    width: "65%",
+    width: "85%",
     maxWidth: "27.5em",
     height: "fit-content",
     marginLeft: "auto",
     marginRight: "auto",
     background: "#F6F6FA",
-    padding: "4em 2em 2em 2em",
+    padding: "4em 1.5% 2em 1.5%",
     position: "absolute",
     borderRadius: "5px",
     top: "4em",
@@ -98,17 +100,19 @@ export const styles = makeStyles((theme) => ({
     },
   },
   publicProfileName: {
-    fontSize: "2em",
+    fontSize: "1.75rem",
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.75em",
     },
   },
   publicVendorDetailsRowLogo: {
     margin: "0.35em",
+    [theme.breakpoints.down("sm")]: {
+      margin: "0.2em 0.25em 0.2em 0em",
+    },
   },
   publicVendorDetailsRowContainer: {
-    paddingBottom: "1em",
-    fontSize: "1.25em",
+    fontSize: "1.15em",
     [theme.breakpoints.down("sm")]: {
       paddingBottom: "0",
       fontSize: "1em",

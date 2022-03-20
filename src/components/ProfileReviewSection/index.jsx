@@ -95,7 +95,7 @@ function ProfileReviewSection(props) {
         <Grid
           container
           className={classes.desktop}
-          style={{ minHeight: "400px" }}
+          style={{ minHeight: reviews.length > 0 ? "400px" : "125px" }}
           spacing={5}
         >
           {reviews && reviews.length > 0 ? (
@@ -107,7 +107,9 @@ function ProfileReviewSection(props) {
               );
             })
           ) : (
-            <Typography>No Reviews</Typography>
+            <Typography style={{ paddingLeft: "1.25em", paddingTop: "2em" }}>
+              No Reviews
+            </Typography>
           )}
         </Grid>
 

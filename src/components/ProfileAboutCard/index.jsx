@@ -102,25 +102,31 @@ function ProfileAboutCard({ profileData, vendor = true, updateProfile }) {
           </Grid>
         </form>
 
-        <Grid
-          container
-          alignItems="center"
-          justifyContent="space-between"
-          style={{ margin: "1.5em 0" }}
-        >
-          <Grid>
-            <Typography variant="h6" style={{ fontWeight: "bold" }}>
-              Introduction Video
-            </Typography>
-          </Grid>
-        </Grid>
-
-        <VideoUpload
-          vendor={vendor}
-          videoProps={{
-            src: profileData.videoLink,
-          }}
-        />
+        {profileData.videoLink || vendor ? (
+          <>
+            {" "}
+            <Grid
+              container
+              alignItems="center"
+              justifyContent="space-between"
+              style={{ margin: "1.5em 0" }}
+            >
+              <Grid>
+                <Typography variant="h6" style={{ fontWeight: "bold" }}>
+                  Introduction Video
+                </Typography>
+              </Grid>
+            </Grid>
+            <VideoUpload
+              isVendor={vendor}
+              profileData={profileData}
+              videoProps={{
+                src: profileData.videoLink,
+              }}
+              updateProfile={updateProfile}
+            />
+          </>
+        ) : null}
       </Grid>
     </Grid>
   );
@@ -158,6 +164,7 @@ const styles = makeStyles((theme) => ({
   previewButton: {
     boxShadow: "none",
     background: "linear-gradient(178.83deg, #68FDF3 1%, #00D4FF 183.74%)",
+    padding: "0.35em 1em",
     [theme.breakpoints.down("sm")]: {
       padding: "0.5em 1em",
       fontSize: "0.75em",
@@ -168,6 +175,7 @@ const styles = makeStyles((theme) => ({
     background: "rgba(38, 214, 108, 1)",
     color: appColors.white,
     marginLeft: "0.5em",
+    padding: "0.35em 1em",
     [theme.breakpoints.down("sm")]: {
       padding: "0.5em 1em",
       fontSize: "0.75em",
