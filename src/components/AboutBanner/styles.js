@@ -8,23 +8,22 @@ export const styles = makeStyles((theme) => ({
     margin: "0 auto",
     justifyContent: "center",
     [theme.breakpoints.down("sm")]: {
+      padding: "10em 1.5em 5em 1.5em",
       width: "100% !important",
-      height: "60vh",
+      height: "fit-content",
       background: "#F0FFFE",
       alignItems: "center",
     },
   },
   textContainer: {
     display: "inline",
-    position: "relative",
     left: "2em",
     top: "8em",
     width: "100%",
     alignItems: "center",
     [theme.breakpoints.down("sm")]: {
       top: "15%",
-      left: "0%",
-      padding: "1em 1em",
+      left: "0",
     },
   },
   titleSection: {
@@ -43,6 +42,10 @@ export const styles = makeStyles((theme) => ({
     fontSize: "1em",
     color: "#00D4FF",
     textAlign: "center",
+    [theme.breakpoints.down("sm")]: {
+      paddingTop: "0.25em",
+      fontSize: "1.25em",
+    },
   },
   descriptionText: {
     color: "black",
