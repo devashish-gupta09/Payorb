@@ -14,7 +14,7 @@ function Landing({ content }) {
   const classes = styles();
 
   return (
-    <Grid style={{ padding: "0", width: "100vw" }}>
+    <Grid style={{ padding: "0" }}>
       <Grid className={classes.box}>
         <Grid
           style={{
