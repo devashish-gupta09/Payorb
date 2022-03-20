@@ -42,6 +42,7 @@ function Logout(props) {
       />
       <Button title="Logout" onClick={showConfirmDialog} {...props}>
         <ExitToApp />
+        Logout
       </Button>
     </>
   );

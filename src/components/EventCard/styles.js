@@ -81,4 +81,86 @@ export const styles = makeStyles((theme) => ({
       margin: "1em",
     },
   },
+  cardContainer: {
+    width: "25em"
+  },
+  headline: {
+    fontWeight: "bold",
+    fontSize: "1em"
+  },
+  textContainer: {
+    padding: "0.4em 1em 0.6em 1.2em"
+  },
+  descriptionText: {
+    fontSize: "0.7em",
+    marginTop: "0.24em"
+  },
+  cost: {
+    float: "right",
+    fontWeight: "bold",
+    fontSize: "1em"
+  },
+  bottomTextContainer: {
+    marginTop: "0.5em",
+  },
+  bottomText: {
+    fontSize: "0.6em",
+    fontWeight: "bold",
+    
+    display:"flex",
+    //alignContent:"center",
+    alignSelf:"center",
+    alignItems:"center",
+  },
+  topBannerButton: {
+    borderRadius: "2em",
+    background: "#008EFF",
+    fontSize: "0.6em",
+    color: "white",
+    height: "2.5em",
+
+  },
+  cooking: {
+    background: "#1ECE7A",
+    marginRight:"0.5em",
+    // right: "74%"
+  },
+  topBanner: {
+    //position: "absolute",
+    justifyContent: "right",
+    right: "24em",
+    marginTop:"-12em",
+  },
+  sideBar: {
+    display: "flex",
+    flexDirection: "column",
+    color: "white"
+  },
+  dateAndTime: {
+    color: "#68FDF3",
+    background: "rgba(0,0,0,0.5)",
+    marginTop: "-2.2em",
+    marginBottom: "0.3em",
+    //left
+    padding: "0 0.5em 0 1.5em",
+    alignItems:"center",
+
+  },
+  icon: {
+    background: "white",
+    color: "#008EFF",
+    borderRadius: "2em",
+    padding: "0.2em",
+    marginTop: "0.2em",
+    marginRight:"0.2em",
+  },
+  deleteIcon: {
+    color: "#FC6767"
+  },
+  AddToPhotosIcon: {
+    color: "#FFB648"
+  },
+  shareIcon: {
+    color: "#1ECE7A"
+  }
 }));
