@@ -57,7 +57,7 @@ function CustomerVendorProfile({ userUID }) {
           </Grid>
         </Grid>
         <div id="gallery">
-          <ProfileImageGallery profileData={profileData} vendor={false} />
+          <ProfileImageGallery profileInfo={profileData} vendor={false} />
         </div>
         <div id="review">
           <ProfileReviewSection />

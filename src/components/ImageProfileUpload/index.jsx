@@ -181,7 +181,7 @@ const styles = makeStyles((theme) => ({
   },
   imageContainer: {
     position: "relative",
-    padding: "2em 0",
+    padding: "1.5em 0",
     [theme.breakpoints.down("sm")]: {
       padding: "1em 0",
     },
@@ -192,8 +192,8 @@ const styles = makeStyles((theme) => ({
     padding: "0.2em 0.3em",
     background: "white",
     borderRadius: "50%",
-    right: 5,
-    top: 30,
+    right: 10,
+    top: 40,
     cursor: "pointer",
     zIndex: "1",
     boxShadow: "0px 0px 4px 1px grey",

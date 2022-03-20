@@ -23,15 +23,24 @@ import { updateUser } from "../../services/auth";
 
 const styles = makeStyles((theme) => ({
   root: {
-    height: "13.5em",
-    width: "100%",
+    "--heightA": "100%",
+    height: "calc(100vh/2.56)",
+    width: "100vw",
     backgroundColor: "pink",
     position: "relative",
+    [theme.breakpoints.down("sm")]: {
+      height: "25vh",
+    },
   },
   base: {
     position: "absolute",
     width: "100%",
     height: "100%",
+  },
+  bannerImg: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
   },
   buttonLayer: {
     position: "absolute",
@@ -99,9 +108,6 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
     const user = auth.getUser();
 
     const firebaseStorageObj = firebase.storage();
-    if (process.env.NODE_ENV === "development") {
-      firebaseStorageObj.useEmulator("localhost", 9199);
-    }
     const ref = firebaseStorageObj.ref();
     const childRef = ref.child(
       `/profile-banner/${user.uid}.${type.split("/")[1]}`
@@ -140,10 +146,10 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
       },
       () => {
         task.snapshot.ref.getDownloadURL().then(async (res) => {
-          showAlert(res);
-          setProgress(false);
           await delay(2000);
+          setProgress(false);
           setCroppedImage(dataUrl);
+          updateProfile({ ...profileData, bannerImgUrl: res });
           handleDialog(false);
         });
       }
@@ -151,9 +157,9 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
   };
 
   const handleBannerDelete = async () => {
-    console.log("Handle Banner Delete");
     try {
-      await updateUser({ ...profileData, bannerImgUrl: "" });
+      await updateUser({ bannerImgUrl: "" });
+      updateProfile({ ...profileData, bannerImgUrl: "" });
       showAlert("Banner image deleted");
     } catch (err) {
       showAlert("Banner image failed to delete");
@@ -164,10 +170,10 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
 
   return (
     <Grid className={classes.root}>
+      {Alert()}
       {dialogOpen && (
         <Dialog open={dialogOpen} onClose={() => handleDialog(false)}>
           <DialogContent className={classes.dialogContentContainer}>
-            {Alert()}
             <ImageSelectAndCrop
               title="Select banner image"
               imagePath={
@@ -176,7 +182,7 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
                 "/assets/profile-banner-default.png"
               }
               handleDataUrl={handleDataUrl}
-              cropperAspectRatio={6.5}
+              cropperAspectRatio={4.5}
             />
 
             <Grid
@@ -216,10 +222,7 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
       )}
       <Grid className={classes.base}>
         {profileData?.bannerImgUrl ? (
-          <img
-            src={profileData.bannerImgUrl}
-            style={{ width: "100%", height: "100%" }}
-          />
+          <img src={profileData.bannerImgUrl} className={classes.bannerImg} />
         ) : (
           <Grid
             container
@@ -256,12 +259,14 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
             >
               <Edit></Edit>
             </IconButton>
-            <IconButton
-              className={classes.deleteButton}
-              onClick={handleBannerDelete}
-            >
-              <Delete></Delete>
-            </IconButton>
+            {profileData?.bannerImgUrl ? (
+              <IconButton
+                className={classes.deleteButton}
+                onClick={handleBannerDelete}
+              >
+                <Delete></Delete>
+              </IconButton>
+            ) : null}
           </Grid>
         ) : null}
       </Grid>

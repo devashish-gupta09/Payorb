@@ -1,35 +1,75 @@
 import { Grid, IconButton, makeStyles, Typography } from "@material-ui/core";
-import { Add, Delete, Edit } from "@material-ui/icons";
+import { Add, Delete, Edit, PlayCircleFilled } from "@material-ui/icons";
+import { useEffect, useState } from "react";
 import { appColors } from "../../../styles/colors";
+import ProfilePageCarauselEditForm from "../ProfilePageCarauselEditForm";
 import ReadMore from "../ReadMore";
+import VideoPlayer from "../VideoPlayer";
 
 export const ProfileImageGalleryCard = ({
-  asset,
-  vendor,
+  isVendor,
   profileInfo,
   index,
+  openDialog,
+  handleImageDelete,
 }) => {
   const classes = styles();
+  const [asset, setAsset] = useState();
+
+  useEffect(() => {
+    if (profileInfo?.carauselAssets.length > index) {
+      setAsset(profileInfo.carauselAssets[index]);
+    }
+  }, [asset]);
+
+  const handleEdit = () => {
+    openDialog(index);
+  };
+
+  const handleNonAssetAdd = () => {
+    openDialog(profileInfo?.carauselAssets?.length);
+  };
+
   return (
     <Grid className={classes.root}>
       {asset ? (
         <>
-          <Grid
-            className={classes.cardImage}
-            style={{ backgroundImage: `url(${asset.link})` }}
-          />{" "}
-          <Grid container className={classes.imageTitle} alignItems="center">
-            <Typography className={classes.imageTitleText}>
-              {asset.title}
-            </Typography>
-          </Grid>
-          {vendor ? (
+          {asset.type === "image" ? (
+            <Grid
+              className={classes.cardImage}
+              style={{ backgroundImage: `url(${asset.link})` }}
+            />
+          ) : (
+            <Grid className={classes.cardImage}>
+              <VideoPlayer link={asset.link} />
+            </Grid>
+          )}
+
+          {asset.title ? (
+            <Grid container className={classes.imageTitle} alignItems="center">
+              <Typography className={classes.imageTitleText}>
+                {asset.title ? asset.title : null}
+              </Typography>
+            </Grid>
+          ) : null}
+
+          {isVendor ? (
             <Grid className={classes.toolkit}>
               <Grid>
-                <IconButton size="small" className={classes.editButton}>
+                <IconButton
+                  size="small"
+                  className={classes.editButton}
+                  onClick={handleEdit}
+                >
                   <Edit></Edit>
                 </IconButton>
-                <IconButton size="small" className={classes.deleteButton}>
+                <IconButton
+                  size="small"
+                  className={classes.deleteButton}
+                  onClick={() => {
+                    handleImageDelete(index);
+                  }}
+                >
                   <Delete></Delete>
                 </IconButton>
               </Grid>
@@ -44,12 +84,13 @@ export const ProfileImageGalleryCard = ({
           alignItems="center"
         >
           <Grid
+            onClick={handleNonAssetAdd}
             className={classes.addButton}
             container
             justifyContent="center"
             alignItems="center"
           >
-            <Add style={{ fontWeight: 600 }} />
+            <Add fontSize="large" />
           </Grid>
         </Grid>
       )}
@@ -107,23 +148,22 @@ const styles = makeStyles((theme) => ({
   },
   imageTitle: {
     height: "fit-content",
-    background: "rgba(0, 0, 0, 0.6)",
     width: "100%",
     bottom: 0,
     position: "absolute",
-    padding: "0.5em 1em",
     color: appColors.white,
     borderRadius: "0 0 5px 5px",
-    [theme.breakpoints.down("sm")]: {
-      padding: "0.5em",
-    },
+    [theme.breakpoints.down("sm")]: {},
   },
   imageTitleText: {
-    background: "none",
+    padding: "0.5em 1em",
+    background: "rgba(0, 0, 0, 0.6)",
     width: "100%",
+    minHeight: "3em",
     wordWrap: "break-word",
     [theme.breakpoints.down("sm")]: {
       fontSize: "0.75em",
+      padding: "0.5em",
     },
   },
 }));

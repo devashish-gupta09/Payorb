@@ -45,7 +45,7 @@ export default function Profile({ profileData }) {
       </Grid>
       <div id="gallery">
         <ProfileImageGallery
-          profileData={profileInfo}
+          profileInfo={profileInfo}
           vendor={true}
           updateProfile={updateProfileInfo}
         />

@@ -8,21 +8,23 @@ export const VendorReviewCard = ({ review }) => {
   return (
     <Grid className={classes.infoRowRoot} container>
       <Grid item xs={12}>
-        <Typography
-          variant="h6"
-          style={{ fontWeight: "500", paddingBottom: "0.5em" }}
-        >
+        <Typography variant="h6" className={classes.eventName}>
           {review.eventName}
         </Typography>
       </Grid>
       <Grid container alignItems="flex-start">
-        <Grid item xs={1}>
+        <Grid
+          style={{
+            padding: "0.25em",
+            width: "12.5%",
+          }}
+        >
           <Avatar
             src={"/assets/profile.jpg"}
             style={{ width: "2em", height: "2em" }}
           />
         </Grid>
-        <Grid item xs={11} className={classes.cardContentContainer}>
+        <Grid className={classes.cardContentContainer}>
           <Grid
             container
             justifyContent="space-between"
@@ -70,7 +72,14 @@ const styles = makeStyles((theme) => ({
   },
   cardContentContainer: {
     height: "fit-content",
+    width: "87.5%",
     padding: "0 0.45em 0 0.45em",
-    [theme.breakpoints.down("sm")]: { padding: "0.5em 1em 0.25em 1.5em" },
+    [theme.breakpoints.down("sm")]: {
+      padding: "0em 1em 0.25em 1.5em",
+    },
+  },
+  eventName: {
+    fontWeight: "500",
+    paddingBottom: "0.75em",
   },
 }));

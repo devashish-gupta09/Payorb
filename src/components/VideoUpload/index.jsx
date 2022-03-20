@@ -26,6 +26,7 @@ import { FirebaseAuth } from "../AuthenticationContext";
 import ButtonCapsule from "../ButtonCapsule";
 import VideoSelect from "../VideoSelect";
 import { withStyles } from "@material-ui/styles";
+import { updateUser } from "../../services/auth";
 
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
@@ -36,13 +37,24 @@ const LightTooltip = withStyles((theme) => ({
   },
 }))(Tooltip);
 
-function VideoUpload({ videoProps, vendor }) {
+function VideoUpload({ videoProps, isVendor, updateProfile, profileData }) {
   const classes = styles();
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [dataUrl, setDataUrl] = React.useState();
   const [savedUrl, setSavedUrl] = React.useState();
   const { Alert, showAlert } = useAlertSnackbar();
   const [progressLoader, setProgress] = React.useState(false);
+
+  const handleVideoDelete = async () => {
+    showAlert("Deleting the video");
+    const temp = { ...profileData };
+    temp.videoLink = "";
+    await updateUser({ videoLink: "" });
+    updateProfile(temp);
+    setDataUrl("");
+    setSavedUrl("");
+    showAlert("Video Deleted");
+  };
 
   const handleDialog = React.useCallback((ds) => {
     if (typeof ds === "boolean") setDialogOpen(ds);
@@ -131,7 +143,7 @@ function VideoUpload({ videoProps, vendor }) {
       )}
 
       <div className={classes.imageContainer}>
-        {vendor && (
+        {isVendor && (
           <div className={classes.editDiv}>
             <LightTooltip
               arrow={true}
@@ -156,6 +168,7 @@ function VideoUpload({ videoProps, vendor }) {
             />
             {savedUrl || videoProps.src ? (
               <DeleteOutline
+                onClick={handleVideoDelete}
                 style={{ color: "#FC6767", marginLeft: "0.5em" }}
               />
             ) : null}
@@ -169,7 +182,7 @@ function VideoUpload({ videoProps, vendor }) {
             src={savedUrl || videoProps.src}
           ></video>
         ) : (
-          vendor && (
+          isVendor && (
             <Grid className={classes.previewText}>
               <Grid style={{ padding: "0.5em" }}>
                 <Typography align="center" style={{ paddingTop: "1em" }}>
