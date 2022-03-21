@@ -14,7 +14,7 @@ function Landing({ content }) {
   const classes = styles();
 
   return (
-    <Grid style={{ padding: "0", width: "100vw" }}>
+    <Grid style={{ padding: "0" }}>
       <Grid className={classes.box}>
         <Grid
           style={{
@@ -42,9 +42,6 @@ function Landing({ content }) {
     </Grid>
   );
 }
-
-export default Landing;
-
 const styles = makeStyles((theme) => ({
   box: {
     width: "100%",
@@ -62,3 +59,5 @@ const styles = makeStyles((theme) => ({
     },
   },
 }));
+
+export default Landing;

@@ -13,23 +13,12 @@ function LandingSectionCard({ image, title, description }) {
         spacing={1}
         alignItems="center"
       >
-        <Grid item xs={2}>
-          <Grid
-            className={classes.logo}
-            container
-            justifyContent={"center"}
-            alignItems="center"
-          >
-            <img src={image} className={classes.logoImage} quality={"75"} />
-          </Grid>
+        <Grid item style={{ width: "22.5%" }}>
+          <img src={image} className={classes.logoImage} quality={"90"} />
         </Grid>
-        <Grid item xs={10} className={classes.textContainer}>
+        <Grid item className={classes.textContainer}>
           <Typography className={classes.title}>{title}</Typography>
-          {description && (
-            <Typography className={classes.description}>
-              {description}
-            </Typography>
-          )}
+          <Typography className={classes.description}>{description}</Typography>
         </Grid>
       </Grid>
     </Card>

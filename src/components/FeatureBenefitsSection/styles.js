@@ -4,7 +4,7 @@ export const styles = makeStyles((theme) => ({
   container: {
     background:
       "linear-gradient(180deg, #BCF4F1 0%, rgba(0, 212, 255, 0.33) 157.68%)",
-    padding: "4em 4em 5em 5em",
+    // padding: "4em 4em 5em 5em",
     [theme.breakpoints.down("sm")]: {
       height: "fit-content",
       padding: "2em 1em",
@@ -41,16 +41,21 @@ export const styles = makeStyles((theme) => ({
     backgroundSize: "contain",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
+    margin: "2.5em 0",
+    padding: "0em 4em 0em 2em",
     [theme.breakpoints.down("sm")]: {
+      margin: "1em 0",
       textAlign: "center",
       alignItems: "center",
-      padding: "1em",
+      padding: "0 1em",
     },
   },
   mainTitle: {
     color: "#333333",
-    fontWeight: "400",
+    fontWeight: "600",
     width: "50%",
+    fontSize: "2.5em",
+    lineHeight: "1.15",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       fontSize: "1.7em",
