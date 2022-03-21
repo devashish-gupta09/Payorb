@@ -11,7 +11,7 @@ import AboutAdvisors from "../AboutAdvisors";
 function AboutView({ content }) {
   const classes = styles();
   return (
-    <Grid>
+    <Grid style={{ padding: 0 }}>
       <Grid className={classes.box}>
         <Grid
           style={{

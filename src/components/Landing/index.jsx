@@ -42,7 +42,22 @@ function Landing({ content }) {
     </Grid>
   );
 }
+const styles = makeStyles((theme) => ({
+  box: {
+    width: "100%",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    backgroundImage: `url("/assets/homepage.png")`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    [theme.breakpoints.down("sm")]: {
+      background: `#F0FFFE`,
+      width: "100vw",
+    },
+  },
+}));
 
 export default Landing;
-
-
