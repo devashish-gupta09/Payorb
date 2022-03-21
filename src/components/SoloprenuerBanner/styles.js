@@ -2,10 +2,8 @@ import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
   container: {
-    width: "100vw",
     height: "100vh",
     overflow: "hidden",
-    margin: "0 auto",
     justifyContent: "center",
     [theme.breakpoints.down("sm")]: {
       width: "100% !important",
@@ -15,11 +13,11 @@ export const styles = makeStyles((theme) => ({
     },
   },
   textContainer: {
+    // border: "2px solid purple",
     display: "inline",
     position: "relative",
-    left: "2em",
-    top: "2em",
-    width: "100%",
+    top: "3em",
+    width: "fit-content",
     alignItems: "center",
     [theme.breakpoints.down("sm")]: {
       display: "none",
