@@ -80,4 +80,8 @@ export const styles = makeStyles((theme) => ({
       color: "#000000",
     },
   },
+  navItem: {
+    width: "100%",
+    textAlign: "left",
+  },
 }));

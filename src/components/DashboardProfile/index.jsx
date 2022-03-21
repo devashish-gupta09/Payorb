@@ -53,7 +53,7 @@ const styles = makeStyles((theme) => ({
   avatar: {
     display: "block",
     margin: "0 auto",
-    border: "1em solid white",
+    border: "0.75em solid white",
     width: "12em",
     height: "12em",
     borderRadius: "50%",
@@ -63,5 +63,6 @@ const styles = makeStyles((theme) => ({
   },
   name: {
     fontWeight: "500",
+    marginBottom: "0.25em",
   },
 }));

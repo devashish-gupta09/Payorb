@@ -171,7 +171,7 @@ function VendorDashboardHeader({ profileData }) {
                     (isActive("events") && classes.activeLink) || classes.btn
                   }
                   label={
-                    <div>
+                    <div className={classes.navItem}>
                       <img
                         src="/assets/sidebar/event-icon.svg"
                         alt="events"
@@ -191,7 +191,7 @@ function VendorDashboardHeader({ profileData }) {
                     classes.btn
                   }
                   label={
-                    <div>
+                    <div className={classes.navItem}>
                       <img
                         src="/assets/sidebar/finance-icon.svg"
                         alt="financial"
@@ -210,7 +210,7 @@ function VendorDashboardHeader({ profileData }) {
                     (isActive("customers") && classes.activeLink) || classes.btn
                   }
                   label={
-                    <div>
+                    <div className={classes.navItem}>
                       <img
                         src="/assets/sidebar/customers-icon.svg"
                         alt="customers"
@@ -231,7 +231,7 @@ function VendorDashboardHeader({ profileData }) {
                   }
                   iconPosition="start"
                   label={
-                    <div>
+                    <div className={classes.navItem}>
                       <img
                         src="/assets/sidebar/promotion-icon.svg"
                         alt="promotions"
@@ -251,7 +251,7 @@ function VendorDashboardHeader({ profileData }) {
                     classes.btn
                   }
                   label={
-                    <div>
+                    <div className={classes.navItem}>
                       <img
                         src="/assets/sidebar/schedule-icon.svg"
                         alt="my-schedule"

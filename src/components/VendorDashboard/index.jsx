@@ -124,11 +124,7 @@ function VendorDashboard() {
         <UserAuthDetailsProvider>
           <Grid>
             <VendorDashboardHeader profileData={profileData} />
-            {router.pathname == `/vendor/[vendorId]` ? (
-              <VendorDashboardContainer>
-                {getComponent(profileData)}
-              </VendorDashboardContainer>
-            ) : (
+            {router.pathname == `/vendor/[vendorId]/[...section]` ? (
               <Grid container className={classes.dashboard}>
                 <Grid item className={classes.sidebar}>
                   <VendorDashboardSidebar profileData={profileData} />
@@ -139,6 +135,10 @@ function VendorDashboard() {
                   </VendorDashboardContainer>
                 </Grid>
               </Grid>
+            ) : (
+              <VendorDashboardContainer>
+                {getComponent(profileData)}
+              </VendorDashboardContainer>
             )}
             {/* <AuthAlertBanner /> */}
             <AppFooter />

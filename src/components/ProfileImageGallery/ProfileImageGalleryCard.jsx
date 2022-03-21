@@ -17,7 +17,7 @@ export const ProfileImageGalleryCard = ({
   const [asset, setAsset] = useState();
 
   useEffect(() => {
-    if (profileInfo?.carauselAssets.length > index) {
+    if (profileInfo?.carauselAssets?.length > index) {
       setAsset(profileInfo.carauselAssets[index]);
     }
   }, [asset]);
