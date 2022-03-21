@@ -25,15 +25,7 @@ function AboutAdvisors({ content }) {
         <Carousel
           interval={2500}
           fullHeightHover={false}
-          navButtonsProps={{
-            // Change the colors and radius of the actual buttons. THIS STYLES BOTH BUTTONS
-            style: {
-              backgroundColor: "black",
-              opacity: "0.2",
-              borderRadius: "2em",
-              marginTop: "-2em",
-            },
-          }}
+         
         >
           {content.details.map((advisor, index) => {
             return (

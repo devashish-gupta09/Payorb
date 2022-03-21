@@ -32,9 +32,8 @@ function SolopreneurSuccess({ content }) {
           <Card className={classes.bannerContainer}>
             <Grid
               container
-              justifyContent={"center"}
-              alignItems={"center"}
               spacing="2"
+              alignItems="center"
               justify={"space-evenly"}
             >
               <Grid item sm={6} className={classes.bannerText}>
@@ -65,11 +64,11 @@ function SolopreneurSuccess({ content }) {
                 </Grid>
               </Grid>
               <Grid item sm={4}>
-                <img
-                  object-fit="cover"
-                  src={content.bannerStory.image}
-                  alt="cover-page"
-                />
+                <img 
+                src={content.bannerStory.image}
+                alt={"cover-story"}
+                style={{maxHeight:"11em", alignItems:"center",float:"bottom"}}></img>
+                
               </Grid>
             </Grid>
           </Card>
@@ -95,24 +94,30 @@ function SolopreneurSuccess({ content }) {
           className={classes.mobileView}
           alignItems="center"
           justifyContent="center"
-          spacing={"2"}
         >
           <Carousel
             interval={2500}
             fullHeightHover={false}
+            indicators={false}
+            navButtonsAlwaysVisible
             navButtonsProps={{
               // Change the colors and radius of the actual buttons. THIS STYLES BOTH BUTTONS
               style: {
-                backgroundColor: "black",
-                opacity: "0.2",
-                borderRadius: "em",
-                margin: "-2em 1.5 0 1.5",
+                backgroundColor: "white",
+                color:"#00D4FF",
+                width:"1.2em",
+                height:"1.2em",
+                marginTop:"6.5em",
+                justifyContent:"center",
+                marginRight:"4.3em",
+                marginLeft:"4.3em",
               },
             }}
+            
           >
             {content.stories.map((story, index) => {
               return (
-                <Grid key={index} item sm={4}>
+                <Grid key={index} item sm={6} style= {{paddingBottom:"5em"}}>
                   <SolopreneurSuccessCards
                     image={story.image}
                     headline={story.headline}

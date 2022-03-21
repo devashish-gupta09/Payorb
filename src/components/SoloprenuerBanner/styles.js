@@ -2,7 +2,6 @@ import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
   container: {
-    width: "100vw",
     height: "100vh",
     overflow: "hidden",
     margin: "0 auto",
@@ -18,7 +17,7 @@ export const styles = makeStyles((theme) => ({
     display: "inline",
     position: "relative",
     left: "2em",
-    top: "2em",
+    top: "3em",
     width: "100%",
     alignItems: "center",
     [theme.breakpoints.down("sm")]: {
@@ -29,7 +28,7 @@ export const styles = makeStyles((theme) => ({
     },
   },
   titleSection: {
-    display: "inline-block",
+    display: "block",
     color: "black",
     fontWeight: "bolder",
     fontSize: "2.7em",
@@ -75,6 +74,7 @@ export const styles = makeStyles((theme) => ({
     display: "none",
     [theme.breakpoints.down("sm")]: {
       display: "block",
+      marginTop:"1.5em",
     },
   },
 }));

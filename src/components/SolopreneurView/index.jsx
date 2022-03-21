@@ -10,7 +10,13 @@ import SolopreneurLife from "../SolopreneurLife";
 
 function SolopreneurView({ content }) {
   return (
-    <Grid style={{ width: "100vw" }}>
+    <Grid  style={{ 
+      width:"100%",
+      left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    }}>
       <LandingHeader />
       <SolopreneurBanner content={content.home} />
       <SolopreneurAdvantages content={content.banner} />

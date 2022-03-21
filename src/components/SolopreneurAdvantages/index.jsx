@@ -43,8 +43,8 @@ function SoloprenuerAdvantages({ content }) {
           </Typography>
         </Grid>
 
-        <Grid container className={classes.checklistContainer}>
-          <Grid item xs={12} sm={6}>
+        <Grid container spacing={2} className={classes.checklistContainer}>
+          <Grid item  xs={12} sm={6}>
             {content.checklist1.map((list, index) => {
               return (
                 <Grid container className={classes.list}>
@@ -54,7 +54,7 @@ function SoloprenuerAdvantages({ content }) {
                     className={classes.checkIcon}
                     justifyContent={"center"}
                   >
-                    <CheckIcon />
+                    <CheckIcon/>
                   </Grid>
                   <Grid item xs zeroMinWidth className={classes.listItem}>
                     {list.item}
