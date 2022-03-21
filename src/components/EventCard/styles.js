@@ -87,26 +87,28 @@ export const styles = makeStyles((theme) => ({
     display: "inline",
     // width: "25em",
     borderRadius: "8px 8px 0px 0px",
+    marginBottom: "1em",
   },
   headline: {
     fontWeight: "bold",
     fontSize: "1em",
   },
   imgContainer: {
-    width: "520px",
+    width: "480px",
     borderRadius: "8px 8px 0px 0px",
   },
   image: {
     borderRadius: "8px 8px 0px 0px",
   },
   textContainer: {
-    width: "520px",
+    width: "480px",
     padding: "0.4em 1em 0.6em 1.2em",
     boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.25)",
     borderRadius: "8px",
+    marginBottom: "1em",
   },
   descriptionText: {
-    fontSize: "0.2em",
+    fontSize: "0.6em",
     marginTop: "0.24em",
   },
   cost: {

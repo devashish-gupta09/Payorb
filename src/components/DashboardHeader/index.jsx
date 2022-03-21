@@ -91,11 +91,15 @@ function VendorDashboardHeader({ profileData }) {
               <Grid item sm={2}>
                 <Logo redirectToHome={true} dark={true} width={"4.5em"}></Logo>
               </Grid>
-              <Grid container item sm={8}>
+              <Grid
+                container
+                item
+                sm={8}
+                style={{ justifyContent: "flex-end" }}
+              >
                 <Grid
                   style={{
-                    width: "100%",
-                    flexGrow: 1,
+                    width: "auto",
                   }}
                 >
                   <Tabs

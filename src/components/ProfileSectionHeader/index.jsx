@@ -37,9 +37,10 @@ function ProfileSectionHeader({ image, name }) {
     >
       <Grid style={{ padding: "0 1em", display: "contents" }}>
         {image ? (
-          <Avatar src={image} />
+          <Avatar className={classes.avatar} src={image} />
         ) : (
           <Avatar
+            className={classes.avatar}
             src={
               "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/assets%2Fprofile.jpg?alt=media&token=eea58cd4-50ea-4525-93fb-e7fe83350b59"
             }
@@ -54,7 +55,7 @@ function ProfileSectionHeader({ image, name }) {
       </Typography>
       {expanded ? (
         <Grid className={classes.expand}>
-          <Button onClick={handleProfileClick}>
+          <Button className={classes.btn} onClick={handleProfileClick}>
             <AssignmentIndIcon /> My Profile
           </Button>
           <Logout />
@@ -76,6 +77,9 @@ const styles = makeStyles((theme) => ({
       display: "none",
     },
   },
+  avatar: {
+    marginRight: "4px",
+  },
   arrow: {
     position: "absolute",
     marginTop: "-12px",
@@ -95,5 +99,8 @@ const styles = makeStyles((theme) => ({
     background: "#fff",
     boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.25)",
     borderRadius: "4px",
+  },
+  btn: {
+    color: "#7B7B7B",
   },
 }));

@@ -148,7 +148,7 @@ function EventCard({ event, handleEventDelete }) {
         <img
           src={event.photoUrl || DEFAULT_EVENT_IMAGE}
           alt="vendor-event"
-          width="520"
+          width="480"
           height="260"
           className={classes.image}
         />
