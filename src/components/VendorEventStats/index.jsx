@@ -54,7 +54,32 @@ const styles = makeStyles((theme) => ({
     float:"right",
     borderStyle:"1px solid #CFCFCF",
   },
-  
+  status:{
+    borderRadius:"2em",
+    fontWeight: "500",
+    fontSize: "0.8em",
+    padding:"0.5em 0 0.5em 0",
+  },
+  statusCompleted:{
+    border:"1px solid #1ECE7A",
+    backgroundColor:"rgba(30, 206, 122, 0.2)",
+    color:"#1ECE7A",
+  },
+  statusOnGoing:{
+    border:"1px solid #5887FF",
+    backgroundColor:"rgba(88, 135, 255, 0.1)",
+    color:"#5887FF",
+    },
+  statusUpcoming:{
+    border:"1px solid #FFB648",
+    backgroundColor:"rgba(255, 172, 50, 0.1)",
+    color:"#5887FF",
+  },
+  checkbox:{
+    position:"relative",
+    marginTop:"0.8em",
+    fontSize:"0.9em",
+  }
 }));
 
 const getEventStatus = (startDate, endDate) => {
@@ -85,12 +110,12 @@ function VendorEventsStats() {
   const classes = styles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [currentPage, setCurrentPage] = useState(1);
-  const maxPage = Math.ceil(rows.length / rowsPerPage);
+  //const [currentPage, setCurrentPage] = useState(1);
+  //const maxPage = Math.ceil(rows.length / rowsPerPage);
 
 
   const { items } = usePagination({
-    count: maxPage,
+    count: 5,
   });
 
 
@@ -167,6 +192,8 @@ function VendorEventsStats() {
                 <Checkbox
                         color="primary"
                         onChange={handleCheckboxChange}
+                        size="small"
+                        className={classes.checkbox}
                       />
                   {columns.map((column) => (
                     <TableCell
@@ -187,17 +214,24 @@ function VendorEventsStats() {
                     return (
                       <TableRow hover role="checkbox" tabIndex={-1} key={index} className={classes.container}>
                         <Checkbox
-                        color="primary"
-                        onChange={handleCheckboxChange}
-                      />
+                          color="primary"
+                          onChange={handleCheckboxChange}
+                          className={classes.checkbox}
+                          size="small"
+                        />
                         {columns.map((column) => {
                           const value = row[column.id];
                           return (
                             <TableCell key={column.id} align={column.align}>
-                              {value.status}
                               {column.format && typeof value === "number"
                                 ? column.format(value)
-                                : value}
+                                :(value === "Completed"?
+                                 (<Typography className={`${classes.status} ${classes.statusCompleted}`}>{value}</Typography>)
+                                 :(value === "On Going"?
+                                 (<Typography className={`${classes.status} ${classes.statusOnGoing}`}>{value}</Typography>)
+                                 :(value === "Upcoming"?
+                                 (<Typography className={`${classes.status} ${classes.statusUpcoming}`}>{value}</Typography>)
+                                 :value)))}
                             </TableCell>
                           );
                         })}
