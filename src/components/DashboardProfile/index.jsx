@@ -1,10 +1,4 @@
-import {
-  Avatar,
-  Box,
-  makeStyles,
-  Tooltip,
-  Typography,
-} from "@material-ui/core";
+import { Avatar, Box, makeStyles, Typography } from "@material-ui/core";
 import WorkOutlineIcon from "@material-ui/icons/WorkOutline";
 import React from "react";
 
@@ -12,32 +6,30 @@ function ProfileSectionSidebar({ image, name, occupation }) {
   const classes = styles();
 
   return (
-    <Tooltip title="Go to profile">
-      <Box className={classes.header}>
-        <Box>
-          {image ? (
-            <Avatar className={classes.avatar} src={image} />
-          ) : (
-            <Avatar
-              src={
-                "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/assets%2Fprofile.jpg?alt=media&token=eea58cd4-50ea-4525-93fb-e7fe83350b59"
-              }
-            />
-          )}
-        </Box>
-        <Box className={classes.content}>
-          <Typography className={classes.name} variant="h6" align="center">
-            {name ? name : "Welcome User"}
-          </Typography>
-          <Typography variant="body1" align="center">
-            <WorkOutlineIcon
-              style={{ verticalAlign: "middle", marginRight: "0.5em" }}
-            />
-            {occupation ? occupation : "Occupation"}
-          </Typography>
-        </Box>
+    <Box className={classes.header}>
+      <Box>
+        {image ? (
+          <Avatar className={classes.avatar} src={image} />
+        ) : (
+          <Avatar
+            src={
+              "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/assets%2Fprofile.jpg?alt=media&token=eea58cd4-50ea-4525-93fb-e7fe83350b59"
+            }
+          />
+        )}
       </Box>
-    </Tooltip>
+      <Box className={classes.content}>
+        <Typography className={classes.name} variant="h6" align="center">
+          {name ? name : "Welcome User"}
+        </Typography>
+        <Typography variant="body1" align="center">
+          <WorkOutlineIcon
+            style={{ verticalAlign: "middle", marginRight: "0.5em" }}
+          />
+          {occupation ? occupation : "Occupation"}
+        </Typography>
+      </Box>
+    </Box>
   );
 }
 

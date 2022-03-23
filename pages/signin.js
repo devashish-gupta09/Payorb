@@ -33,5 +33,6 @@ const styles = makeStyles((theme) => ({
   container: {
     background: "url(/assets/sign-in-bg.svg) no-repeat center",
     backgroundSize: "cover",
+    height: "100vh",
   },
 }));

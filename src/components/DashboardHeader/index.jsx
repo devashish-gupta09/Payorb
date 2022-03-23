@@ -91,33 +91,6 @@ function VendorDashboardHeader({ profileData }) {
               <Grid item sm={2}>
                 <Logo redirectToHome={true} dark={true} width={"4.5em"}></Logo>
               </Grid>
-              <Grid
-                container
-                item
-                sm={8}
-                style={{ justifyContent: "flex-end" }}
-              >
-                <Grid
-                  style={{
-                    width: "auto",
-                  }}
-                >
-                  <Tabs
-                    value={currentTab}
-                    onChange={handleTabChange}
-                    textColor="primary"
-                    TabIndicatorProps={{
-                      className: classes.activeTab,
-                    }}
-                  >
-                    <Tab
-                      className={isActive("events") && classes.activeLink}
-                      label="Home"
-                      value={0}
-                    />
-                  </Tabs>
-                </Grid>
-              </Grid>
               <Grid item sm={2}>
                 <Grid
                   style={{

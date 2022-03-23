@@ -47,7 +47,7 @@ function Logout(props) {
         onClick={showConfirmDialog}
         {...props}
       >
-        <ExitToApp />
+        <ExitToApp className={classes.icon} />
         Logout
       </Button>
     </>
@@ -58,6 +58,16 @@ export default Logout;
 
 const styles = makeStyles((theme) => ({
   btn: {
+    width: "100%",
+    height: "48px",
+    justifyContent: "flex-start",
     color: "#7B7B7B",
+    "&:hover": {
+      background: "rgba(0, 142, 255, 0.06)",
+      color: "#008EFF",
+    },
+  },
+  icon: {
+    marginRight: "4px",
   },
 }));
