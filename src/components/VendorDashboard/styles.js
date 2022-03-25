@@ -15,12 +15,12 @@ export const styles = makeStyles((theme) => ({
     flexDirection: "row",
   },
   sidebar: {
-    width: "20vw",
+    width: "340px",
   },
   mainContainer: {
     width: "100vw",
     [theme.breakpoints.up("sm")]: {
-      width: "calc(100% - 20vw)",
+      width: "calc(100% - 340px)",
     },
   },
 }));

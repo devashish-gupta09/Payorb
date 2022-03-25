@@ -1,8 +1,8 @@
 import { Grid, makeStyles } from "@material-ui/core";
 
 import PageTitle from "../src/components/PageTitle";
-import SigningHeader from "../src/components/SigningHeader";
 import SignUpContainer from "../src/components/SignUpContainer";
+import SignupHeader from "../src/components/SignUpHeader";
 import { getSignInContent } from "../src/services/landing";
 
 export default function SignUp({ content }) {
@@ -11,7 +11,7 @@ export default function SignUp({ content }) {
   return (
     <Grid className={classes.container}>
       <PageTitle title="Payorb | Sign Up" />
-      <SigningHeader />
+      <SignupHeader />
       <SignUpContainer content={content} />
     </Grid>
   );
@@ -34,5 +34,7 @@ const styles = makeStyles((theme) => ({
   container: {
     background: "url(/assets/sign-in-bg.svg) no-repeat center",
     backgroundSize: "cover",
+    height: "fit-content",
+    minHeight: "100vh",
   },
 }));

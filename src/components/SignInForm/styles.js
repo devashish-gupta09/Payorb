@@ -82,6 +82,7 @@ export const styles = makeStyles((theme) => ({
   },
   signupText: {
     color: "#008EFF",
+    cursor: "pointer",
     textDecoration: "underline",
     display: "inline",
   },
