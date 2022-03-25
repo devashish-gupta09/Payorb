@@ -232,7 +232,7 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
             className={classes.defaultBackgroundContainer}
           >
             <Typography className={classes.defaultBannerText}>
-              Add a cover pic
+              {isVendor && "Add a cover pic"}
             </Typography>
           </Grid>
         )}

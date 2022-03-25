@@ -156,7 +156,10 @@ function VendorDashboard() {
               </VendorDashboardContainer>
             )}
             {/* <AuthAlertBanner /> */}
-            <AppFooter />
+
+            {router.asPath === `/vendor/${router.query.vendorId}` && (
+              <AppFooter />
+            )}
           </Grid>
         </UserAuthDetailsProvider>
       )}

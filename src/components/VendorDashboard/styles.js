@@ -8,6 +8,7 @@ export const styles = makeStyles((theme) => ({
     maxHeight: "fit-content",
     [theme.breakpoints.down("sm")]: {
       padding: "2em 1em",
+      width: "100vw",
     },
   },
   dashboard: {
@@ -16,6 +17,9 @@ export const styles = makeStyles((theme) => ({
   },
   sidebar: {
     width: "340px",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
   },
   mainContainer: {
     width: "100vw",

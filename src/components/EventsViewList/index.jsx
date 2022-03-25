@@ -90,6 +90,10 @@ const styles = makeStyles((theme) => ({
     height: "100%",
     //paddingBottom: "2em",
     padding: "2em 1em",
+    [theme.breakpoints.down("sm")]: {
+      width: "100vw",
+      padding: "1em 0",
+    },
   },
 }));
 

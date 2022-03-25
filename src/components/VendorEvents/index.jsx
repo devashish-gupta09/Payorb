@@ -152,6 +152,7 @@ function VendorEvents() {
               justifyContent: "flex-end",
               width: "100%",
               maxHeight: "2.5em",
+              border: "2px solid",
             }}
           >
             <Button
@@ -202,70 +203,71 @@ function VendorEvents() {
       {listView ? (
         events ? (
           <Grid className={classes.container}>
-            {events.length > 0 ? (
-              <div>
-                {buttonColorOpen == classes.blue ? (
-                  <Grid className={classes.events}>
-                    <Typography
-                      variant="h6"
-                      style={{
-                        marginBottom: "0.5em",
-                        fontSize: "1em",
-                      }}
-                    >
-                      Open Events (
-                      {events.filter((e) => !isEventPastDate(e)).length})
-                    </Typography>
-                    <EventsViewList
-                      showOpen={true}
-                      events={events}
-                      handleEventDelete={handleEventDelete}
-                    />
-                  </Grid>
-                ) : (
-                  <Grid className={classes.events}>
-                    <Typography
-                      variant="h6"
-                      style={{
-                        marginBottom: "0.5em",
-                        fontSize: "1em",
-                      }}
-                    >
-                      Completed Events (
-                      {events.filter((e) => isEventPastDate(e)).length})
-                    </Typography>
-                    <EventsViewList
-                      showOpen={false}
-                      events={events}
-                      handleEventDelete={handleEventDelete}
-                    />
-                  </Grid>
-                )}
-
-                <Grid
-                  style={{ marginBottom: "1em" }}
-                  container
-                  alignItems="center"
-                  justify="center"
-                >
-                  {loadMore ? (
-                    <Button onClick={loadMoreEvents}>Load more</Button>
+            {
+              events.length > 0 ? (
+                <div>
+                  {buttonColorOpen == classes.blue ? (
+                    <Grid className={classes.events}>
+                      <Typography
+                        variant="h6"
+                        style={{
+                          marginBottom: "0.5em",
+                          fontSize: "1em",
+                        }}
+                      >
+                        Open Events (
+                        {events.filter((e) => !isEventPastDate(e)).length})
+                      </Typography>
+                      <EventsViewList
+                        showOpen={true}
+                        events={events}
+                        handleEventDelete={handleEventDelete}
+                      />
+                    </Grid>
                   ) : (
-                    <Typography>All events loaded</Typography>
+                    <Grid className={classes.events}>
+                      <Typography
+                        variant="h6"
+                        style={{
+                          marginBottom: "0.5em",
+                          fontSize: "1em",
+                        }}
+                      >
+                        Completed Events (
+                        {events.filter((e) => isEventPastDate(e)).length})
+                      </Typography>
+                      <EventsViewList
+                        showOpen={false}
+                        events={events}
+                        handleEventDelete={handleEventDelete}
+                      />
+                    </Grid>
                   )}
-                </Grid>
-              </div>
-            ) : (
-              <Grid container justifyContent="center" alignItems="center">
-                <img
-                  src="/assets/vendorEvents/noPastEvents.svg"
-                  className={classes.imgContainer}
-                />
-                <Typography variant="h6" className={classes.noEventMsg}>
-                  No past events found. Start creating new events...
-                </Typography>
-              </Grid>
-            )}
+
+                  <Grid
+                    style={{ marginBottom: "1em" }}
+                    container
+                    alignItems="center"
+                    justify="center"
+                  >
+                    {loadMore ? (
+                      <Button onClick={loadMoreEvents}>Load more</Button>
+                    ) : (
+                      <Typography>All events loaded</Typography>
+                    )}
+                  </Grid>
+                </div>
+              ) : null
+              // <Grid container justifyContent="center" alignItems="center">
+              //   <img
+              //     src="/assets/vendorEvents/noPastEvents.svg"
+              //     className={classes.imgContainer}
+              //   />
+              //   <Typography variant="h6" className={classes.noEventMsg}>
+              //     No past events found. Start creating new events...
+              //   </Typography>
+              // </Grid>
+            }
           </Grid>
         ) : (
           <DashboardCard rootClass={classes.skeleton}>
@@ -279,7 +281,7 @@ function VendorEvents() {
 
       {!desktop && (
         <Grid container justify="center" alignItems="center">
-          <DashboardCard rootClass={classes.createEventCard}>
+          <Grid className={classes.createEventCard}>
             <Grid container justify="center" alignItems="center">
               <Grid item xs={6}>
                 <ButtonCapsule
@@ -296,7 +298,7 @@ function VendorEvents() {
                 ></ButtonCapsule>
               </Grid>
             </Grid>
-          </DashboardCard>
+          </Grid>
         </Grid>
       )}
     </Grid>
@@ -323,7 +325,7 @@ const styles = makeStyles((theme) => ({
     padding: "0.15em",
     [theme.breakpoints.down("sm")]: {
       justifyContent: "center",
-      marginRight: "5em",
+      margin: "1em 0",
     },
   },
   blue: {
@@ -349,12 +351,16 @@ const styles = makeStyles((theme) => ({
     minHeight: "80vh",
     maxHeight: "max-content",
     [theme.breakpoints.down("sm")]: {
-      padding: 0,
+      padding: "5em 0 0 0",
+      margin: "0",
     },
   },
   events: {
     minHeight: "70vh",
     maxHeight: "100%",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "1em",
+    },
   },
   createEvent: {
     height: "min-content",
@@ -377,8 +383,10 @@ const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       position: "fixed",
-      bottom: "0",
+      bottom: -8,
       borderRadius: "0",
+      padding: 0,
+      margin: 0,
     },
   },
   createEventButton: {
