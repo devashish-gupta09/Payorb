@@ -1,5 +1,5 @@
 import { Button, Drawer, Grid, Toolbar, Typography } from "@material-ui/core";
-import { Close, Menu } from "@material-ui/icons";
+import { Menu } from "@material-ui/icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -37,17 +37,6 @@ function SigningHeader() {
     <CustomHeader>
       <Drawer anchor={"left"} open={appMenu} onClose={toggleDrawer}>
         <Grid className={classes.drawerItemContainer}>
-          <Grid
-            container
-            justify={"space-between"}
-            className={classes.drawerTitleContainer}
-          >
-            <Logo redirectToHome={true} dark={true} width={"5em"} />
-            <Typography className={classes.drawerClose} onClick={toggleDrawer}>
-              <Close />
-            </Typography>
-          </Grid>
-
           <Grid className={classes.drawerList}>
             <li
               onClick={() => {

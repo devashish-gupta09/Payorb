@@ -228,6 +228,7 @@ function SigninForm() {
                 }
                 helperText={formik.touched.username && formik.errors.username}
                 InputProps={{
+                  style: { borderRadius: "100px" },
                   endAdornment: (
                     <InputAdornment position="end">
                       <AccountCircle
@@ -270,6 +271,7 @@ function SigninForm() {
                 }
                 helperText={formik.touched.password && formik.errors.password}
                 InputProps={{
+                  style: { borderRadius: "100px" },
                   endAdornment: (
                     <InputAdornment position="end">
                       <Lock style={{ color: "rgba(189, 189, 189, 1" }} />
@@ -294,6 +296,7 @@ function SigninForm() {
               value={formik.values.otp}
               type="password"
               InputProps={{
+                style: { borderRadius: "100px" },
                 endAdornment: (
                   <InputAdornment position="end">
                     <Grid style={{ display: "flex", flexDirection: "column" }}>

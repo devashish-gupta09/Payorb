@@ -7,9 +7,9 @@ export const styles = makeStyles((theme) => ({
     boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.25)",
     borderRadius: "10px",
     overflow: "hidden",
-    [theme.breakpoints.down("sm")]:{
-      width:"100%"
-    }
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+    },
   },
   title: {
     fontSize: "1.6em",
