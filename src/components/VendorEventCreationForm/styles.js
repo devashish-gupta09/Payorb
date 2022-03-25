@@ -3,8 +3,10 @@ import { makeStyles } from "@material-ui/core";
 export const styles = makeStyles((theme) => ({
   root: {
     width: "100%",
+    border: "10px solid yellow",
   },
   container: {
+    border: "3px solid purple",
     background: "white",
     borderRadius: "10px",
     padding: "2em 2em 1em 2em",

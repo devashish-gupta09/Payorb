@@ -332,7 +332,6 @@ const styles = makeStyles((theme) => ({
   },
   white: {
     background: "white",
-    // padding: "0.5em 1.9em",
     borderRadius: "2em",
   },
   noEventMsg: {
