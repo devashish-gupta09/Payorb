@@ -24,7 +24,7 @@ function ProfileNavBar({ vendor = true }) {
       <Tab label="Gallery" href="#gallery"></Tab>
       <Tab label="Reviews" href="#review"></Tab>
       <Tab label="Payments" href="#payment"></Tab>
-      {!vendor ? <Tab label="Events" href="#events"></Tab> : null}
+      {/* {!vendor ? <Tab label="Events" href="#events"></Tab> : null} */}
     </Tabs>
   );
 }

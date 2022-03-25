@@ -33,6 +33,23 @@ function VendorDashboard() {
   const [profileData, setProfileData] = React.useState(null);
   const { Alert, showAlert } = useAlertSnackbar();
 
+  const checkIfSideBarAllowed = () => {
+    const { vendorId } = router.query;
+
+    if (router.query.section) {
+      switch (router.asPath) {
+        case `/vendor/${vendorId}/events/create`:
+        case `/vendor/${vendorId}/events/create?trialClass=true`:
+          return false;
+        default:
+          return true;
+      }
+    }
+
+    // Side bar not allowed on profile page
+    return false;
+  };
+
   const getComponent = (profileData) => {
     if (profileData && profileData.userUID) {
       if (router.query.section) {
@@ -56,14 +73,14 @@ function VendorDashboard() {
               />
             );
         }
-      } else {
-        return (
-          <>
-            <PageTitle title="Payorb | Profile" />
-            <Profile profileData={profileData} />
-          </>
-        );
       }
+
+      return (
+        <>
+          <PageTitle title="Payorb | Profile" />
+          <Profile profileData={profileData} />
+        </>
+      );
     }
   };
 
@@ -122,7 +139,7 @@ function VendorDashboard() {
         <UserAuthDetailsProvider>
           <Grid>
             <VendorDashboardHeader profileData={profileData} />
-            {router.pathname == `/vendor/[vendorId]/[...section]` ? (
+            {checkIfSideBarAllowed() ? (
               <Grid container className={classes.dashboard}>
                 <Grid item className={classes.sidebar}>
                   <VendorDashboardSidebar profileData={profileData} />
@@ -139,7 +156,10 @@ function VendorDashboard() {
               </VendorDashboardContainer>
             )}
             {/* <AuthAlertBanner /> */}
-            <AppFooter />
+
+            {router.asPath === `/vendor/${router.query.vendorId}` && (
+              <AppFooter />
+            )}
           </Grid>
         </UserAuthDetailsProvider>
       )}
