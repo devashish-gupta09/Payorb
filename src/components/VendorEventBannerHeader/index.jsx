@@ -10,10 +10,12 @@ import {
   useTheme,
 } from "@material-ui/core";
 import { ArrowBack, CloudUpload, Delete, Edit } from "@material-ui/icons";
+import { useRouter } from "next/router";
 
 import * as React from "react";
 
 import { ALERT_TYPES } from "../../constants/alerts";
+import { EVENT_DEFAULT_BANNERS } from "../../constants/images";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { updateUser } from "../../services/auth";
 import { delay } from "../../utils/dateTime";
@@ -22,13 +24,23 @@ import { FirebaseAuth } from "../AuthenticationContext";
 import ButtonCapsule from "../ButtonCapsule";
 import ImageSelectAndCrop from "../ImageSelectAndCrop";
 
+export function randomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+export const getRandomEventBanner = () => {
+  const banners = EVENT_DEFAULT_BANNERS;
+  const index = randomNumber(1, 16);
+  return banners[index];
+};
+
 const styles = makeStyles((theme) => ({
   root: {
     "--heightA": "100%",
-    height: "calc(100vh/4)",
+    height: "calc(100vh/3)",
     width: "100%",
     position: "relative",
-    padding: "0.5em 0",
+    // padding: "0.5em 0",
     [theme.breakpoints.down("sm")]: {
       height: "25vh",
     },
@@ -81,7 +93,7 @@ const styles = makeStyles((theme) => ({
   },
 }));
 
-const VendorEventBannerHeader = ({ eventData, updateProfile, isVendor }) => {
+const VendorEventBannerHeader = ({ eventData, updateEvent, isVendor }) => {
   const classes = styles();
 
   const [dialogOpen, setDialogOpen] = React.useState(false);
@@ -90,6 +102,7 @@ const VendorEventBannerHeader = ({ eventData, updateProfile, isVendor }) => {
   const [dataUrl, setDataUrl] = React.useState();
   const [croppedImg, setCroppedImage] = React.useState();
   const theme = useTheme();
+  const router = useRouter();
   const handleDataUrl = React.useCallback((data) => {
     setDataUrl(data);
   }, []);
@@ -110,7 +123,7 @@ const VendorEventBannerHeader = ({ eventData, updateProfile, isVendor }) => {
     const firebaseStorageObj = firebase.storage();
     const ref = firebaseStorageObj.ref();
     const childRef = ref.child(
-      `/event-banner/${user.uid}.${type.split("/")[1]}`
+      `/event-banner/${user.uid}/${eventData}.${type.split("/")[1]}`
     );
 
     const task = childRef.putString(dataUrl, "data_url", {
@@ -149,7 +162,7 @@ const VendorEventBannerHeader = ({ eventData, updateProfile, isVendor }) => {
           await delay(2000);
           setProgress(false);
           setCroppedImage(dataUrl);
-          updateProfile({ ...eventData, bannerImgUrl: res });
+          updateEvent({ ...eventData, bannerImgUrl: res });
           handleDialog(false);
         });
       }
@@ -159,13 +172,17 @@ const VendorEventBannerHeader = ({ eventData, updateProfile, isVendor }) => {
   const handleBannerDelete = async () => {
     try {
       await updateUser({ bannerImgUrl: "" });
-      updateProfile({ ...eventData, bannerImgUrl: "" });
+      updateEvent({ ...eventData, bannerImgUrl: "" });
       showAlert("Banner image deleted");
     } catch (err) {
       showAlert("Banner image failed to delete");
       // To be caught by sentry
       throw err;
     }
+  };
+
+  const handleBack = () => {
+    router.back();
   };
 
   return (
@@ -177,9 +194,7 @@ const VendorEventBannerHeader = ({ eventData, updateProfile, isVendor }) => {
             <ImageSelectAndCrop
               title="Select banner image"
               imagePath={
-                croppedImg ||
-                eventData.bannerImgUrl ||
-                "/assets/create-event-transparent-bg.svg"
+                croppedImg || eventData?.bannerImgUrl || getRandomEventBanner()
               }
               handleDataUrl={handleDataUrl}
               cropperAspectRatio={4.5}
@@ -247,6 +262,7 @@ const VendorEventBannerHeader = ({ eventData, updateProfile, isVendor }) => {
             icon={<ArrowBack style={{ fontSize: "1.25em" }} />}
             iconBefore={true}
             buttonStyle={`${classes.backButton}`}
+            onClick={handleBack}
           />
         </Grid>
         {isVendor ? (
