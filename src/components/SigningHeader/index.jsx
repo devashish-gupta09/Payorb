@@ -1,4 +1,4 @@
-import { Button, Drawer, Grid, Toolbar, Typography } from "@material-ui/core";
+import { Button, Drawer, Grid, Toolbar } from "@material-ui/core";
 import { Menu } from "@material-ui/icons";
 import Link from "next/link";
 import { useRouter } from "next/router";

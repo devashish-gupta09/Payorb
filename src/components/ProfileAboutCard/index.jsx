@@ -1,11 +1,4 @@
-import {
-  Button,
-  Grid,
-  makeStyles,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import { MailOutline, Phone, Place } from "@material-ui/icons";
+import { Grid, makeStyles, TextField, Typography } from "@material-ui/core";
 import { useFormik } from "formik";
 import React from "react";
 

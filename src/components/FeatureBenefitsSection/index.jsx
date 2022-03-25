@@ -1,7 +1,6 @@
 import { Grid, Typography } from "@material-ui/core";
 import React from "react";
-import Image from "next/image";
-import LandingSectionContent from "../LandingSectionContent";
+
 import { styles } from "./styles";
 
 const ColoredLine = ({ color }) => (

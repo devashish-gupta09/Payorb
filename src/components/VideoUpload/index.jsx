@@ -3,30 +3,28 @@ import {
   DialogContent,
   Grid,
   makeStyles,
-  styled,
   Tooltip,
   Typography,
 } from "@material-ui/core";
 import {
   CloudUpload,
-  Delete,
   DeleteOutline,
   Edit,
   Info,
   Movie,
 } from "@material-ui/icons";
+import { withStyles } from "@material-ui/styles";
 import React from "react";
 import "cropperjs/dist/cropper.css";
 
 import { ALERT_TYPES } from "../../constants/alerts";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
+import { updateUser } from "../../services/auth";
 import { delay } from "../../utils/dateTime";
 import firebase from "../../utils/firebase";
 import { FirebaseAuth } from "../AuthenticationContext";
 import ButtonCapsule from "../ButtonCapsule";
 import VideoSelect from "../VideoSelect";
-import { withStyles } from "@material-ui/styles";
-import { updateUser } from "../../services/auth";
 
 const LightTooltip = withStyles((theme) => ({
   tooltip: {

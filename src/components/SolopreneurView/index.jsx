@@ -1,12 +1,13 @@
 import { Grid, makeStyles } from "@material-ui/core";
 import React from "react";
+
 import Footer from "../LandingFooter";
 import LandingHeader from "../LandingHeader";
-import SolopreneurBanner from "../SoloprenuerBanner";
 import SolopreneurAdvantages from "../SolopreneurAdvantages";
 
-import SolopreneurSuccess from "../SolopreneurSuccess";
 import SolopreneurLife from "../SolopreneurLife";
+import SolopreneurSuccess from "../SolopreneurSuccess";
+import SolopreneurBanner from "../SoloprenuerBanner";
 
 function SolopreneurView({ content }) {
   const classes = styles();

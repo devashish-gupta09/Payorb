@@ -6,7 +6,7 @@ import {
   Typography,
   Icon,
 } from "@material-ui/core";
-import { Close, Menu } from "@material-ui/icons";
+import { Close } from "@material-ui/icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";

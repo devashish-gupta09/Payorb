@@ -8,7 +8,7 @@ import {
 import moment from "moment";
 import { useRouter } from "next/router";
 
-import React, { useEffect } from "react";
+import React from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
 import { EVENT_MODES, EVENT_TYPES } from "../../constants/events";
@@ -16,7 +16,6 @@ import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 import useFetchEvents from "../../hooks/useFetchEvents";
 import { getMonthDate } from "../../utils/dateTime";
 import { getCategoryString } from "../../utils/events";
-import { DangerouslySetInnterHtml } from "../ButtonCapsule";
 import Capsule from "../Capsule";
 import DashboardCard from "../DashboardCard";
 import DetailRow from "../DetailRow";

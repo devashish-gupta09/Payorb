@@ -1,5 +1,5 @@
 import { Grid, InputAdornment, TextField, Typography } from "@material-ui/core";
-import { Edit, WorkOutline } from "@material-ui/icons";
+import { Edit } from "@material-ui/icons";
 import { useState } from "react";
 
 export const EditableTextFieldV2 = ({

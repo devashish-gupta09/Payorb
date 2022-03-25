@@ -1,9 +1,8 @@
 import { Grid, IconButton, makeStyles, Typography } from "@material-ui/core";
-import { Add, Delete, Edit, PlayCircleFilled } from "@material-ui/icons";
+import { Add, Delete, Edit } from "@material-ui/icons";
 import { useEffect, useState } from "react";
+
 import { appColors } from "../../../styles/colors";
-import ProfilePageCarauselEditForm from "../ProfilePageCarauselEditForm";
-import ReadMore from "../ReadMore";
 import VideoPlayer from "../VideoPlayer";
 
 export const ProfileImageGalleryCard = ({

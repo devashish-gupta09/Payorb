@@ -1,11 +1,12 @@
-import { Grid, Link, Typography, Button } from "@material-ui/core";
-import React from "react";
+import { Grid, Typography, Button } from "@material-ui/core";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
+import React from "react";
+
 import { PAGE_PATHS } from "../../constants/paths";
+import FeatureBookingSection from "../FeatureBookingSection";
 import Logo from "../Logo";
 
 import { styles } from "./styles";
-import FeatureBookingSection from "../FeatureBookingSection";
 
 const handleClick = () => {
   window[`scrollTo`]({ top: 0, behavior: "smooth" });

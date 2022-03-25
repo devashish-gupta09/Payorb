@@ -10,16 +10,17 @@ import {
   useTheme,
 } from "@material-ui/core";
 import { ArrowBack, CloudUpload, Delete, Edit } from "@material-ui/icons";
-import ButtonCapsule from "../ButtonCapsule";
+
 import * as React from "react";
-import useAlertSnackbar from "../../hooks/useAlertSnackbar";
-import firebase from "../../utils/firebase";
-import { FirebaseAuth } from "../AuthenticationContext";
-import ImageSelectAndCrop from "../ImageSelectAndCrop";
 
 import { ALERT_TYPES } from "../../constants/alerts";
-import { delay } from "../../utils/dateTime";
+import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { updateUser } from "../../services/auth";
+import { delay } from "../../utils/dateTime";
+import firebase from "../../utils/firebase";
+import { FirebaseAuth } from "../AuthenticationContext";
+import ButtonCapsule from "../ButtonCapsule";
+import ImageSelectAndCrop from "../ImageSelectAndCrop";
 
 const styles = makeStyles((theme) => ({
   root: {

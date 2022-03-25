@@ -1,5 +1,6 @@
 import { makeStyles, Grid } from "@material-ui/core";
 import React from "react";
+
 import FaqsSection from "../FAQsSection";
 
 import FeatureSectionHome from "../FeatureSectionHome";

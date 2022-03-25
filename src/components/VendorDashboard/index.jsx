@@ -2,8 +2,6 @@ import { Grid } from "@material-ui/core";
 import { useRouter } from "next/router";
 import React from "react";
 
-import { styles } from "./styles";
-
 import { ALERT_TYPES } from "../../constants/alerts";
 
 import { PAGE_PATHS } from "../../constants/paths";
@@ -13,7 +11,6 @@ import { getUser } from "../../services/auth";
 import { delay } from "../../utils/dateTime";
 import { buildVendorDashboardUrl } from "../../utils/url";
 import { AppFooter } from "../AppFooter";
-import AuthAlertBanner from "../AuthAlertBanner";
 import { Context } from "../AuthenticationContext";
 import VendorDashboardHeader from "../DashboardHeader";
 import VendorDashboardSidebar from "../DashboardSidebar";
@@ -26,6 +23,7 @@ import VendorDashboardContainer from "../VendorDashboardContainer";
 import VendorEventCreationForm from "../VendorEventCreationForm";
 import VendorEvents from "../VendorEvents";
 import VendorFinancials from "../VendorFinancials";
+import { styles } from "./styles";
 
 function VendorDashboard() {
   const classes = styles();
