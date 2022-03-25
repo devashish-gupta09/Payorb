@@ -16,8 +16,9 @@ export const styles = makeStyles((theme) => ({
     // border: "2px solid purple",
     display: "inline",
     position: "relative",
+    left: "2em",
     top: "3em",
-    width: "fit-content",
+    width: "100%",
     alignItems: "center",
     [theme.breakpoints.down("sm")]: {
       display: "none",
@@ -27,7 +28,7 @@ export const styles = makeStyles((theme) => ({
     },
   },
   titleSection: {
-    display: "inline-block",
+    display: "block",
     color: "black",
     fontWeight: "bolder",
     fontSize: "2.7em",
@@ -73,6 +74,7 @@ export const styles = makeStyles((theme) => ({
     display: "none",
     [theme.breakpoints.down("sm")]: {
       display: "block",
+      marginTop:"1.5em",
     },
   },
 }));

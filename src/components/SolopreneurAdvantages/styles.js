@@ -8,7 +8,7 @@ export const styles = makeStyles((theme) => ({
     padding: "4em 7em 5em 7em",
     [theme.breakpoints.down("sm")]: {
       height: "fit-content",
-      padding: "2em 1em",
+      padding: "4em 1em",
     },
   },
   mainTitle: {
@@ -34,13 +34,14 @@ export const styles = makeStyles((theme) => ({
     color: "#000000",
     alignItems: "center",
     textAlign: "center",
-    fontWeight: "bold",
+    fontWeight: "600",
     [theme.breakpoints.down("sm")]: {
       padding: "1em -0.2em",
     },
   },
   description: {
     fontSize: "1.2em",
+    padding:"0 1em 0 1em",
     [theme.breakpoints.down("sm")]: {
       textAlign: "center",
       alignItems: "center",
@@ -58,23 +59,26 @@ export const styles = makeStyles((theme) => ({
       height: "0.2em",
     },
   },
-  checkListContainer: {
-    fontSize: "1.2em",
-    marginTop: "1.2em",
+  checklistContainer: {
+    marginTop: "0.5em",
     [theme.breakpoints.down("sm")]: {
       padding: "0.5em 1.4em 0 1.4em",
+      marginTop:"0.2em"
     },
   },
   checkIcon: {
     display: "inline",
     position: "relative",
-    marginTop: "0.7em",
+    marginTop: "0.8em",
+    fontSize:"0.6em",
   },
   listItem: {
     display: "inline",
     position: "relative",
-    marginTop: "0.7em",
+    marginTop: "0.8em",
     paddingLeft: "1em",
+    fontSize: "0.9em",
+    fotWeight:"600",
   },
   bgImg1: {
     position: "absolute",

@@ -12,6 +12,7 @@ import SolopreneurBanner from "../SoloprenuerBanner";
 function SolopreneurView({ content }) {
   const classes = styles();
   return (
+
     <Grid>
       <Grid className={classes.box}>
         <Grid
@@ -31,7 +32,6 @@ function SolopreneurView({ content }) {
           <SolopreneurBanner content={content.home} />
         </Grid>
       </Grid>
-
       <SolopreneurAdvantages content={content.banner} />
       <SolopreneurSuccess content={content.stories} />
       <SolopreneurLife content={content.life} />
