@@ -1,4 +1,4 @@
-import { Grid, List, ListItem, makeStyles, Tabs, Tab } from "@material-ui/core";
+import { makeStyles, Tabs, Tab } from "@material-ui/core";
 import { useRouter } from "next/router";
 import useMobileDetect from "use-mobile-detect-hook";
 

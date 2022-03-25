@@ -1,10 +1,10 @@
-import React from "react";
 import { Button, Grid, makeStyles, Typography, Card } from "@material-ui/core";
+import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
 import CreateIcon from "@material-ui/icons/Create";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
-import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
-import ShareIcon from "@material-ui/icons/Share";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import ShareIcon from "@material-ui/icons/Share";
+import React from "react";
 
 function VendorEventsCard({ image, headline, description, date }) {
   const classes = styles();

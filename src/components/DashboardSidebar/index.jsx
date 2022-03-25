@@ -1,5 +1,5 @@
 import { Box, Drawer, Grid, Tab, Tabs, Typography } from "@material-ui/core";
-import { Close, Menu } from "@material-ui/icons";
+import { Close } from "@material-ui/icons";
 import { useRouter } from "next/router";
 import React from "react";
 

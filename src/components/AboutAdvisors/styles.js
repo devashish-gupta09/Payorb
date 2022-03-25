@@ -43,7 +43,6 @@ export const styles = makeStyles((theme) => ({
     fontWeight: "bolder",
   },
   advisorTitle: {
-    fontSize: "1em",
     fontWeight: "300",
     marginBottom: "1.5em",
     fontSize: "0.8em",

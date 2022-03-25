@@ -1,4 +1,4 @@
-import { Grid, Typography, useTheme } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import {
   ContactPhone,
   FiberManualRecord,

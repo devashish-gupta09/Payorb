@@ -6,24 +6,26 @@ import {
   useMediaQuery,
   useTheme,
 } from "@material-ui/core";
-import { isEventPastDate } from "../../utils/events";
-import { Add, DateRange, List } from "@material-ui/icons";
+
+import CallMadeIcon from "@material-ui/icons/CallMade";
 import { useRouter } from "next/router";
+
 import React from "react";
 
 import Skeleton from "react-loading-skeleton";
+
 import { globalStyles } from "../../../styles/globalStyles";
 
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 
 import { deleteEvent, getEventsVendorDashboard } from "../../services/events";
 import { delay } from "../../utils/dateTime";
+import { isEventPastDate } from "../../utils/events";
 import { buildVendorDashboardUrl } from "../../utils/url";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
 import EventsViewList from "../EventsViewList";
 import PageTitle from "../PageTitle";
-import CallMadeIcon from "@material-ui/icons/CallMade";
 
 import VendorEventsCalenderView from "../VendorEventsCalenderView";
 

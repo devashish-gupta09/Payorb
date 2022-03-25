@@ -3,36 +3,27 @@ import {
   Dialog,
   Grid,
   IconButton,
-  Tooltip,
   Typography,
   Card,
 } from "@material-ui/core";
-import { DeleteRounded, Share, FileCopy } from "@material-ui/icons";
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
+import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
+import CreateIcon from "@material-ui/icons/Create";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import ShareIcon from "@material-ui/icons/Share";
 import React from "react";
 import { useMediaQuery } from "react-responsive";
 
-import { globalStyles } from "../../../styles/globalStyles";
 import { EVENT_TYPES } from "../../constants/events";
 import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 import { useUserAuthDetails } from "../../context/UserAuthDetailContext";
 import { getEventDate, getEventMonth } from "../../utils/dateTime";
-import { formatEventType, isEventPastDate } from "../../utils/events";
-import { isPaymentDetailsIncomplete } from "../../utils/vendor";
-import AuthAlertGrid from "../AuthAlertGrid";
-import ButtonCapsule from "../ButtonCapsule";
+import { formatEventType } from "../../utils/events";
 import CustomConfirmationDialog from "../CustomConfirmationDialog";
-import DashboardCard from "../DashboardCard";
-import EventImageContainer from "../EventImageContainer/Index";
 import PostEventCreationDialog from "../PostEventCreationDialog";
 import ReadMore from "../ReadMore";
 import VendorEventCreationForm from "../VendorEventCreationForm";
 import { styles } from "./styles";
-import CreateIcon from "@material-ui/icons/Create";
-import AccessTimeIcon from "@material-ui/icons/AccessTime";
-import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
-import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import ShareIcon from "@material-ui/icons/Share";
 
 export function EventCardDate({ classes, startDate, endDate }) {
   return (

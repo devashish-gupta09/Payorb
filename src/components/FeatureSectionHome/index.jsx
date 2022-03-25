@@ -1,12 +1,12 @@
-import { Box, Grid, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import CallMadeIcon from "@material-ui/icons/CallMade";
+import Link from "next/link";
 import React from "react";
+
+import { event, FEATURES_CLICK } from "../../utils/ga";
 import ButtonCapsule from "../ButtonCapsule";
 import FeatureSectionHomeCard from "../FeatureSectionHomeCard";
 import { styles } from "./styles";
-
-import { event, FEATURES_CLICK } from "../../utils/ga";
-import Link from "next/link";
 
 const ColoredLine = () => (
   <hr

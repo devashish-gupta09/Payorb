@@ -76,11 +76,6 @@ export const styles = makeStyles((theme) => ({
     marginTop: "0.7em",
     paddingLeft: "1em",
   },
-  desktop: {
-    [theme.breakpoints.down("sm")]: {
-      display: "none",
-    },
-  },
   bgImg1: {
     position: "absolute",
     left: 0,

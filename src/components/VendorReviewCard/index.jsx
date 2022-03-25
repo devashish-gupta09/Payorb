@@ -1,5 +1,6 @@
 import { Avatar, Grid, makeStyles, Typography } from "@material-ui/core";
 import { Star } from "@material-ui/icons";
+
 import ReadMore from "../ReadMore";
 
 const starCount = [0, 0, 0, 0];
@@ -38,8 +39,11 @@ export const VendorReviewCard = ({ review }) => {
               container
               style={{ width: "fit-content", height: "fit-content" }}
             >
-              {starCount.map((star) => (
-                <Star style={{ color: "#FFCE31", fontSize: "1.25em" }} />
+              {starCount.map((star, index) => (
+                <Star
+                  style={{ color: "#FFCE31", fontSize: "1.25em" }}
+                  key={index}
+                />
               ))}
             </Grid>
           </Grid>

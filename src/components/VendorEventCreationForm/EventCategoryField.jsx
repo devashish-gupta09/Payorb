@@ -1,10 +1,4 @@
-import {
-  FormHelperText,
-  FormLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from "@material-ui/core";
+import { FormHelperText, MenuItem, Select, TextField } from "@material-ui/core";
 import React from "react";
 
 import { EVENT_CATEGORY } from "../../constants/events";

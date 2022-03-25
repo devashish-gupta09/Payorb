@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@material-ui/core";
 import React from "react";
+
 import SectionCard from "../LandingSectionCard";
-import SectionContent from "../LandingSectionContent";
 import { styles } from "./styles";
 
 const ColoredLine = () => (

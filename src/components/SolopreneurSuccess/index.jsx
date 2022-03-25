@@ -1,8 +1,10 @@
 import { Grid, Typography, Card, Button } from "@material-ui/core";
 import React from "react";
+
+import Carousel from "react-material-ui-carousel";
+
 import SolopreneurSuccessCards from "../SolopreneurSuccessCards";
 import { styles } from "./styles";
-import Carousel from "react-material-ui-carousel";
 
 function SolopreneurSuccess({ content }) {
   const classes = styles();

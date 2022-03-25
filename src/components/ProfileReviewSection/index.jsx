@@ -1,5 +1,4 @@
 import {
-  Button,
   CircularProgress,
   Grid,
   makeStyles,
@@ -15,7 +14,6 @@ import { ALERT_TYPES } from "../../constants/alerts";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { getReviewsForVendor } from "../../services/review";
 import DashboardCard from "../DashboardCard";
-import ReadMore from "../ReadMore";
 import { VendorReviewCard } from "../VendorReviewCard";
 
 function ProfileReviewSection(props) {
@@ -125,7 +123,7 @@ function ProfileReviewSection(props) {
           }}
         >
           {reviews.map((review, index) => {
-            return <VendorReviewCard review={review} />;
+            return <VendorReviewCard review={review} key={index} />;
           })}
         </Carousel>
 
@@ -178,9 +176,7 @@ const styles = makeStyles((theme) => ({
     },
   },
   reviewerLabel: {
-    color: appColors.grey,
     paddingTop: "0.5em",
-    reviewTime: {},
     color: appColors.grey,
     [theme.breakpoints.down("sm")]: {
       fontSize: "1em",

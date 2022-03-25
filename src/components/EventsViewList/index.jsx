@@ -1,5 +1,6 @@
 import { Grid, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
+
 import { isEventPastDate } from "../../utils/events";
 
 import EventCard from "../EventCard";

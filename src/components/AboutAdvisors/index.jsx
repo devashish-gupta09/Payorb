@@ -1,7 +1,9 @@
 import { Grid, Typography } from "@material-ui/core";
 import React from "react";
-import { styles } from "./styles";
+
 import Carousel from "react-material-ui-carousel";
+
+import { styles } from "./styles";
 
 function AboutAdvisors({ content }) {
   const classes = styles();
@@ -37,7 +39,7 @@ function AboutAdvisors({ content }) {
         >
           {content.details.map((advisor, index) => {
             return (
-              <Grid container justifyContent={"center"}>
+              <Grid container justifyContent={"center"} key={index}>
                 <Grid
                   item
                   className={classes.imgContainer}

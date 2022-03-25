@@ -17,7 +17,6 @@ import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { getUser } from "../../services/auth";
 import { Context } from "../AuthenticationContext";
 // import { PAGE_PATHS } from "../../constants/paths";
-import DashboardCard from "../DashboardCard";
 import DateMonth from "../DateMonth";
 import EventImageContainer from "../EventImageContainer/Index";
 import ReadMore from "../ReadMore";

@@ -15,7 +15,6 @@ import {
   FormHelperText,
   Dialog,
   DialogContent,
-  Tooltip,
   useMediaQuery,
   useTheme,
   Switch,
