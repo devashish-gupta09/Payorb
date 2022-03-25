@@ -1,11 +1,12 @@
 import { Box, Container, Typography } from "@material-ui/core";
+import CallMadeIcon from "@material-ui/icons/CallMade";
 import Link from "next/link";
 import React from "react";
+
+import { event, SIGNUP_CLICK } from "../../utils/ga";
 import ButtonCapsule from "../ButtonCapsule";
-import CallMadeIcon from "@material-ui/icons/CallMade";
 import PricingCard from "../PricingCard";
 import PricingPlan from "../PricingPlan";
-import { event, SIGNUP_CLICK } from "../../utils/ga";
 
 import { styles } from "./styles";
 

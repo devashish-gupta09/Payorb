@@ -1,17 +1,18 @@
 import { Grid, makeStyles } from "@material-ui/core";
 import React from "react";
+
+import AboutAdvisors from "../AboutAdvisors";
 import AboutBanner from "../AboutBanner";
+import AboutFounders from "../AboutFounders";
+import AboutStoryPayOrb from "../AboutStoryPayOrb";
 import AboutVision from "../AboutVision";
 import Footer from "../LandingFooter";
 import LandingHeader from "../LandingHeader";
-import AboutStoryPayOrb from "../AboutStoryPayOrb";
-import AboutFounders from "../AboutFounders";
-import AboutAdvisors from "../AboutAdvisors";
 
 function AboutView({ content }) {
   const classes = styles();
   return (
-    <Grid>
+    <Grid style={{ padding: 0 }}>
       <Grid className={classes.box}>
         <Grid
           style={{

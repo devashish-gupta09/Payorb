@@ -1,6 +1,7 @@
 import { Box } from "@material-ui/core";
 import React from "react";
 import Carousel from "react-material-ui-carousel";
+
 import WhyChooseUsCard from "../WhyChooseUsCard";
 
 function WhyUsCarousel() {

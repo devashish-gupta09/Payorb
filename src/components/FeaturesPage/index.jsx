@@ -1,11 +1,11 @@
 import { Grid, makeStyles } from "@material-ui/core";
 import React from "react";
-import FeatureSection from "../FeatureSection";
-import FeatureBookingSection from "../FeatureBookingSection";
+
+import FeatureBenefitsSection from "../FeatureBenefitsSection";
 import FeaturesContent from "../FeaturesContent";
+import FeatureSection from "../FeatureSection";
 import Footer from "../LandingFooter";
 import LandingHeader from "../LandingHeader";
-import FeatureBenefitsSection from "../FeatureBenefitsSection";
 
 function FeaturesPage({ content }) {
   const classes = styles();

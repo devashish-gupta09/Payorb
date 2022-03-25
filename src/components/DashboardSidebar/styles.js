@@ -44,7 +44,7 @@ export const styles = makeStyles((theme) => ({
   content: {
     height: "calc(90vh)",
     background: "#F6F6FA",
-    paddingTop: "15em",
+    paddingTop: "16em",
     display: "block",
     [theme.breakpoints.down("sm")]: {
       display: "None",
@@ -63,5 +63,9 @@ export const styles = makeStyles((theme) => ({
     maxWidth: "100%",
     padding: "1em",
     color: "#000000",
+  },
+  navItem: {
+    width: "100%",
+    textAlign: "left",
   },
 }));

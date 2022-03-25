@@ -64,7 +64,7 @@ module.exports = {
     ],
     "autofix/no-debugger": "error",
     "react/prop-types": 0,
-    "react/react-in-jsx-scope": false,
+    "react/react-in-jsx-scope": 0,
   },
   settings: {
     "import/resolver": {

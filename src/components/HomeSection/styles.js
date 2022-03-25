@@ -36,12 +36,6 @@ export const styles = makeStyles((theme) => ({
   },
   titleSection1: {
     [theme.breakpoints.down("sm")]: {
-      fontSize: "1.6em",
-      textAlign: "center",
-    },
-  },
-  titleSection1: {
-    [theme.breakpoints.down("sm")]: {
       fontSize: "1.25em",
       width: "100%",
     },
@@ -104,7 +98,6 @@ export const styles = makeStyles((theme) => ({
     padding: "0 1.5em",
   },
   capsuleButton: {
-    padding: "0.75em 1.25em",
     marginRight: "1em",
     background: "linear-gradient(178.83deg, #68FDF3 1%, #00D4FF 183.74%)",
     boxShadow: "none",

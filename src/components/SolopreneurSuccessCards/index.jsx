@@ -1,5 +1,6 @@
 import { Grid, Typography, Card, Button } from "@material-ui/core";
 import React from "react";
+
 import { styles } from "./styles";
 
 function SolopreneurSuccessCards({ image, headline, description, date }) {

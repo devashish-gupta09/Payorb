@@ -6,24 +6,26 @@ import {
   useMediaQuery,
   useTheme,
 } from "@material-ui/core";
-import { isEventPastDate } from "../../utils/events";
-import { Add, DateRange, List } from "@material-ui/icons";
+
+import CallMadeIcon from "@material-ui/icons/CallMade";
 import { useRouter } from "next/router";
+
 import React from "react";
 
 import Skeleton from "react-loading-skeleton";
+
 import { globalStyles } from "../../../styles/globalStyles";
 
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 
 import { deleteEvent, getEventsVendorDashboard } from "../../services/events";
 import { delay } from "../../utils/dateTime";
+import { isEventPastDate } from "../../utils/events";
 import { buildVendorDashboardUrl } from "../../utils/url";
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
 import EventsViewList from "../EventsViewList";
 import PageTitle from "../PageTitle";
-import CallMadeIcon from "@material-ui/icons/CallMade";
 
 import VendorEventsCalenderView from "../VendorEventsCalenderView";
 
@@ -43,15 +45,19 @@ function VendorEvents() {
   const [loadMore, setLoadMore] = React.useState(true);
   const router = useRouter();
 
-  const [buttonColorOpen, setOpen] = React.useState(classes.blue);
-  const [buttonColorClosed, setClosed] = React.useState(classes.white);
+  const [buttonColorOpen, setButtonColorOpen] = React.useState(classes.blue);
+  const [buttonColorClosed, setButtonColorClosed] = React.useState(
+    classes.white
+  );
+
   const btnCompleted = () => {
-    setOpen(classes.white);
-    setClosed(classes.blue);
+    setButtonColorOpen(classes.white);
+    setButtonColorClosed(classes.blue);
   };
+
   const btnOpen = () => {
-    setOpen(classes.blue);
-    setClosed(classes.white);
+    setButtonColorOpen(classes.blue);
+    setButtonColorClosed(classes.white);
   };
 
   const handleCreateEvent = (trialClass) => {
@@ -137,36 +143,24 @@ function VendorEvents() {
       <PageTitle title="Payorb | Events" />
       {Alert()}
 
-      <Grid container justify={"flex-end"} style={{ padding: "1em 0px" }}>
-        {/* {<Button onClick={toggleView}>
-          {!listView ? <List /> : <DateRange />}
-        </Button>} */}
-        <Grid
-          container
-          justifyContent={"center"}
-          className={classes.buttonContainer}
-          justify={"space-evenly"}
-        >
-          <Button className={buttonColorOpen} value={"open"} onClick={btnOpen}>
-            Open
-          </Button>
-          <Button
-            className={buttonColorClosed}
-            value={"completed"}
-            onClick={btnCompleted}
-          >
-            Completed
-          </Button>
-        </Grid>
-
+      <Grid container>
         {desktop && (
-          <div style={{ display: "flex", maxHeight: "2.5em" }}>
+          <div
+            style={{
+              display: "flex",
+              flowDirection: "row",
+              justifyContent: "flex-end",
+              width: "100%",
+              maxHeight: "2.5em",
+              border: "2px solid",
+            }}
+          >
             <Button
               style={{
                 background: "#EFEFEF",
                 padding: "0.5em 1em",
                 borderRadius: "2em",
-                marginRight: "0.2em",
+                marginRight: "1em",
               }}
               onClick={() => handleCreateEvent(true)}
             >
@@ -180,76 +174,100 @@ function VendorEvents() {
             </Button>
           </div>
         )}
+
+        <Grid container justifyContent={"center"} style={{ padding: "1em 0" }}>
+          <Grid className={classes.buttonContainer}>
+            <Button
+              className={buttonColorOpen}
+              value={"open"}
+              onClick={btnOpen}
+              style={{
+                padding: "0.5em 1.5em",
+              }}
+            >
+              Open
+            </Button>
+            <Button
+              className={buttonColorClosed}
+              value={"completed"}
+              onClick={btnCompleted}
+              style={{
+                padding: "0.5em 1.5em",
+              }}
+            >
+              Completed
+            </Button>
+          </Grid>
+        </Grid>
       </Grid>
       {listView ? (
         events ? (
           <Grid className={classes.container}>
-            {events.length > 0 ? (
-              <div style={!desktop ? { paddingBottom: "13vh" } : {}}>
-                {buttonColorOpen == classes.blue ? (
-                  <Grid className={classes.events}>
-                    <Typography
-                      variant="h6"
-                      style={{
-                        marginBottom: "0.5em",
-                        fontSize: "1em",
-                        marginLeft: "1em",
-                      }}
-                    >
-                      Open Events (
-                      {events.filter((e) => !isEventPastDate(e)).length})
-                    </Typography>
-                    <EventsViewList
-                      showOpen={true}
-                      events={events}
-                      handleEventDelete={handleEventDelete}
-                    />
-                  </Grid>
-                ) : (
-                  <Grid className={classes.events}>
-                    <Typography
-                      variant="h6"
-                      style={{
-                        marginBottom: "0.5em",
-                        marginLeft: "1em",
-                        fontSize: "1em",
-                      }}
-                    >
-                      Completed Events (
-                      {events.filter((e) => isEventPastDate(e)).length})
-                    </Typography>
-                    <EventsViewList
-                      showOpen={false}
-                      events={events}
-                      handleEventDelete={handleEventDelete}
-                    />
-                  </Grid>
-                )}
-
-                <Grid
-                  style={{ marginBottom: "1em" }}
-                  container
-                  alignItems="center"
-                  justify="center"
-                >
-                  {loadMore ? (
-                    <Button onClick={loadMoreEvents}>Load more</Button>
+            {
+              events.length > 0 ? (
+                <div>
+                  {buttonColorOpen == classes.blue ? (
+                    <Grid className={classes.events}>
+                      <Typography
+                        variant="h6"
+                        style={{
+                          marginBottom: "0.5em",
+                          fontSize: "1em",
+                        }}
+                      >
+                        Open Events (
+                        {events.filter((e) => !isEventPastDate(e)).length})
+                      </Typography>
+                      <EventsViewList
+                        showOpen={true}
+                        events={events}
+                        handleEventDelete={handleEventDelete}
+                      />
+                    </Grid>
                   ) : (
-                    <Typography>All events loaded</Typography>
+                    <Grid className={classes.events}>
+                      <Typography
+                        variant="h6"
+                        style={{
+                          marginBottom: "0.5em",
+                          fontSize: "1em",
+                        }}
+                      >
+                        Completed Events (
+                        {events.filter((e) => isEventPastDate(e)).length})
+                      </Typography>
+                      <EventsViewList
+                        showOpen={false}
+                        events={events}
+                        handleEventDelete={handleEventDelete}
+                      />
+                    </Grid>
                   )}
-                </Grid>
-              </div>
-            ) : (
-              <Grid container justifyContent="center" alignItems="center">
-                <img
-                  src="/assets/vendorEvents/noPastEvents.svg"
-                  className={classes.imgContainer}
-                />
-                <Typography variant="h6" className={classes.noEventMsg}>
-                  No past events found. Start creating new events...
-                </Typography>
-              </Grid>
-            )}
+
+                  <Grid
+                    style={{ marginBottom: "1em" }}
+                    container
+                    alignItems="center"
+                    justify="center"
+                  >
+                    {loadMore ? (
+                      <Button onClick={loadMoreEvents}>Load more</Button>
+                    ) : (
+                      <Typography>All events loaded</Typography>
+                    )}
+                  </Grid>
+                </div>
+              ) : null
+              // <Grid container justifyContent="center" alignItems="center">
+              //   <img
+              //     src="/assets/vendorEvents/noPastEvents.svg"
+              //     className={classes.imgContainer}
+              //   />
+              //   <Typography variant="h6" className={classes.noEventMsg}>
+              //     No past events found. Start creating new events...
+              //   </Typography>
+              // </Grid>
+            }
           </Grid>
         ) : (
           <DashboardCard rootClass={classes.skeleton}>
@@ -263,7 +281,7 @@ function VendorEvents() {
 
       {!desktop && (
         <Grid container justify="center" alignItems="center">
-          <DashboardCard rootClass={classes.createEventCard}>
+          <Grid className={classes.createEventCard}>
             <Grid container justify="center" alignItems="center">
               <Grid item xs={6}>
                 <ButtonCapsule
@@ -280,7 +298,7 @@ function VendorEvents() {
                 ></ButtonCapsule>
               </Grid>
             </Grid>
-          </DashboardCard>
+          </Grid>
         </Grid>
       )}
     </Grid>
@@ -300,29 +318,22 @@ const styles = makeStyles((theme) => ({
   },
   buttonContainer: {
     display: "flex",
-    width: "14em",
-    color: "black",
-    height: "2.3em",
     borderRadius: "3em",
     backgroundColor: "white",
-    border: "solid",
-    borderWidth: "0.08em",
-    marginRight: "7.5em",
-    marginTop: "3em",
+    justifyContent: "flex-stretch",
+    border: "2px solid",
+    padding: "0.15em",
     [theme.breakpoints.down("sm")]: {
       justifyContent: "center",
-      marginRight: "5em",
+      margin: "1em 0",
     },
   },
   blue: {
-    fontSize: "0.9em",
     background: "linear-gradient(180deg, #68FDF3 0%, #00D4FF 219.05%);",
-    padding: "0.10em 1.44em",
     borderRadius: "2em",
-    marginBottom: "0.2em",
   },
   white: {
-    padding: "0.5em 1.9em",
+    background: "white",
     borderRadius: "2em",
   },
   noEventMsg: {
@@ -336,16 +347,20 @@ const styles = makeStyles((theme) => ({
     },
   },
   root: {
-    padding: "1em 2em",
+    padding: "2em",
     minHeight: "80vh",
     maxHeight: "max-content",
     [theme.breakpoints.down("sm")]: {
-      padding: 0,
+      padding: "5em 0 0 0",
+      margin: "0",
     },
   },
   events: {
     minHeight: "70vh",
     maxHeight: "100%",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "1em",
+    },
   },
   createEvent: {
     height: "min-content",
@@ -356,6 +371,7 @@ const styles = makeStyles((theme) => ({
     },
   },
   container: {
+    // padding: "2em",
     [theme.breakpoints.down("sm")]: {
       paddingBottom: "3em",
     },
@@ -367,8 +383,10 @@ const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       position: "fixed",
-      bottom: "0",
+      bottom: -8,
       borderRadius: "0",
+      padding: 0,
+      margin: 0,
     },
   },
   createEventButton: {

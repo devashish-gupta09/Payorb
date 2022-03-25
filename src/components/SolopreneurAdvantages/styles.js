@@ -80,11 +80,6 @@ export const styles = makeStyles((theme) => ({
     fontSize: "0.9em",
     fotWeight:"600",
   },
-  desktop: {
-    [theme.breakpoints.down("sm")]: {
-      display: "none",
-    },
-  },
   bgImg1: {
     position: "absolute",
     left: 0,

@@ -13,8 +13,7 @@ import {
 import numeral from "numeral";
 import React from "react";
 import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { usePagination } from '@material-ui/lab/Pagination';
+
 
 
 import { globalStyles } from "../../../styles/globalStyles";
@@ -110,15 +109,7 @@ function VendorEventsStats() {
   const classes = styles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  //const [currentPage, setCurrentPage] = useState(1);
-  //const maxPage = Math.ceil(rows.length / rowsPerPage);
-
-
-  const { items } = usePagination({
-    count: 5,
-  });
-
-
+  
   const { loading, events, changeLimit, loadMoreEvents } = useFetchEvents(
     true,
     {
@@ -134,8 +125,6 @@ function VendorEventsStats() {
     }
     setPage(newPage);
   };
-
-
   
   const handleChangeRowsPerPage = async (event) => {
     setRowsPerPage(event.target.value);
@@ -176,6 +165,7 @@ function VendorEventsStats() {
       )
     );
 
+  const pageCount=Math.ceil(rows.length/5);
     return (
       <Grid className={classes.root}>
         <Typography
@@ -241,41 +231,13 @@ function VendorEventsStats() {
               </TableBody>
             </Table>
           </TableContainer>
-          <nav>
-                    <ul className={classes.ul}>
-                      {items.map(({ page, type, selected, ...item }, index) => {
-                        let children = null;
-
-                        if (type === 'start-ellipsis' || type === 'end-ellipsis') {
-                          children = '…';
-                        } else if (type === 'page') {
-                          children = (
-                            <button type="button" 
-                            
-                              style={{ fontWeight: selected ? 'bold' : undefined, 
-                                background: selected? "linear-gradient(180deg, #68FDF3 0%, #00D4FF 100%)":"none",
-                                borderStyle:"1px solid #CFCFCF",
-                                width:"2em",
-                              }}
-
-                             {...item}
-                             onClick={handleChangePage}
-                             >
-                              {page}
-                            </button>
-                          );
-                        } else {
-                          children = (
-                            <button type="button" {...item}>
-                              {type}
-                            </button>
-                          );
-                        }
-
-                        return <li key={index}>{children}</li>;
-                      })}
-                    </ul>
-                  </nav>
+          <TablePagination
+            page={page}
+            rowsPerPage={rowsPerPage}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            count={rows}
+         />
         </DashboardCard>
       </Grid>
     );

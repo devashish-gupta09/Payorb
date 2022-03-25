@@ -94,9 +94,6 @@ export const styles = makeStyles((theme) => ({
       display: "none",
     },
   },
-  planName: {
-    borderBottom: "2px solid #00D4FF",
-  },
   planDescription: {
     margin: "1em",
     marginLeft: "0",

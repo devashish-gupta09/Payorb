@@ -4,24 +4,17 @@ import { appColors } from "../../../styles/colors";
 
 export const styles = makeStyles((theme) => ({
   root: {
-    padding: "0",
-    display: "inline-block",
+    boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.25)",
+    borderRadius: "10px",
+    overflow: "hidden",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+    },
   },
   title: {
     fontSize: "1.6em",
     [theme.breakpoints.down("sm")]: {
       fontSize: "0.9em",
-    },
-  },
-  imageContainer: {
-    padding: "1em",
-    maxHeight: "30em",
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
-    borderRadius: "8px 8px 0px 0px",
-    [theme.breakpoints.down("sm")]: {
-      padding: 0,
     },
   },
   desktop: {
@@ -84,86 +77,90 @@ export const styles = makeStyles((theme) => ({
     },
   },
   cardContainer: {
-    display: "inline",
-    // width: "25em",
-    borderRadius: "8px 8px 0px 0px",
+    position: "relative",
   },
   headline: {
-    fontWeight: "bold",
-    fontSize: "1em",
+    fontWeight: "600",
+    fontSize: "1.5em",
   },
   imgContainer: {
-    width: "520px",
-    borderRadius: "8px 8px 0px 0px",
+    width: "100%",
+    top: 0,
+    height: "12.5em",
+    position: "absolute",
   },
   image: {
-    borderRadius: "8px 8px 0px 0px",
+    height: "12.5em",
+    width: "100%",
+    objectFit: "cover",
   },
   textContainer: {
-    width: "520px",
+    width: "100%",
     padding: "0.4em 1em 0.6em 1.2em",
-    boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.25)",
-    borderRadius: "8px",
   },
   descriptionText: {
-    fontSize: "0.2em",
-    marginTop: "0.24em",
+    fontSize: "0.95em",
+    padding: "0.5em 0 0.75em 0",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.75em",
+    },
   },
   cost: {
     float: "right",
-    fontWeight: "bold",
-    fontSize: "1em",
-  },
-  bottomTextContainer: {
-    marginTop: "0.5em",
+    fontWeight: "600",
+    fontSize: "1.5em",
   },
   bottomText: {
-    fontSize: "0.8em",
-    marginTop: "0.5em",
-    fontWeight: "bold",
+    fontSize: "0.95em",
+    paddingBottom: "0.25em",
+    fontWeight: "500",
     alignItems: "center",
     verticalAlign: "middle",
-    //textAlign: "center"
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.85em",
+    },
   },
   topBannerButton: {
     borderRadius: "2em",
     background: "#008EFF",
-    fontSize: "0.6em",
+    fontSize: "0.75em",
     padding: "0.5em 1em",
     margin: "0 0.5em",
     color: "white",
     height: "2.5em",
+    textTransform: "none",
   },
   cooking: {
     background: "#1ECE7A",
-    // right: "74%"
   },
   topBanner: {
-    //position: "absolute",
-    justifyContent: "right",
-    right: "24em",
-    marginTop: "-16em",
+    position: "absolute",
+    justifyContent: "flex-end",
+    top: 0,
+    padding: "0.75em 0.75em",
   },
   sideBar: {
     display: "flex",
     flexDirection: "column",
     color: "white",
+    padding: "0 0.25em",
   },
   dateAndTime: {
+    // height: "100%",
     color: "#68FDF3",
     background: "rgba(0,0,0,0.5)",
-    marginTop: "-1.5em",
-    // marginBottom: "0.3em",
-    //left
-    padding: "0 0.5em 0 0.5em",
+    padding: "0.25em 0.5em",
+    position: "absolute",
+    bottom: 0,
   },
   icon: {
+    padding: "0.25em",
     background: "white",
     color: "#008EFF",
-    borderRadius: "2em",
-    fontSize: "1.5em",
-    padding: "0.2em",
-    margin: "0.2em 0.5em 0em 0.5em",
+    marginBottom: "0.25em",
+    "&:hover": {
+      background: "white",
+    },
   },
   deleteIcon: {
     color: "#FC6767",
@@ -176,5 +173,11 @@ export const styles = makeStyles((theme) => ({
   },
   date: {
     verticalAlign: "super",
+  },
+  bottomTextContainer: {
+    display: "flex",
+    [theme.breakpoints.down("sm")]: {
+      display: "None",
+    },
   },
 }));
