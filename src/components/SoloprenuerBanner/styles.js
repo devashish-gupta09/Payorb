@@ -4,7 +4,6 @@ export const styles = makeStyles((theme) => ({
   container: {
     height: "100vh",
     overflow: "hidden",
-    margin: "0 auto",
     justifyContent: "center",
     [theme.breakpoints.down("sm")]: {
       width: "100% !important",
@@ -14,6 +13,7 @@ export const styles = makeStyles((theme) => ({
     },
   },
   textContainer: {
+    // border: "2px solid purple",
     display: "inline",
     position: "relative",
     left: "2em",

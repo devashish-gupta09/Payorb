@@ -255,6 +255,7 @@ function SignUpForm() {
                 }
                 helperText={formik.touched.username && formik.errors.username}
                 InputProps={{
+                  style: { borderRadius: "100px" },
                   endAdornment: (
                     <InputAdornment position="end">
                       <AccountCircle
@@ -298,6 +299,7 @@ function SignUpForm() {
                 }
                 helperText={formik.touched.password && formik.errors.password}
                 InputProps={{
+                  style: { borderRadius: "100px" },
                   endAdornment: (
                     <InputAdornment position="end">
                       <Lock style={{ color: "rgba(189, 189, 189, 1" }} />
@@ -326,6 +328,7 @@ function SignUpForm() {
                   formik.errors.confirmPassword
                 }
                 InputProps={{
+                  style: { borderRadius: "100px" },
                   endAdornment: (
                     <InputAdornment position="end">
                       <Lock style={{ color: "rgba(189, 189, 189, 1" }} />
@@ -348,6 +351,7 @@ function SignUpForm() {
               value={formik.values.otp}
               autoComplete={"off"}
               InputProps={{
+                style: { borderRadius: "100px" },
                 endAdornment: (
                   <InputAdornment position="end">
                     <Grid style={{ display: "flex", flexDirection: "column" }}>
@@ -376,6 +380,7 @@ function SignUpForm() {
             error={formik.touched.name && Boolean(formik.errors.name)}
             helperText={formik.touched.name && formik.errors.name}
             InputProps={{
+              style: { borderRadius: "100px" },
               endAdornment: (
                 <InputAdornment position="end">
                   <AccountCircle style={{ color: "rgba(189, 189, 189, 1" }} />
@@ -394,6 +399,7 @@ function SignUpForm() {
             error={formik.touched.location && Boolean(formik.errors.location)}
             helperText={formik.touched.location && formik.errors.location}
             InputProps={{
+              style: { borderRadius: "100px" },
               endAdornment: (
                 <InputAdornment position="end">
                   <Lock style={{ color: "rgba(189, 189, 189, 1" }} />

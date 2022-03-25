@@ -25,10 +25,10 @@ import ImageSelectAndCrop from "../ImageSelectAndCrop";
 const styles = makeStyles((theme) => ({
   root: {
     "--heightA": "100%",
-    height: "calc(100vh/2.56)",
-    width: "100vw",
-    backgroundColor: "pink",
+    height: "calc(100vh/4)",
+    width: "100%",
     position: "relative",
+    padding: "0.5em 0",
     [theme.breakpoints.down("sm")]: {
       height: "25vh",
     },
@@ -67,22 +67,21 @@ const styles = makeStyles((theme) => ({
     marginLeft: "0.5em",
   },
   defaultBackgroundContainer: {
-    background: "linear-gradient(90deg, #BCF4F1 0%, #00D4FF 177.56%)",
     width: "100%",
     height: "100%",
   },
   defaultBannerText: {
-    fontSize: "3.5em",
-    fontWeight: "700",
+    fontSize: "2.5em",
+    fontWeight: "600",
     color: "#FFFFFF",
-    opacity: "0.35",
+    // opacity: "0.35",
     [theme.breakpoints.down("sm")]: {
       fontSize: "2em",
     },
   },
 }));
 
-const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
+const VendorEventBannerHeader = ({ eventData, updateProfile, isVendor }) => {
   const classes = styles();
 
   const [dialogOpen, setDialogOpen] = React.useState(false);
@@ -111,7 +110,7 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
     const firebaseStorageObj = firebase.storage();
     const ref = firebaseStorageObj.ref();
     const childRef = ref.child(
-      `/profile-banner/${user.uid}.${type.split("/")[1]}`
+      `/event-banner/${user.uid}.${type.split("/")[1]}`
     );
 
     const task = childRef.putString(dataUrl, "data_url", {
@@ -150,7 +149,7 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
           await delay(2000);
           setProgress(false);
           setCroppedImage(dataUrl);
-          updateProfile({ ...profileData, bannerImgUrl: res });
+          updateProfile({ ...eventData, bannerImgUrl: res });
           handleDialog(false);
         });
       }
@@ -160,7 +159,7 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
   const handleBannerDelete = async () => {
     try {
       await updateUser({ bannerImgUrl: "" });
-      updateProfile({ ...profileData, bannerImgUrl: "" });
+      updateProfile({ ...eventData, bannerImgUrl: "" });
       showAlert("Banner image deleted");
     } catch (err) {
       showAlert("Banner image failed to delete");
@@ -179,8 +178,8 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
               title="Select banner image"
               imagePath={
                 croppedImg ||
-                profileData.bannerImgUrl ||
-                "/assets/profile-banner-default.png"
+                eventData.bannerImgUrl ||
+                "/assets/create-event-transparent-bg.svg"
               }
               handleDataUrl={handleDataUrl}
               cropperAspectRatio={4.5}
@@ -222,8 +221,8 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
         </Dialog>
       )}
       <Grid className={classes.base}>
-        {profileData?.bannerImgUrl ? (
-          <img src={profileData.bannerImgUrl} className={classes.bannerImg} />
+        {eventData?.bannerImgUrl ? (
+          <img src={eventData.bannerImgUrl} className={classes.bannerImg} />
         ) : (
           <Grid
             container
@@ -232,7 +231,7 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
             className={classes.defaultBackgroundContainer}
           >
             <Typography className={classes.defaultBannerText}>
-              {isVendor && "Add a cover pic"}
+              Upload Event Banner
             </Typography>
           </Grid>
         )}
@@ -260,7 +259,7 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
             >
               <Edit></Edit>
             </IconButton>
-            {profileData?.bannerImgUrl ? (
+            {eventData?.bannerImgUrl ? (
               <IconButton
                 className={classes.deleteButton}
                 onClick={handleBannerDelete}
@@ -274,4 +273,4 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
     </Grid>
   );
 };
-export { ProfileHeader };
+export { VendorEventBannerHeader };

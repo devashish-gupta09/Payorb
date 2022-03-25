@@ -17,7 +17,6 @@ import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { getUser } from "../../services/auth";
 import { Context } from "../AuthenticationContext";
 // import { PAGE_PATHS } from "../../constants/paths";
-import DashboardCard from "../DashboardCard";
 import DateMonth from "../DateMonth";
 import EventImageContainer from "../EventImageContainer/Index";
 import ReadMore from "../ReadMore";
@@ -105,7 +104,7 @@ function PostEventCreationDialog(props) {
       scroll="body"
       PaperProps={{
         style: {
-          background: "transparent",
+          background: "white",
         },
       }}
     >
@@ -113,7 +112,7 @@ function PostEventCreationDialog(props) {
         {Alert()}
         <Grid container spacing={2}>
           <Grid item sm={12} className={classes.fullWidth}>
-            <DashboardCard rootClass={`${classes.posterRoot}`}>
+            <Grid className={`${classes.posterRoot}`}>
               <Grid>
                 <EventImageContainer
                   url={eventImg || event.photoUrl || DEFAULT_EVENT_IMAGE}
@@ -126,7 +125,11 @@ function PostEventCreationDialog(props) {
                 justify="space-between"
                 className={classes.descriptionInfoContainer}
               >
-                <Grid item sm={10} style={{ width: "100%" }}>
+                <Grid
+                  item
+                  sm={10}
+                  style={{ width: "100%", border: "4px solid" }}
+                >
                   <Typography
                     variant={"h6"}
                     gutterBottom
@@ -138,7 +141,7 @@ function PostEventCreationDialog(props) {
                     style={{
                       width: "95%",
                       whiteSpace: "pre-line",
-                      paddingBottom: "1.5em",
+                      // paddingBottom: "1.5em",
                     }}
                   >
                     <ReadMore percent={11} text={event.description} />
@@ -189,10 +192,10 @@ function PostEventCreationDialog(props) {
                   </Grid>
                 </Grid>
               </Grid>
-            </DashboardCard>
+            </Grid>
           </Grid>
           <Grid item sm={12} className={classes.fullWidth}>
-            <DashboardCard rootClass={`${classes.eventLinkContainer}`}>
+            <Grid className={`${classes.eventLinkContainer}`}>
               <Grid container justify="space-between" alignItems="center">
                 {" "}
                 <Grid item xs={10}>
@@ -231,7 +234,7 @@ function PostEventCreationDialog(props) {
                   </Link>
                 </Grid>
               </Grid>
-            </DashboardCard>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
@@ -286,8 +289,9 @@ const styles = makeStyles((theme) => ({
     },
   },
   descriptionInfoContainer: {
-    padding: "2em",
+    padding: "1em 2em",
     width: "100%",
+    border: "2px solid",
     [theme.breakpoints.down("sm")]: {
       padding: "2em 1em",
     },

@@ -1,12 +1,5 @@
-import {
-  Button,
-  Drawer,
-  Grid,
-  Toolbar,
-  Typography,
-  Icon,
-} from "@material-ui/core";
-import { Close } from "@material-ui/icons";
+import { Button, Drawer, Grid, Toolbar } from "@material-ui/core";
+import { Menu } from "@material-ui/icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -21,12 +14,12 @@ import {
 } from "../../utils/ga";
 
 import CustomHeader from "../Header";
-import LandingHeaderProfile from "../LandingHeaderProfile";
 
 import Logo from "../Logo";
+import SignUpHeaderProfile from "../SignUpHeaderProfile";
 import { styles } from "./styles";
 
-function LandingHeader() {
+function SignupHeader() {
   const classes = styles();
   const router = useRouter();
   const [appMenu, setAppMenu] = React.useState(false);
@@ -44,17 +37,6 @@ function LandingHeader() {
     <CustomHeader>
       <Drawer anchor={"left"} open={appMenu} onClose={toggleDrawer}>
         <Grid className={classes.drawerItemContainer}>
-          <Grid
-            container
-            justify={"space-between"}
-            className={classes.drawerTitleContainer}
-          >
-            <Logo redirectToHome={true} dark={true} width={"5em"} />
-            <Typography className={classes.drawerClose} onClick={toggleDrawer}>
-              <Close />
-            </Typography>
-          </Grid>
-
           <Grid className={classes.drawerList}>
             <li
               onClick={() => {
@@ -105,28 +87,15 @@ function LandingHeader() {
               Become a Solopreneur
             </li>
 
-            <LandingHeaderProfile handleLinkClick={handleClick} />
+            <SignUpHeaderProfile handleLinkClick={handleClick} />
           </Grid>
         </Grid>
       </Drawer>
 
       <Toolbar>
-        <Grid className={classes.menuButtonContainer}>
-          <Icon classeName={classes.iconRoot}>
-            <img
-              className={classes.imageIcon}
-              src="/assets/menuBar.svg"
-              onClick={toggleDrawer}
-            />
-          </Icon>
-          <Logo redirectToHome={true} dark={true} width={"6em"}></Logo>
-        </Grid>
-        <Grid container sm={12} justify="space-between" alignItems="center">
+        <Grid container justify="space-between" alignItems="center">
           {/* Will be replaced with logo */}
-
-          <Grid className={classes.desktop}>
-            <Logo redirectToHome={true} dark={true} width={"6em"}></Logo>
-          </Grid>
+          <Logo redirectToHome={true} dark={true} width={"6em"}></Logo>
 
           <Grid
             className={classes.buttonContainer}
@@ -182,23 +151,35 @@ function LandingHeader() {
               </Button>
             </Link>
             <Link href={PAGE_PATHS.SOLOPRENEUR}>
-              <Button
-                onClick={() =>
-                  event({
-                    action: SOLOPRENEUR_CLICK,
-                  })
-                }
-                className={
-                  router.pathname === PAGE_PATHS.SOLOPRENEUR
-                    ? classes.buttonActive
-                    : classes.buttonSpacing
-                }
-              >
-                Become a Solopreneur
-              </Button>
+              {router.pathname === PAGE_PATHS.SOLOPRENEUR ? (
+                <Button
+                  onClick={() =>
+                    event({
+                      action: SOLOPRENEUR_CLICK,
+                    })
+                  }
+                  className={classes.buttonActive}
+                >
+                  Become a Solopreneur
+                </Button>
+              ) : (
+                <Button
+                  onClick={() =>
+                    event({
+                      action: SOLOPRENEUR_CLICK,
+                    })
+                  }
+                  className={classes.buttonSpacing}
+                >
+                  Become a Solopreneur
+                </Button>
+              )}
             </Link>
 
-            <LandingHeaderProfile />
+            <SignUpHeaderProfile />
+          </Grid>
+          <Grid className={classes.menuButtonContainer}>
+            <Menu style={{ color: "black" }} onClick={toggleDrawer} />
           </Grid>
         </Grid>
       </Toolbar>
@@ -206,4 +187,4 @@ function LandingHeader() {
   );
 }
 
-export default LandingHeader;
+export default SignupHeader;

@@ -14,18 +14,16 @@ const EventImageContainer = ({ url }) => {
     <div
       className={classes.eventImageWrapper}
       style={{
-        height: imgHeight,
+        height: "15em",
         width: "100%",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         overflow: "hidden",
-        // transform: "scale(1)",
-        border: "1px solid grey",
       }}
       ref={imageContainerRef}
     >
-      <img style={{ height: imgHeight }} src={url} />
+      <img style={{ width: "100%", objectFit: "cover" }} src={url} />
     </div>
   );
 };
@@ -34,7 +32,7 @@ export default EventImageContainer;
 
 const styles = makeStyles((theme) => ({
   eventImageWrapper: {
-    borderRadius: "6px",
+    borderRadius: "5px",
     [theme.breakpoints.down("sm")]: {
       borderRadius: "0.4em",
     },

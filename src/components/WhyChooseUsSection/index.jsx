@@ -1,5 +1,6 @@
-import { Box, Container, Typography } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
 import React from "react";
+
 import WhyUsCarousel from "../WhyUsCarousel";
 
 import { styles } from "./styles";

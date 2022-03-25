@@ -1,5 +1,6 @@
 import { makeStyles, Grid } from "@material-ui/core";
 import React from "react";
+
 import FaqsSection from "../FAQsSection";
 
 import FeatureSectionHome from "../FeatureSectionHome";
@@ -42,9 +43,6 @@ function Landing({ content }) {
     </Grid>
   );
 }
-
-export default Landing;
-
 const styles = makeStyles((theme) => ({
   box: {
     width: "100%",
@@ -62,3 +60,5 @@ const styles = makeStyles((theme) => ({
     },
   },
 }));
+
+export default Landing;

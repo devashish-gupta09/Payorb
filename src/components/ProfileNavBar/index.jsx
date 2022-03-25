@@ -1,4 +1,4 @@
-import { Grid, List, ListItem, makeStyles, Tabs, Tab } from "@material-ui/core";
+import { makeStyles, Tabs, Tab } from "@material-ui/core";
 import { useRouter } from "next/router";
 import useMobileDetect from "use-mobile-detect-hook";
 
@@ -24,7 +24,7 @@ function ProfileNavBar({ vendor = true }) {
       <Tab label="Gallery" href="#gallery"></Tab>
       <Tab label="Reviews" href="#review"></Tab>
       <Tab label="Payments" href="#payment"></Tab>
-      {!vendor ? <Tab label="Events" href="#events"></Tab> : null}
+      {/* {!vendor ? <Tab label="Events" href="#events"></Tab> : null} */}
     </Tabs>
   );
 }

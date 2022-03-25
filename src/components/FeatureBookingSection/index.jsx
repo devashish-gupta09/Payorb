@@ -1,10 +1,11 @@
 import { Grid, Button, Typography } from "@material-ui/core";
 import CallMadeIcon from "@material-ui/icons/CallMade";
-import React from "react";
 import Link from "next/link";
+import React from "react";
+
 import { event, SIGNUP_CLICK } from "../../utils/ga";
-import { styles } from "./styles";
 import Logo from "../Logo";
+import { styles } from "./styles";
 function FeatureBookingSection() {
   const classes = styles();
 

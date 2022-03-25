@@ -1,7 +1,8 @@
 import { Grid, Typography } from "@material-ui/core";
-import React from "react";
-import { styles } from "./styles";
 import CheckIcon from "@material-ui/icons/Check";
+import React from "react";
+
+import { styles } from "./styles";
 
 function SoloprenuerAdvantages({ content }) {
   const classes = styles();
@@ -47,7 +48,7 @@ function SoloprenuerAdvantages({ content }) {
           <Grid item  xs={12} sm={6}>
             {content.checklist1.map((list, index) => {
               return (
-                <Grid container className={classes.list}>
+                <Grid container className={classes.list} key={index}>
                   <Grid
                     item
                     p={1}
@@ -66,7 +67,7 @@ function SoloprenuerAdvantages({ content }) {
           <Grid item xs={12} sm={6} className={classes.desktop}>
             {content.checklist2.map((list, index) => {
               return (
-                <Grid container className={classes.list}>
+                <Grid container className={classes.list} key={index}>
                   <Grid
                     item
                     p={1}

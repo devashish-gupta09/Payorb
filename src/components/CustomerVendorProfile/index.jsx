@@ -3,14 +3,12 @@ import { useRouter } from "next/router";
 import React from "react";
 
 import { getUser } from "../../services/auth";
-import CustomerVendorProfileEvents from "../CustomerVendorProfileEvents";
 import PageTitle from "../PageTitle";
 import ProfileDetailsSection from "../ProfileDetailsSection";
 import { ProfileHeader } from "../ProfileHeader";
 import { ProfileImageGallery } from "../ProfileImageGallery";
 import ProfileInfoCard from "../ProfileInfoCard";
 import { ProfileNavBar } from "../ProfileNavBar";
-import ProfilePageCarausel from "../ProfilePageCarausel";
 import ProfileReviewSection from "../ProfileReviewSection";
 import SkeletonLoading from "../SkeletonLoading";
 

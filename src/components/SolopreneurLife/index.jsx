@@ -1,7 +1,8 @@
 import { Grid, Typography, Link, Button } from "@material-ui/core";
 import React from "react";
-import { styles } from "./styles";
+
 import { event, SIGNUP_CLICK } from "../../utils/ga";
+import { styles } from "./styles";
 
 function SoloprenuerAdvantages({ content }) {
   const classes = styles();

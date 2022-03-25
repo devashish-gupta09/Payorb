@@ -1,12 +1,13 @@
+import { Grid, makeStyles, Typography } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
-import { Button, Grid, makeStyles, Typography } from "@material-ui/core";
 import * as React from "react";
-import ButtonCapsule from "../ButtonCapsule";
-import { ProfileImageGalleryCard } from "./ProfileImageGalleryCard";
-import ProfilePageCarauselEditForm from "../ProfilePageCarauselEditForm";
-import useAlertSnackbar from "../../hooks/useAlertSnackbar";
+
 import { ALERT_TYPES } from "../../constants/alerts";
+import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { updateUser } from "../../services/auth";
+import ButtonCapsule from "../ButtonCapsule";
+import ProfilePageCarauselEditForm from "../ProfilePageCarauselEditForm";
+import { ProfileImageGalleryCard } from "./ProfileImageGalleryCard";
 
 export const ProfileImageGallery = ({
   profileInfo,
@@ -113,6 +114,7 @@ export const ProfileImageGallery = ({
                     sm={4}
                     xs={12}
                     className={classes.cardContainerRoot}
+                    key={index}
                   >
                     <ProfileImageGalleryCard
                       key={index}
@@ -136,6 +138,7 @@ export const ProfileImageGallery = ({
                     sm={4}
                     xs={12}
                     className={classes.cardContainerRoot}
+                    key={index}
                   >
                     <ProfileImageGalleryCard
                       key={index}
@@ -152,13 +155,14 @@ export const ProfileImageGallery = ({
 
             {assets.length < defaultGridSize &&
               vendor &&
-              emptyAssets.map(() => {
+              emptyAssets.map((_, index) => {
                 return (
                   <Grid
                     item
                     sm={4}
                     xs={12}
                     className={classes.cardContainerRoot}
+                    key={index}
                   >
                     <ProfileImageGalleryCard
                       profileInfo={profileInfo}

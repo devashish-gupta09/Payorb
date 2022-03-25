@@ -91,29 +91,6 @@ function VendorDashboardHeader({ profileData }) {
               <Grid item sm={2}>
                 <Logo redirectToHome={true} dark={true} width={"4.5em"}></Logo>
               </Grid>
-              <Grid container item sm={8}>
-                <Grid
-                  style={{
-                    width: "100%",
-                    flexGrow: 1,
-                  }}
-                >
-                  <Tabs
-                    value={currentTab}
-                    onChange={handleTabChange}
-                    textColor="primary"
-                    TabIndicatorProps={{
-                      className: classes.activeTab,
-                    }}
-                  >
-                    <Tab
-                      className={isActive("events") && classes.activeLink}
-                      label="Home"
-                      value={0}
-                    />
-                  </Tabs>
-                </Grid>
-              </Grid>
               <Grid item sm={2}>
                 <Grid
                   style={{
@@ -171,7 +148,7 @@ function VendorDashboardHeader({ profileData }) {
                     (isActive("events") && classes.activeLink) || classes.btn
                   }
                   label={
-                    <div>
+                    <div className={classes.navItem}>
                       <img
                         src="/assets/sidebar/event-icon.svg"
                         alt="events"
@@ -191,7 +168,7 @@ function VendorDashboardHeader({ profileData }) {
                     classes.btn
                   }
                   label={
-                    <div>
+                    <div className={classes.navItem}>
                       <img
                         src="/assets/sidebar/finance-icon.svg"
                         alt="financial"
@@ -210,7 +187,7 @@ function VendorDashboardHeader({ profileData }) {
                     (isActive("customers") && classes.activeLink) || classes.btn
                   }
                   label={
-                    <div>
+                    <div className={classes.navItem}>
                       <img
                         src="/assets/sidebar/customers-icon.svg"
                         alt="customers"
@@ -231,7 +208,7 @@ function VendorDashboardHeader({ profileData }) {
                   }
                   iconPosition="start"
                   label={
-                    <div>
+                    <div className={classes.navItem}>
                       <img
                         src="/assets/sidebar/promotion-icon.svg"
                         alt="promotions"
@@ -251,7 +228,7 @@ function VendorDashboardHeader({ profileData }) {
                     classes.btn
                   }
                   label={
-                    <div>
+                    <div className={classes.navItem}>
                       <img
                         src="/assets/sidebar/schedule-icon.svg"
                         alt="my-schedule"

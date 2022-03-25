@@ -4,7 +4,7 @@ export const styles = makeStyles((theme) => ({
   container: {
     height: "100%",
     [theme.breakpoints.down("sm")]: {
-      height: "fit-content",
+      alignItems: "center",
     },
   },
   leftContainer: {
