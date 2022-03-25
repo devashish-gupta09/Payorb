@@ -1,6 +1,12 @@
 import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
+  baseBackground: {
+    height: "100vh",
+    width: "100%",
+    background: "url(/assets/create-event-bg.svg)",
+    backgroundSize: "cover",
+  },
   root: {
     width: "100%",
     border: "10px solid yellow",
