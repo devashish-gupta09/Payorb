@@ -1,12 +1,4 @@
-import {
-  Button,
-  Drawer,
-  Grid,
-  Toolbar,
-  Typography,
-  Icon,
-} from "@material-ui/core";
-import { Close } from "@material-ui/icons";
+import { Button, Drawer, Grid, Toolbar, Icon } from "@material-ui/core";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -44,17 +36,6 @@ function LandingHeader() {
     <CustomHeader>
       <Drawer anchor={"left"} open={appMenu} onClose={toggleDrawer}>
         <Grid className={classes.drawerItemContainer}>
-          <Grid
-            container
-            justify={"space-between"}
-            className={classes.drawerTitleContainer}
-          >
-            <Logo redirectToHome={true} dark={true} width={"5em"} />
-            <Typography className={classes.drawerClose} onClick={toggleDrawer}>
-              <Close />
-            </Typography>
-          </Grid>
-
           <Grid className={classes.drawerList}>
             <li
               onClick={() => {

@@ -1,5 +1,4 @@
-import { Button, Grid, Typography } from "@material-ui/core";
-import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
+import { Grid, Typography } from "@material-ui/core";
 import CallMadeIcon from "@material-ui/icons/CallMade";
 import Link from "next/link";
 import React from "react";
@@ -24,7 +23,7 @@ function FeaturesContent({ content }) {
             </Typography>
           </Typography>
         </Grid>
-        <Typography variant={"h6"} className={classes.descriptionText}>
+        <Typography className={classes.descriptionText}>
           {content.description}
         </Typography>
         <Grid container className={classes.buttonContain}>
@@ -39,7 +38,7 @@ function FeaturesContent({ content }) {
             />
           </Link>
         </Grid>
-        <Button
+        {/* <Button
           className={classes.scroll}
           onClick={() =>
             window.scrollBy({
@@ -52,7 +51,7 @@ function FeaturesContent({ content }) {
             <ArrowDownwardIcon />
           </Grid>
           Scroll to Explore
-        </Button>
+        </Button> */}
       </Grid>
       <Grid className={classes.imgContainer}>
         <img
