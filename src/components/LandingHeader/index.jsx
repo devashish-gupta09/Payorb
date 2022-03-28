@@ -67,7 +67,7 @@ function LandingHeader() {
             >
               About Us
             </li>
-            <li
+            {/* <li
               onClick={() => {
                 handleClick(PAGE_PATHS.SOLOPRENEUR);
               }}
@@ -78,7 +78,7 @@ function LandingHeader() {
               }
             >
               Become a Solopreneur
-            </li>
+            </li> */}
 
             <LandingHeaderProfile handleLinkClick={handleClick} />
           </Grid>
