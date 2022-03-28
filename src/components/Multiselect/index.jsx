@@ -21,11 +21,11 @@ const Multiselect = ({ selected, events, setSelected, label }) => {
         onChange={null}
         value={null}
         error={null}
-        style={{ margin: "0.5em 0.5em" }}
+        style={{ margin: "0.1em 0.1em" }}
         onClick={() => setShow(true)}
         InputProps={{
           style: {
-            width: "10em",
+            width: "7em",
             background: "white",
           },
           endAdornment: (
@@ -40,8 +40,8 @@ const Multiselect = ({ selected, events, setSelected, label }) => {
         <div
           style={{
             position: "absolute",
-            width: "10em",
-            height: "300px",
+            width: "7em",
+            height: "2.5em",
             zIndex: "50",
             backgroundColor: "#ffffff",
             boxShadow: "0px 0px 4px 1px grey",
@@ -54,7 +54,7 @@ const Multiselect = ({ selected, events, setSelected, label }) => {
             style={{
               display: "flex",
               justifyContent: "flex-end",
-              padding: "0em 1em 0em 1em",
+              padding: "0em 0.2em 0em 0.2em",
             }}
           >
             <small
@@ -62,7 +62,7 @@ const Multiselect = ({ selected, events, setSelected, label }) => {
                 textAlign: "right",
                 fontWeight: "bold",
                 cursor: "pointer",
-                marginBottom: "1em",
+                marginBottom: "0.3em",
               }}
               onClick={() => setShow(false)}
             >
@@ -82,7 +82,7 @@ const Multiselect = ({ selected, events, setSelected, label }) => {
                       cursor: "pointer",
                       display: "flex",
                       justifyContent: "flex-start",
-                      padding: "0em 1em 0em 1em",
+                      padding: "0em 0.2em 0em 0.2em",
                       fontWeight: selected.includes(d.link) ? "600" : "normal",
                       backgroundColor: selected.includes(d.link)
                         ? "rgba(189,245,242, 0.4)"
@@ -90,7 +90,7 @@ const Multiselect = ({ selected, events, setSelected, label }) => {
                     }}
                     onClick={() => setSelected(d.link)}
                   >
-                    <p style={{ margin: "0.5em 0px" }}>
+                    <p style={{ margin: "0.2em 0px" }}>
                       {/* {d.name.length < 10 || d.name.includes(" ")
                       ? d.name
                       : d.name.slice(0, 10) + "  ..."} */}

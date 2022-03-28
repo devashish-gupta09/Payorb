@@ -15,7 +15,7 @@ import {
 } from "@material-ui/core";
 import { Send, Info } from "@material-ui/icons";
 import React from "react";
-
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { globalStyles } from "../../../styles/globalStyles";
 import { ALERT_TYPES } from "../../constants/alerts";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
@@ -30,7 +30,9 @@ import DashboardCard from "../DashboardCard";
 import Multiselect from "../Multiselect";
 import PageTitle from "../PageTitle";
 import SkeletonLoading from "../SkeletonLoading";
-function createData(name, phoneNumber, email, date, events, eventList) {
+
+
+function createData(name, phoneNumber, email, date, events, eventList,priceList) {
   return {
     name,
     phoneNumber,
@@ -38,10 +40,17 @@ function createData(name, phoneNumber, email, date, events, eventList) {
     events: events.length
       ? [
           ...new Set(
-            events.map((e) => e.name).filter((e) => eventList.includes(e))
+            events.map((e) =>e.name).filter((e) => eventList.includes(e))
           ),
-        ].join(",")
+        ]
       : "",
+    customerTLV: events.length
+    ? [
+        ...new Set(
+          events.map((e) =>e.price).filter((e) => priceList.includes(e))
+        ),
+      ]
+    : "",
   };
 }
 
@@ -57,32 +66,251 @@ function VendorCustomers() {
   const [collapsed, setCollapsed] = React.useState(true);
   // const [sendBtnLoading, setSendBtnLoading] = React.useState(false);
   const { Alert, showAlert } = useAlertSnackbar();
-  const [formattedCustomers, setFormattedCustomers] = React.useState([]);
-  const { customers, loading } = useFetchVendorCustomers();
-  const { events, loading: eventLoading } = useFetchEvents(true, {
-    limit: 400,
-    keys: ["name", "link"],
-  });
+  // {const [formattedCustomers, setFormattedCustomers] = React.useState([]);
+  // const { customers, loading } = useFetchVendorCustomers();
+  // const { events, loading: eventLoading } = useFetchEvents(true, {
+  //   limit: 400,
+  //   keys: ["name", "link"],
+  // });
 
-  React.useEffect(() => {
-    if (customers && events) {
-      let formattedCustomersData = [];
-      customers.forEach((customer) => {
-        let formattedEvents = customer?.events
-          ?.map((link) => {
-            return events.find((event) => event.link === link);
-          })
-          .filter((e) => e);
+  // React.useEffect(() => {
+  //   if (customers && events) {
+  //     let formattedCustomersData = [];
+  //     customers.forEach((customer) => {
+  //       let formattedEvents = customer?.events
+  //         ?.map((link) => {
+  //           return events.find((event) => event.link === link);
+  //         })
+  //         .filter((e) => e);
 
-        formattedCustomersData.push({
-          ...customer,
-          events: [...formattedEvents],
-        });
-      });
-      console.log(formattedCustomersData);
-      setFormattedCustomers([...formattedCustomersData]);
-    }
-  }, [customers, events]);
+  //       formattedCustomersData.push({
+  //         ...customer,
+  //         events: [...formattedEvents],
+  //       });
+  //     });
+  //     console.log(formattedCustomersData);
+  //     setFormattedCustomers([...formattedCustomersData]);
+  //   }
+  // }, [customers, events]);}
+
+  //Dummy data that should be removed later
+  const [formattedCustomers, setFormattedCustomers] = React.useState([
+     {
+      customerId: "1234",
+      name: "VendorCustomer1",
+      phoneNumber: "+91-9287349247",
+      email: "abc@123.com",
+      createdAt: "2022-07-16T19:20:30+01:00",
+      events: [{
+        id: "abc",
+        name: "Event Name ABC",
+        type: "online",
+        startDate:"2022-04-16T19:20:30+01:00",
+        endDate: "2022-07-16T19:20:30+01:00",
+        createdDate: "2021-07-16T19:20:30+01:00",
+        location:"online",
+        category: "business",
+        address:"string;",
+        description: "This will host new categories",
+        price: "200",
+        mode: "online",
+        photoUrl: "",
+        totalTickets: "20",
+        link: "https://www.google.com",
+        url: "hgvdhgcdus",
+        privateMessage: "none",
+        orders: "",
+        userUID: "harshdeepKaur",
+        vendorUserName: "harshdeepKaur",
+        commission: "none",
+        bookedSlots: "",
+        status: "booked",
+      },{
+        id: "abc2",
+        name: "EventNameABC2",
+        type: "online",
+        startDate:"2022-04-16T19:20:30+01:00",
+        endDate: "2022-07-16T19:20:30+01:00",
+        createdDate: "2021-07-16T19:20:30+01:00",
+        location:"online",
+        category: "business",
+        address:"string;",
+        description: "This will host new categories",
+        price: "200",
+        mode: "onlinw",
+        photoUrl: "",
+        totalTickets: "20",
+        link: "https://www.google.com",
+        url: "hgvdhgcdus",
+        privateMessage: "none",
+        orders: "",
+        userUID: "harshdeepKaur",
+        vendorUserName: "harshdeepKaur",
+        commission: "none",
+        bookedSlots: "",
+        status: "booked",
+      }],
+      emails: "abxbdh@nsebh.nc",
+     },
+     {
+      customerId: "1234",
+      name: "VendorCustomer3",
+      phoneNumber:"+91-98286736487",
+      email: "abc12@123.com",
+      createdAt: "2022-07-16T19:20:30+01:00",
+      events: [{
+        eventId: "abc3",
+        name: "Event Name ABC 3",
+        type: "online",
+        startDate:"2022-04-16T19:20:30+01:00",
+        endDate: "2022-07-16T19:20:30+01:00",
+        createdDate: "2021-07-16T19:20:30+01:00",
+        location:"online",
+        category: "business",
+        address:"string;",
+        description: "This will host new categories",
+        price: "200",
+        mode: "online",
+        photoUrl: "",
+        totalTickets: "20",
+        link: "https://www.google.com",
+        url: "hgvdhgcdus",
+        privateMessage: "none",
+        orders: "",
+        userUID: "harshdeepKaur",
+        vendorUserName: "harshdeepKaur",
+        commission: "none",
+        bookedSlots: "",
+        status: "booked",
+      },{
+        eventId: "abc4",
+        name: "EventName",
+        type: "online",
+        startDate:"2022-04-16T19:20:30+01:00",
+        endDate: "2022-07-16T19:20:30+01:00",
+        createdDate: "2021-07-16T19:20:30+01:00",
+        location:"online",
+        category: "business",
+        address:"string;",
+        description: "This will host new categories",
+        price: "200",
+        mode: "online",
+        photoUrl: "",
+        totalTickets: "20",
+        link: "https://www.google.com",
+        url: "hgvdhgcdus",
+        privateMessage:"none",
+        orders: "",
+        userUID: "harsshdeepKaur",
+        vendorUserName: "harshdeepKaur",
+        commission: "none",
+        bookedSlots: "",
+        status: "booked",
+      }],
+      emails: "abxbdh@nsebh.nc",
+     },
+  ]);
+const [eventLoading,loaded]=React.useState(false);
+  const [ events, evntsLoad ] =  React.useState([{
+    eventId: "abc",
+    name: "Event Name ABC",
+    type: "online",
+    startDate:"2022-04-16T19:20:30+01:00",
+    endDate: "2022-07-16T19:20:30+01:00",
+    createdDate: "2021-07-16T19:20:30+01:00",
+    location:"online",
+    category: "business",
+    address:"string;",
+    description: "This will host new categories",
+    price: "200",
+    mode: "online",
+    photoUrl: "",
+    totalTickets: "20",
+    link: "https://www.google.com",
+    url: "hgvdhgcdus",
+    privateMessage: "none",
+    orders: "",
+    userUID: "harshdeepkaur",
+    vendorUserName: "harshdeepkaur",
+    commission: "none",
+    bookedSlots: "",
+    status: "booked",
+  },{
+    eventId: "abc2",
+    name: "EventNameABC2",
+    type: "online",
+    startDate:"2022-04-16T19:20:30+01:00",
+    endDate: "2022-07-16T19:20:30+01:00",
+    createdDate: "2021-07-16T19:20:30+01:00",
+    location:"online",
+    category: "business",
+    address:"string;",
+    description: "This will host new categories",
+    price: "200",
+    mode: "online",
+    photoUrl: "",
+    totalTickets: "20",
+    link: "https://www.google.com",
+    url: "hgvdhgcdus",
+    privateMessage:"none",
+    orders: "",
+    userUID: "harshdeepkaur",
+    vendorUserName: "harshdeepkaur",
+    commission: "none",
+    bookedSlots: "",
+    status: "booked",
+  },
+  {
+    eventId: "abc3",
+    name: "Event Name ABC 3",
+    type: "online",
+    startDate:"2022-04-16T19:20:30+01:00",
+    endDate: "2022-07-16T19:20:30+01:00",
+    createdDate: "2021-07-16T19:20:30+01:00",
+    location:"online",
+    category: "business",
+    address:"string;",
+    description: "This will host new categories",
+    price: "200",
+    mode: "online",
+    photoUrl: "",
+    totalTickets: "20",
+    link: "https://www.google.com",
+    url: "hgvdhgcdus",
+    privateMessage: "none",
+    orders: "",
+    userUID: "harshdeepKaur",
+    vendorUserName: "harshdeepKaur",
+    commission: "none",
+    bookedSlots: "",
+    status: "booked",
+  },{
+    eventId: "abc4",
+    name: "EventName",
+    type: "online",
+    startDate:"2022-04-16T19:20:30+01:00",
+    endDate: "2022-07-16T19:20:30+01:00",
+    createdDate: "2021-07-16T19:20:30+01:00",
+    location:"online",
+    category: "business",
+    address:"string;",
+    description: "This will host new categories",
+    price: "200",
+    mode: "online",
+    photoUrl: "",
+    totalTickets: "20",
+    link: "https://www.google.com",
+    url: "hgvdhgcdus",
+    privateMessage:"none",
+    orders: "",
+    userUID: "harsshdeepKaur",
+    vendorUserName: "harshdeepKaur",
+    commission: "none",
+    bookedSlots: "",
+    status: "booked",
+  }],)
+  //Dummy data ends here
+
 
   const handleEventTypeChange = (event) => {
     setSelectedValue(event.target.value);
@@ -142,17 +370,19 @@ function VendorCustomers() {
     }
   };
 
-  if (loading || eventLoading) {
-    return (
-      <Grid className={classes.root}>
-        <PageTitle title="Payorb | Customers" />
-        <SkeletonLoading message={"Loading customers"} />
-      </Grid>
-    );
-  }
+//  {if (loading || eventLoading) {
+//     return (
+//       <Grid className={classes.root}>
+//         <PageTitle title="Payorb | Customers" />
+//         <SkeletonLoading message={"Loading customers"} />
+//       </Grid>
+//     );
+//   }}
 
   if (formattedCustomers && events) {
     const eventList = events.map((e) => e.name);
+    const priceList = events.map((e) => e.price);
+    console.log(eventList)
     const rows =
       selectedValueForFilter && selectedValueForFilter.length //if filter is present
         ? formattedCustomers
@@ -169,6 +399,7 @@ function VendorCustomers() {
                 getMonthDate(customer.createdAt, customer.createdAt),
                 customer.events,
                 eventList,
+               priceList,
                 selectedValueForFilter
               )
             )
@@ -180,6 +411,7 @@ function VendorCustomers() {
               getMonthDate(customer.createdAt, customer.createdAt),
               customer.events,
               eventList,
+              priceList,
               selectedValueForFilter
             )
           );
@@ -218,7 +450,7 @@ function VendorCustomers() {
         >
           <Typography
             variant={"h6"}
-            className={`${globalClasses.boldSixHundred} `}
+            className={`${globalClasses.boldSixHundred} ${classes.customersTitle}`}
           >
             Customers
           </Typography>
@@ -233,7 +465,7 @@ function VendorCustomers() {
             className={classes.collapseController}
             onClick={() => setCollapsed(!collapsed)}
           >
-            <Typography>Filter by Events</Typography>
+            <Typography style={{fontSize:'0.9em', float:"right"}}>Filter by Events</Typography>
             {eventLoading ? (
               <CircularProgress />
             ) : (
@@ -252,7 +484,7 @@ function VendorCustomers() {
               />
             )}
           </div>
-          <Grid className={classes.selectDesktopView}>
+         {/* { <Grid className={classes.selectDesktopView}>
             {eventLoading ? (
               <CircularProgress />
             ) : events && events.length ? (
@@ -301,7 +533,7 @@ function VendorCustomers() {
                 ></ButtonCapsule>
               </Grid>
             ) : null}
-          </Grid>
+          </Grid>} */}
         </Grid>
         <DashboardCard>
           <TableContainer className={classes.container}>
@@ -312,7 +544,7 @@ function VendorCustomers() {
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ minWidth: column.minWidth }}
+                      style={{ minWidth: column.minWidth, backgroundColor:"#EFF0F6",color:"#767676" }}
                     >
                       {column.label}
                     </TableCell>
@@ -325,14 +557,31 @@ function VendorCustomers() {
                     <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                       {columns.map((column) => {
                         const value = row[column.id];
-
+                        if(column.id=="events")
+                        {
+                          return(
+                            <TableCell key={column.id} align={column.align} className={classes.tableContents}>
+                            {value.map((val)=><p>{val}</p>)}
+                          </TableCell>
+                          )
+                        }
+                        else if(column.id=="customerTLV")
+                        {
+                          return(
+                            <TableCell key={column.id} align={column.align} className={classes.tableContents}>
+                            {value.map((val)=><p>₹{val}</p>)}
+                            <ArrowDropDownIcon/>
+                          </TableCell>
+                          )
+                        }
+                        else{
                         return (
-                          <TableCell key={column.id} align={column.align}>
+                          <TableCell key={column.id} align={column.align} className={classes.tableContents}>
                             {column.format && typeof value === "number"
                               ? column.format(value)
                               : value}
                           </TableCell>
-                        );
+                        );}
                       })}
                     </TableRow>
                   );
@@ -341,7 +590,7 @@ function VendorCustomers() {
             </Table>
           </TableContainer>
         </DashboardCard>
-        <Grid className={classes.selectMobileView}>
+       {/* { <Grid className={classes.selectMobileView}>
           {eventLoading ? (
             <CircularProgress />
           ) : events && events.length ? (
@@ -390,7 +639,7 @@ function VendorCustomers() {
               ></ButtonCapsule>
             </Grid>
           ) : null}
-        </Grid>
+        </Grid>} */}
       </Grid>
     );
   }
@@ -399,7 +648,10 @@ function VendorCustomers() {
 }
 
 const columns = [
-  { id: "name", label: "Customers", minWidth: 170 },
+  { id: "name"
+  , label: "Customers"
+  , minWidth: 90 
+  },
   // {
   //   id: "date",
   //   label: "Date",
@@ -409,46 +661,59 @@ const columns = [
   {
     id: "phoneNumber",
     label: "Contact",
-    minWidth: 100,
+    minWidth: 90,
     align: "center",
+    color:"#767676",
   },
   {
     id: "email",
-    label: "Email",
-    minWidth: 100,
+    label: "Email ID",
+    minWidth: 90,
     align: "center",
+    color:"#767676",
   },
   {
     id: "events",
-    label: "Events",
-    minWidth: 100,
+    label: "Event Details",
+    minWidth: 180,
     align: "center",
+    color:"#767676",
   },
+  {
+    id:"customerTLV",
+    label:"Customer TLV",
+    minWidth:60,
+    align:"center",
+    color:"#767676",
+  }
 ];
 
 const styles = makeStyles((theme) => ({
   root: {
     width: "96%",
-    paddingTop: "1.5em",
+    paddingTop: "1em",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
   },
   container: {
+    border:"1px solid #DCDCDC",
     [theme.breakpoints.down("sm")]: {
       height: "45vh",
     },
   },
   title: {
     fontSize: "1.2em",
-    paddingBottom: "1em",
+    paddingBottom: "0.5em",
   },
   selectMobileView: {
+
     [theme.breakpoints.up("sm")]: {
       display: "none",
     },
   },
   selectDesktopView: {
+    fontSize:"0.9em",
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
@@ -483,6 +748,17 @@ const styles = makeStyles((theme) => ({
       width: "30%",
     },
   },
+  customersTitle:{
+    marginTop:"-1em",
+    fontSize:"1em",
+    marginLeft:"2em",
+  },
+  tableContents:{
+    fontWeight:"500",
+    fontSize:"0.7em",
+    marginTop:"-0.2em",
+    marginBottom:"-0.2em",
+  }
 }));
 
 export default VendorCustomers;
