@@ -1,10 +1,8 @@
 import { Grid, Typography, Card, Button } from "@material-ui/core";
 import React from "react";
-
-import Carousel from "react-material-ui-carousel";
-
 import SolopreneurSuccessCards from "../SolopreneurSuccessCards";
 import { styles } from "./styles";
+import Carousel from "react-material-ui-carousel";
 
 function SolopreneurSuccess({ content }) {
   const classes = styles();
@@ -29,14 +27,13 @@ function SolopreneurSuccess({ content }) {
 
         {/* This is for the desktop display of the cards*/}
 
-        <Grid container className={classes.desktop} spacing={"2"}>
+        <Grid container className={classes.desktop}>
           {/* This is for the banner story of the cards*/}
           <Card className={classes.bannerContainer}>
             <Grid
               container
-              spacing="2"
-              alignItems="center"
-              justify={"space-evenly"}
+              alignItems={"center"}
+              justify={"space-between"}
             >
               <Grid item sm={6} className={classes.bannerText}>
                 <Typography
@@ -65,11 +62,11 @@ function SolopreneurSuccess({ content }) {
                   </Button>
                 </Grid>
               </Grid>
-              <Grid item sm={4}>
-                <img 
+              <Grid item sm={4} justifyContent={"right"} className={classes.bannerImage}>
+               {/* {<img 
                 src={content.bannerStory.image}
                 alt={"cover-story"}
-                style={{maxHeight:"11em", alignItems:"center",float:"bottom"}}></img>
+                style={{height:"10em",bottom:"0"}}></img>} */}
                 
               </Grid>
             </Grid>
