@@ -1,50 +1,132 @@
 import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
-  textContainer: {
-    position: "absolute",
-    top: "40%",
-    left: "10%",
-
+  container: {
+    height: "90vh",
+    position: "relative",
     [theme.breakpoints.down("sm")]: {
-      top: "15%",
-      left: 0,
-      paddingLeft: "1em",
+      height: "75vh",
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "contain",
+      backgroundImage: "url(/assets/mobile-home-bg.png)",
+    },
+  },
+  textContainer: {
+    padding: "4em 4em 4em 4em",
+    width: "60%",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      height: "100%",
+      padding: "5em 1.5em 0 1.5em",
+      alignItems: "center",
+      display: "flex",
+      flexDirection: "column",
     },
   },
   titleSection: {
-    color: "white",
+    display: "inline-block",
+    color: "black",
     fontWeight: "bolder",
+    paddingBottom: "0.25em",
     [theme.breakpoints.down("sm")]: {
-      fontSize: "1.4em",
+      fontSize: "1.6em",
+      textAlign: "center",
+      paddingLeft: "1.2em",
+    },
+  },
+  titleSection1: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1.25em",
+      width: "100%",
     },
   },
   aquaText: {
-    color: "aqua",
+    position: "relative",
+    display: "inline-block",
+    color: "#00D4FF",
+    fontSize: "1em",
+    fontWeight: "bolder",
+    [theme.breakpoints.down("sm")]: {
+      textAlign: "center",
+      width: "100%",
+      fontSize: "1.5em",
+    },
   },
   descriptionText: {
-    color: "white",
-    fontWeight: "bold",
-    width: "60%",
-    textJustify: "auto",
+    color: "black",
+    width: "100%",
+    fontWeight: "400",
+    fontSize: "1.25em",
     [theme.breakpoints.down("sm")]: {
-      fontSize: "0.75em",
-      fontWeight: "600",
-      padding: "0.6em 0",
+      width: "100%",
+      fontWeight: "500",
+      fontSize: "1em",
+      textAlign: "center",
+    },
+  },
+  imgContainer: {
+    display: "inline",
+    position: "absolute",
+    width: "40%",
+    height: "29.25em",
+    right: "5%",
+    bottom: "0",
+    [theme.breakpoints.down("sm")]: {
+      height: "20em",
+      width: "100%",
+      right: "0",
+    },
+  },
+  image: {
+    width: "100%",
+    position: "absolute",
+    bottom: "0",
+  },
+  buttonContain: {
+    position: "relative",
+    width: "100%",
+    height: "fit-content",
+    top: "3em",
+    [theme.breakpoints.down("sm")]: {
+      justifyContent: "center",
+      height: "fit-content",
+      top: 0,
+      marginTop: "2em",
     },
   },
   buttonSpacing: {
     padding: "0 1.5em",
   },
   capsuleButton: {
-    background: "linear-gradient(115.52deg, #BDF5F2 0%, #79DFDF 100%)",
-    borderRadius: "2em",
-    fontWeight: "bold",
+    marginRight: "1em",
+    background: "linear-gradient(178.83deg, #68FDF3 1%, #00D4FF 183.74%)",
+    boxShadow: "none",
+    fontSize: "0.8em",
     marginTop: "1.6em",
     padding: "0.5em 1em",
     [theme.breakpoints.down("sm")]: {
+      marginTop: "0",
+      alignItems: "center",
       fontSize: "0.65em",
       fontWeight: "600",
+      padding: "1em 1.75em",
     },
+  },
+  callMadeIcon: {
+    paddingLeft: "0.25em",
+    fontSize: "2em",
+  },
+  scroll: {
+    marginTop: "10em",
+    cursor: "pointer",
+    paddingLeft: "0",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
+  scrollIcon: {
+    display: "inline-block",
+    position: "relative",
+    top: "0.3em",
   },
 }));

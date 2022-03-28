@@ -15,82 +15,108 @@ export const getHomeContent = async () => {
   // } catch (err) {
   //   console.error(err.message);
   return {
-    titleSection1: "One",
-    titleSection2: "Platform",
-    titleSection3: "Infinite Opportunities",
-    description: "A place to start & grow all your business ideas",
-    urls: [
-      "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2Flanding-carousel4.jpg?alt=media&token=4f5c9789-9a19-4f7b-ab9e-7d1e61c27d7a",
-      "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2Flanding-caraousel1-resize.jpg?alt=media&token=0d0f4234-d01f-4adf-8cc0-b26ad7be5cf1",
-      "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2Flanding-caraousel2.jpg?alt=media&token=e620258a-6971-4257-a13c-79138d54982c",
-      "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/landing-page-assets%2Flanding-carousel3.jpg?alt=media&token=3abb2f45-e52c-47a0-9cd9-4279ab817f8b",
-    ],
+    titleSection1: "Up your multitasking game as a",
+    titleSection2: "SOLOPRENEUR!",
+    titleSection3: "",
+    description:
+      "With your personal virtual online workspace, accessible anytime, anywhere.👋",
+    urls: [],
   };
   // }
 };
 
-export const getFeaturesContent = async () => {
-  // try {
-  //   const res = await axios.get(`${CMS_URL}/feature-section`);
-
-  //   res.data.features.map((feature, index) => {
-  //     res.data.features[index].image = buildImageUrl(feature.image.url);
-  //   });
-
-  //   return {
-  //     title: res.data.title,
-  //     sectionLogo: buildImageUrl(res.data.sectionLogo.url),
-  //     sectionTitle: res.data.sectionTitle,
-  //     features: res.data.features,
-  //   };
-  // } catch (err) {
-  //   console.error(err.message);
+export const getHowItWorksContent = async () => {
   return {
-    topPara:
-      "The desire for having a more flexible and fulfilling career path has led to Freelancing & solo entrepreneurship supplementing and complementing existing 9-5 worklife. When people think of venturing out on their own, the thought of all the efforts required in 'managing the business' holds them back. Hours spent in planning your offering, client communications, promoting your offering, booking reminders, scheduling & rescheduling, managing payments, follow up for feedback & reviews, and the list goes on...",
-    bottomPara: "Don't let all these overwhelm & hold you back.",
-    title: "What Payorb Offers You",
-    sectionLogo:
-      "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
-    sectionTitle: "FEATURES",
-    description:
-      "Our platform helps you transition into the freelance ecosystem at a faster pace by taking care of all basic operational barriers to starting something new: Online presence, bookings, payment, CRM all at one space.",
-    features: [
+    title: "How it works?",
+    image: "/assets/howItWorks/video-bg.svg",
+    works: [
       {
-        title: "Event",
-        description: "Event creation or On-on-one service bookings",
-        image: "/assets/features/eventCreation.png",
-      },
-
-      {
-        title: "Booking",
-        description: "Easy one-click event booking for your clients",
-        image: "/assets/features/eventBooking.png",
+        title: "Create your profile",
+        description:
+          "Input material at the beginning of farming cycle is the most important aspect that determines the quality.",
+        image: "/assets/howItWorks/create-profile.svg",
       },
       {
-        title: "Instant Payouts",
-        description: "Receive money in your account sooner than you think",
-
-        image: "/assets/features/payments.png",
+        title: "List your Services",
+        description:
+          "Input material at the beginning of farming cycle is the most important aspect that determines the quality.",
+        image: "/assets/howItWorks/services.svg",
       },
       {
-        title: "Reviews",
-        description: "Verified user reviews to boost profile credibility",
-        image: "/assets/features/rating.png",
-      },
-      {
-        title: "Analytics",
-        description: "Real-time analytics for your business",
-        image: "/assets/features/analytics.png",
-      },
-      {
-        title: "Social Media Sharing",
-        description: "Easy marketing of your events",
-        image: "/assets/features/social-media.png",
+        title: "Bookings & Payments",
+        description:
+          "Dynamically architect real-time web services for installed base systems.",
+        image: "/assets/howItWorks/booking-payment.svg",
       },
     ],
   };
-  // }
+};
+
+export const getWhyChooseUsContent = async () => {
+  return {
+    title: "Why choose PayOrb?",
+    subtitle:
+      "The desire for having a more flexible and fulfilling career path has led to Freelancing & solo entrepreneurship supplementing and complementing existing 9-5 worklife.",
+  };
+};
+
+export const getPricingContent = async () => {
+  return {
+    title: "Our Pricing",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
+    img: "/assets/pricing/pricing-img.svg",
+    plans: [
+      {
+        feature:
+          "Collaboratively extend end-to-end quality vectors via client-centric catalysts for change. Phosfluorescently.",
+      },
+      {
+        feature: "Lorem ipsum dolor sit amet.",
+      },
+      {
+        feature: "Consectetur adipiscing elit.",
+      },
+      {
+        feature: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      },
+      {
+        feature: "Lorem ipsum dolor sit amet.",
+      },
+    ],
+  };
+};
+
+export const getFaqsContent = async () => {
+  return {
+    title: "FAQ's",
+    image: "/assets/faqs/faq-img.svg",
+    faqs: [
+      {
+        ques: "She met humoured sir breeding her. Six curiosity day assurance bed necessary.",
+        ans: "Relation so in confined smallest children unpacked delicate. Why sir end believe uncivil respect. Always get adieus nature day course for common. My little garret repair to desire he esteem.",
+      },
+      {
+        ques: "And excellence partiality estimating terminated day everything?",
+        ans: "Relation so in confined smallest children unpacked delicate. Why sir end believe uncivil respect. Always get adieus nature day course for common. My little garret repair to desire he esteem.",
+      },
+      {
+        ques: "Latter person am secure of estate genius at?",
+        ans: "Relation so in confined smallest children unpacked delicate. Why sir end believe uncivil respect. Always get adieus nature day course for common. My little garret repair to desire he esteem.",
+      },
+      {
+        ques: "Whatever landlord yourself at by pleasure of children be?",
+        ans: "Relation so in confined smallest children unpacked delicate. Why sir end believe uncivil respect. Always get adieus nature day course for common. My little garret repair to desire he esteem.",
+      },
+    ],
+  };
+};
+
+export const getSignInContent = async () => {
+  return {
+    titleSection1: "One Platform",
+    titleSection2: "Infinite Opportunities!",
+  };
 };
 
 export const getEventRegistrationContent = async () => {
@@ -223,4 +249,74 @@ export const getGrowthContent = async () => {
     ],
     // };
   };
+};
+
+export const getFeaturesContent = async () => {
+  // try {
+  //   const res = await axios.get(`${CMS_URL}/feature-section`);
+
+  //   res.data.features.map((feature, index) => {
+  //     res.data.features[index].image = buildImageUrl(feature.image.url);
+  //   });
+
+  //   return {
+  //     title: res.data.title,
+  //     sectionLogo: buildImageUrl(res.data.sectionLogo.url),
+  //     sectionTitle: res.data.sectionTitle,
+  //     features: res.data.features,
+  //   };
+  // } catch (err) {
+  //   console.error(err.message);
+  return {
+    topPara:
+      "The desire for having a more flexible and fulfilling career path has led to Freelancing & solo entrepreneurship supplementing and complementing existing 9-5 worklife. When people think of venturing out on their own, the thought of all the efforts required in 'managing the business' holds them back. Hours spent in planning your offering, client communications, promoting your offering, booking reminders, scheduling & rescheduling, managing payments, follow up for feedback & reviews, and the list goes on...",
+    bottomPara: "Don't let all these overwhelm & hold you back.",
+    title: "Features",
+    sectionLogo:
+      "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
+    sectionTitle: "Features",
+    description:
+      "Our platform helps you transition into the freelance ecosystem at a faster pace by taking care of all basic operational barriers to starting something new: Online presence, bookings, payment, CRM all at one space.",
+    features: [
+      {
+        title: "Online Presence",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
+        image: "/assets/features/onlinePresence.svg",
+      },
+
+      {
+        title: "Unlimited service listings",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
+        image: "/assets/features/UnlimitedServiceListing.svg",
+      },
+      {
+        title: "Bookings & Payments",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
+
+        image: "/assets/features/Bookings&Payments.svg",
+      },
+      {
+        title: "Verified Reviews",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
+        image: "/assets/features/VerifiedReview.svg",
+      },
+      {
+        title: "Business Dashboards",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
+        image: "/assets/features/BusinessDashboard.svg",
+      },
+      {
+        title: "One Click Promotions",
+        description:
+          "Dynamically architect real-time web services for installed base systems",
+        image: "/assets/features/OneClickPromotions.svg",
+      },
+    ],
+  };
+  // }
 };
