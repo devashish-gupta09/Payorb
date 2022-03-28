@@ -38,8 +38,11 @@ export const styles = makeStyles((theme) => ({
   },
   menuButtonContainer: {
     display: "None",
+    border: "2px solid",
     [theme.breakpoints.down("sm")]: {
-      display: "contents",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "cente",
     },
   },
   drawerList: {
@@ -63,5 +66,8 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
+  },
+  iconRoot: {
+    marginRight: "1em",
   },
 }));

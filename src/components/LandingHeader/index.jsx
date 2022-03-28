@@ -94,7 +94,9 @@ function LandingHeader() {
               onClick={toggleDrawer}
             />
           </Icon>
-          <Logo redirectToHome={true} dark={true} width={"6em"}></Logo>
+          <Grid style={{ paddingLeft: "0.75em", paddingTop: "0.15em" }}>
+            <Logo redirectToHome={true} dark={true} width={"6em"}></Logo>
+          </Grid>
         </Grid>
         <Grid container sm={12} justify="space-between" alignItems="center">
           {/* Will be replaced with logo */}
