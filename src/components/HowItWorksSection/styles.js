@@ -5,11 +5,15 @@ export const styles = makeStyles((theme) => ({
     paddingBottom: "1em",
     background: "url(/assets/howItWorksBG.svg) no-repeat center center",
     backgroundSize: "cover",
+    [theme.breakpoints.down("sm")]: {
+      paddingTop: "2em",
+      background: "linear-gradient(185.16deg, #BCF4F1 4.14%, #00D4FF 288.3%)",
+    },
   },
   container: {
     height: "100vh",
     maxHeight: "fit-content",
-    padding: "4em 2em 10em 2em",
+    padding: "4em 0 10em 0em",
     [theme.breakpoints.down("sm")]: {
       height: "fit-content",
       padding: "2em 1em",
@@ -42,5 +46,8 @@ export const styles = makeStyles((theme) => ({
     height: "100%",
     objectFit: "cover",
     padding: "0 auto",
+    [theme.breakpoints.down("sm")]: {
+      paddingTop: "2em",
+    },
   },
 }));

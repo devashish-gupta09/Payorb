@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
   container: {
-    height: "fit-content",
+    height: "90vh",
     position: "relative",
     [theme.breakpoints.down("sm")]: {
       height: "70vh",
@@ -12,7 +12,7 @@ export const styles = makeStyles((theme) => ({
     },
   },
   textContainer: {
-    padding: "4em 4em 4em 4em",
+    padding: "10% 4em 4em 4em",
     width: "60%",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
@@ -117,7 +117,7 @@ export const styles = makeStyles((theme) => ({
     width: "40%",
     height: "100%",
     right: "2.5%",
-    top: "0",
+    top: "10%",
     bottom: "0",
     margin: "0",
     [theme.breakpoints.down("sm")]: {
