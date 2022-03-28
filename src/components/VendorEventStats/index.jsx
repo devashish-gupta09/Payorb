@@ -42,7 +42,7 @@ const styles = makeStyles((theme) => ({
     marginTop:"2em",
   },
   tableStyle:{
-    backgroundColor:"#DCDCDC",
+    backgroundColor:"#EFF0F6",
     color:"#767676",
   },
   ul: {
@@ -189,7 +189,7 @@ function VendorEventsStats() {
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ minWidth: column.minWidth, backgroundColor:"#DCDCDC",  color:"#767676", fontWeight:"600", }}
+                      style={{ minWidth: column.minWidth, backgroundColor:"#EFF0F6",  color:"#767676", fontWeight:"500", }}
                     >
                       {column.label}
                     </TableCell>
@@ -209,10 +209,21 @@ function VendorEventsStats() {
                           className={classes.checkbox}
                           size="small"
                         />
+                       
                         {columns.map((column) => {
                           const value = row[column.id];
+                          if(column.id=="name"){
+                            return(
+                              <TableCell key={column.id} align={column.align} style={{fontWeight:"500", color:"black"}}>
+                                  {column.format && typeof value === "number"
+                                    ? column.format(value)
+                                    :value}
+                                </TableCell>
+                              )
+                          }
+                          else{
                           return (
-                            <TableCell key={column.id} align={column.align}>
+                            <TableCell key={column.id} align={column.align} style={{fontWeight:"500", color:"#767676"}}>
                               {column.format && typeof value === "number"
                                 ? column.format(value)
                                 :(value === "Completed"?
@@ -223,7 +234,7 @@ function VendorEventsStats() {
                                  (<Typography className={`${classes.status} ${classes.statusUpcoming}`}>{value}</Typography>)
                                  :value)))}
                             </TableCell>
-                          );
+                          );}
                         })}
                       </TableRow>
                     );
@@ -232,12 +243,14 @@ function VendorEventsStats() {
             </Table>
           </TableContainer>
           <TablePagination
-            page={page}
+            rowsPerPageOptions={[5, 10, 20]}
+            component="div"
+            count={rows.length}
             rowsPerPage={rowsPerPage}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            count={rows}
-         />
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
         </DashboardCard>
       </Grid>
     );
