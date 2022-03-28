@@ -12,13 +12,7 @@ import { useRouter } from "next/router";
 import React from "react";
 
 import { PAGE_PATHS } from "../../constants/paths";
-import {
-  HOME_CLICK,
-  ABOUT_CLICK,
-  FEATURES_CLICK,
-  SOLOPRENEUR_CLICK,
-  event,
-} from "../../utils/ga";
+import { HOME_CLICK, ABOUT_CLICK, FEATURES_CLICK, event } from "../../utils/ga";
 
 import CustomHeader from "../Header";
 import LandingHeaderProfile from "../LandingHeaderProfile";
@@ -181,7 +175,7 @@ function LandingHeader() {
                 About Us
               </Button>
             </Link>
-            <Link href={PAGE_PATHS.SOLOPRENEUR}>
+            {/* <Link href={PAGE_PATHS.SOLOPRENEUR}>
               <Button
                 onClick={() =>
                   event({
@@ -196,7 +190,7 @@ function LandingHeader() {
               >
                 Become a Solopreneur
               </Button>
-            </Link>
+            </Link> */}
 
             <LandingHeaderProfile />
           </Grid>
