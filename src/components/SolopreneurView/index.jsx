@@ -12,15 +12,26 @@ import SolopreneurBanner from "../SoloprenuerBanner";
 function SolopreneurView({ content }) {
   const classes = styles();
   return (
-    <Grid  style={{ 
-      width:"100%",
-      left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    }}>
-      <LandingHeader />
-      <SolopreneurBanner content={content.home} />
+
+    <Grid>
+      <Grid className={classes.box}>
+        <Grid
+          style={{
+            position: "absolute",
+            width: "100%",
+          }}
+        >
+          <LandingHeader />
+        </Grid>
+        <Grid
+          style={{
+            paddingTop: "5%",
+            height: "fit-content",
+          }}
+        >
+          <SolopreneurBanner content={content.home} />
+        </Grid>
+      </Grid>
       <SolopreneurAdvantages content={content.banner} />
       <SolopreneurSuccess content={content.stories} />
       <SolopreneurLife content={content.life} />

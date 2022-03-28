@@ -4,6 +4,7 @@ export const styles = makeStyles((theme) => ({
   container: {
     height: "100%",
     [theme.breakpoints.down("sm")]: {
+      paddingTop: "4em",
       height: "fit-content",
     },
   },

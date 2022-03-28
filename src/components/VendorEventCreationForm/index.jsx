@@ -62,7 +62,10 @@ import OneOnOneDateSelector from "../OneOnOneDateSelector";
 import OneTimeDateSelector from "../OneTimeDateSelector";
 import PageTitle from "../PageTitle";
 import PostEventCreationDialog from "../PostEventCreationDialog";
-import { VendorEventBannerHeader } from "../VendorEventBannerHeader";
+import {
+  getRandomEventBanner,
+  VendorEventBannerHeader,
+} from "../VendorEventBannerHeader";
 import { EventCategoryField } from "./EventCategoryField";
 import { styles } from "./styles";
 
@@ -93,6 +96,7 @@ function getCreationFormInitialState(trialClass) {
     earlyBirdPrice: 0,
     earlyBirdDeadline: new Date(new Date().getHours() + 1),
     trialClass: trialClass === true ? true : false,
+    bannerImgUrl: getRandomEventBanner(),
   };
 }
 
@@ -479,20 +483,20 @@ function VendorEventCreationForm({
         <div
           style={{
             background: "url(/assets/create-event-transparent-bg.svg)",
-            padding: "0 8% 6% 8%",
+            // padding: "0 8% 6% 8%",
           }}
         >
-          <VendorEventBannerHeader />
+          <VendorEventBannerHeader isVendor={true} eventData={formik.values} />
         </div>
       </Grid>
 
       <Grid
         style={{
-          height: "80vh",
+          height: "100vh",
           width: "100%",
           background: "url(/assets/create-event-bg.svg)",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
+          // backgroundSize: "",
+          backgroundRepeat: "repeat",
         }}
       ></Grid>
 
