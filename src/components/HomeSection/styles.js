@@ -12,7 +12,7 @@ export const styles = makeStyles((theme) => ({
     },
   },
   textContainer: {
-    padding: "4em 4em 4em 4em",
+    padding: "10% 4em 4em 4em",
     width: "60%",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
@@ -115,18 +115,5 @@ export const styles = makeStyles((theme) => ({
   callMadeIcon: {
     paddingLeft: "0.25em",
     fontSize: "2em",
-  },
-  scroll: {
-    marginTop: "10em",
-    cursor: "pointer",
-    paddingLeft: "0",
-    [theme.breakpoints.down("sm")]: {
-      display: "none",
-    },
-  },
-  scrollIcon: {
-    display: "inline-block",
-    position: "relative",
-    top: "0.3em",
   },
 }));

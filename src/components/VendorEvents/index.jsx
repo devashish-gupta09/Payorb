@@ -152,7 +152,6 @@ function VendorEvents() {
               justifyContent: "flex-end",
               width: "100%",
               maxHeight: "2.5em",
-              border: "2px solid",
             }}
           >
             <Button

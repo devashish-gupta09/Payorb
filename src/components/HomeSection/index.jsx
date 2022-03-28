@@ -1,5 +1,4 @@
-import { Button, Grid, Typography } from "@material-ui/core";
-import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
+import { Grid, Typography } from "@material-ui/core";
 import CallMadeIcon from "@material-ui/icons/CallMade";
 import Link from "next/link";
 import React from "react";
@@ -41,20 +40,6 @@ function HomeSection({ content }) {
           </Link>
         </Grid>
         {/* Todo : Fix scroll */}
-        <Button
-          className={classes.scroll}
-          onClick={() =>
-            window.scrollBy({
-              top: window.innerHeight,
-              behavior: "smooth",
-            })
-          }
-        >
-          <Grid className={classes.scrollIcon}>
-            <ArrowDownwardIcon />
-          </Grid>
-          Scroll to Explore
-        </Button>
       </Grid>
       <Grid className={classes.imgContainer}>
         <img
