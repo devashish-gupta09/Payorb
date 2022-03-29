@@ -15,7 +15,7 @@ import {
 } from "@material-ui/core";
 import { Send, Info } from "@material-ui/icons";
 import React from "react";
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import { globalStyles } from "../../../styles/globalStyles";
 import { ALERT_TYPES } from "../../constants/alerts";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
@@ -23,6 +23,7 @@ import useFetchVendorCustomers from "../../hooks/useFetchCustomers";
 import useFetchEvents from "../../hooks/useFetchEvents";
 import { sendNotificationToCustomers } from "../../services/notification";
 import { getMonthDate } from "../../utils/dateTime";
+import { getEventDate,getEventMonth } from "../../utils/dateTime";
 import { isEventPastDate } from "../../utils/events";
 import ButtonCapsule from "../ButtonCapsule";
 import ConfirmationAlertDialog from "../ConfirmationAlertDialog";
@@ -30,27 +31,27 @@ import DashboardCard from "../DashboardCard";
 import Multiselect from "../Multiselect";
 import PageTitle from "../PageTitle";
 import SkeletonLoading from "../SkeletonLoading";
-
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 function createData(name, phoneNumber, email, date, events, eventList,priceList) {
   return {
     name,
     phoneNumber,
     email,
-    events: events.length
-      ? [
+    events: events.length ?
+          [ 
           ...new Set(
             events.map((e) =>e.name).filter((e) => eventList.includes(e))
           ),
-        ]
-      : "",
-    customerTLV: events.length
-    ? [
+        ] 
+      : ""   ,
+      price: events.length ?
+      [ 
         ...new Set(
           events.map((e) =>e.price).filter((e) => priceList.includes(e))
         ),
-      ]
-    : "",
+      ] 
+    : ""   ,
   };
 }
 
@@ -66,6 +67,31 @@ function VendorCustomers() {
   const [collapsed, setCollapsed] = React.useState(true);
   // const [sendBtnLoading, setSendBtnLoading] = React.useState(false);
   const { Alert, showAlert } = useAlertSnackbar();
+
+  const [tableContentCollapse, setTableContentsCollapse]=React.useState(true);
+
+  {/*const addItem = () => {
+    setTableContentsCollapse([
+      ...tableContentCollapse,
+      {
+        id: tableContentCollapse.length,
+        value: true,
+      }
+    ]);
+  };
+
+  const handleTableCollapse = (index,value) => {
+    setTableContentsCollapse(
+        tableContentCollapse.map((tableContent) =>
+            // Here you accept a id argument to the function and replace it with hard coded 🤪 2, to make it dynamic.
+            tableContent.id === index
+                ? { ...tableContentCollapse, value: value }
+                : { ...tableContentCollapse }
+        )
+    );
+};*/}
+
+
   // {const [formattedCustomers, setFormattedCustomers] = React.useState([]);
   // const { customers, loading } = useFetchVendorCustomers();
   // const { events, loading: eventLoading } = useFetchEvents(true, {
@@ -112,7 +138,7 @@ function VendorCustomers() {
         category: "business",
         address:"string;",
         description: "This will host new categories",
-        price: "200",
+        price: "300",
         mode: "online",
         photoUrl: "",
         totalTickets: "20",
@@ -169,7 +195,7 @@ function VendorCustomers() {
         category: "business",
         address:"string;",
         description: "This will host new categories",
-        price: "200",
+        price: "250",
         mode: "online",
         photoUrl: "",
         totalTickets: "20",
@@ -193,7 +219,7 @@ function VendorCustomers() {
         category: "business",
         address:"string;",
         description: "This will host new categories",
-        price: "200",
+        price: "500",
         mode: "online",
         photoUrl: "",
         totalTickets: "20",
@@ -222,7 +248,7 @@ const [eventLoading,loaded]=React.useState(false);
     category: "business",
     address:"string;",
     description: "This will host new categories",
-    price: "200",
+    price: "300",
     mode: "online",
     photoUrl: "",
     totalTickets: "20",
@@ -271,7 +297,7 @@ const [eventLoading,loaded]=React.useState(false);
     category: "business",
     address:"string;",
     description: "This will host new categories",
-    price: "200",
+    price: "250",
     mode: "online",
     photoUrl: "",
     totalTickets: "20",
@@ -295,7 +321,7 @@ const [eventLoading,loaded]=React.useState(false);
     category: "business",
     address:"string;",
     description: "This will host new categories",
-    price: "200",
+    price: "500",
     mode: "online",
     photoUrl: "",
     totalTickets: "20",
@@ -312,6 +338,7 @@ const [eventLoading,loaded]=React.useState(false);
   //Dummy data ends here
 
 
+  
   const handleEventTypeChange = (event) => {
     setSelectedValue(event.target.value);
   };
@@ -380,8 +407,8 @@ const [eventLoading,loaded]=React.useState(false);
 //   }}
 
   if (formattedCustomers && events) {
-    const eventList = events.map((e) => e.name);
-    const priceList = events.map((e) => e.price);
+    const eventList = events.map((e) =>e.name);
+    const priceList = events.map((e) =>e.price);
     console.log(eventList)
     const rows =
       selectedValueForFilter && selectedValueForFilter.length //if filter is present
@@ -399,7 +426,7 @@ const [eventLoading,loaded]=React.useState(false);
                 getMonthDate(customer.createdAt, customer.createdAt),
                 customer.events,
                 eventList,
-               priceList,
+                priceList,
                 selectedValueForFilter
               )
             )
@@ -443,34 +470,29 @@ const [eventLoading,loaded]=React.useState(false);
           />
         ) : null}
         <Grid
-          className={`${classes.title}`}
+          className={classes.title}
           container
           justify="space-between"
           alignItems="center"
         >
+          <Grid item xs={6}>
           <Typography
             variant={"h6"}
             className={`${globalClasses.boldSixHundred} ${classes.customersTitle}`}
           >
             Customers
           </Typography>
-        </Grid>
-        <Grid
-          className={`${classes.title}`}
-          container
-          justify="space-between"
-          alignItems="center"
-        >
+          </Grid>
+          <Grid item xs={6}>
           <div
             className={classes.collapseController}
             onClick={() => setCollapsed(!collapsed)}
           >
-            <Typography style={{fontSize:'0.9em', float:"right"}}>Filter by Events</Typography>
             {eventLoading ? (
               <CircularProgress />
             ) : (
               <Multiselect
-                className={classes.select}
+                className={classes.filterSelect}
                 events={events}
                 setSelected={handleFilterChange}
                 selected={selectedValueForFilter}
@@ -479,12 +501,18 @@ const [eventLoading,loaded]=React.useState(false);
                     ? events.filter(
                         (e) => e.link === selectedValueForFilter[0]
                       )[0]["name"]
-                    : selectedValueForFilter.length + " Selected"
+                    : <div style={{fontSize:"0.6em", padding:"0"}}><img src="/assets/vendorCustomers/filterIcon.svg"
+                     style={{width:"0.7em",marginTop:"0.35em", padding:"0"}} alt="filter-icon"/>Filter by Events</div>
                 }
               />
             )}
           </div>
-         {/* { <Grid className={classes.selectDesktopView}>
+          </Grid>
+        </Grid>
+       
+         
+          {/* {Promotions not included} */}
+          {/* {<Grid className={classes.selectDesktopView}>
             {eventLoading ? (
               <CircularProgress />
             ) : events && events.length ? (
@@ -534,7 +562,7 @@ const [eventLoading,loaded]=React.useState(false);
               </Grid>
             ) : null}
           </Grid>} */}
-        </Grid>
+        
         <DashboardCard>
           <TableContainer className={classes.container}>
             <Table stickyHeader aria-label="sticky table">
@@ -553,35 +581,78 @@ const [eventLoading,loaded]=React.useState(false);
               </TableHead>
               <TableBody>
                 {rows.map((row, index) => {
+                  console.log(tableContentCollapse)
+                 
                   return (
                     <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                       {columns.map((column) => {
                         const value = row[column.id];
-                        if(column.id=="events")
-                        {
-                          return(
-                            <TableCell key={column.id} align={column.align} className={classes.tableContents}>
-                            {value.map((val)=><p>{val}</p>)}
-                          </TableCell>
-                          )
-                        }
-                        else if(column.id=="customerTLV")
-                        {
-                          return(
-                            <TableCell key={column.id} align={column.align} className={classes.tableContents}>
-                            {value.map((val)=><p>₹{val}</p>)}
-                            <ArrowDropDownIcon/>
-                          </TableCell>
-                          )
-                        }
-                        else{
-                        return (
+                       
+                        if(column.id==="events")
+                          {
+                           console.log(value) 
+                            return(
+                              <TableCell key={column.id} align={column.align} className={classes.tableContents} style={{margin:0, padding:0}}>
+                                <Typography style={{fontWeight:"600", fontSize:"0.9em", padding:"0"}}>
+                                {tableContentCollapse? 
+                                value[0]
+                                 :
+                                value.map(val=>
+                                    <Grid>  
+                                    {val}
+                                    <Grid container justify={"space-evenly"} style={{marginTop:"-0.3em"}}>
+                                      <Grid item xs={6} container alignItems="center">
+                                        <img src="/assets/vendorCustomers/calendar.svg"></img>
+                                        <Typography style={{color:"#8B8B8B", fontSize:"0.6em", marginLeft:"0.1em"}}>
+                                          17 March 2002
+                                        </Typography>
+                                      </Grid>
+                                      <Grid item xs={6} container alignItems="center">
+                                        <AccessTimeIcon style={{color:"#8B8B8B", width:"0.6em"}} />
+                                        <Typography  style={{color:"#8B8B8B", fontSize:"0.6em"}}>
+                                          12:00 PM - 2:00 PM
+                                        </Typography>
+                                      </Grid>
+                                    </Grid>
+                                   </Grid>
+                                )}
+
+                                </Typography>
+                                </TableCell>
+                            )
+                          }
+                          else if(column.id==="price")
+                          {
+                            return(
+                              <TableCell key={column.id} align={column.align} className={classes.tableContents} style={{margin:0, padding:0}}>
+                                <Typography style={{fontWeight:"600", fontSize:"0.9em", padding:"0"}}>
+                                <Grid container justify={"space-between"}>
+                                  <Grid item xs={9}>
+                                  {tableContentCollapse? 
+                                    value[0] :
+                                    value.map(val=><p>{val}</p>)}
+                                    </Grid>
+                                  <Grid item xs={3}>
+                                    <ArrowDropDownIcon onClick={()=>
+                                     {tableContentCollapse? 
+                                      setTableContentsCollapse(false): 
+                                      setTableContentsCollapse(true)}
+                                    }/>
+                                  </Grid>
+                                </Grid>
+                                </Typography>
+                                </TableCell>
+                            )
+                          }
+                          else{
+                        return (                          
                           <TableCell key={column.id} align={column.align} className={classes.tableContents}>
                             {column.format && typeof value === "number"
                               ? column.format(value)
                               : value}
                           </TableCell>
-                        );}
+                        );
+                          }
                       })}
                     </TableRow>
                   );
@@ -590,7 +661,7 @@ const [eventLoading,loaded]=React.useState(false);
             </Table>
           </TableContainer>
         </DashboardCard>
-       {/* { <Grid className={classes.selectMobileView}>
+        <Grid className={classes.selectMobileView}>
           {eventLoading ? (
             <CircularProgress />
           ) : events && events.length ? (
@@ -639,7 +710,7 @@ const [eventLoading,loaded]=React.useState(false);
               ></ButtonCapsule>
             </Grid>
           ) : null}
-        </Grid>} */}
+        </Grid>
       </Grid>
     );
   }
@@ -650,7 +721,7 @@ const [eventLoading,loaded]=React.useState(false);
 const columns = [
   { id: "name"
   , label: "Customers"
-  , minWidth: 90 
+  , minWidth: 80 
   },
   // {
   //   id: "date",
@@ -661,14 +732,14 @@ const columns = [
   {
     id: "phoneNumber",
     label: "Contact",
-    minWidth: 90,
+    minWidth: 80,
     align: "center",
     color:"#767676",
   },
   {
     id: "email",
     label: "Email ID",
-    minWidth: 90,
+    minWidth: 80,
     align: "center",
     color:"#767676",
   },
@@ -676,11 +747,11 @@ const columns = [
     id: "events",
     label: "Event Details",
     minWidth: 180,
-    align: "center",
+    align: "left",
     color:"#767676",
   },
   {
-    id:"customerTLV",
+    id:"price",
     label:"Customer TLV",
     minWidth:60,
     align:"center",
@@ -690,30 +761,26 @@ const columns = [
 
 const styles = makeStyles((theme) => ({
   root: {
-    width: "96%",
-    paddingTop: "1em",
-    [theme.breakpoints.down("sm")]: {
-      width: "100%",
-    },
+    width: "100%",
+   
   },
   container: {
     border:"1px solid #DCDCDC",
+    margin:"0",
+    padding:"0",
     [theme.breakpoints.down("sm")]: {
       height: "45vh",
     },
   },
   title: {
     fontSize: "1.2em",
-    paddingBottom: "0.5em",
   },
   selectMobileView: {
-
     [theme.breakpoints.up("sm")]: {
       display: "none",
     },
   },
   selectDesktopView: {
-    fontSize:"0.9em",
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
@@ -754,11 +821,25 @@ const styles = makeStyles((theme) => ({
     marginLeft:"2em",
   },
   tableContents:{
-    fontWeight:"500",
-    fontSize:"0.7em",
-    marginTop:"-0.2em",
-    marginBottom:"-0.2em",
-  }
+    fontWeight:"600",
+    fontSize:"0.8em",
+  },
+  filterSelect:{
+    width:"8em",
+    height:"2em",
+    float:"right",
+    position:"relative",
+    fontSize:"0.8em",
+    padding:"0.2em",
+  },
+  dateAndTime: {
+    // height: "100%",
+    color: "#68FDF3",
+    background: "rgba(0,0,0,0.5)",
+    padding: "0.25em 0.5em",
+    position: "absolute",
+    bottom: 0,
+  },
 }));
 
 export default VendorCustomers;

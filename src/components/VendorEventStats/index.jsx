@@ -44,6 +44,7 @@ const styles = makeStyles((theme) => ({
   tableStyle:{
     backgroundColor:"#EFF0F6",
     color:"#767676",
+    fontSize:"0.8em"
   },
   ul: {
     listStyle: 'none',
@@ -77,7 +78,7 @@ const styles = makeStyles((theme) => ({
   checkbox:{
     position:"relative",
     marginTop:"0.8em",
-    fontSize:"0.9em",
+    fontSize:"0.8em",
   }
 }));
 
@@ -189,7 +190,7 @@ function VendorEventsStats() {
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ minWidth: column.minWidth, backgroundColor:"#EFF0F6",  color:"#767676", fontWeight:"500", }}
+                      style={{ minWidth: column.minWidth, backgroundColor:"#EFF0F6", fontSize:"0.9em", color:"#767676", fontWeight:"500", }}
                     >
                       {column.label}
                     </TableCell>
