@@ -57,16 +57,15 @@ function VendorRevenueUserAggSec() {
 
         <Grid
           item
-          sm={8}
+          sm={12}
           xs={12}
           container
-          spacing={matches ? 1 : 3}
           className={classes.fix}
         >
           <Grid
             item
-            xs={12}
-            sm={5}
+            xs={5}
+            sm={3}
             className={`${classes.box} ${classes.leftTopContainer}`}
           >
             <ValueCard
@@ -78,8 +77,8 @@ function VendorRevenueUserAggSec() {
           </Grid>
           <Grid
             item
-            xs={12}
-            sm={5}
+            xs={5}
+            sm={3}
             className={`${classes.box} ${classes.rightTopContainer}`}
           >
             <ValueCard
@@ -91,8 +90,8 @@ function VendorRevenueUserAggSec() {
           </Grid>
           <Grid
             item
-            xs={12}
-            sm={5}
+            xs={5}
+            sm={3}
             className={`${classes.box} ${classes.leftBottomContainer}`}
           >
             <ValueCard
@@ -106,8 +105,8 @@ function VendorRevenueUserAggSec() {
           </Grid>
           <Grid
             item
-            xs={12}
-            sm={5}
+            xs={5}
+            sm={3}
             className={`${classes.box} ${classes.rightBottomContainer}`}
           >
             <ValueCard
@@ -134,6 +133,8 @@ const styles = makeStyles((theme) => ({
   title: {
     fontSize: "1.2em",
     paddingBottom: "1em",
+    marginLeft:"3.5em",
+
   },
   fix: {
     // padding: "0.5em",
@@ -142,7 +143,8 @@ const styles = makeStyles((theme) => ({
   box: {
     boxShadow: " 0px 0px 10px rgba(0, 0, 0, 0.1)",
     borderRadius: "0.4em",
-    margin: "0.4em",
+    marginTop: "0.4em",
+    margin:"0.2em",
   },
   leftTopContainer: {
     borderTop: "0.3em solid #465DD6",
