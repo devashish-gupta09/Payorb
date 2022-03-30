@@ -47,20 +47,20 @@ function VendorRevenueUserAggSec() {
 
   if (stats) {
     return (
-      <Grid style={{ width: "100%" }}>
+      <Grid className={classes.outerContainer}>
         <Typography
           variant={"h6"}
           className={`${classes.dashboard} ${classes.title}`}
         >
           Dashboard
         </Typography>
-        <Grid container justify={"space-between"} className={classes.outerFix}>
+       
         <Grid
-          item
           sm={12}
           xs={12}
           container
           className={classes.fix}
+
         >
           <Grid
             item
@@ -120,7 +120,6 @@ function VendorRevenueUserAggSec() {
           </Grid>
         </Grid>
         </Grid>
-      </Grid>
     );
   }
 
@@ -131,34 +130,35 @@ const styles = makeStyles((theme) => ({
   root: {
     width: "fit-content",
   },
+  outerContainer:{
+    position:"relative",
+    marginLeft:"4em",
+    [theme.breakpoints.down("sm")]:{
+      position:"static",
+      marginLeft:"0",
+    }
+    },
   title: {
     fontWeight:"600",
     fontSize: "1.2em",
     paddingBottom: "1em",
-    marginLeft:"3.5em",
     [theme.breakpoints.down("sm")]:{
-      marginLeft:"1.2em",
+      marginLeft:"1em",
       marginTop:"5em",
     }
   },
   fix: {
-    // padding: "0.5em",
-    justifyContent: "flex-start",
+    justifyContent:'flex-start',
     [theme.breakpoints.down("sm")]:{
-      justifyContent:'center',
+      justifyContent:"center",
     }
-  },
-  outerFix:{
-     marginLeft:"3.5",
-     [theme.breakpoints.down("sm")]:{
-       marginLeft:"0",
-     }
   },
   box: {
     boxShadow: " 0px 0px 10px rgba(0, 0, 0, 0.1)",
     borderRadius: "0.4em",
     marginTop: "0.4em",
-    margin:"0.2em",
+    margin:"0.4em",
+ 
   },
   leftTopContainer: {
     borderTop: "0.3em solid #465DD6",
@@ -169,7 +169,7 @@ const styles = makeStyles((theme) => ({
   rightTopContainer: {
     borderTop: "0.3em solid #FFB648",
     [theme.breakpoints.down("sm")]: {
-      paddingLeft: "0.5em",
+      paddingRight: "0.5em",
     },
   },
   leftBottomContainer: {

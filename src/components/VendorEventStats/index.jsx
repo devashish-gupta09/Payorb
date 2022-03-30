@@ -26,7 +26,6 @@ import SkeletonLoading from "../SkeletonLoading";
 const styles = makeStyles((theme) => ({
   root: {
     width: "96%",
-    paddingTop: "1.5em",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
@@ -139,7 +138,7 @@ function VendorEventsStats() {
     }
     changeLimit(event.target.value + 1);
   };
-  
+
   const [checked, setChecked] = React.useState(true);
   const handleCheckboxChange = (event) => {
     setChecked(event.target.checked);

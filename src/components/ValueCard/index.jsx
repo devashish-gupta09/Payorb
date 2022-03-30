@@ -8,8 +8,8 @@ function ValueCard({ title, subTitle, photo, bottomText }) {
   const classes = styles();
   return (
     <DashboardCard rootClass={classes.container}>
-      <Grid container spacing={"2"}>
-        <Grid item xs={4}>
+      <Grid container spacing={"4"}>
+        <Grid item xs={4} className={classes.spacing}>
           <img src={photo} className={classes.img}/>
         </Grid>
         <Grid item xs={8}>
@@ -24,21 +24,27 @@ function ValueCard({ title, subTitle, photo, bottomText }) {
 
 const styles = makeStyles((theme) => ({
   container: {
-    padding: "1.5em 1em",
+    padding: "1.5em 0.5em",
     height: "100%",
     [theme.breakpoints.down("sm")]: {
       padding: "1em",
     },
   },
+  spacing:{
+    paddingRight:"1em",
+    [theme.breakpoints.down("sm")]: {
+      paddingRight:"0",
+    },
+  },
   title: {
-    fontSize: "1.4em",
+    fontSize: "1.2em",
     fontWeight: 500,
     [theme.breakpoints.down("sm")]: {
       fontSize: "1em",
     },
   },
   subTitle: {
-    fontSize: "1em",
+    fontSize: "0.8em",
     [theme.breakpoints.down("sm")]: {
       paddingTop: "0.3em",
       fontSize: "0.75em",
@@ -55,10 +61,11 @@ const styles = makeStyles((theme) => ({
     },
   },
   img:{
+    width:"110%",
     [theme.breakpoints.down("sm")]: {
-      width:"80%",
+      width:"100%",
       justifySelf:"left",
-      alignSelf:"center",
+      alignItems:"center",
     },
   }
 }));
