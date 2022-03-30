@@ -70,8 +70,6 @@ function VendorCustomers() {
 
   const [tableContentCollapse, setTableContentsCollapse]=React.useState([]);
 
-
-
 // {  React.useEffect(()=>{
 //     console.log(rows)
 //     rows.map((index)=>
@@ -331,6 +329,7 @@ const [eventLoading,loaded]=React.useState(false);
   //Dummy data ends here
 
   const handleTableCollapse=(index,value)=>{
+    console.log(value);
     setTableContentsCollapse(
             tableContentCollapse.map((tableContent,id) =>
                 // Here you accept a id argument to the function and replace it with hard coded 🤪 2, to make it dynamic.
@@ -457,12 +456,15 @@ const [eventLoading,loaded]=React.useState(false);
     }
 
     React.useEffect(()=>{ 
-        setTableContentsCollapse([
+      rows.map((item,index)=>{
+        setTableContentsCollapse(tableContentCollapse=>[
           ...tableContentCollapse, true,
         ])
-      },[rows.length]);
+      })  
+      },[]);
     
     return (
+      
       <Grid className={classes.root}>
         <PageTitle title="Payorb | Customers" />
       {/* {  {Alert()}
@@ -594,7 +596,6 @@ const [eventLoading,loaded]=React.useState(false);
                         const value = row[column.id];
                         if(column.id==="events")
                           {
-                           
                             return(
                               <TableCell key={column.id} align={column.align} className={classes.tableContents} style={{margin:0, padding:0}}>
                                 <Typography style={{fontWeight:"600", fontSize:"0.9em", padding:"0"}}>
