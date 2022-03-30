@@ -50,11 +50,11 @@ function VendorRevenueUserAggSec() {
       <Grid style={{ width: "100%" }}>
         <Typography
           variant={"h6"}
-          className={`${globalClasses.boldSixHundred} ${classes.title}`}
+          className={`${classes.dashboard} ${classes.title}`}
         >
           Dashboard
         </Typography>
-
+        <Grid container justify={"space-between"} className={classes.outerFix}>
         <Grid
           item
           sm={12}
@@ -64,7 +64,7 @@ function VendorRevenueUserAggSec() {
         >
           <Grid
             item
-            xs={5}
+            xs={10}
             sm={3}
             className={`${classes.box} ${classes.leftTopContainer}`}
           >
@@ -77,7 +77,7 @@ function VendorRevenueUserAggSec() {
           </Grid>
           <Grid
             item
-            xs={5}
+            xs={10}
             sm={3}
             className={`${classes.box} ${classes.rightTopContainer}`}
           >
@@ -90,7 +90,7 @@ function VendorRevenueUserAggSec() {
           </Grid>
           <Grid
             item
-            xs={5}
+            xs={10}
             sm={3}
             className={`${classes.box} ${classes.leftBottomContainer}`}
           >
@@ -105,7 +105,7 @@ function VendorRevenueUserAggSec() {
           </Grid>
           <Grid
             item
-            xs={5}
+            xs={10}
             sm={3}
             className={`${classes.box} ${classes.rightBottomContainer}`}
           >
@@ -119,6 +119,7 @@ function VendorRevenueUserAggSec() {
             />
           </Grid>
         </Grid>
+        </Grid>
       </Grid>
     );
   }
@@ -131,14 +132,27 @@ const styles = makeStyles((theme) => ({
     width: "fit-content",
   },
   title: {
+    fontWeight:"600",
     fontSize: "1.2em",
     paddingBottom: "1em",
     marginLeft:"3.5em",
-
+    [theme.breakpoints.down("sm")]:{
+      marginLeft:"1.2em",
+      marginTop:"5em",
+    }
   },
   fix: {
     // padding: "0.5em",
-    justifyContent: "center",
+    justifyContent: "flex-start",
+    [theme.breakpoints.down("sm")]:{
+      justifyContent:'center',
+    }
+  },
+  outerFix:{
+     marginLeft:"3.5",
+     [theme.breakpoints.down("sm")]:{
+       marginLeft:"0",
+     }
   },
   box: {
     boxShadow: " 0px 0px 10px rgba(0, 0, 0, 0.1)",

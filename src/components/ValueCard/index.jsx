@@ -8,7 +8,7 @@ function ValueCard({ title, subTitle, photo, bottomText }) {
   const classes = styles();
   return (
     <DashboardCard rootClass={classes.container}>
-      <Grid container>
+      <Grid container spacing={"2"}>
         <Grid item xs={4}>
           <img src={photo} className={classes.img}/>
         </Grid>

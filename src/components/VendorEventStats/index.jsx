@@ -139,11 +139,15 @@ function VendorEventsStats() {
     }
     changeLimit(event.target.value + 1);
   };
+  
   const [checked, setChecked] = React.useState(true);
   const handleCheckboxChange = (event) => {
     setChecked(event.target.checked);
   };
 
+  const handleAllCheckboxChange=(event)=>{
+    setChecked(true);
+  }
 
   if (loading) {
     return (
@@ -169,12 +173,12 @@ function VendorEventsStats() {
   const pageCount=Math.ceil(rows.length/5);
     return (
       <Grid className={classes.root}>
-        <Typography
+        {/* {<Typography
           variant={"h6"}
           className={`${globalClasses.boldSixHundred} ${classes.title}`}
         >
           Events
-        </Typography>
+        </Typography>} */}
         <DashboardCard>
           <TableContainer className={classes.container}>
             <Table stickyHeader aria-label="sticky table">
@@ -182,7 +186,7 @@ function VendorEventsStats() {
                 <TableRow className={classes.tableStyle} >
                 <Checkbox
                         color="primary"
-                        onChange={handleCheckboxChange}
+                        onChange={handleAllCheckboxChange}
                         size="small"
                         className={classes.checkbox}
                       />
@@ -190,7 +194,7 @@ function VendorEventsStats() {
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ minWidth: column.minWidth, backgroundColor:"#EFF0F6", fontSize:"0.9em", color:"#767676", fontWeight:"500", }}
+                      style={{ minWidth: column.minWidth, backgroundColor:"#EFF0F6", fontSize:"1em", color:"#767676", fontWeight:"500", }}
                     >
                       {column.label}
                     </TableCell>

@@ -68,28 +68,21 @@ function VendorCustomers() {
   // const [sendBtnLoading, setSendBtnLoading] = React.useState(false);
   const { Alert, showAlert } = useAlertSnackbar();
 
-  const [tableContentCollapse, setTableContentsCollapse]=React.useState(true);
+  const [tableContentCollapse, setTableContentsCollapse]=React.useState([]);
 
-  {/*const addItem = () => {
-    setTableContentsCollapse([
-      ...tableContentCollapse,
-      {
-        id: tableContentCollapse.length,
-        value: true,
-      }
-    ]);
-  };
 
-  const handleTableCollapse = (index,value) => {
-    setTableContentsCollapse(
-        tableContentCollapse.map((tableContent) =>
-            // Here you accept a id argument to the function and replace it with hard coded 🤪 2, to make it dynamic.
-            tableContent.id === index
-                ? { ...tableContentCollapse, value: value }
-                : { ...tableContentCollapse }
-        )
-    );
-};*/}
+
+// {  React.useEffect(()=>{
+//     console.log(rows)
+//     rows.map((index)=>
+//     setTableContentsCollapse([
+//     ...tableContentCollapse,
+//     {
+//       id: rows[index],
+//       value: true,
+//     }
+//     ]) )   
+//   },[]);
 
 
   // {const [formattedCustomers, setFormattedCustomers] = React.useState([]);
@@ -337,7 +330,16 @@ const [eventLoading,loaded]=React.useState(false);
   }],)
   //Dummy data ends here
 
-
+  const handleTableCollapse=(index,value)=>{
+    setTableContentsCollapse(
+            tableContentCollapse.map((tableContent,id) =>
+                // Here you accept a id argument to the function and replace it with hard coded 🤪 2, to make it dynamic.
+                    id === index
+                    ? value
+                    : tableContent
+            )
+        );
+  }
   
   const handleEventTypeChange = (event) => {
     setSelectedValue(event.target.value);
@@ -409,7 +411,6 @@ const [eventLoading,loaded]=React.useState(false);
   if (formattedCustomers && events) {
     const eventList = events.map((e) =>e.name);
     const priceList = events.map((e) =>e.price);
-    console.log(eventList)
     const rows =
       selectedValueForFilter && selectedValueForFilter.length //if filter is present
         ? formattedCustomers
@@ -455,10 +456,16 @@ const [eventLoading,loaded]=React.useState(false);
       );
     }
 
+    React.useEffect(()=>{ 
+        setTableContentsCollapse([
+          ...tableContentCollapse, true,
+        ])
+      },[rows.length]);
+    
     return (
       <Grid className={classes.root}>
         <PageTitle title="Payorb | Customers" />
-        {Alert()}
+      {/* {  {Alert()}
         {confirmationDialogOpen ? (
           <ConfirmationAlertDialog
             open={confirmationDialogOpen}
@@ -468,14 +475,14 @@ const [eventLoading,loaded]=React.useState(false);
               "Are you sure you wish to send promotional email to all customers? If not, please filter relevant customers based on past events."
             }
           />
-        ) : null}
+        ) : null}} */}
         <Grid
-          className={classes.title}
           container
-          justify="space-between"
-          alignItems="center"
+          justify={"space-between"}
+          justifyContent={"center"}
+          className={classes.titleContainer}
         >
-          <Grid item xs={6}>
+          <Grid item xs={6} sm={6}>
           <Typography
             variant={"h6"}
             className={`${globalClasses.boldSixHundred} ${classes.customersTitle}`}
@@ -483,11 +490,11 @@ const [eventLoading,loaded]=React.useState(false);
             Customers
           </Typography>
           </Grid>
-          <Grid item xs={6}>
-          <div
+          <Grid item xs={6} sm={6} >
+          {/* {<div
             className={classes.collapseController}
             onClick={() => setCollapsed(!collapsed)}
-          >
+          >} */}
             {eventLoading ? (
               <CircularProgress />
             ) : (
@@ -502,11 +509,11 @@ const [eventLoading,loaded]=React.useState(false);
                         (e) => e.link === selectedValueForFilter[0]
                       )[0]["name"]
                     : <div style={{fontSize:"0.6em", padding:"0"}}><img src="/assets/vendorCustomers/filterIcon.svg"
-                     style={{width:"0.7em",marginTop:"0.35em", padding:"0"}} alt="filter-icon"/>Filter by Events</div>
+                     style={{width:"0.7em",marginTop:"0.35em", padding:"0", marginRight:"0.5em"}} alt="filter-icon"/>Filter by Events</div>
                 }
               />
             )}
-          </div>
+         {/* { </div>} */}
           </Grid>
         </Grid>
        
@@ -580,21 +587,18 @@ const [eventLoading,loaded]=React.useState(false);
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row, index) => {
-                  console.log(tableContentCollapse)
-                 
+                {rows.map((row, index) => {                  
                   return (
                     <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                       {columns.map((column) => {
                         const value = row[column.id];
-                       
                         if(column.id==="events")
                           {
-                           console.log(value) 
+                           
                             return(
                               <TableCell key={column.id} align={column.align} className={classes.tableContents} style={{margin:0, padding:0}}>
                                 <Typography style={{fontWeight:"600", fontSize:"0.9em", padding:"0"}}>
-                                {tableContentCollapse? 
+                                {tableContentCollapse[index]? 
                                 value[0]
                                  :
                                 value.map(val=>
@@ -628,15 +632,16 @@ const [eventLoading,loaded]=React.useState(false);
                                 <Typography style={{fontWeight:"600", fontSize:"0.9em", padding:"0"}}>
                                 <Grid container justify={"space-between"}>
                                   <Grid item xs={9}>
-                                  {tableContentCollapse? 
-                                    value[0] :
-                                    value.map(val=><p>{val}</p>)}
+                                 
+                                  {tableContentCollapse[index]? 
+                                    <p> ₹{value[0]}</p> :
+                                    value.map(val=><p> ₹{val}</p>)}
                                     </Grid>
                                   <Grid item xs={3}>
                                     <ArrowDropDownIcon onClick={()=>
-                                     {tableContentCollapse? 
-                                      setTableContentsCollapse(false): 
-                                      setTableContentsCollapse(true)}
+                                     {tableContentCollapse[index]? 
+                                      handleTableCollapse(index,false): 
+                                      handleTableCollapse(index,true)}
                                     }/>
                                   </Grid>
                                 </Grid>
@@ -661,7 +666,7 @@ const [eventLoading,loaded]=React.useState(false);
             </Table>
           </TableContainer>
         </DashboardCard>
-        <Grid className={classes.selectMobileView}>
+        {/* {<Grid className={classes.selectMobileView}>
           {eventLoading ? (
             <CircularProgress />
           ) : events && events.length ? (
@@ -710,7 +715,7 @@ const [eventLoading,loaded]=React.useState(false);
               ></ButtonCapsule>
             </Grid>
           ) : null}
-        </Grid>
+        </Grid>} */}
       </Grid>
     );
   }
@@ -749,6 +754,7 @@ const columns = [
     minWidth: 180,
     align: "left",
     color:"#767676",
+    padding:"0.5em",
   },
   {
     id:"price",
@@ -762,36 +768,18 @@ const columns = [
 const styles = makeStyles((theme) => ({
   root: {
     width: "100%",
-   
   },
   container: {
     border:"1px solid #DCDCDC",
-    margin:"0",
+    marginTop:"-3.5em",
     padding:"0",
     [theme.breakpoints.down("sm")]: {
       height: "45vh",
+      marginTop:"1em",
     },
   },
-  title: {
-    fontSize: "1.2em",
-  },
-  selectMobileView: {
-    [theme.breakpoints.up("sm")]: {
-      display: "none",
-    },
-  },
-  selectDesktopView: {
-    [theme.breakpoints.down("sm")]: {
-      display: "none",
-    },
-  },
-  chips: {
-    margin: "0px 5px 5px 0",
-  },
-  collapseController: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "start",
+  titleContainer:{
+    justifyContent:"space-between",
   },
   collapseArrowDown: {
     transition: `transform .8s ease`,
@@ -818,22 +806,13 @@ const styles = makeStyles((theme) => ({
   customersTitle:{
     marginTop:"-1em",
     fontSize:"1em",
-    marginLeft:"2em",
+    marginLeft:"3.9em",
   },
   tableContents:{
     fontWeight:"600",
     fontSize:"0.8em",
-  },
-  filterSelect:{
-    width:"8em",
-    height:"2em",
-    float:"right",
-    position:"relative",
-    fontSize:"0.8em",
-    padding:"0.2em",
-  },
+  }, 
   dateAndTime: {
-    // height: "100%",
     color: "#68FDF3",
     background: "rgba(0,0,0,0.5)",
     padding: "0.25em 0.5em",

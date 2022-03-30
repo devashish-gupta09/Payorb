@@ -21,7 +21,7 @@ const Multiselect = ({ selected, events, setSelected, label }) => {
         onChange={null}
         value={null}
         error={null}
-        style={{ margin: "0.1em 0.1em", padding:"0" }}
+        style={{ margin:"0em 0 0.2em 0", padding:"0" }}
         onClick={() => setShow(true)}
         InputProps={{
           style: {
@@ -40,12 +40,11 @@ const Multiselect = ({ selected, events, setSelected, label }) => {
         <div
           style={{
             position: "absolute",
-            width: "8em",
-            height: "6em",
+            width: "10em",
+            height: "8em",
             zIndex: "50",
             backgroundColor: "#ffffff",
             boxShadow: "0px 0px 4px 1px grey",
-            padding: "0.2em 0em 0.2em 0em",
             borderRadius: "0.4em",
           }}
           className="multiselect"
@@ -54,7 +53,7 @@ const Multiselect = ({ selected, events, setSelected, label }) => {
             style={{
               display: "flex",
               justifyContent: "flex-end",
-              padding: "0em 0.2em 0em 0.2em",
+              padding: "0em 0.4em 0em 0.4em",
             }}
           >
             <small
@@ -83,16 +82,16 @@ const Multiselect = ({ selected, events, setSelected, label }) => {
                       cursor: "pointer",
                       display: "flex",
                       justifyContent: "flex-start",
-                      padding: "0em 0.2em 0em 0.2em",
+                      padding: "0em 0.4em 0em 0.4em",
                       fontWeight: selected.includes(d.link) ? "600" : "normal",
                       backgroundColor: selected.includes(d.link)
                         ? "rgba(189,245,242, 0.4)"
                         : "white",
-                      fontSize:"0.5em",
+                      fontSize:"0.7em",
                     }}
                     onClick={() => setSelected(d.link)}
                   >
-                    <p style={{ margin: "0.2em 0px",fontSize:"0.5em" }}>
+                    <p style={{ margin: "0.2em 0px",fontSize:"0.7em" }}>
                       {/* {d.name.length < 10 || d.name.includes(" ")
                       ? d.name
                       : d.name.slice(0, 10) + "  ..."} */}
@@ -112,7 +111,7 @@ export default Multiselect;
 
 const styles = makeStyles((theme) => ({
   textInput: {
-    padding:"0",
+    padding:"-0.3em",
     color: "#BDBDBD",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
