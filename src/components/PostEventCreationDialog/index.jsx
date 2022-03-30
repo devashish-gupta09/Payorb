@@ -45,7 +45,6 @@ function PostEventCreationDialog(props) {
   const { Alert, showAlert } = useAlertSnackbar();
 
   const handleCopy = () => {
-    // can use window.location.host -> If we need port number as well.
     showAlert("Link copied");
     copy(`${location.host}${eventLink}`);
   };
