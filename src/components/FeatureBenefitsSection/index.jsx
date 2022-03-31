@@ -25,8 +25,13 @@ function FeatureBenefitsSection({ content }) {
         alignItems="center"
         justifyContent="center"
       >
-        <Typography className={classes.mainTitle}>{content.title}</Typography>
-        <Grid className={classes.coloredLine}></Grid>
+        <Grid className={classes.titleContainer}>
+          <Typography className={classes.mainTitle}>{content.title}</Typography>
+          {/* <Grid className={classes.coloredLine}></Grid> */}
+          <p className={classes.descriptionSubTitle}>
+            Take the smartest first step as a Solopreneur.
+          </p>
+        </Grid>
       </Grid>
       <Grid
         container
@@ -42,10 +47,34 @@ function FeatureBenefitsSection({ content }) {
             fontWeight: "500",
           }}
         >
-          <p>{content.contentSection1}</p>
-          <p>{content.contentSection2}</p>
-          <p>{content.contentSection3}</p>
-          <p>{content.contentSection4}</p>
+          <p>
+            <b>Simplicity is an underrated Superpower!</b>
+          </p>
+          <p>
+            Taking your business online with PayOrb takes less than 5 minutes!
+            Access all of your operations and essential tools on the go with our
+            easy to use, mobile and desktop friendly platform.{" "}
+          </p>
+          <p>
+            <b>
+              Our Free Trial class feature is the ultimate growth hack for new
+              businesses.
+            </b>
+          </p>
+          <p>
+            We understand that client acquisition can be a challenge for new
+            solopreneurs. This power packed feature takes your business from 0
+            to 1. Evolve your services as you grow.
+          </p>
+          <p>
+            <b>Promote your services, with just one click.</b>
+          </p>
+          <p>
+            Tired of spending hours reaching out to people over calls & messages
+            to promote your services? Our promotional dashboard is just the
+            timesaver you need. With Payorb, send out promote your services to
+            hundreds of prospective clients, with just one click.{" "}
+          </p>
         </Typography>
       </Grid>
     </Grid>

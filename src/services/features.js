@@ -15,11 +15,10 @@ export const getHomeContent = async () => {
   // } catch (err) {
   //   console.error(err.message);
   return {
-    titleSection1: "Up your multitasking game as a",
-    titleSection2: "SOLOPRENEUR!",
+    titleSection1: "Ace Solopreneurship the ",
+    titleSection2: "PAYORB Way!",
     titleSection3: "",
-    description:
-      "With your personal virtual online workspace, accessible anytime, anywhere.👋",
+    description: "The smartest online workspace for Solopreneurs like you!",
     urls: [],
   };
   // }
@@ -53,41 +52,39 @@ export const getFeaturesContent = async () => {
       "Our platform helps you transition into the freelance ecosystem at a faster pace by taking care of all basic operational barriers to starting something new: Online presence, bookings, payment, CRM all at one space.",
     features: [
       {
-        title: "Online Presence",
-        description:
-          "Dynamically architect real-time web services for installed base systems",
+        title: "Simplified Workspace for Solopreneurs",
+        description: "Setting up your business online has never been easier!",
         image: "/assets/features/onlinePresence.svg",
       },
 
       {
         title: "Unlimited service listings",
         description:
-          "Dynamically architect real-time web services for installed base systems",
+          "Create unlimited listings of group events or one-on-one appointments. ",
         image: "/assets/features/UnlimitedServiceListing.svg",
       },
       {
-        title: "Bookings & Payments",
+        title: "Easy Bookings & Payments",
         description:
-          "Dynamically architect real-time web services for installed base systems",
-
+          "One-click bookings for your clients & instant payouts for you!",
         image: "/assets/features/Bookings&Payments.svg",
       },
       {
-        title: "Verified Reviews",
+        title: "Automated Verified Reviews",
         description:
-          "Dynamically architect real-time web services for installed base systems",
+          "Our automated review tool captures reviews from all your customers, and helps build your credentials.",
         image: "/assets/features/VerifiedReview.svg",
       },
       {
         title: "Business Dashboards",
         description:
-          "Dynamically architect real-time web services for installed base systems",
+          "Realtime updates & analytics of your business, all at one place. The real power-tool to keep it running smoothly.",
         image: "/assets/features/BusinessDashboard.svg",
       },
       {
         title: "One Click Promotions",
         description:
-          "Dynamically architect real-time web services for installed base systems",
+          "Integrated automations to promote your offerings to hundreds of prospective customers, with just one click!",
         image: "/assets/features/OneClickPromotions.svg",
       },
     ],

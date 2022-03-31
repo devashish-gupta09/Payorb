@@ -35,11 +35,11 @@ function PricingSection({ content }) {
         <Box className={classes.planContainer}>
           <Box className={classes.head}>
             <Box className={classes.title}>
-              <Typography variant="h5" className={classes.heading1}>
+              {/* <Typography variant="h5" className={classes.heading1}>
                 Start now your
-              </Typography>
+              </Typography> */}
               <Typography variant="h5" className={classes.heading2}>
-                free plan now!
+                Sign up for Free Today!
               </Typography>
             </Box>
             <Box className={classes.contact}>

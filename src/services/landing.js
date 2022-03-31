@@ -15,11 +15,10 @@ export const getHomeContent = async () => {
   // } catch (err) {
   //   console.error(err.message);
   return {
-    titleSection1: "Up your multitasking game as a",
-    titleSection2: "SOLOPRENEUR!",
+    titleSection1: "Let your passion lead you to",
+    titleSection2: " new opportunities.",
     titleSection3: "",
-    description:
-      "With your personal virtual online workspace, accessible anytime, anywhere.👋",
+    description: "The smartest first step for the Solopreneur in you.",
     urls: [],
   };
   // }
@@ -27,25 +26,27 @@ export const getHomeContent = async () => {
 
 export const getHowItWorksContent = async () => {
   return {
-    title: "How it works?",
+    title: "How to get started with PayOrb?",
     image: "/assets/howItWorks/video-bg.svg",
     works: [
       {
         title: "Create your profile",
         description:
-          "Input material at the beginning of farming cycle is the most important aspect that determines the quality.",
+          "Fill in your basic details, link your socials.\n" +
+          "Take your business online in less than 5 minutes.\n" +
+          "Your profile is now ready to take you places!",
         image: "/assets/howItWorks/create-profile.svg",
       },
       {
         title: "List your Services",
         description:
-          "Input material at the beginning of farming cycle is the most important aspect that determines the quality.",
+          "You have a service to offer? Here’s where you introduce it to the rest of the world. One on one appointments or group events, as many as you want.",
         image: "/assets/howItWorks/services.svg",
       },
       {
         title: "Bookings & Payments",
         description:
-          "Dynamically architect real-time web services for installed base systems.",
+          "Bookings, payments, reviews, CRM, and more. One workspace for all your operational needs.",
         image: "/assets/howItWorks/booking-payment.svg",
       },
     ],
@@ -54,34 +55,51 @@ export const getHowItWorksContent = async () => {
 
 export const getWhyChooseUsContent = async () => {
   return {
-    title: "Why choose PayOrb?",
+    title: "Why Solopreneurs choose PayOrb?",
     subtitle:
-      "The desire for having a more flexible and fulfilling career path has led to Freelancing & solo entrepreneurship supplementing and complementing existing 9-5 worklife.",
+      "Foolproof growth hacks for Solopreneurs: Delegate & Automate. You focus on what you do best, and let us handle the rest.",
+    testimonies: [
+      {
+        name: "Gina",
+        content:
+          "“Thank you PayOrb for making my life so much easier. It is so easy to use, and it saves me so much time. My students also love PayOrb”",
+        img: "/assets/whyChooseUs/gina.png",
+      },
+      {
+        name: "Ahona",
+        content:
+          "“The easiest way to take your solo business online! The best thing about PayOrb is its simplicity. You can create your online presence in just 2 minutes, no technological expertise required.”",
+        img: "/assets/whyChooseUs/ahona.png",
+      },
+      {
+        name: "Sakshi",
+        content:
+          "“PayOrb gave the professional touch to my online classes booking, and my students liked the experience. I can manage & utilise all my customer database very easily”",
+        img: "/assets/whyChooseUs/sakshi.png",
+      },
+    ],
   };
 };
 
 export const getPricingContent = async () => {
   return {
-    title: "Our Pricing",
+    title: "Platform pricing",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
     img: "/assets/pricing/pricing-img.svg",
     plans: [
       {
+        feature: "Free Sign-up",
+      },
+      {
+        feature: "No Monthly or annual subscription",
+      },
+      {
+        feature: "Free trial class & promotional dashboard features",
+      },
+      {
         feature:
-          "Collaboratively extend end-to-end quality vectors via client-centric catalysts for change. Phosfluorescently.",
-      },
-      {
-        feature: "Lorem ipsum dolor sit amet.",
-      },
-      {
-        feature: "Consectetur adipiscing elit.",
-      },
-      {
-        feature: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      },
-      {
-        feature: "Lorem ipsum dolor sit amet.",
+          "Service fee of 4.5 % (plus tax) on transactions facilitated by PayOrb. This includes payment gateway fee.",
       },
     ],
   };
@@ -93,20 +111,36 @@ export const getFaqsContent = async () => {
     image: "/assets/faqs/faq-img.svg",
     faqs: [
       {
-        ques: "She met humoured sir breeding her. Six curiosity day assurance bed necessary.",
-        ans: "Relation so in confined smallest children unpacked delicate. Why sir end believe uncivil respect. Always get adieus nature day course for common. My little garret repair to desire he esteem.",
+        ques: "What all services does PayOrb provide?",
+        ans: "PayOrb is a platform that helps solopreneurs & independent professionals launch, manage and scale up their services seamlessly. It helps solopreneurs create an online presence, manage bookings & payments, CRM automations, reviews, promotions, and much more through an easy to use platform.",
       },
       {
-        ques: "And excellence partiality estimating terminated day everything?",
-        ans: "Relation so in confined smallest children unpacked delicate. Why sir end believe uncivil respect. Always get adieus nature day course for common. My little garret repair to desire he esteem.",
+        ques: "I am not a full time freelancer, I host services and classes as a side hustle. Is PayOrb suitable for me?",
+        ans: "Absolutely. We understand the value of time for side hustlers. PayOrb helps you double your income, by taking the business execution chores off your schedule. You focus on what you do best, and let us handle the rest.",
       },
       {
-        ques: "Latter person am secure of estate genius at?",
-        ans: "Relation so in confined smallest children unpacked delicate. Why sir end believe uncivil respect. Always get adieus nature day course for common. My little garret repair to desire he esteem.",
+        ques: "Does PayOrb help me in getting new clients?",
+        ans: "We have specially designed features to help Solopreneurs grow their client base. Our ‘Trial Class feature’ helps you take your business from 0 to 1 (get your first client), Our ‘promotion automation tool’ helps you promote your services to hundreds of prospective customers on one click and double your customer acquisition. ",
       },
       {
-        ques: "Whatever landlord yourself at by pleasure of children be?",
-        ans: "Relation so in confined smallest children unpacked delicate. Why sir end believe uncivil respect. Always get adieus nature day course for common. My little garret repair to desire he esteem.",
+        ques: "Do my clients need to create an account on PayOrb to buy my offerings?",
+        ans: "We have specially designed features to help Solopreneurs grow their client base. Our ‘Trial Class feature’ helps you take your business from 0 to 1 (get your first client), Our ‘promotion automation tool’ helps you promote your services to hundreds of prospective customers on one click and double your customer acquisition. ",
+      },
+      {
+        ques: "What all payment methods are accepted?",
+        ans: "We facilitate transactions from all Debit cards, Credit cards & UPIs.",
+      },
+      {
+        ques: "Are there any hidden charges apart from service fee?",
+        ans: "No. PayOrb charges Zero Onboarding Fee. No monthly or annual charges for basic tier. We only deduct a Platform Usage fee of only 4.5% (+ taxes) on your transactions facilitated through PayOrb.",
+      },
+      {
+        ques: "Do I need to have a GST number to create an account on PayOrb?",
+        ans: "Not necessarily. Independent professionals (freelancers) using PayOrb for facilitating their services are liable to handle matters of taxation (ITR filing) at their end as per provisions of Income Tax Act.",
+      },
+      {
+        ques: "Do you offer any discounts for bigger business houses or institutes?",
+        ans: "Yes. We do offer tailored service fees for Service SMBs. Please drop us a query, and we will get back to you within 24hrs.",
       },
     ],
   };
@@ -252,21 +286,6 @@ export const getGrowthContent = async () => {
 };
 
 export const getFeaturesContent = async () => {
-  // try {
-  //   const res = await axios.get(`${CMS_URL}/feature-section`);
-
-  //   res.data.features.map((feature, index) => {
-  //     res.data.features[index].image = buildImageUrl(feature.image.url);
-  //   });
-
-  //   return {
-  //     title: res.data.title,
-  //     sectionLogo: buildImageUrl(res.data.sectionLogo.url),
-  //     sectionTitle: res.data.sectionTitle,
-  //     features: res.data.features,
-  //   };
-  // } catch (err) {
-  //   console.error(err.message);
   return {
     topPara:
       "The desire for having a more flexible and fulfilling career path has led to Freelancing & solo entrepreneurship supplementing and complementing existing 9-5 worklife. When people think of venturing out on their own, the thought of all the efforts required in 'managing the business' holds them back. Hours spent in planning your offering, client communications, promoting your offering, booking reminders, scheduling & rescheduling, managing payments, follow up for feedback & reviews, and the list goes on...",
@@ -274,46 +293,44 @@ export const getFeaturesContent = async () => {
     title: "Features",
     sectionLogo:
       "https://storage.googleapis.com/bucket_icon_assets/assets/Group%20(1).png",
-    sectionTitle: "Features",
+    sectionTitle: "At PayOrb you enjoy",
     description:
       "Our platform helps you transition into the freelance ecosystem at a faster pace by taking care of all basic operational barriers to starting something new: Online presence, bookings, payment, CRM all at one space.",
     features: [
       {
-        title: "Online Presence",
-        description:
-          "Dynamically architect real-time web services for installed base systems",
+        title: "Simplified Workspace for Solopreneurs",
+        description: "Setting up your business online has never been easier!",
         image: "/assets/features/onlinePresence.svg",
       },
 
       {
         title: "Unlimited service listings",
         description:
-          "Dynamically architect real-time web services for installed base systems",
+          "Create unlimited listings of group events or one-on-one appointments. ",
         image: "/assets/features/UnlimitedServiceListing.svg",
       },
       {
-        title: "Bookings & Payments",
+        title: "Easy Bookings & Payments",
         description:
-          "Dynamically architect real-time web services for installed base systems",
-
+          "One-click bookings for your clients & instant payouts for you!",
         image: "/assets/features/Bookings&Payments.svg",
       },
       {
-        title: "Verified Reviews",
+        title: "Automated Verified Reviews",
         description:
-          "Dynamically architect real-time web services for installed base systems",
+          "Our automated review tool captures reviews from all your customers, and helps build your credentials.",
         image: "/assets/features/VerifiedReview.svg",
       },
       {
         title: "Business Dashboards",
         description:
-          "Dynamically architect real-time web services for installed base systems",
+          "Realtime updates & analytics of your business, all at one place. The real power-tool to keep it running smoothly.",
         image: "/assets/features/BusinessDashboard.svg",
       },
       {
         title: "One Click Promotions",
         description:
-          "Dynamically architect real-time web services for installed base systems",
+          "Integrated automations to promote your offerings to hundreds of prospective customers, with just one click!",
         image: "/assets/features/OneClickPromotions.svg",
       },
     ],

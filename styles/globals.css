@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap");
 
 html,
 body {
@@ -38,6 +39,6 @@ a {
   color: #0eadad;
 }
 
-.carauselContainer{
-  padding : 2rem 0px;
+.carauselContainer {
+  padding: 2rem 0px;
 }
