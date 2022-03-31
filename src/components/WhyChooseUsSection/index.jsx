@@ -32,7 +32,7 @@ function WhyChooseUsSection({ content }) {
       >
         {content.subtitle}
       </Typography>
-      <WhyUsCarousel />
+      <WhyUsCarousel testimonies={content.testimonies} />
     </Box>
   );
 }

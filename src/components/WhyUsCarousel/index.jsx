@@ -4,7 +4,7 @@ import Carousel from "react-material-ui-carousel";
 
 import WhyChooseUsCard from "../WhyChooseUsCard";
 
-function WhyUsCarousel() {
+function WhyUsCarousel({ testimonies }) {
   return (
     <Box>
       <Box className="carousel-container">
@@ -15,11 +15,9 @@ function WhyUsCarousel() {
           centerMode
           dynamicHeight
         >
-          <WhyChooseUsCard />
-          <WhyChooseUsCard />
-          <WhyChooseUsCard />
-          <WhyChooseUsCard />
-          <WhyChooseUsCard />
+          {testimonies.map((testimony, index) => (
+            <WhyChooseUsCard key={index} testimony={testimony} />
+          ))}
         </Carousel>
       </Box>
     </Box>

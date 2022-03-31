@@ -74,7 +74,7 @@ export const styles = makeStyles((theme) => ({
     display: "none",
     [theme.breakpoints.down("sm")]: {
       display: "block",
-      marginTop:"1.5em",
+      marginTop: "1.5em",
     },
   },
 }));

@@ -72,4 +72,18 @@ export const styles = makeStyles((theme) => ({
       height: "0.25em",
     },
   },
+  titleContainer: {
+    paddingLeft: "25%",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "0",
+    },
+  },
+  descriptionSubTitle: {
+    width: "80%",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      textAlign: "center",
+      padding: "0 1em",
+    },
+  },
 }));

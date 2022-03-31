@@ -12,7 +12,6 @@ import SolopreneurBanner from "../SoloprenuerBanner";
 function SolopreneurView({ content }) {
   const classes = styles();
   return (
-
     <Grid>
       <Grid className={classes.box}>
         <Grid

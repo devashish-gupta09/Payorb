@@ -66,11 +66,15 @@ function SolopreneurSuccess({ content }) {
                 </Grid>
               </Grid>
               <Grid item sm={4}>
-                <img 
-                src={content.bannerStory.image}
-                alt={"cover-story"}
-                style={{maxHeight:"11em", alignItems:"center",float:"bottom"}}></img>
-                
+                <img
+                  src={content.bannerStory.image}
+                  alt={"cover-story"}
+                  style={{
+                    maxHeight: "11em",
+                    alignItems: "center",
+                    float: "bottom",
+                  }}
+                ></img>
               </Grid>
             </Grid>
           </Card>
@@ -106,20 +110,19 @@ function SolopreneurSuccess({ content }) {
               // Change the colors and radius of the actual buttons. THIS STYLES BOTH BUTTONS
               style: {
                 backgroundColor: "white",
-                color:"#00D4FF",
-                width:"1.2em",
-                height:"1.2em",
-                marginTop:"6.5em",
-                justifyContent:"center",
-                marginRight:"4.3em",
-                marginLeft:"4.3em",
+                color: "#00D4FF",
+                width: "1.2em",
+                height: "1.2em",
+                marginTop: "6.5em",
+                justifyContent: "center",
+                marginRight: "4.3em",
+                marginLeft: "4.3em",
               },
             }}
-            
           >
             {content.stories.map((story, index) => {
               return (
-                <Grid key={index} item sm={6} style= {{paddingBottom:"5em"}}>
+                <Grid key={index} item sm={6} style={{ paddingBottom: "5em" }}>
                   <SolopreneurSuccessCards
                     image={story.image}
                     headline={story.headline}

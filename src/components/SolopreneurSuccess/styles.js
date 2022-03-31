@@ -45,7 +45,6 @@ export const styles = makeStyles((theme) => ({
     },
   },
   description: {
-    
     [theme.breakpoints.down("sm")]: {
       textAlign: "center",
       alignItems: "center",
@@ -67,7 +66,7 @@ export const styles = makeStyles((theme) => ({
     display: "none",
     [theme.breakpoints.down("sm")]: {
       display: "block",
-      paddingBottom:"1em",
+      paddingBottom: "1em",
     },
   },
   multipleCards: {
@@ -89,8 +88,8 @@ export const styles = makeStyles((theme) => ({
     float: "right",
     right: "0",
     fontSize: "0.7em",
-    textTransform: 'none',
-    fontWeight:"bold",
+    textTransform: "none",
+    fontWeight: "bold",
   },
   descriptionText: {
     fontSize: "0.8em",
@@ -101,10 +100,10 @@ export const styles = makeStyles((theme) => ({
   },
   date: {
     fontSize: "0.7em",
-    color:"#718096",
+    color: "#718096",
   },
   bannerContainer: {
     minHeight: "10em",
-    padding:'0',
+    padding: "0",
   },
 }));

@@ -4,7 +4,7 @@ export const styles = makeStyles((theme) => ({
   cardContainer: {
     marginTop: "1em",
     [theme.breakpoints.down("sm")]: {
-    margin: "0 2em 0 2em",
+      margin: "0 2em 0 2em",
     },
   },
   desktop: {
@@ -52,7 +52,7 @@ export const styles = makeStyles((theme) => ({
     marginTop: "2em",
     color: "#718096",
     [theme.breakpoints.down("sm")]: {
-      marginTop:"0.5em"
+      marginTop: "0.5em",
     },
   },
   readMore: {
@@ -61,7 +61,7 @@ export const styles = makeStyles((theme) => ({
     right: "0",
     fontSize: "0.7em",
     textTransform: "none",
-    fontWeight:"bold",
+    fontWeight: "bold",
   },
   descriptionText: {
     fontSize: "0.8em",
@@ -72,6 +72,6 @@ export const styles = makeStyles((theme) => ({
   },
   date: {
     fontSize: "0.7em",
-    color:"#718096",
+    color: "#718096",
   },
 }));
