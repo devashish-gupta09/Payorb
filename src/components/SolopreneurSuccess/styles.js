@@ -62,6 +62,13 @@ export const styles = makeStyles((theme) => ({
       height: "0.2em",
     },
   },
+  desktop: {
+    display: "block",
+    margin: "0 3em 0 3em",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
   mobileView: {
     display: "none",
     [theme.breakpoints.down("sm")]: {
@@ -103,7 +110,18 @@ export const styles = makeStyles((theme) => ({
     color: "#718096",
   },
   bannerContainer: {
-    minHeight: "10em",
-    padding: "0",
+    //minHeight: "12em",
+    //padding:'0',
   },
+  bannerImage:{
+    minHeight:"11em",
+    backgroundImage:"url(/assets/solopreneur/SuccessStories/cover-issue1.svg)",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+  },
+  bannerText:{
+    marginLeft:"4em",
+    marginTop:"1em",
+  }
 }));
