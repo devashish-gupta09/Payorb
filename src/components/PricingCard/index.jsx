@@ -9,15 +9,29 @@ function PricingCard({ description, image }) {
   return (
     <Box className={classes.container}>
       <Box className={classes.head}>
-        <Typography variant="h4" className={classes.heading1}>
-          Your carrier
+        <Typography variant="h5" className={classes.heading1}>
+          Choose Solopreneurship
         </Typography>
-        <Typography variant="h4" className={classes.heading2}>
-          Starts here
+        <Typography variant="h5" className={classes.heading2}>
+          the Smart Way
+        </Typography>
+        <Typography variant="h5" className={classes.heading1}>
+          not the hard way!
         </Typography>
       </Box>
       <Box className={classes.description}>
-        <Typography variant="body1">{description}</Typography>
+        <Typography gutterBottom variant="body1">
+          Did you know that a majority of solopreneurs spend more than 30% of
+          their time in managing business execution chores?
+        </Typography>
+        <Typography gutterBottom variant="body1">
+          Did you know that a majority of solopreneurs spend more than 30% of
+          their time in managing business execution chores?
+        </Typography>
+        <Typography gutterBottom variant="body1">
+          It doesn’t have to be that hard for you. Partner with PayOrb and kick
+          off your Solopreneur journey <b>The Smart Way!</b>
+        </Typography>
         <Box className={classes.imgBox}>
           <img src={image} />
         </Box>

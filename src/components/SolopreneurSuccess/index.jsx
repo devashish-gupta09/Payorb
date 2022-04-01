@@ -1,8 +1,10 @@
 import { Grid, Typography, Card, Button } from "@material-ui/core";
 import React from "react";
+
+import Carousel from "react-material-ui-carousel";
+
 import SolopreneurSuccessCards from "../SolopreneurSuccessCards";
 import { styles } from "./styles";
-import Carousel from "react-material-ui-carousel";
 
 function SolopreneurSuccess({ content }) {
   const classes = styles();
@@ -30,11 +32,7 @@ function SolopreneurSuccess({ content }) {
         <Grid container className={classes.desktop}>
           {/* This is for the banner story of the cards*/}
           <Card className={classes.bannerContainer}>
-            <Grid
-              container
-              alignItems={"center"}
-              justify={"space-between"}
-            >
+            <Grid container alignItems={"center"} justify={"space-between"}>
               <Grid item sm={6} className={classes.bannerText}>
                 <Typography
                   gutterBottom
@@ -62,12 +60,16 @@ function SolopreneurSuccess({ content }) {
                   </Button>
                 </Grid>
               </Grid>
-              <Grid item sm={4} justifyContent={"right"} className={classes.bannerImage}>
-               {/* {<img 
+              <Grid
+                item
+                sm={4}
+                justifyContent={"right"}
+                className={classes.bannerImage}
+              >
+                {/* {<img 
                 src={content.bannerStory.image}
                 alt={"cover-story"}
                 style={{height:"10em",bottom:"0"}}></img>} */}
-                
               </Grid>
             </Grid>
           </Card>
@@ -103,20 +105,19 @@ function SolopreneurSuccess({ content }) {
               // Change the colors and radius of the actual buttons. THIS STYLES BOTH BUTTONS
               style: {
                 backgroundColor: "white",
-                color:"#00D4FF",
-                width:"1.2em",
-                height:"1.2em",
-                marginTop:"6.5em",
-                justifyContent:"center",
-                marginRight:"4.3em",
-                marginLeft:"4.3em",
+                color: "#00D4FF",
+                width: "1.2em",
+                height: "1.2em",
+                marginTop: "6.5em",
+                justifyContent: "center",
+                marginRight: "4.3em",
+                marginLeft: "4.3em",
               },
             }}
-            
           >
             {content.stories.map((story, index) => {
               return (
-                <Grid key={index} item sm={6} style= {{paddingBottom:"5em"}}>
+                <Grid key={index} item sm={6} style={{ paddingBottom: "5em" }}>
                   <SolopreneurSuccessCards
                     image={story.image}
                     headline={story.headline}

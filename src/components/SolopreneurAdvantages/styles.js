@@ -41,7 +41,7 @@ export const styles = makeStyles((theme) => ({
   },
   description: {
     fontSize: "1.2em",
-    padding:"0 1em 0 1em",
+    padding: "0 1em 0 1em",
     [theme.breakpoints.down("sm")]: {
       textAlign: "center",
       alignItems: "center",
@@ -63,14 +63,14 @@ export const styles = makeStyles((theme) => ({
     marginTop: "0.5em",
     [theme.breakpoints.down("sm")]: {
       padding: "0.5em 1.4em 0 1.4em",
-      marginTop:"0.2em"
+      marginTop: "0.2em",
     },
   },
   checkIcon: {
     display: "inline",
     position: "relative",
     marginTop: "0.8em",
-    fontSize:"0.6em",
+    fontSize: "0.6em",
   },
   listItem: {
     display: "inline",
@@ -78,7 +78,7 @@ export const styles = makeStyles((theme) => ({
     marginTop: "0.8em",
     paddingLeft: "1em",
     fontSize: "0.9em",
-    fotWeight:"600",
+    fotWeight: "600",
   },
   bgImg1: {
     position: "absolute",

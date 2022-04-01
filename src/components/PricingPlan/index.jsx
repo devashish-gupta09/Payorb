@@ -17,7 +17,7 @@ export default PricingPlan;
 
 const styles = makeStyles((theme) => ({
   feature: {
-    fontSize: "0.8em",
+    // fontSize: "0.8em",
     paddingBottom: "0.5em",
   },
 }));

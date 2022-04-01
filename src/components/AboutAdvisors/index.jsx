@@ -24,11 +24,7 @@ function AboutAdvisors({ content }) {
       <hr className={classes.divider} />
 
       <Grid container className={classes.advisorCarouselMobile}>
-        <Carousel
-          interval={2500}
-          fullHeightHover={false}
-         
-        >
+        <Carousel interval={2500} fullHeightHover={false}>
           {content.details.map((advisor, index) => {
             return (
               <Grid container justifyContent={"center"} key={index}>

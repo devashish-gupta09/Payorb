@@ -11,7 +11,8 @@ const ColoredLine = () => (
       border: "0",
       backgroundColor: "#000000",
       height: "0.25em",
-      width: "4em",
+      margin: "1em 0",
+      width: "5em",
     }}
   />
 );
@@ -32,7 +33,7 @@ function WhyChooseUsSection({ content }) {
       >
         {content.subtitle}
       </Typography>
-      <WhyUsCarousel />
+      <WhyUsCarousel testimonies={content.testimonies} />
     </Box>
   );
 }
