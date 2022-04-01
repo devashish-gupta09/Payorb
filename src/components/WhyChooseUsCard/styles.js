@@ -3,11 +3,14 @@ import { makeStyles } from "@material-ui/core";
 export const styles = makeStyles((theme) => ({
   container: {
     position: "relative",
+    // border: "2px solid",
+    // height: "200px",
+    // width: "200px",
   },
   profile: {
     position: "absolute",
     top: "-2em",
-    left: "1em",
+    left: "0em",
     [theme.breakpoints.down("sm")]: {
       left: "0.5em",
     },
@@ -16,13 +19,12 @@ export const styles = makeStyles((theme) => ({
     backgroundColor: "#fff",
     border: "3px solid #00D4FF",
     borderRadius: "10px",
-    margin: "4em",
-    padding: "1em 2em 1em 5em",
-    width: "500px",
-    minHeight: "200px",
+    margin: "1em",
+    padding: "2em 2em 1em 6em",
+    minHeight: "250px",
     maxHeight: "fit-content",
     [theme.breakpoints.down("sm")]: {
-      margin: "2em",
+      // margin: "2em",
       padding: "2em 1em 1em 2em",
       width: "85%",
     },
@@ -38,6 +40,7 @@ export const styles = makeStyles((theme) => ({
   },
   description: {
     [theme.breakpoints.down("sm")]: {
+      fontSize: "0.85em",
       paddingTop: "1em",
     },
   },

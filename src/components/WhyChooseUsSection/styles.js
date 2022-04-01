@@ -26,8 +26,9 @@ export const styles = makeStyles((theme) => ({
   },
   description: {
     width: "50vw",
-    padding: "0.5em",
+    padding: "0.5em 0.5em 1em 0.5em",
     [theme.breakpoints.down("sm")]: {
+      width: "100%",
       display: "none",
     },
   },
