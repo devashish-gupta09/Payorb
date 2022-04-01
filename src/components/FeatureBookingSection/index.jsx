@@ -1,4 +1,4 @@
-import { Grid, Button, Typography } from "@material-ui/core";
+import { Grid, Button } from "@material-ui/core";
 import CallMadeIcon from "@material-ui/icons/CallMade";
 import Link from "next/link";
 import React from "react";
@@ -14,10 +14,10 @@ function FeatureBookingSection() {
       <Grid className={classes.logoContainer}>
         <Logo width="7em" />
       </Grid>
-      <Typography variant="h4" className={classes.title}>
+      {/* <Typography variant="h4" className={classes.title}>
         People who are ready to book events!
-      </Typography>
-      <Grid container justify={"center"} className={classes.bottomButton}>
+      </Typography> */}
+      <Grid container justify={"center"}>
         <Link href={"/signup"}>
           <Button
             className={classes.capsuleButton}

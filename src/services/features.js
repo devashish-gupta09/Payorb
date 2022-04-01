@@ -53,14 +53,15 @@ export const getFeaturesContent = async () => {
     features: [
       {
         title: "Simplified Workspace for Solopreneurs",
-        description: "Setting up your business online has never been easier!",
+        description:
+          "Setting up your business online has never been easier. Creating a profile at PayOrb less than 5 minutes!",
         image: "/assets/features/onlinePresence.svg",
       },
 
       {
         title: "Unlimited service listings",
         description:
-          "Create unlimited listings of group events or one-on-one appointments. ",
+          "Create unlimited listings of group events or one-on-one appointments. Our easy to share booking links enable you to share your listings on any messaging & social media platform you wish. ",
         image: "/assets/features/UnlimitedServiceListing.svg",
       },
       {
@@ -72,7 +73,7 @@ export const getFeaturesContent = async () => {
       {
         title: "Automated Verified Reviews",
         description:
-          "Our automated review tool captures reviews from all your customers, and helps build your credentials.",
+          "Our automated review tool captures reviews from all your customers, and helps build your credentials. Verified reviews help you expand your client base from your immediate network to the rest of the world.",
         image: "/assets/features/VerifiedReview.svg",
       },
       {
@@ -84,7 +85,7 @@ export const getFeaturesContent = async () => {
       {
         title: "One Click Promotions",
         description:
-          "Integrated automations to promote your offerings to hundreds of prospective customers, with just one click!",
+          "Integrated automations to promote your offerings to hundreds of prospective customers, with just one click! This saves you the hassle of reaching out to people one at a time, and fastens your customer acquisition pace.",
         image: "/assets/features/OneClickPromotions.svg",
       },
     ],
