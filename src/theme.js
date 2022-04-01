@@ -4,7 +4,7 @@ import { createTheme } from "@material-ui/core/styles";
 // Create a theme instance.
 const theme = createTheme({
   typography: {
-    fontFamily: "Work Sans",
+    fontFamily: "Inter",
     style: "normal",
   },
   palette: {

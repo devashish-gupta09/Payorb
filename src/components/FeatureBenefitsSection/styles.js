@@ -42,12 +42,22 @@ export const styles = makeStyles((theme) => ({
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     margin: "2.5em 0",
-    padding: "0em 4em 0em 2em",
+    padding: "0em 6em 0em 2em",
     [theme.breakpoints.down("sm")]: {
       margin: "1em 0",
       textAlign: "center",
       alignItems: "center",
       padding: "0 1em",
+    },
+    "&>p": {
+      fontSize: "0.85em",
+      textAlign: "left",
+      marginTop: "0",
+      marginBottom: "1.25em",
+    },
+    "&>b": {
+      fontSize: "0.85em",
+      marginBottom: "0.25em",
     },
   },
   mainTitle: {

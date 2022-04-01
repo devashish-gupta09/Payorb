@@ -52,15 +52,10 @@ function PricingSection({ content }) {
           <Box className={classes.plan}>
             <Box className={classes.planHead}>
               <Typography variant="h5" className={classes.planName}>
-                Lite
-              </Typography>
-              <Typography variant="h6" className={classes.planPrice}>
-                Free
+                Basic plan includes
               </Typography>
             </Box>
-            <Typography variant="body1" className={classes.planDescription}>
-              Plan includes:{" "}
-            </Typography>
+
             {content.plans.map((plan, index) => {
               return <PricingPlan feature={plan.feature} key={index} />;
             })}

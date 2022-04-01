@@ -84,6 +84,8 @@ export const styles = makeStyles((theme) => ({
     justifyContent: "space-between",
   },
   planName: {
+    fontFamily: "'Playfair Display', serif",
+    paddingBottom: "1em",
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.8em !important",
       fontWeight: "bold",

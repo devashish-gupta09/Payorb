@@ -46,6 +46,7 @@ export const styles = makeStyles((theme) => ({
     color: "#00D4FF",
     fontSize: "1em",
     fontWeight: "bolder",
+    fontFamily:"'Kadwa', serif",
     [theme.breakpoints.down("sm")]: {
       textAlign: "center",
       width: "100%",
