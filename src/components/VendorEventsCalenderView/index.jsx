@@ -74,10 +74,11 @@ function VendorEventsCalenderView() {
     !matches ? "Week" : "Day"
   );
 
-  const { data: events, loading, error } = useFetchEventsBetween(
-    startDate,
-    endDate
-  );
+  const {
+    data: events,
+    loading,
+    error,
+  } = useFetchEventsBetween(startDate, endDate);
 
   const handleDateChange = (currentDate) => {
     const momentDate = moment(currentDate);
