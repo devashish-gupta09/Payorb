@@ -2,8 +2,9 @@ import {
   CircularProgress,
   Grid,
   makeStyles,
-  MenuItem,
-  Select,
+  NativeSelect,
+  styled,
+  InputBase,
   Table,
   TableBody,
   TableCell,
@@ -12,8 +13,11 @@ import {
   TableRow,
   Typography,
   Tooltip,
+  TextField,
+  InputAdornment, 
+  MenuItem
 } from "@material-ui/core";
-import { Send, Info } from "@material-ui/icons";
+import SearchIcon from '@material-ui/icons/Search';
 import React from "react";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import { globalStyles } from "../../../styles/globalStyles";
@@ -24,14 +28,12 @@ import useFetchEvents from "../../hooks/useFetchEvents";
 import { sendNotificationToCustomers } from "../../services/notification";
 import { getMonthDate } from "../../utils/dateTime";
 import { getEventDate,getEventMonth } from "../../utils/dateTime";
-import { isEventPastDate } from "../../utils/events";
-import ButtonCapsule from "../ButtonCapsule";
-import ConfirmationAlertDialog from "../ConfirmationAlertDialog";
+import { isEventPastDate } from "../../utils/events";;
 import DashboardCard from "../DashboardCard";
-import Multiselect from "../Multiselect";
 import PageTitle from "../PageTitle";
 import SkeletonLoading from "../SkeletonLoading";
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ReactPaginate from 'react-paginate';
 
 function createData(name, phoneNumber, email, date, events, eventList,priceList) {
   return {
@@ -55,6 +57,40 @@ function createData(name, phoneNumber, email, date, events, eventList,priceList)
   };
 }
 
+const BootstrapInput = styled(InputBase)(({ theme }) => ({
+  'label + &': {
+    marginTop: theme.spacing(3),
+  },
+  '& .MuiInputBase-input': {
+    borderRadius: 4,
+    position: 'relative',
+    backgroundColor: theme.palette.background.paper,
+    border: '1px solid #ced4da',
+    fontSize: 16,
+    padding: '10px 26px 10px 12px',
+    transition: theme.transitions.create(['border-color', 'box-shadow']),
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    '&:focus': {
+      borderRadius: 4,
+      borderColor: '#80bdff',
+      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+    },
+  },
+}));
+
+
 function VendorCustomers() {
   const classes = styles();
   const globalClasses = globalStyles();
@@ -69,18 +105,8 @@ function VendorCustomers() {
   const { Alert, showAlert } = useAlertSnackbar();
 
   const [tableContentCollapse, setTableContentsCollapse]=React.useState([]);
-
-// {  React.useEffect(()=>{
-//     console.log(rows)
-//     rows.map((index)=>
-//     setTableContentsCollapse([
-//     ...tableContentCollapse,
-//     {
-//       id: rows[index],
-//       value: true,
-//     }
-//     ]) )   
-//   },[]);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
 
   // {const [formattedCustomers, setFormattedCustomers] = React.useState([]);
@@ -332,7 +358,6 @@ const [eventLoading,loaded]=React.useState(false);
     console.log(value);
     setTableContentsCollapse(
             tableContentCollapse.map((tableContent,id) =>
-                // Here you accept a id argument to the function and replace it with hard coded 🤪 2, to make it dynamic.
                     id === index
                     ? value
                     : tableContent
@@ -342,6 +367,13 @@ const [eventLoading,loaded]=React.useState(false);
   
   const handleEventTypeChange = (event) => {
     setSelectedValue(event.target.value);
+  };
+
+  const handleChangePage = async (event, newPage) => {
+    if (newPage > page) {
+      await loadMoreEvents();
+    }
+    setPage(newPage);
   };
 
   const handleFilterChange = (link) => {
@@ -362,40 +394,6 @@ const [eventLoading,loaded]=React.useState(false);
 
   const onAccept = () => {
     sendNotification();
-  };
-
-  const sendNotification = async () => {
-    if (
-      selectedValueForFilter.length === 0 &&
-      confirmationDialogOpen === false
-    ) {
-      setConfirmationDialogOpen(true);
-      return;
-    }
-    try {
-      if (!selectedValue) {
-        throw new Error("Please select an event from the drop down");
-      }
-      const res = await sendNotificationToCustomers({
-        eventId: selectedValue,
-        filterEventIds: selectedValueForFilter,
-      });
-
-      if (res) {
-        showAlert("Notification sent");
-      }
-      setConfirmationDialogOpen(false);
-    } catch (err) {
-      if (err.message) {
-        showAlert(err.message, ALERT_TYPES.ERROR);
-        setConfirmationDialogOpen(false);
-        return;
-      } else if (err.error) {
-        showAlert(err.error, ALERT_TYPES.ERROR);
-        setConfirmationDialogOpen(false);
-        return;
-      }
-    }
   };
 
 //  {if (loading || eventLoading) {
@@ -467,22 +465,11 @@ const [eventLoading,loaded]=React.useState(false);
       
       <Grid className={classes.root}>
         <PageTitle title="Payorb | Customers" />
-      {/* {  {Alert()}
-        {confirmationDialogOpen ? (
-          <ConfirmationAlertDialog
-            open={confirmationDialogOpen}
-            onAccept={onAccept}
-            onReject={onReject}
-            message={
-              "Are you sure you wish to send promotional email to all customers? If not, please filter relevant customers based on past events."
-            }
-          />
-        ) : null}} */}
         <Grid
+          item
           container
-          justify={"space-between"}
-          justifyContent={"center"}
           className={classes.titleContainer}
+          alignItems={"center"}
         >
           <Grid item xs={6} sm={6}>
           <Typography
@@ -493,85 +480,60 @@ const [eventLoading,loaded]=React.useState(false);
           </Typography>
           </Grid>
           <Grid item xs={6} sm={6} >
-          {/* {<div
-            className={classes.collapseController}
-            onClick={() => setCollapsed(!collapsed)}
-          >} */}
             {eventLoading ? (
               <CircularProgress />
             ) : (
-              <Multiselect
-                className={classes.filterSelect}
-                events={events}
-                setSelected={handleFilterChange}
-                selected={selectedValueForFilter}
-                label={
-                  selectedValueForFilter.length === 1
-                    ? events.filter(
-                        (e) => e.link === selectedValueForFilter[0]
-                      )[0]["name"]
-                    : <div style={{fontSize:"0.6em", padding:"0"}}><img src="/assets/vendorCustomers/filterIcon.svg"
-                     style={{width:"0.7em",marginTop:"0.35em", padding:"0", marginRight:"0.5em"}} alt="filter-icon"/>Filter by Events</div>
-                }
-              />
+              <Grid container >
+                <Grid item xs={6} sm={6} >
+              <TextField
+              variant="outlined"
+              size="small"
+              InputProps={{
+                startAdornment:(
+                  <InputAdornment position="start">
+                    <SearchIcon style={{width:"1em",padding:"0.2em",color:"#8B8B8B"}}/>
+                  </InputAdornment>
+                )
+              }}
+
+              // label={<div style={{fontSize:"0.7em", padding:"0", alignItems:"center",color:"#8B8B8B"}}>Search</div>}
+              label={"Search"}
+              className={classes.search}
+            />
+            </Grid>
+            <Grid item xs={6} sm={6} >
+            <NativeSelect
+              id="demo-customized-select-native"
+             // value={selectedValue}
+              value={ selectedValueForFilter.length === 1
+                ? events.filter(
+                    (e) => e.link === selectedValueForFilter[0]
+                  )[0]["name"]
+                : <div style={{fontSize:"0.7em", padding:"0"}}><img src="/assets/vendorCustomers/filterIcon.svg"
+                style={{width:"0.8em", marginTop:"0.35em", padding:"0", marginRight:"0.5em"}} alt="filter-icon"/>Filter by Events</div>}
+              className={classes.filterSelect}
+              onChange={handleFilterChange}
+              input={<BootstrapInput />}
+              SelectDisplayProps={{
+                style: {
+                  width: "10em",
+                  background: "white",
+                  paddingTop: "0.75em",
+                  paddingBottom: "0.75em",
+                },
+              }}
+             >
+                    {events.map((event) => (
+                              <MenuItem key={event.link} value={event.link}>
+                                {event.name}
+                      </MenuItem>
+                    ))}
+              </NativeSelect>
+              </Grid> 
+              </Grid>
             )}
-         {/* { </div>} */}
           </Grid>
         </Grid>
-       
-         
-          {/* {Promotions not included} */}
-          {/* {<Grid className={classes.selectDesktopView}>
-            {eventLoading ? (
-              <CircularProgress />
-            ) : events && events.length ? (
-              <Grid container alignItems={"center"}>
-                <Typography style={{ margin: "0.5em 0.5em" }}>
-                  Promote Event
-                </Typography>
-                <Tooltip
-                  title="Send promotional emails for upcoming events"
-                  placement="top"
-                >
-                  <Info style={{ fontSize: "1rem", color: "#808080" }} />
-                </Tooltip>
-                <Select
-                  style={{ margin: "0.5em 0.5em" }}
-                  className={classes.select}
-                  variant="outlined"
-                  value={selectedValue}
-                  onChange={handleEventTypeChange}
-                  SelectDisplayProps={{
-                    style: {
-                      width: "10em",
-                      background: "white",
-                      paddingTop: "0.75em",
-                      paddingBottom: "0.75em",
-                    },
-                  }}
-                  MenuProps={{
-                    style: {},
-                  }}
-                >
-                  {events &&
-                    events
-                      .filter((e) => !isEventPastDate(e))
-                      .map((event) => (
-                        <MenuItem key={event.link} value={event.link}>
-                          {event.name}
-                        </MenuItem>
-                      ))}
-                </Select>
-                <ButtonCapsule
-                  buttonStyle={classes.sendButton}
-                  text={`Send`}
-                  icon={<Send />}
-                  onClick={sendNotification}
-                ></ButtonCapsule>
-              </Grid>
-            ) : null}
-          </Grid>} */}
-        
         <DashboardCard>
           <TableContainer className={classes.container}>
             <Table stickyHeader aria-label="sticky table">
@@ -598,11 +560,11 @@ const [eventLoading,loaded]=React.useState(false);
                           {
                             return(
                               <TableCell key={column.id} align={column.align} className={classes.tableContents} style={{margin:0, padding:0}}>
-                                <Typography style={{fontWeight:"600", fontSize:"0.9em", padding:"0"}}>
+                                <Typography style={{fontWeight:"600", fontSize:"0.9em", padding:"0.2em"}}>
                                 {tableContentCollapse[index]? 
-                                value[0]
-                                 :
-                                value.map(val=>
+                                  value[0]
+                                  :
+                                  value.map(val=>
                                     <Grid>  
                                     {val}
                                     <Grid container justify={"space-evenly"} style={{marginTop:"-0.3em"}}>
@@ -666,58 +628,26 @@ const [eventLoading,loaded]=React.useState(false);
               </TableBody>
             </Table>
           </TableContainer>
-        </DashboardCard>
-        {/* {<Grid className={classes.selectMobileView}>
-          {eventLoading ? (
-            <CircularProgress />
-          ) : events && events.length ? (
-            <Grid container alignItems={"center"}>
-              <Typography style={{ margin: "0.5em 0.5em" }}>
-                Promote Event
-              </Typography>
-              <Tooltip
-                title="Send promotional emails for upcoming events"
-                placement="top"
-              >
-                <Info style={{ fontSize: "1rem", color: "#808080" }} />
-              </Tooltip>
-              <Select
-                style={{ margin: "0.5em 0.5em" }}
-                className={classes.select}
-                variant="outlined"
-                value={selectedValue}
-                onChange={handleEventTypeChange}
-                SelectDisplayProps={{
-                  style: {
-                    width: "10em",
-                    background: "white",
-                    paddingTop: "0.75em",
-                    paddingBottom: "0.75em",
-                  },
-                }}
-                MenuProps={{
-                  style: {},
-                }}
-              >
-                {events &&
-                  events
-                    .filter((e) => !isEventPastDate(e))
-                    .map((event) => (
-                      <MenuItem key={event.link} value={event.link}>
-                        {event.name}
-                      </MenuItem>
-                    ))}
-              </Select>
-              <ButtonCapsule
-                buttonStyle={classes.sendButton}
-                text={`Send`}
-                icon={<Send />}
-                onClick={sendNotification}
-              ></ButtonCapsule>
-            </Grid>
-          ) : null}
-        </Grid>} */}
+        </DashboardCard>      
+      <ReactPaginate
+       breakLabel="..."
+       previousLabel={"Previous"}
+       nextLabel={"Next"}
+       //onPageChange={handlePageClick}
+      // pageCount={Math.ceil(rows.length/rowsPerPage)}
+      pageCount={4}
+       pageRangeDisplayed={3}
+       marginPagesDisplayed={2}
+       renderOnZeroPageCount={null}
+       onPageChange={handleChangePage}
+       containerClassName={classes.pagination}
+       pageClassName={classes.pageItem}
+       previousClassName={classes.pageItem}
+       nextClassName={classes.pageItem}
+       activeClassName={classes.active}
+     />
       </Grid>
+      
     );
   }
 
@@ -770,17 +700,46 @@ const styles = makeStyles((theme) => ({
   root: {
     width: "100%",
   },
+  filterSelect:{
+    marginRight:"3em",
+  },
+  pagination:{
+  display:"flex",
+  listStyle:"none",
+  width:"fit-content",
+  right:"4em",
+  position:"relative",
+  float:"right",
+  marginTop:"-2em",
+  [theme.breakpoints.down("sm")]:{
+    marginTop:"0",
+    right:"1em",
+  }},
+  pageItem:{
+  border:"1px solid #DCDCDC",
+  padding:"0.5em",
+  fontSize:"0.8em",
+  "&:hover": {
+    background: "#767676",
+  },
+  },
+  active:{
+    background:"linear-gradient(180deg, #68FDF3 0%, #00D4FF 100%)",
+  },
   container: {
     border:"1px solid #DCDCDC",
     marginTop:"-3.5em",
     padding:"0",
     [theme.breakpoints.down("sm")]: {
       height: "45vh",
-      marginTop:"1em",
+      marginTop:"3.5em",
     },
   },
   titleContainer:{
-    justifyContent:"space-between",
+    position:"relative",
+    justifyContent:"right",
+    alignItems:"center",
+    justify:"space-around",
   },
   collapseArrowDown: {
     transition: `transform .8s ease`,
@@ -790,19 +749,15 @@ const styles = makeStyles((theme) => ({
     transform: `rotate(-180deg)`,
     transition: `transform .8s ease`,
   },
-  sendButton: {
-    background: "white",
-    padding: "0.5em 2em",
-    height: "fit-content",
-    "& > span > svg": {
-      marginLeft: "0.5em",
-    },
-    "&:hover": {
-      background: "#dedede",
-    },
-    [theme.breakpoints.down("sm")]: {
-      width: "30%",
-    },
+
+  search:{
+      width:"12em",
+      height:"2em",
+      padding:"-0.8em",
+      color: "#BDBDBD",
+      [theme.breakpoints.down("sm")]: {
+        width: "100%",
+      },
   },
   customersTitle:{
     marginTop:"-1em",

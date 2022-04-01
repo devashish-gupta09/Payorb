@@ -6043,6 +6043,13 @@ react-multi-carousel@^2.6.5:
   resolved "https://registry.npmjs.org/react-multi-carousel/-/react-multi-carousel-2.6.5.tgz"
   integrity sha512-i5iuAm5XRT/h7uBL9/pGWeRsQXzqvjBrPVP1sobKgDKEvfZuKFpYp/alaQhTRM56Jtkb8jZpSqLn52Ku6jJbDg==
 
+react-paginate@^8.1.2:
+  version "8.1.2"
+  resolved "https://registry.yarnpkg.com/react-paginate/-/react-paginate-8.1.2.tgz#08d90945d0d021f1da78f2848c0f60e6c25e2391"
+  integrity sha512-buBkBiN9J8gvZYwYNixlTGRmWOC5C6+tH2XHTN8B5qGkRPOSYFkAqxhWUnxSVAeLKxpVZGPya/gOL2eJQNZGvg==
+  dependencies:
+    prop-types "^15.6.1"
+
 react-player@^2.9.0:
   version "2.9.0"
   resolved "https://registry.npmjs.org/react-player/-/react-player-2.9.0.tgz"
