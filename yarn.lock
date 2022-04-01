@@ -6038,10 +6038,10 @@ react-material-ui-carousel@^2.3.8:
     auto-bind "^2.1.1"
     react-swipeable "^6.1.0"
 
-react-multi-carousel@^2.6.5:
-  version "2.6.5"
-  resolved "https://registry.npmjs.org/react-multi-carousel/-/react-multi-carousel-2.6.5.tgz"
-  integrity sha512-i5iuAm5XRT/h7uBL9/pGWeRsQXzqvjBrPVP1sobKgDKEvfZuKFpYp/alaQhTRM56Jtkb8jZpSqLn52Ku6jJbDg==
+react-multi-carousel@^2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/react-multi-carousel/-/react-multi-carousel-2.8.0.tgz#94a74245989b74211c9fcfa02c71009a3da3f487"
+  integrity sha512-xuxQVGGiH8yWDDWgt9Z9+C+zzoACuBT740cV+6To52DYCwLlQGJIntDFLOCqMsO85Ist1x+630HA8lazb/a/tA==
 
 react-player@^2.9.0:
   version "2.9.0"
