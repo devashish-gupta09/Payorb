@@ -16,6 +16,7 @@ import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 import useFetchEvents from "../../hooks/useFetchEvents";
 import { getMonthDate } from "../../utils/dateTime";
 import { getCategoryString } from "../../utils/events";
+import { DangerouslySetInnerHtml } from "../ButtonCapsule";
 import Capsule from "../Capsule";
 import DashboardCard from "../DashboardCard";
 import DetailRow from "../DetailRow";

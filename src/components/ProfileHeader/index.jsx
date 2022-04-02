@@ -229,7 +229,7 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
         </Dialog>
       )}
       <Grid className={classes.base}>
-        {profileData?.bannerImgUrl ? (
+        {dataUrl || profileData?.bannerImgUrl ? (
           <img src={profileData.bannerImgUrl} className={classes.bannerImg} />
         ) : (
           <Grid

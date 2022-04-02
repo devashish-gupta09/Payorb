@@ -124,11 +124,7 @@ function PostEventCreationDialog(props) {
                 justify="space-between"
                 className={classes.descriptionInfoContainer}
               >
-                <Grid
-                  item
-                  sm={10}
-                  style={{ width: "100%", border: "4px solid" }}
-                >
+                <Grid item sm={10} style={{ width: "100%" }}>
                   <Typography
                     variant={"h6"}
                     gutterBottom
@@ -290,7 +286,6 @@ const styles = makeStyles((theme) => ({
   descriptionInfoContainer: {
     padding: "1em 2em",
     width: "100%",
-    border: "2px solid",
     [theme.breakpoints.down("sm")]: {
       padding: "2em 1em",
     },
