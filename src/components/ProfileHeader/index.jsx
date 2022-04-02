@@ -10,6 +10,7 @@ import {
   useTheme,
 } from "@material-ui/core";
 import { ArrowBack, CloudUpload, Delete, Edit } from "@material-ui/icons";
+import { useRouter } from "next/router";
 
 import * as React from "react";
 
@@ -85,6 +86,8 @@ const styles = makeStyles((theme) => ({
 const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
   const classes = styles();
 
+  const router = useRouter();
+
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const { Alert, showAlert } = useAlertSnackbar();
   const [progressLoader, setProgress] = React.useState(false);
@@ -97,6 +100,10 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
 
   const handleDialog = (ds) => {
     if (typeof ds === "boolean") setDialogOpen(ds);
+  };
+
+  const handleBack = () => {
+    router.back();
   };
 
   const handleSave = async () => {
@@ -248,6 +255,7 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
             icon={<ArrowBack style={{ fontSize: "1.25em" }} />}
             iconBefore={true}
             buttonStyle={`${classes.backButton}`}
+            onClick={handleBack}
           />
         </Grid>
         {isVendor ? (
