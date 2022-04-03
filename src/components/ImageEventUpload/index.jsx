@@ -3,8 +3,8 @@ import {
   Dialog,
   DialogContent,
   Grid,
+  IconButton,
   makeStyles,
-  Tooltip,
 } from "@material-ui/core";
 import { Edit } from "@material-ui/icons";
 import React from "react";
@@ -32,7 +32,7 @@ function ImageEventUpload({ imageProps, croppedImg, handleCroppedImage }) {
   };
 
   return (
-    <div>
+    <div style={{ height: "30vh" }}>
       {dialogOpen && (
         <Dialog open={dialogOpen} onClose={() => handleDialog(false)}>
           <DialogContent className={classes.dialogContentContainer}>
@@ -75,12 +75,33 @@ function ImageEventUpload({ imageProps, croppedImg, handleCroppedImage }) {
           handleDialog(true);
         }}
       >
-        <div className={classes.editDiv}>
-          <Tooltip title="Edit Poster">
-            <Edit style={{ fontSize: "1.5em" }} />
-          </Tooltip>
-        </div>
-        <img {...imageProps} src={croppedImg || imageProps.src}></img>
+        <Grid container justifyContent="flex-end" className={classes.editDiv}>
+          <IconButton
+            size={"small"}
+            style={{
+              boxShadow: "0 0 3px 0 rgba(0,0,0,0.25)",
+              background: "#FFFFFF",
+            }}
+          >
+            <Edit />
+          </IconButton>
+        </Grid>
+
+        {croppedImg || imageProps.src ? (
+          <img {...imageProps} src={croppedImg || imageProps.src}></img>
+        ) : (
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="center"
+            style={{ height: "100%", width: "100%" }}
+          >
+            <img
+              src={"/assets/defaultImageIcon.svg"}
+              style={{ height: "4em", opacity: "0.4" }}
+            />
+          </Grid>
+        )}
       </div>
     </div>
   );
@@ -103,23 +124,20 @@ const styles = makeStyles((theme) => ({
   },
   imageContainer: {
     position: "relative",
-    padding: "2em 0",
+    // padding: "2em 0",
     cursor: "pointer",
+    height: "100%",
   },
   editDiv: {
+    background: "transparent",
     position: "absolute",
     color: "#BDBDBD",
-    padding: "0.3em 0.45em",
-    background: "white",
-    borderRadius: "2em",
-    right: 5,
-    top: 40,
+    padding: "0.5em 0.5em",
+    width: "fit-content",
+    right: "0",
     cursor: "pointer",
-    zIndex: "1",
-    boxShadow: "0px 0px 4px 1px grey",
-    "&:hover": {
-      boxShadow: "0px 0px 4px 2px #79DFDF",
-    },
+    zIndex: "2100",
+    "&:hover": {},
   },
 }));
 

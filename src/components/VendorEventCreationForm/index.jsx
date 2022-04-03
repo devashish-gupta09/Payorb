@@ -43,7 +43,6 @@ import {
   EVENT_MODES,
   EVENT_TYPES,
 } from "../../constants/events";
-import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { getUser } from "../../services/auth";
@@ -57,7 +56,7 @@ import { buildVendorDashboardUrl, getVendorIdFromUrl } from "../../utils/url";
 import { createEventValidationSchema } from "../../validations/events";
 import { FirebaseAuth } from "../AuthenticationContext";
 import ButtonCapsule from "../ButtonCapsule";
-import ImageEventUpload from "../ImageEventUpload";
+import { EventCoverUpload } from "../EventCoverUpload";
 import OneOnOneDateSelector from "../OneOnOneDateSelector";
 import OneTimeDateSelector from "../OneTimeDateSelector";
 import PageTitle from "../PageTitle";
@@ -988,21 +987,34 @@ function VendorEventCreationForm({
 
             <Grid item sm={4} className={classes.rightContainer}>
               <Grid className={`${classes.container} ${classes.containerSave}`}>
-                <FormControl variant="outlined">
+                <FormControl
+                  variant="outlined"
+                  style={{ width: "100%", marginBottom: "1em" }}
+                >
                   <FormLabel>
-                    <Typography variant="h6" style={{ fontWeight: "bold" }}>
+                    <Typography
+                      variant="h6"
+                      style={{ fontWeight: "bold", marginBottom: "0.75em" }}
+                    >
                       Event Cover
                     </Typography>
                   </FormLabel>
 
-                  <ImageEventUpload
+                  <EventCoverUpload
+                    croppedImgs={[]}
+                    eventDate={{
+                      coverBannerImages: [],
+                    }}
+                  />
+
+                  {/* <ImageEventUpload
                     croppedImg={croppedImg}
                     handleCroppedImage={handleCroppedImage}
                     imageProps={{
                       src: formik.values.photoUrl || DEFAULT_EVENT_IMAGE,
                       className: classes.eventImage,
                     }}
-                  />
+                  /> */}
                 </FormControl>
 
                 {formik.values.type !== EVENT_TYPES.ONE_ON_ONE && (

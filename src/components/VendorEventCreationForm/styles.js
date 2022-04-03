@@ -20,6 +20,7 @@ export const styles = makeStyles((theme) => ({
     },
   },
   containerSave: {
+    width: "100%",
     height: "100%",
   },
   leftContainer: {
