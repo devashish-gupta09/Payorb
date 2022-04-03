@@ -61,4 +61,11 @@ theme.typography.h2 = {
   },
 };
 
+theme.typography.subtitle1 = {
+  fontSize: "14px",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1.4em",
+  },
+};
+
 export default theme;

@@ -23,7 +23,7 @@ function FeatureSectionHome({ content }) {
   const classes = styles();
   return (
     <Grid className={classes.root}>
-      <Typography variant="h4" className={classes.sectionTitle}>
+      <Typography variant="h3" className={classes.sectionTitle}>
         {content.title}
       </Typography>
       <ColoredLine />

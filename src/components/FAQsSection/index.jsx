@@ -22,7 +22,7 @@ function FaqsSection({ content }) {
   return (
     <Box className={classes.bg}>
       <Container className={classes.container} container>
-        <Typography variant="h2" className={classes.heading} align="center">
+        <Typography className={classes.heading} align="center">
           {content.title}
         </Typography>
         <ColoredLine />

@@ -59,7 +59,7 @@ function FeatureBenefitsSection({ content }) {
           1. Evolve your services as you grow.
         </p>
         <b>Promote your services, with just one click.</b>
-        <br />
+
         <p>
           Tired of spending hours reaching out to people over calls & messages
           to promote your services? Our promotional dashboard is just the
