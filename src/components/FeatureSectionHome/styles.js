@@ -58,7 +58,8 @@ export const styles = makeStyles((theme) => ({
   sectionTitle: {
     width: "100%",
     color: "black",
-    fontWeight: "bolder",
+    fontSize: "40px",
+    fontWeight: "600",
     textAlign: "center",
     alignSelf: "center",
     justifyContent: "center",

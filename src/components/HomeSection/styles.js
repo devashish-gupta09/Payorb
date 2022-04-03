@@ -28,6 +28,8 @@ export const styles = makeStyles((theme) => ({
     color: "black",
     fontWeight: "bolder",
     paddingBottom: "0.25em",
+    fontFamily: "'Kadwa', serif",
+    lineHeight: "1",
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.6em",
       textAlign: "center",

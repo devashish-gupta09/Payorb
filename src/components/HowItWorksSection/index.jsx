@@ -23,7 +23,7 @@ function HowItWorksSection({ content }) {
   return (
     <Box className={classes.bg}>
       <Container className={classes.container} container>
-        <Typography variant="h2" className={classes.heading} align="center">
+        <Typography variant="h3" className={classes.heading} align="center">
           {content.title}
         </Typography>
         <ColoredLine />

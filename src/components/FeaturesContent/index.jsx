@@ -14,7 +14,7 @@ function FeaturesContent({ content }) {
       <Grid className={classes.textContainer}>
         <Grid container sx={{ whiteSpace: "nowrap", overflowX: "auto" }}>
           <Typography
-            variant="h2"
+            variant="h3"
             className={`${classes.titleSection} ${classes.titleSection1}`}
           >
             {content.titleSection1}&nbsp;{" "}

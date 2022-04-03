@@ -19,9 +19,7 @@ function FeatureSection({ content }) {
   const classes = styles();
   return (
     <Grid className={classes.root}>
-      <Typography variant="h4" className={classes.sectionTitle}>
-        {content.title}
-      </Typography>
+      <Typography className={classes.sectionTitle}>{content.title}</Typography>
       <ColoredLine />
       <Grid className={classes.container} container alignItems={"center"}>
         <Grid

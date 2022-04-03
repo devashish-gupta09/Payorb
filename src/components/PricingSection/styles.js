@@ -10,18 +10,21 @@ export const styles = makeStyles((theme) => ({
     },
   },
   heading: {
-    fontSize: "2.5em",
-    fontWeight: "bold",
+    marginBottom: "-0.25em",
+    fontSize: "40px",
+    fontWeight: "600",
     color: "#000000",
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.5em",
     },
   },
   box: {
+    paddingTop: "1em",
     display: "flex",
     flexDirection: "row",
     [theme.breakpoints.down("sm")]: {
       flexDirection: "column",
+      paddingTop: "0em",
       width: "100%",
     },
   },
@@ -36,31 +39,32 @@ export const styles = makeStyles((theme) => ({
   },
   planContainer: {
     height: "fit-content",
-    width: "800px",
-    padding: "1.5em 2em",
+    width: "65%",
+    padding: "0.5em 2.25em",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
-      padding: "1em",
+      padding: "1em 0",
     },
   },
   head: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
   },
-  title: {
-    width: "40%",
-    textAlign: "left",
-  },
+  // title: {
+  //   width: "40%",
+  //   textAlign: "left",
+  // },
   heading1: {
-    fontSize: "2.2em",
+    fontSize: "32px",
     fontWeight: "300",
   },
   heading2: {
-    fontSize: "2.2em",
+    fontSize: "32px",
     fontWeight: "bold",
   },
   contact: {
@@ -69,6 +73,8 @@ export const styles = makeStyles((theme) => ({
   },
   contactText: {
     color: "#00D4FF",
+    fontWeight: "400",
+    paddingTop: "0.25em",
     textDecoration: "underline",
   },
   plan: {
@@ -77,6 +83,10 @@ export const styles = makeStyles((theme) => ({
     margin: "2em 0",
     padding: "1.5em",
     paddingBottom: "4em",
+    [theme.breakpoints.down("sm")]: {
+      padding: "1em",
+      margin: "2em 0 1em 0",
+    },
   },
   planHead: {
     display: "flex",
@@ -85,7 +95,9 @@ export const styles = makeStyles((theme) => ({
   },
   planName: {
     fontFamily: "'Playfair Display', serif",
-    paddingBottom: "1em",
+    marginBottom: "1em",
+    paddingBottom: "0.25em",
+    borderBottom: "2px solid #00D4FF",
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.8em !important",
       fontWeight: "bold",

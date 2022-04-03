@@ -15,7 +15,7 @@ const ColoredLine = () => (
     style={{
       border: "0",
       backgroundColor: "#00D4FF",
-      height: "0.125em",
+      height: "0.25em",
       width: "4em",
     }}
   />
@@ -26,7 +26,7 @@ function PricingSection({ content }) {
 
   return (
     <Container className={classes.container} container>
-      <Typography variant="h2" className={classes.heading} align="center">
+      <Typography className={classes.heading} align="center">
         {content.title}
       </Typography>
       <ColoredLine />
@@ -35,15 +35,13 @@ function PricingSection({ content }) {
         <Box className={classes.planContainer}>
           <Box className={classes.head}>
             <Box className={classes.title}>
-              {/* <Typography variant="h5" className={classes.heading1}>
-                Start now your
-              </Typography> */}
-              <Typography variant="h5" className={classes.heading2}>
-                Sign up for Free Today!
-              </Typography>
+              <Typography className={classes.heading1}>Sign up for</Typography>
+              <Typography className={classes.heading2}>Free Today!</Typography>
             </Box>
             <Box className={classes.contact}>
-              <Typography variant="subtitle1">Are you a freelancer?</Typography>
+              <Typography variant="subtitle1" style={{ fontWeight: "400" }}>
+                Are you a freelancer?
+              </Typography>
               <Typography className={classes.contactText} variant="subtitle1">
                 Contact Us
               </Typography>
