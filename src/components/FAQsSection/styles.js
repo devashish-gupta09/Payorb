@@ -8,15 +8,16 @@ export const styles = makeStyles((theme) => ({
   },
   container: {
     height: "fit-content",
-    padding: "4em 2em",
+    padding: "2em 2em",
     [theme.breakpoints.down("sm")]: {
       height: "fit-content",
       padding: "2em 1em",
     },
   },
   heading: {
-    fontSize: "2.5em",
-    fontWeight: "bold",
+    marginBottom: "-0.25em",
+    fontSize: "40px",
+    fontWeight: "600",
     color: "#000000",
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.5em",

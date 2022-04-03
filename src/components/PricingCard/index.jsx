@@ -1,9 +1,9 @@
-import { Box, Typography } from "@material-ui/core";
+import { Box, Grid, Typography } from "@material-ui/core";
 import React from "react";
 
 import { styles } from "./styles";
 
-function PricingCard({ description, image }) {
+function PricingCard({ image }) {
   const classes = styles();
 
   return (
@@ -32,9 +32,9 @@ function PricingCard({ description, image }) {
           It doesn’t have to be that hard for you. Partner with PayOrb and kick
           off your Solopreneur journey <b>The Smart Way!</b>
         </Typography>
-        <Box className={classes.imgBox}>
+        <Grid container alignItems="center" justifyContent="center">
           <img src={image} />
-        </Box>
+        </Grid>
       </Box>
     </Box>
   );

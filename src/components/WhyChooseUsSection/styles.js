@@ -10,15 +10,15 @@ export const styles = makeStyles((theme) => ({
     alignItems: "center",
     padding: "4em 2em 5em 2em",
     background:
-      "linear-gradient(180deg, #BCF4F1 0%, rgba(0, 212, 255, 0.33) 157.68%);",
+      "linear-gradient(180deg, rgba(188, 244, 241, 1) 0%, rgba(0, 212, 255, 0.5) 90%);",
     [theme.breakpoints.down("sm")]: {
       minHeight: "fit-content",
       padding: "2em 1em",
     },
   },
   heading: {
-    fontSize: "2.5em",
-    fontWeight: "bold",
+    fontSize: "40px",
+    fontWeight: "600",
     color: "#000000",
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.5em",

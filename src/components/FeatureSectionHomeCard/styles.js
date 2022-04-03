@@ -42,9 +42,9 @@ export const styles = makeStyles((theme) => ({
   },
   title: {
     padding: "1em 0.5em 0.25em 0",
-    fontWeight: "bold",
-    fontSize: "1.25em",
-    color: "#333333",
+    fontWeight: "600",
+    fontSize: "18px",
+    color: "#2F2F2F",
     height: "max-content",
     [theme.breakpoints.down("sm")]: {
       padding: "0",
@@ -52,9 +52,11 @@ export const styles = makeStyles((theme) => ({
     },
   },
   description: {
-    fontSize: "0.8em",
+    fontSize: "15",
+    // fontWeight: "500",
     paddingBottom: "2%",
-    color: appColors.grey,
+    color: "#7B7B7B",
+    lineHeight: "22px",
     [theme.breakpoints.down("sm")]: {
       paddingTop: "2%",
       fontSize: "0.75em",
