@@ -3,10 +3,9 @@ import {
   makeStyles,
   Tooltip,
   Typography,
-  useMediaQuery,
   useTheme,
 } from "@material-ui/core";
-import { Add } from "@material-ui/icons";
+import { Add, Close } from "@material-ui/icons";
 import React, { useRef } from "react";
 import "cropperjs/dist/cropper.css";
 import { Cropper } from "react-cropper";
@@ -19,18 +18,20 @@ function ImageSelectAndCrop({
   handleDataUrl,
   title = "Select image",
   cropperAspectRatio,
+  handleClose,
+  allowAdd = true,
 }) {
+  console.log("ALLOW ADD", allowAdd);
   const classes = styles();
   const [imgSrc, setImgSrc] = React.useState(imagePath);
   const { Alert, showAlert } = useAlertSnackbar();
   const cropperRef = useRef();
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+  // const matches = useMediaQuery(theme.breakpoints.down("sm"));
 
   const onInputChange = (e) => {
     // Uploading a single file
     if (e.target.files.length === 1) {
-      console.log("Shajdhdjkshdjkash");
       if (e.target.files[0].size > 3145728) {
         showAlert("Max image size < 3 MB", ALERT_TYPES.ERROR);
         return;
@@ -75,39 +76,70 @@ function ImageSelectAndCrop({
         style={{ paddingBottom: "1em" }}
       >
         {Alert()}
-        <Typography style={{ fontWeight: "bold" }}>{title}</Typography>
+        <Typography style={{ fontWeight: "600", fontSize: "1.125em" }}>
+          {title}
+        </Typography>
 
-        <div className={classes.addButton}>
-          <label>
-            <Tooltip title="Press button to choose file">
-              <Typography
-                align="center"
-                style={{
-                  padding: "0 1em",
-                }}
-              >
-                <Add />
-              </Typography>
-            </Tooltip>
-            <input
-              type="file"
-              className="image-upload"
-              accept="image/*"
-              onChange={onInputChange}
-            />
-          </label>
-        </div>
+        <Grid container style={{ width: "fit-content" }}>
+          {/* {allowAdd ? ( */}
+          <div className={classes.addButton}>
+            <label>
+              <Tooltip title="Press button to choose file">
+                <Typography
+                  align="center"
+                  style={{
+                    padding: "0 1em",
+                  }}
+                >
+                  <Add />
+                </Typography>
+              </Tooltip>
+              <input
+                type="file"
+                className="image-upload"
+                accept="image/*"
+                onChange={onInputChange}
+              />
+            </label>
+          </div>
+          {/* ) : null} */}
+
+          {handleClose ? <Close onClick={handleClose} /> : null}
+        </Grid>
       </Grid>
-
-      <Cropper
-        checkCrossOrigin={false}
-        src={imgSrc}
-        style={{ height: 300, width: "100%" }}
-        guides={true}
-        ref={cropperRef}
-        crop={handleOnCrop}
-        aspectRatio={cropperAspectRatio ?? NaN}
-      />
+      {imgSrc ? (
+        <Cropper
+          checkCrossOrigin={false}
+          src={imgSrc}
+          style={{ height: 300, width: "100%" }}
+          guides={true}
+          ref={cropperRef}
+          crop={handleOnCrop}
+          aspectRatio={cropperAspectRatio ?? NaN}
+        />
+      ) : (
+        <Grid
+          container
+          alignItems="center"
+          justifyContent="center"
+          style={{
+            height: "300px",
+            width: "100%",
+            background: "#F6F6FA",
+            borderRadius: "8px",
+          }}
+        >
+          <Add
+            style={{
+              color: "#DDDDDD",
+              border: "2px solid",
+              borderRadius: "50%",
+              transform: "scale(4)",
+              background: "#F6F6FA",
+            }}
+          />
+        </Grid>
+      )}
     </div>
   );
 }

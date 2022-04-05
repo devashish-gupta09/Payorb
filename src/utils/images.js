@@ -18,7 +18,7 @@ export const IMAGE_DIR = {
 export class ImageUtils {
   static async handleImageUpload(image, fileName) {
     const type = ImageUtils.getImageExtFromDataUrl(image);
-    console.log("TYPE", type);
+
     const ref = firebase.storage().ref();
     const childRef = ref.child(`${fileName}.${type.split("/")[1]}`);
 

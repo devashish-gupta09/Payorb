@@ -6,13 +6,21 @@ import {
   IconButton,
   makeStyles,
 } from "@material-ui/core";
-import { Edit } from "@material-ui/icons";
+import { CloseRounded, Edit } from "@material-ui/icons";
 import React from "react";
 import "cropperjs/dist/cropper.css";
 
+import { COVER_BANNER_LIMIT } from "../EventCoverUpload";
 import ImageSelectAndCrop from "../ImageSelectAndCrop";
 
-function ImageEventUpload({ imageProps, croppedImg, handleCroppedImage }) {
+function ImageEventUpload({
+  index,
+  imageProps,
+  croppedImgs,
+  handleCroppedImage,
+  handleDelete,
+  eventData,
+}) {
   const classes = styles();
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [dataUrl, setDataUrl] = React.useState();
@@ -31,35 +39,135 @@ function ImageEventUpload({ imageProps, croppedImg, handleCroppedImage }) {
     setDialogOpen(false);
   };
 
+  const handleAddMore = () => {
+    handleCroppedImage(dataUrl);
+  };
+
+  const handleClose = () => {
+    setDialogOpen(false);
+  };
+
   return (
     <div style={{ height: "30vh" }}>
       {dialogOpen && (
-        <Dialog open={dialogOpen} onClose={() => handleDialog(false)}>
+        <Dialog
+          PaperProps={{
+            className: classes.dialogPaper,
+          }}
+          open={dialogOpen}
+          onClose={() => handleDialog(false)}
+        >
           <DialogContent className={classes.dialogContentContainer}>
-            <ImageSelectAndCrop
-              title="Select poster for event"
-              imagePath={croppedImg || imageProps.src}
-              handleDataUrl={handleDataUrl}
-              // cropperAspectRatio={16 / 9}
-            />
+            <div style={{ padding: "1em" }}>
+              <ImageSelectAndCrop
+                title="Add event cover"
+                imagePath={croppedImgs?.[index] || imageProps.src}
+                handleDataUrl={handleDataUrl}
+                handleClose={handleClose}
+                allowAdd={
+                  croppedImgs?.length < COVER_BANNER_LIMIT ? true : false
+                }
+                // cropperAspectRatio={16 / 9}
+              />
+            </div>
+
+            <Grid container style={{ padding: "0 0.5em 0 1em" }}>
+              {(croppedImgs ?? eventData?.coverBannerImages)?.map(
+                (cover, index) => (
+                  <Grid
+                    item
+                    sm={3}
+                    key={index}
+                    style={{
+                      height: "3.5em",
+                    }}
+                  >
+                    <Grid
+                      style={{
+                        height: "100%",
+                        width: "100%",
+                        paddingRight: "0.5em",
+                      }}
+                    >
+                      <Grid
+                        style={{
+                          height: "100%",
+                          width: "100%",
+                          borderRadius: "5px",
+                          // overflow: "hidden",
+                          position: "relative",
+                        }}
+                      >
+                        <CloseRounded
+                          onClick={
+                            handleDelete
+                              ? () => {
+                                  handleDelete(index);
+                                }
+                              : null
+                          }
+                          style={{
+                            color: "grey",
+                            background: "white",
+                            boxShadow: "0 0 0 2px solid",
+                            borderRadius: "50%",
+                            cursor: "pointer",
+                            position: "absolute",
+                            right: "-12",
+                            top: "-12",
+                            zIndex: "500",
+                            padding: "2.5px",
+                          }}
+                        />
+                        <img
+                          src={cover}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                )
+              )}
+            </Grid>
 
             <Grid
               container
-              justify="center"
+              justifyContent="flex-end"
               style={{
+                background: "#F6F6FA",
                 marginTop: "0.5em",
-                borderTop: "4px solid grey",
-                padding: "0.5em 0",
+                padding: "1em",
               }}
             >
+              {(croppedImgs ?? eventData?.coverBannerImages)?.length <
+              COVER_BANNER_LIMIT - 1 ? (
+                <Button
+                  onClick={handleAddMore}
+                  style={{
+                    padding: "0.25em 1.5em",
+                    borderRadius: "25px",
+                    border: "2px solid #8B8B8B",
+                    color: "#8B8B8B",
+                    textTransform: "none",
+                    marginRight: "0.5em",
+                  }}
+                >
+                  Add More
+                </Button>
+              ) : null}
+
               <Button
                 onClick={handleSave}
                 style={{
-                  background: "#79DFDF",
-                  padding: "0.75em 1.5em",
+                  padding: "0.25em 1.5em",
                   borderRadius: "25px",
-                  fontWeight: "bold",
-                  color: "white",
+                  border: "2px solid #8B8B8B",
+                  color: "#8B8B8B",
+                  textTransform: "none",
                 }}
               >
                 Save
@@ -81,14 +189,18 @@ function ImageEventUpload({ imageProps, croppedImg, handleCroppedImage }) {
             style={{
               boxShadow: "0 0 3px 0 rgba(0,0,0,0.25)",
               background: "#FFFFFF",
+              padding: "0.25em",
             }}
           >
             <Edit />
           </IconButton>
         </Grid>
 
-        {croppedImg || imageProps.src ? (
-          <img {...imageProps} src={croppedImg || imageProps.src}></img>
+        {croppedImgs?.[index] || imageProps.src ? (
+          <img
+            {...imageProps}
+            src={croppedImgs?.[index] || imageProps.src}
+          ></img>
         ) : (
           <Grid
             container
@@ -110,9 +222,11 @@ function ImageEventUpload({ imageProps, croppedImg, handleCroppedImage }) {
 const styles = makeStyles((theme) => ({
   dialogContentContainer: {
     height: "fit-content",
-    width: "fit-content",
     "& img ": {
       maxWidth: "100%",
+    },
+    "&.MuiDialogContent-root": {
+      padding: 0,
     },
   },
   "box-2": {
@@ -136,8 +250,18 @@ const styles = makeStyles((theme) => ({
     width: "fit-content",
     right: "0",
     cursor: "pointer",
-    zIndex: "2100",
+    zIndex: "200",
     "&:hover": {},
+  },
+  dialogPaper: {
+    width: "30%",
+    padding: 0,
+    [theme.breakpoints.down("sm")]: {
+      width: "100vw",
+    },
+    "&.MuiDialog-paper": {
+      padding: 0,
+    },
   },
 }));
 

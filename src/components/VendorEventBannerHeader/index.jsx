@@ -94,6 +94,7 @@ const VendorEventBannerHeader = ({
   croppedCoverImage,
   handleBannerCroppedImage,
   isVendor,
+  customBackHandler,
 }) => {
   const classes = styles();
 
@@ -214,7 +215,7 @@ const VendorEventBannerHeader = ({
             icon={<ArrowBack style={{ fontSize: "1.25em" }} />}
             iconBefore={true}
             buttonStyle={`${classes.backButton}`}
-            onClick={handleBack}
+            onClick={customBackHandler ?? handleBack}
           />
         </Grid>
         {isVendor ? (

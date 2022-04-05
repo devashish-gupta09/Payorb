@@ -56,7 +56,7 @@ import { buildVendorDashboardUrl, getVendorIdFromUrl } from "../../utils/url";
 import { createEventValidationSchema } from "../../validations/events";
 import { FirebaseAuth } from "../AuthenticationContext";
 import ButtonCapsule from "../ButtonCapsule";
-import { EventCoverUpload } from "../EventCoverUpload";
+import { COVER_BANNER_LIMIT, EventCoverUpload } from "../EventCoverUpload";
 import OneOnOneDateSelector from "../OneOnOneDateSelector";
 import OneTimeDateSelector from "../OneTimeDateSelector";
 import PageTitle from "../PageTitle";
@@ -113,6 +113,11 @@ function VendorEventCreationForm({
   handleClose,
   trialClass,
 }) {
+  // event.coverBannerImages = [
+  //   "/assets/footer-bg.png",
+  //   "/assets/feature-page-section.png",
+  //   "/assets/profile.jpg",
+  // ];
   const classes = styles();
   const router = useRouter();
   const [dialog, setDialog] = React.useState({ display: false, text: "" });
@@ -122,6 +127,8 @@ function VendorEventCreationForm({
   const [customMessageRows, setCustomMessageRows] = React.useState(3);
   const [croppedImg, setCroppedImage] = React.useState();
   const [croppedCoverImage, setCroppedCoverImage] = React.useState();
+  const [croppedCoverBannerImages, setCroppedCoverBannerImages] =
+    React.useState(event?.coverBannerImages ?? []);
   const theme = useTheme();
   const [eventsLoading, setEventsLoading] = React.useState(false);
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
@@ -164,9 +171,14 @@ function VendorEventCreationForm({
     setCroppedCoverImage(data);
   }, []);
 
-  const handleCroppedImage = React.useCallback((data) => {
-    setCroppedImage(data);
-  }, []);
+  const handleCroppedImgs = React.useCallback(
+    (data) => {
+      if (croppedCoverBannerImages.length < COVER_BANNER_LIMIT) {
+        setCroppedCoverBannerImages([...croppedCoverBannerImages, data]);
+      }
+    },
+    [croppedCoverBannerImages]
+  );
 
   const formik = useFormik({
     initialValues: event || getCreationFormInitialState(trialClass),
@@ -217,19 +229,21 @@ function VendorEventCreationForm({
             formik.setFieldValue("link", formatedLink);
 
             let eventImageUrls;
-            if (croppedImg) {
-              const fileName = ImageUtils.buildImageFileName(
-                IMAGE_TYPE.EVENT_IMAGE,
-                user.uid,
-                formatedLink,
-                0
-              );
-              eventImageUrls = await ImageUtils.handleImageUpload(
-                croppedImg,
-                fileName
+            if (croppedCoverBannerImages.length > 0) {
+              eventImageUrls = await Promise.all(
+                croppedCoverBannerImages.map(async (coverBannerImg) => {
+                  const fileName = ImageUtils.buildImageFileName(
+                    IMAGE_TYPE.EVENT_IMAGE,
+                    user.uid,
+                    formatedLink,
+                    0
+                  );
+                  return ImageUtils.handleImageUpload(coverBannerImg, fileName);
+                })
               );
             }
 
+            // Top Event Banner
             let eventCoverUrl;
             if (croppedCoverImage) {
               const fileName = ImageUtils.buildImageFileName(
@@ -249,7 +263,8 @@ function VendorEventCreationForm({
             await createEvent({
               event: {
                 ...req,
-                photoUrl: eventImageUrls,
+                // photoUrl: eventImageUrls,
+                coverBannerImages: eventImageUrls,
                 url: formatedLink,
                 coverImgUrl: eventCoverUrl,
               },
@@ -448,11 +463,6 @@ function VendorEventCreationForm({
     }
   };
 
-  const handleSlotDurationChange = (event) => {
-    const hours = parseFloat(parseFloat(event.target.value).toFixed(1));
-    formik.setFieldValue("slotDuration", hours);
-  };
-
   React.useEffect(() => {
     if (event && clone && !edit) {
       formik.setFieldValue(
@@ -483,6 +493,21 @@ function VendorEventCreationForm({
     }
   }, [edit]);
 
+  const handleCoverBannerDelete = async (_index) => {
+    const result = croppedCoverBannerImages.filter(
+      (_, index) => index !== _index
+    );
+    setCroppedCoverBannerImages(result);
+    if (edit) {
+      await editEvent({
+        ...event,
+        coverBannerImages: croppedCoverBannerImages?.filter(
+          (_, index) => index !== _index
+        ),
+      });
+    }
+  };
+
   return (
     <div
       style={{ position: "relative", width: edit || clone ? "80vw" : "99vw" }}
@@ -504,6 +529,7 @@ function VendorEventCreationForm({
             eventData={formik.values}
             handleBannerCroppedImage={handleBannerCroppedImage}
             croppedCoverImage={croppedCoverImage || formik.values.coverImgUrl}
+            customBackHandler={handleClose}
           />
         </div>
       </Grid>
@@ -513,7 +539,6 @@ function VendorEventCreationForm({
           height: "100vh",
           width: "100%",
           background: "url(/assets/create-event-bg.svg)",
-          // backgroundSize: "",
           backgroundRepeat: "repeat",
         }}
       ></Grid>
@@ -1001,20 +1026,11 @@ function VendorEventCreationForm({
                   </FormLabel>
 
                   <EventCoverUpload
-                    croppedImgs={[]}
-                    eventDate={{
-                      coverBannerImages: [],
-                    }}
+                    croppedImgs={croppedCoverBannerImages}
+                    eventData={event}
+                    handleDelete={handleCoverBannerDelete}
+                    handleCroppedImgs={handleCroppedImgs}
                   />
-
-                  {/* <ImageEventUpload
-                    croppedImg={croppedImg}
-                    handleCroppedImage={handleCroppedImage}
-                    imageProps={{
-                      src: formik.values.photoUrl || DEFAULT_EVENT_IMAGE,
-                      className: classes.eventImage,
-                    }}
-                  /> */}
                 </FormControl>
 
                 {formik.values.type !== EVENT_TYPES.ONE_ON_ONE && (
