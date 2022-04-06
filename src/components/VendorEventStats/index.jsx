@@ -14,8 +14,6 @@ import numeral from "numeral";
 import React from "react";
 import Checkbox from "@material-ui/core/Checkbox";
 
-
-
 import { globalStyles } from "../../../styles/globalStyles";
 import { EVENT_STATUS } from "../../constants/events";
 import useFetchEvents from "../../hooks/useFetchEvents";
@@ -33,52 +31,52 @@ const styles = makeStyles((theme) => ({
   },
   container: {
     // maxHeight: 300,
-    boxShadow:"0px 1px 0px #DADBE4",
-    border:"1px solid #DCDCDC",
+    boxShadow: "0px 1px 0px #DADBE4",
+    border: "1px solid #DCDCDC",
   },
   title: {
     fontSize: "1.2em",
-    marginLeft:"3.5em",
-    marginTop:"2em",
+    marginLeft: "3.5em",
+    marginTop: "2em",
   },
-  tableStyle:{
-    backgroundColor:"#DCDCDC",
-    color:"#767676",
+  tableStyle: {
+    backgroundColor: "#DCDCDC",
+    color: "#767676",
   },
   ul: {
-    listStyle: 'none',
+    listStyle: "none",
     padding: 0,
     marginTop: "1em",
-    display: 'flex',
-    float:"right",
-    borderStyle:"1px solid #CFCFCF",
+    display: "flex",
+    float: "right",
+    borderStyle: "1px solid #CFCFCF",
   },
-  status:{
-    borderRadius:"2em",
+  status: {
+    borderRadius: "2em",
     fontWeight: "500",
     fontSize: "0.8em",
-    padding:"0.5em 0 0.5em 0",
+    padding: "0.5em 0 0.5em 0",
   },
-  statusCompleted:{
-    border:"1px solid #1ECE7A",
-    backgroundColor:"rgba(30, 206, 122, 0.2)",
-    color:"#1ECE7A",
+  statusCompleted: {
+    border: "1px solid #1ECE7A",
+    backgroundColor: "rgba(30, 206, 122, 0.2)",
+    color: "#1ECE7A",
   },
-  statusOnGoing:{
-    border:"1px solid #5887FF",
-    backgroundColor:"rgba(88, 135, 255, 0.1)",
-    color:"#5887FF",
-    },
-  statusUpcoming:{
-    border:"1px solid #FFB648",
-    backgroundColor:"rgba(255, 172, 50, 0.1)",
-    color:"#5887FF",
+  statusOnGoing: {
+    border: "1px solid #5887FF",
+    backgroundColor: "rgba(88, 135, 255, 0.1)",
+    color: "#5887FF",
   },
-  checkbox:{
-    position:"relative",
-    marginTop:"0.8em",
-    fontSize:"0.9em",
-  }
+  statusUpcoming: {
+    border: "1px solid #FFB648",
+    backgroundColor: "rgba(255, 172, 50, 0.1)",
+    color: "#5887FF",
+  },
+  checkbox: {
+    position: "relative",
+    marginTop: "0.8em",
+    fontSize: "0.9em",
+  },
 }));
 
 const getEventStatus = (startDate, endDate) => {
@@ -109,7 +107,7 @@ function VendorEventsStats() {
   const classes = styles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  
+
   const { loading, events, changeLimit, loadMoreEvents } = useFetchEvents(
     true,
     {
@@ -125,7 +123,7 @@ function VendorEventsStats() {
     }
     setPage(newPage);
   };
-  
+
   const handleChangeRowsPerPage = async (event) => {
     setRowsPerPage(event.target.value);
     // Trigger To fetch events
@@ -142,7 +140,6 @@ function VendorEventsStats() {
   const handleCheckboxChange = (event) => {
     setChecked(event.target.checked);
   };
-
 
   if (loading) {
     return (
@@ -165,7 +162,7 @@ function VendorEventsStats() {
       )
     );
 
-  const pageCount=Math.ceil(rows.length/5);
+    const pageCount = Math.ceil(rows.length / 5);
     return (
       <Grid className={classes.root}>
         <Typography
@@ -178,18 +175,23 @@ function VendorEventsStats() {
           <TableContainer className={classes.container}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
-                <TableRow className={classes.tableStyle} >
-                <Checkbox
-                        color="primary"
-                        onChange={handleCheckboxChange}
-                        size="small"
-                        className={classes.checkbox}
-                      />
+                <TableRow className={classes.tableStyle}>
+                  <Checkbox
+                    color="primary"
+                    onChange={handleCheckboxChange}
+                    size="small"
+                    className={classes.checkbox}
+                  />
                   {columns.map((column) => (
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ minWidth: column.minWidth, backgroundColor:"#DCDCDC",  color:"#767676", fontWeight:"600", }}
+                      style={{
+                        minWidth: column.minWidth,
+                        backgroundColor: "#DCDCDC",
+                        color: "#767676",
+                        fontWeight: "600",
+                      }}
                     >
                       {column.label}
                     </TableCell>
@@ -197,12 +199,17 @@ function VendorEventsStats() {
                 </TableRow>
               </TableHead>
               <TableBody>
-              
                 {rows
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
                     return (
-                      <TableRow hover role="checkbox" tabIndex={-1} key={index} className={classes.container}>
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={index}
+                        className={classes.container}
+                      >
                         <Checkbox
                           color="primary"
                           onChange={handleCheckboxChange}
@@ -213,15 +220,29 @@ function VendorEventsStats() {
                           const value = row[column.id];
                           return (
                             <TableCell key={column.id} align={column.align}>
-                              {column.format && typeof value === "number"
-                                ? column.format(value)
-                                :(value === "Completed"?
-                                 (<Typography className={`${classes.status} ${classes.statusCompleted}`}>{value}</Typography>)
-                                 :(value === "On Going"?
-                                 (<Typography className={`${classes.status} ${classes.statusOnGoing}`}>{value}</Typography>)
-                                 :(value === "Upcoming"?
-                                 (<Typography className={`${classes.status} ${classes.statusUpcoming}`}>{value}</Typography>)
-                                 :value)))}
+                              {column.format && typeof value === "number" ? (
+                                column.format(value)
+                              ) : value === "Completed" ? (
+                                <Typography
+                                  className={`${classes.status} ${classes.statusCompleted}`}
+                                >
+                                  {value}
+                                </Typography>
+                              ) : value === "On Going" ? (
+                                <Typography
+                                  className={`${classes.status} ${classes.statusOnGoing}`}
+                                >
+                                  {value}
+                                </Typography>
+                              ) : value === "Upcoming" ? (
+                                <Typography
+                                  className={`${classes.status} ${classes.statusUpcoming}`}
+                                >
+                                  {value}
+                                </Typography>
+                              ) : (
+                                value
+                              )}
                             </TableCell>
                           );
                         })}
@@ -237,7 +258,7 @@ function VendorEventsStats() {
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
             count={rows}
-         />
+          />
         </DashboardCard>
       </Grid>
     );

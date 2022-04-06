@@ -7,10 +7,12 @@ import ImageEventUpload from "../ImageEventUpload";
 export const COVER_BANNER_LIMIT = 4;
 
 export const EventCoverUpload = ({
+  allowUploads = true,
   croppedImgs,
   handleCroppedImgs,
   eventData,
   handleDelete,
+  height,
 }) => {
   const classes = styles();
   const [viewPortIndex, setViewPortIndex] = useState(0);
@@ -45,28 +47,35 @@ export const EventCoverUpload = ({
           className={classes.arrowContainer}
         >
           <IconButton size="small" onClick={decrementViewPortIndex}>
-            <KeyboardArrowLeft />
+            <KeyboardArrowLeft className={classes.arrow} />
           </IconButton>
           <IconButton size="small" onClick={incrementViewPortIndex}>
-            <KeyboardArrowRight />
+            <KeyboardArrowRight className={classes.arrow} />
           </IconButton>
         </Grid>
       ) : null}
 
-      <Grid style={{ height: "27.5vh", width: "100%" }}>
-        <ImageEventUpload
-          index={viewPortIndex}
-          croppedImgs={croppedImgs}
-          handleCroppedImage={handleCroppedImgs}
-          imageProps={{
-            src:
-              croppedImgs?.[viewPortIndex] ||
-              eventData?.coverBannerImages[viewPortIndex],
-            className: classes.eventImage,
-          }}
-          eventData={eventData}
-          handleDelete={handleDelete}
-        />
+      <Grid style={{ height: height ? height : "27.5vh", width: "100%" }}>
+        {allowUploads ? (
+          <ImageEventUpload
+            index={viewPortIndex}
+            croppedImgs={croppedImgs}
+            handleCroppedImage={handleCroppedImgs}
+            imageProps={{
+              src:
+                croppedImgs?.[viewPortIndex] ||
+                eventData?.coverBannerImages[viewPortIndex],
+              className: classes.eventImage,
+            }}
+            eventData={eventData}
+            handleDelete={handleDelete}
+          />
+        ) : (
+          <img
+            src={croppedImgs[viewPortIndex]}
+            style={{ height: "100%", width: "100%" }}
+          />
+        )}
       </Grid>
       <Grid
         container
@@ -136,7 +145,10 @@ const styles = makeStyles((theme) => ({
   },
   arrowContainer: {
     position: "absolute",
-    height: "100%",
+    height: "fit-content",
+    top: 0,
+    bottom: 0,
+    margin: "auto",
     width: "100%",
     background: "transparent",
     zIndex: "200",
@@ -154,5 +166,12 @@ const styles = makeStyles((theme) => ({
   },
   inactiveBorder: {
     border: "2px solid #ffffff",
+  },
+  arrow: {
+    transform: "scale(1.5)",
+    color: "white",
+    borderRadius: "50%",
+    boxShadow: "0 0 1px rgba(0, 0, 0, 0.5)",
+    background: "rgba(1,1,1,0.05)",
   },
 }));

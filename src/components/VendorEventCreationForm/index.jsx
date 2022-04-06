@@ -231,12 +231,12 @@ function VendorEventCreationForm({
             let eventImageUrls;
             if (croppedCoverBannerImages.length > 0) {
               eventImageUrls = await Promise.all(
-                croppedCoverBannerImages.map(async (coverBannerImg) => {
+                croppedCoverBannerImages.map(async (coverBannerImg, index) => {
                   const fileName = ImageUtils.buildImageFileName(
                     IMAGE_TYPE.EVENT_IMAGE,
                     user.uid,
                     formatedLink,
-                    0
+                    index
                   );
                   return ImageUtils.handleImageUpload(coverBannerImg, fileName);
                 })
@@ -260,35 +260,77 @@ function VendorEventCreationForm({
               eventCoverUrl = getRandomEventBanner();
             }
 
+            const updateReq = {
+              ...req,
+              // photoUrl: eventImageUrls,
+              coverBannerImages: eventImageUrls,
+              url: formatedLink,
+              coverImgUrl: eventCoverUrl,
+            };
+
             await createEvent({
-              event: {
-                ...req,
-                // photoUrl: eventImageUrls,
-                coverBannerImages: eventImageUrls,
-                url: formatedLink,
-                coverImgUrl: eventCoverUrl,
-              },
+              event: updateReq,
             });
 
+            formik.setFieldValue("coverBannerImages", eventImageUrls);
+            formik.setFieldValue("coverImgUrl", eventCoverUrl);
             setLoader(false);
             setPostEventDialog(true);
           } else {
-            let url = undefined;
-
-            if (croppedImg) {
-              const fileName = ImageUtils.buildImageFileName(
-                IMAGE_TYPE.EVENT_IMAGE,
-                user.uid,
-                req.link,
-                0
+            let eventImageUrls;
+            if (croppedCoverBannerImages.length > 0) {
+              eventImageUrls = await Promise.all(
+                croppedCoverBannerImages
+                  .filter((img) => {
+                    return !event?.coverBannerImages?.includes(img);
+                  })
+                  .map(async (coverBannerImg, index) => {
+                    const fileName = ImageUtils.buildImageFileName(
+                      IMAGE_TYPE.EVENT_IMAGE,
+                      user.uid,
+                      event.link,
+                      index
+                    );
+                    return ImageUtils.handleImageUpload(
+                      coverBannerImg,
+                      fileName
+                    );
+                  })
               );
-              url = await ImageUtils.handleImageUpload(croppedImg, fileName);
+            }
+
+            // Top Event Banner
+            let eventCoverUrl;
+            if (
+              croppedCoverImage &&
+              croppedCoverImage !== event?.bannerImgUrl
+            ) {
+              const fileName = ImageUtils.buildImageFileName(
+                IMAGE_TYPE.EVENT_COVER,
+                user.uid,
+                event.link
+              );
+
+              eventCoverUrl = await ImageUtils.handleImageUpload(
+                croppedCoverImage,
+                fileName
+              );
+            } else {
+              eventCoverUrl = getRandomEventBanner();
             }
 
             delete req.revenue;
 
             await editEvent({
-              event: { ...req, photoUrl: url },
+              event: {
+                ...req,
+                // photoUrl: eventImageUrls,
+                coverBannerImages: [
+                  ...event.coverBannerImages,
+                  ...eventImageUrls,
+                ],
+                coverImgUrl: eventCoverUrl,
+              },
             });
 
             setLoader(false);
@@ -352,12 +394,6 @@ function VendorEventCreationForm({
   React.useEffect(() => {
     formik.setFieldValue(
       "slotEndTimePerDay",
-      new Date(
-        new Date(formik.values.slotStartTimePerDay).getTime() +
-          formik.values.slotDuration * 60 * 60000
-      )
-    );
-    console.log(
       new Date(
         new Date(formik.values.slotStartTimePerDay).getTime() +
           formik.values.slotDuration * 60 * 60000
@@ -510,7 +546,8 @@ function VendorEventCreationForm({
 
   return (
     <div
-      style={{ position: "relative", width: edit || clone ? "80vw" : "99vw" }}
+      className={classes.foundation}
+      style={{ width: edit || clone ? "80vw" : "99vw" }}
     >
       <Grid
         style={{
@@ -1025,12 +1062,14 @@ function VendorEventCreationForm({
                     </Typography>
                   </FormLabel>
 
-                  <EventCoverUpload
-                    croppedImgs={croppedCoverBannerImages}
-                    eventData={event}
-                    handleDelete={handleCoverBannerDelete}
-                    handleCroppedImgs={handleCroppedImgs}
-                  />
+                  <Grid>
+                    <EventCoverUpload
+                      croppedImgs={croppedCoverBannerImages}
+                      eventData={event}
+                      handleDelete={handleCoverBannerDelete}
+                      handleCroppedImgs={handleCroppedImgs}
+                    />
+                  </Grid>
                 </FormControl>
 
                 {formik.values.type !== EVENT_TYPES.ONE_ON_ONE && (

@@ -10,11 +10,6 @@ function VendorEventsCard({ image, headline, description, date }) {
   const classes = styles();
   return (
     <Card className={classes.cardContainer}>
-      <img
-        src="https://media-exp1.licdn.com/dms/image/C561BAQE-51J-8KkMZg/company-background_10000/0/1548357920228?e=2147483647&v=beta&t=wrOVYN8qrGon9jILrMQv78FsyOV4IMQxr_3UjYtUREI"
-        alt="vendor-event"
-        width="400em"
-      />
       <Grid container className={classes.imgContainer}>
         <Grid container justifyContent="right" className={classes.topBanner}>
           <Button className={`${classes.topBannerButton} ${classes.cooking}`}>
@@ -145,11 +140,10 @@ const styles = makeStyles((theme) => ({
     color: "white",
   },
   dateAndTime: {
+    position: "absolute",
     color: "#68FDF3",
     background: "rgba(0,0,0,0.5)",
-    marginTop: "-1.5em",
-    marginBottom: "0.3em",
-    //left
+    bottom: "0",
     padding: "0 0.5em 0 0.5em",
   },
   icon: {
