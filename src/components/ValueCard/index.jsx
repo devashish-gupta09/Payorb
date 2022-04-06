@@ -10,7 +10,7 @@ function ValueCard({ title, subTitle, photo, bottomText }) {
     <DashboardCard rootClass={classes.container}>
       <Grid container>
         <Grid item xs={4}>
-          <img src={photo} className={classes.img}/>
+          <img src={photo} className={classes.img} />
         </Grid>
         <Grid item xs={8}>
           <Typography className={classes.title}>{title}</Typography>
@@ -54,13 +54,13 @@ const styles = makeStyles((theme) => ({
       fontWeight: "500",
     },
   },
-  img:{
+  img: {
     [theme.breakpoints.down("sm")]: {
-      width:"80%",
-      justifySelf:"left",
-      alignSelf:"center",
+      width: "80%",
+      justifySelf: "left",
+      alignSelf: "center",
     },
-  }
+  },
 }));
 
 export default ValueCard;

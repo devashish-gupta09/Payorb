@@ -1,14 +1,29 @@
-import { Grid, Typography } from "@material-ui/core";
+import { Box, Grid, Typography } from "@material-ui/core";
+import { Pause, PlayArrow } from "@material-ui/icons";
 import CallMadeIcon from "@material-ui/icons/CallMade";
 import Link from "next/link";
-import React from "react";
+import React, { useRef, useState } from "react";
+
+import { GENERAL_VIDEO_URL } from "../../constants/video";
 
 import { event, SIGNUP_CLICK } from "../../utils/ga";
 import ButtonCapsule from "../ButtonCapsule";
 import { styles } from "./styles";
 
 function FeaturesContent({ content }) {
-  const classes = styles();
+  const videoPlayerRef = useRef(null);
+  const [videoPlaying, setVideoPlaying] = useState(false);
+  const classes = styles(videoPlaying);
+
+  const handleVideoControl = () => {
+    if (!videoPlaying) {
+      videoPlayerRef.current.play();
+      setVideoPlaying(true);
+    } else {
+      videoPlayerRef.current.pause();
+      setVideoPlaying(false);
+    }
+  };
   return (
     <Grid className={classes.container}>
       <Grid className={classes.textContainer}>
@@ -38,27 +53,40 @@ function FeaturesContent({ content }) {
             />
           </Link>
         </Grid>
-        {/* <Button
-          className={classes.scroll}
-          onClick={() =>
-            window.scrollBy({
-              top: window.innerHeight,
-              behavior: "smooth",
-            })
-          }
-        >
-          <Grid className={classes.scrollIcon}>
-            <ArrowDownwardIcon />
-          </Grid>
-          Scroll to Explore
-        </Button> */}
       </Grid>
       <Grid className={classes.imgContainer}>
-        <img
-          src="/assets/videosnip.png"
-          alt="landing"
-          className={classes.image}
-        />
+        <Box className={classes.box}>
+          <video
+            autopictureinpicture
+            loop
+            ref={videoPlayerRef}
+            src={GENERAL_VIDEO_URL}
+            className={classes.videoImg}
+            poster={"/assets/default-video.png"}
+          />
+          <Grid
+            className={classes.actionButtonContainer}
+            style={{
+              "& > div": {
+                display: "none",
+              },
+            }}
+          >
+            <Grid
+              container
+              justifyContent="center"
+              alignItems="center"
+              className={classes.videoActionContainer}
+              onClick={handleVideoControl}
+            >
+              {videoPlaying ? (
+                <Pause className={classes.videoActions} />
+              ) : (
+                <PlayArrow className={classes.videoActions} />
+              )}
+            </Grid>
+          </Grid>
+        </Box>
       </Grid>
     </Grid>
   );

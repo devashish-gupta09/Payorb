@@ -55,13 +55,7 @@ function VendorRevenueUserAggSec() {
           Dashboard
         </Typography>
 
-        <Grid
-          item
-          sm={12}
-          xs={12}
-          container
-          className={classes.fix}
-        >
+        <Grid item sm={12} xs={12} container className={classes.fix}>
           <Grid
             item
             xs={5}
@@ -133,8 +127,7 @@ const styles = makeStyles((theme) => ({
   title: {
     fontSize: "1.2em",
     paddingBottom: "1em",
-    marginLeft:"3.5em",
-
+    marginLeft: "3.5em",
   },
   fix: {
     // padding: "0.5em",
@@ -144,7 +137,7 @@ const styles = makeStyles((theme) => ({
     boxShadow: " 0px 0px 10px rgba(0, 0, 0, 0.1)",
     borderRadius: "0.4em",
     marginTop: "0.4em",
-    margin:"0.2em",
+    margin: "0.2em",
   },
   leftTopContainer: {
     borderTop: "0.3em solid #465DD6",
