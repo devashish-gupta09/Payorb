@@ -1,6 +1,12 @@
 import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
+  foundation: {
+    position: "relative",
+    [theme.breakpoints.down("sm")]: {
+      paddingTop: "4.5em",
+    },
+  },
   baseBackground: {
     height: "100vh",
     width: "100vw",
@@ -9,7 +15,6 @@ export const styles = makeStyles((theme) => ({
   },
   root: {
     width: "100%",
-    border: "10px solid yellow",
   },
   container: {
     background: "white",

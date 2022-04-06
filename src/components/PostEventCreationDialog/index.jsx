@@ -18,6 +18,7 @@ import { getUser } from "../../services/auth";
 import { Context } from "../AuthenticationContext";
 // import { PAGE_PATHS } from "../../constants/paths";
 import DateMonth from "../DateMonth";
+import { EventCoverUpload } from "../EventCoverUpload";
 import EventImageContainer from "../EventImageContainer/Index";
 import ReadMore from "../ReadMore";
 
@@ -113,9 +114,18 @@ function PostEventCreationDialog(props) {
           <Grid item sm={12} className={classes.fullWidth}>
             <Grid className={`${classes.posterRoot}`}>
               <Grid>
-                <EventImageContainer
-                  url={eventImg || event.photoUrl || DEFAULT_EVENT_IMAGE}
-                />
+                {event?.coverBannerImages?.length > 0 ? (
+                  <EventCoverUpload
+                    allowUploads={false}
+                    croppedImgs={event?.coverBannerImages}
+                    eventData={event}
+                    height="15em"
+                  />
+                ) : (
+                  <EventImageContainer
+                    url={eventImg || event.photoUrl || DEFAULT_EVENT_IMAGE}
+                  />
+                )}
               </Grid>
 
               <Grid

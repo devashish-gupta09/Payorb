@@ -86,10 +86,15 @@ export const styles = makeStyles((theme) => ({
   imgContainer: {
     width: "100%",
     top: 0,
-    height: "12.5em",
-    position: "absolute",
+    height: "15em",
+    position: "relative",
   },
   image: {
+    height: "12.5em",
+    width: "100%",
+    objectFit: "cover",
+  },
+  carouselImage: {
     height: "12.5em",
     width: "100%",
     objectFit: "cover",
@@ -179,5 +184,9 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       display: "None",
     },
+  },
+  carouselContainer: {
+    width: "100%",
+    height: "100%",
   },
 }));
