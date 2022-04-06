@@ -1,26 +1,29 @@
 import {
   Dialog,
+  DialogContent,
+  DialogTitle,
   Grid,
   InputAdornment,
   Link,
   makeStyles,
   TextField,
-  Tooltip,
   Typography,
+  useMediaQuery,
 } from "@material-ui/core";
-import { FilterNone, OpenInBrowser } from "@material-ui/icons";
+import { Close, FilterNone } from "@material-ui/icons";
+import { useTheme } from "@material-ui/styles";
 import copy from "clipboard-copy";
 import React from "react";
 
-import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
+import { SocialIcon } from "react-social-icons";
+
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { getUser } from "../../services/auth";
 import { Context } from "../AuthenticationContext";
+import ButtonCapsule from "../ButtonCapsule";
+import EventCard from "../EventCard";
+
 // import { PAGE_PATHS } from "../../constants/paths";
-import DateMonth from "../DateMonth";
-import { EventCoverUpload } from "../EventCoverUpload";
-import EventImageContainer from "../EventImageContainer/Index";
-import ReadMore from "../ReadMore";
 
 const loadFacebook = () => {
   return new Promise((resolve) => {
@@ -44,6 +47,8 @@ function PostEventCreationDialog(props) {
   const { event, eventImg } = props;
   const [eventLink, setEventLink] = React.useState("");
   const { Alert, showAlert } = useAlertSnackbar();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleCopy = () => {
     showAlert("Link copied");
@@ -103,146 +108,117 @@ function PostEventCreationDialog(props) {
       {...props}
       scroll="body"
       PaperProps={{
-        style: {
-          background: "white",
-        },
+        className: classes.dialogPaper,
       }}
+      maxWidth={"sm"}
     >
-      <Grid className={classes.container}>
-        {Alert()}
-        <Grid container spacing={2}>
-          <Grid item sm={12} className={classes.fullWidth}>
-            <Grid className={`${classes.posterRoot}`}>
-              <Grid>
-                {event?.coverBannerImages?.length > 0 ? (
-                  <EventCoverUpload
-                    allowUploads={false}
-                    croppedImgs={event?.coverBannerImages}
-                    eventData={event}
-                    height="15em"
-                  />
-                ) : (
-                  <EventImageContainer
-                    url={eventImg || event.photoUrl || DEFAULT_EVENT_IMAGE}
-                  />
-                )}
-              </Grid>
+      {Alert()}
+      <DialogTitle style={{ background: "#F6F6FA" }}>
+        <Grid container justifyContent="space-between">
+          <Typography style={{ fontWeight: "600", fontSize: "18px" }}>
+            Share Event
+          </Typography>
+          <Close onClick={props.onClose} />
+        </Grid>
+      </DialogTitle>
+      <DialogContent className={classes.container}>
+        <EventCard event={event} editable={false} />
+        <Grid container style={{ padding: "1em 0.5em" }} alignItems="stretch">
+          <Grid item xs={isMobile ? 5 : 3}>
+            <Typography style={{ fontWeight: "500" }} gutterBottom>
+              Share
+            </Typography>
+          </Grid>
+          <Grid item xs={7} style={{ paddingRight: "0.5em" }}>
+            <Typography style={{ fontWeight: "500" }} gutterBottom>
+              Event
+            </Typography>
+          </Grid>
 
-              <Grid
-                container
-                alignItems="flex-end"
-                justify="space-between"
-                className={classes.descriptionInfoContainer}
-              >
-                <Grid item sm={10} style={{ width: "100%" }}>
-                  <Typography
-                    variant={"h6"}
-                    gutterBottom
-                    className={classes.titleContainer}
-                  >
-                    {event.name}
-                  </Typography>
-                  <Grid
-                    style={{
-                      width: "95%",
-                      whiteSpace: "pre-line",
-                      // paddingBottom: "1.5em",
-                    }}
-                  >
-                    <ReadMore percent={11} text={event.description} />
-                  </Grid>
-                </Grid>
-                <Grid item sm={2} container justify="center">
-                  <DateMonth
-                    startDate={event.startDate}
-                    endDate={event.endDate}
-                  />
-                </Grid>
-              </Grid>
-
-              <Grid container justify="center" style={{ width: "100%" }}>
-                <Grid item sm={12} style={{ marginBottom: "0.5em" }}>
-                  <Typography
-                    variant={"h5"}
-                    align="center"
-                    style={{ width: "100%" }}
-                  >
-                    Share
-                  </Typography>
-                </Grid>
-                <Grid
-                  item
-                  sm={12}
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Grid
-                    onClick={handleFacebookShare}
-                    style={{
-                      borderRadius: "50%",
-                      background: "#ABC6FF",
-                      height: "3em",
-                      width: "3em",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      padding: "1em",
-                    }}
-                  >
-                    <img src="/assets/facebook-xl.png" />
-                  </Grid>
-                </Grid>
-              </Grid>
+          <Grid item xs={isMobile ? 5 : 3}>
+            <Grid container>
+              <SocialIcon
+                network="instagram"
+                fgColor="#000000"
+                bgColor="transparent"
+                style={{
+                  height: "2.5em",
+                  width: "2.5em",
+                  padding: 0,
+                }}
+              />
+              <SocialIcon
+                onClick={handleFacebookShare}
+                network="facebook"
+                fgColor="#000000"
+                bgColor="transparent"
+                style={{
+                  height: "2.5em",
+                  width: "2.5em",
+                  padding: 0,
+                }}
+              />
+              <SocialIcon
+                network="twitter"
+                fgColor="#000000"
+                bgColor="transparent"
+                style={{
+                  height: "2.5em",
+                  width: "2.5em",
+                  padding: 0,
+                }}
+              />
             </Grid>
           </Grid>
-          <Grid item sm={12} className={classes.fullWidth}>
-            <Grid className={`${classes.eventLinkContainer}`}>
-              <Grid container justify="space-between" alignItems="center">
-                {" "}
-                <Grid item xs={10}>
-                  <TextField
-                    id="link"
-                    label={"Event Link"}
-                    variant="outlined"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          payorb/
-                        </InputAdornment>
-                      ),
-                    }}
-                    disabled={true}
-                    value={event.url ? event.url : event.link}
-                  />
-                </Grid>
-                <Grid
-                  item
-                  xs={2}
-                  container
-                  justify="space-evenly"
-                  className={classes.iconContainer}
-                >
-                  <Grid onClick={handleCopy}>
-                    <Tooltip title="Copy link">
-                      <FilterNone className={classes.icon}></FilterNone>
-                    </Tooltip>
-                  </Grid>
+          <Grid item xs={isMobile ? 7 : 6} style={{ paddingRight: "0.5em" }}>
+            <TextField
+              id="link"
+              variant="outlined"
+              fullWidth
+              InputProps={{
+                style: {
+                  color: "black",
+                  background: "#ECEDF4",
 
-                  <Link target="_blank" href={eventLink}>
-                    <Tooltip title="Open in browser">
-                      <OpenInBrowser className={classes.icon} />
-                    </Tooltip>
-                  </Link>
-                </Grid>
-              </Grid>
-            </Grid>
+                  margin: 0,
+                },
+                endAdornment: (
+                  <InputAdornment
+                    style={{ color: "#8B8B8B" }}
+                    position="end"
+                    onClick={handleCopy}
+                  >
+                    <FilterNone />
+                  </InputAdornment>
+                ),
+                startAdornment: (
+                  <InputAdornment style={{ color: "#8B8B8B" }} position="start">
+                    payorb&nbsp;/
+                  </InputAdornment>
+                ),
+              }}
+              disabled={true}
+              value={event.url ? event.url : event.link}
+            />
+          </Grid>
+          <Grid
+            item
+            sm={3}
+            container
+            justifyContent="center"
+            style={{ height: "100%", paddingTop: isMobile ? "1.5em" : 0 }}
+          >
+            <Link target="_blank" href={eventLink}>
+              <ButtonCapsule
+                text={"Preview"}
+                buttonStyle={{
+                  textDecoration: "none",
+                }}
+              />
+            </Link>
           </Grid>
         </Grid>
-      </Grid>
+      </DialogContent>
     </Dialog>
   );
 }
@@ -251,6 +227,12 @@ const styles = makeStyles((theme) => ({
   container: {
     borderRadius: "5px",
     overflow: "hidden",
+    paddingTop: "1",
+    [theme.breakpoints.down("sm")]: {
+      "&.MuiDialogContent-root": {
+        padding: "1em 0 0 0",
+      },
+    },
   },
   iconContainer: {
     "& > a, svg": {
@@ -300,9 +282,12 @@ const styles = makeStyles((theme) => ({
       padding: "2em 1em",
     },
   },
-  icon: {
-    width: "1.25em",
-    height: "1.25em",
+  socialIcons: {
+    width: "0.25em",
+    height: "0.25em",
+  },
+  dialogPaper: {
+    padding: 0,
   },
 }));
 

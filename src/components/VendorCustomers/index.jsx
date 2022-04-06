@@ -14,10 +14,10 @@ import {
   Typography,
   Tooltip,
   TextField,
-  InputAdornment, 
-  MenuItem
+  InputAdornment,
+  MenuItem,
 } from "@material-ui/core";
-import SearchIcon from '@material-ui/icons/Search';
+import SearchIcon from "@material-ui/icons/Search";
 import React from "react";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import { globalStyles } from "../../../styles/globalStyles";
@@ -27,69 +27,76 @@ import useFetchVendorCustomers from "../../hooks/useFetchCustomers";
 import useFetchEvents from "../../hooks/useFetchEvents";
 import { sendNotificationToCustomers } from "../../services/notification";
 import { getMonthDate } from "../../utils/dateTime";
-import { getEventDate,getEventMonth } from "../../utils/dateTime";
-import { isEventPastDate } from "../../utils/events";;
+import { getEventDate, getEventMonth } from "../../utils/dateTime";
+import { isEventPastDate } from "../../utils/events";
 import DashboardCard from "../DashboardCard";
 import PageTitle from "../PageTitle";
 import SkeletonLoading from "../SkeletonLoading";
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ReactPaginate from 'react-paginate';
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import ReactPaginate from "react-paginate";
 
-function createData(name, phoneNumber, email, date, events, eventList,priceList) {
+function createData(
+  name,
+  phoneNumber,
+  email,
+  date,
+  events,
+  eventList,
+  priceList
+) {
   return {
     name,
     phoneNumber,
     email,
-    events: events.length ?
-          [ 
+    events: events.length
+      ? [
           ...new Set(
-            events.map((e) =>e.name).filter((e) => eventList.includes(e))
+            events.map((e) => e.name).filter((e) => eventList.includes(e))
           ),
-        ] 
-      : ""   ,
-      price: events.length ?
-      [ 
-        ...new Set(
-          events.map((e) =>e.price).filter((e) => priceList.includes(e))
-        ),
-      ] 
-    : ""   ,
+        ]
+      : "",
+    price: events.length
+      ? [
+          ...new Set(
+            events.map((e) => e.price).filter((e) => priceList.includes(e))
+          ),
+        ]
+      : "",
   };
 }
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
-  'label + &': {
+  "label + &": {
     marginTop: theme.spacing(3),
   },
-  '& .MuiInputBase-input': {
+  "& .MuiInputBase-input": {
     borderRadius: 4,
-    position: 'relative',
+    position: "relative",
     backgroundColor: theme.palette.background.paper,
-    border: '1px solid #ced4da',
+    border: "1px solid #ced4da",
     fontSize: 16,
-    padding: '10px 26px 10px 12px',
-    transition: theme.transitions.create(['border-color', 'box-shadow']),
+    padding: "10px 26px 10px 12px",
+    transition: theme.transitions.create(["border-color", "box-shadow"]),
     // Use the system font instead of the default Roboto font.
     fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
+      "-apple-system",
+      "BlinkMacSystemFont",
       '"Segoe UI"',
-      'Roboto',
+      "Roboto",
       '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
+      "Arial",
+      "sans-serif",
       '"Apple Color Emoji"',
       '"Segoe UI Emoji"',
       '"Segoe UI Symbol"',
-    ].join(','),
-    '&:focus': {
+    ].join(","),
+    "&:focus": {
       borderRadius: 4,
-      borderColor: '#80bdff',
-      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+      borderColor: "#80bdff",
+      boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
     },
   },
 }));
-
 
 function VendorCustomers() {
   const classes = styles();
@@ -104,10 +111,9 @@ function VendorCustomers() {
   // const [sendBtnLoading, setSendBtnLoading] = React.useState(false);
   const { Alert, showAlert } = useAlertSnackbar();
 
-  const [tableContentCollapse, setTableContentsCollapse]=React.useState([]);
+  const [tableContentCollapse, setTableContentsCollapse] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
 
   // {const [formattedCustomers, setFormattedCustomers] = React.useState([]);
   // const { customers, loading } = useFetchVendorCustomers();
@@ -138,233 +144,241 @@ function VendorCustomers() {
 
   //Dummy data that should be removed later
   const [formattedCustomers, setFormattedCustomers] = React.useState([
-     {
+    {
       customerId: "1234",
       name: "VendorCustomer1",
       phoneNumber: "+91-9287349247",
       email: "abc@123.com",
       createdAt: "2022-07-16T19:20:30+01:00",
-      events: [{
-        id: "abc",
-        name: "Event Name ABC",
-        type: "online",
-        startDate:"2022-04-16T19:20:30+01:00",
-        endDate: "2022-07-16T19:20:30+01:00",
-        createdDate: "2021-07-16T19:20:30+01:00",
-        location:"online",
-        category: "business",
-        address:"string;",
-        description: "This will host new categories",
-        price: "300",
-        mode: "online",
-        photoUrl: "",
-        totalTickets: "20",
-        link: "https://www.google.com",
-        url: "hgvdhgcdus",
-        privateMessage: "none",
-        orders: "",
-        userUID: "harshdeepKaur",
-        vendorUserName: "harshdeepKaur",
-        commission: "none",
-        bookedSlots: "",
-        status: "booked",
-      },{
-        id: "abc2",
-        name: "EventNameABC2",
-        type: "online",
-        startDate:"2022-04-16T19:20:30+01:00",
-        endDate: "2022-07-16T19:20:30+01:00",
-        createdDate: "2021-07-16T19:20:30+01:00",
-        location:"online",
-        category: "business",
-        address:"string;",
-        description: "This will host new categories",
-        price: "200",
-        mode: "onlinw",
-        photoUrl: "",
-        totalTickets: "20",
-        link: "https://www.google.com",
-        url: "hgvdhgcdus",
-        privateMessage: "none",
-        orders: "",
-        userUID: "harshdeepKaur",
-        vendorUserName: "harshdeepKaur",
-        commission: "none",
-        bookedSlots: "",
-        status: "booked",
-      }],
+      events: [
+        {
+          id: "abc",
+          name: "Event Name ABC",
+          type: "online",
+          startDate: "2022-04-16T19:20:30+01:00",
+          endDate: "2022-07-16T19:20:30+01:00",
+          createdDate: "2021-07-16T19:20:30+01:00",
+          location: "online",
+          category: "business",
+          address: "string;",
+          description: "This will host new categories",
+          price: "300",
+          mode: "online",
+          photoUrl: "",
+          totalTickets: "20",
+          link: "https://www.google.com",
+          url: "hgvdhgcdus",
+          privateMessage: "none",
+          orders: "",
+          userUID: "harshdeepKaur",
+          vendorUserName: "harshdeepKaur",
+          commission: "none",
+          bookedSlots: "",
+          status: "booked",
+        },
+        {
+          id: "abc2",
+          name: "EventNameABC2",
+          type: "online",
+          startDate: "2022-04-16T19:20:30+01:00",
+          endDate: "2022-07-16T19:20:30+01:00",
+          createdDate: "2021-07-16T19:20:30+01:00",
+          location: "online",
+          category: "business",
+          address: "string;",
+          description: "This will host new categories",
+          price: "200",
+          mode: "onlinw",
+          photoUrl: "",
+          totalTickets: "20",
+          link: "https://www.google.com",
+          url: "hgvdhgcdus",
+          privateMessage: "none",
+          orders: "",
+          userUID: "harshdeepKaur",
+          vendorUserName: "harshdeepKaur",
+          commission: "none",
+          bookedSlots: "",
+          status: "booked",
+        },
+      ],
       emails: "abxbdh@nsebh.nc",
-     },
-     {
+    },
+    {
       customerId: "1234",
       name: "VendorCustomer3",
-      phoneNumber:"+91-98286736487",
+      phoneNumber: "+91-98286736487",
       email: "abc12@123.com",
       createdAt: "2022-07-16T19:20:30+01:00",
-      events: [{
-        eventId: "abc3",
-        name: "Event Name ABC 3",
-        type: "online",
-        startDate:"2022-04-16T19:20:30+01:00",
-        endDate: "2022-07-16T19:20:30+01:00",
-        createdDate: "2021-07-16T19:20:30+01:00",
-        location:"online",
-        category: "business",
-        address:"string;",
-        description: "This will host new categories",
-        price: "250",
-        mode: "online",
-        photoUrl: "",
-        totalTickets: "20",
-        link: "https://www.google.com",
-        url: "hgvdhgcdus",
-        privateMessage: "none",
-        orders: "",
-        userUID: "harshdeepKaur",
-        vendorUserName: "harshdeepKaur",
-        commission: "none",
-        bookedSlots: "",
-        status: "booked",
-      },{
-        eventId: "abc4",
-        name: "EventName",
-        type: "online",
-        startDate:"2022-04-16T19:20:30+01:00",
-        endDate: "2022-07-16T19:20:30+01:00",
-        createdDate: "2021-07-16T19:20:30+01:00",
-        location:"online",
-        category: "business",
-        address:"string;",
-        description: "This will host new categories",
-        price: "500",
-        mode: "online",
-        photoUrl: "",
-        totalTickets: "20",
-        link: "https://www.google.com",
-        url: "hgvdhgcdus",
-        privateMessage:"none",
-        orders: "",
-        userUID: "harsshdeepKaur",
-        vendorUserName: "harshdeepKaur",
-        commission: "none",
-        bookedSlots: "",
-        status: "booked",
-      }],
+      events: [
+        {
+          eventId: "abc3",
+          name: "Event Name ABC 3",
+          type: "online",
+          startDate: "2022-04-16T19:20:30+01:00",
+          endDate: "2022-07-16T19:20:30+01:00",
+          createdDate: "2021-07-16T19:20:30+01:00",
+          location: "online",
+          category: "business",
+          address: "string;",
+          description: "This will host new categories",
+          price: "250",
+          mode: "online",
+          photoUrl: "",
+          totalTickets: "20",
+          link: "https://www.google.com",
+          url: "hgvdhgcdus",
+          privateMessage: "none",
+          orders: "",
+          userUID: "harshdeepKaur",
+          vendorUserName: "harshdeepKaur",
+          commission: "none",
+          bookedSlots: "",
+          status: "booked",
+        },
+        {
+          eventId: "abc4",
+          name: "EventName",
+          type: "online",
+          startDate: "2022-04-16T19:20:30+01:00",
+          endDate: "2022-07-16T19:20:30+01:00",
+          createdDate: "2021-07-16T19:20:30+01:00",
+          location: "online",
+          category: "business",
+          address: "string;",
+          description: "This will host new categories",
+          price: "500",
+          mode: "online",
+          photoUrl: "",
+          totalTickets: "20",
+          link: "https://www.google.com",
+          url: "hgvdhgcdus",
+          privateMessage: "none",
+          orders: "",
+          userUID: "harsshdeepKaur",
+          vendorUserName: "harshdeepKaur",
+          commission: "none",
+          bookedSlots: "",
+          status: "booked",
+        },
+      ],
       emails: "abxbdh@nsebh.nc",
-     },
+    },
   ]);
-const [eventLoading,loaded]=React.useState(false);
-  const [ events, evntsLoad ] =  React.useState([{
-    eventId: "abc",
-    name: "Event Name ABC",
-    type: "online",
-    startDate:"2022-04-16T19:20:30+01:00",
-    endDate: "2022-07-16T19:20:30+01:00",
-    createdDate: "2021-07-16T19:20:30+01:00",
-    location:"online",
-    category: "business",
-    address:"string;",
-    description: "This will host new categories",
-    price: "300",
-    mode: "online",
-    photoUrl: "",
-    totalTickets: "20",
-    link: "https://www.google.com",
-    url: "hgvdhgcdus",
-    privateMessage: "none",
-    orders: "",
-    userUID: "harshdeepkaur",
-    vendorUserName: "harshdeepkaur",
-    commission: "none",
-    bookedSlots: "",
-    status: "booked",
-  },{
-    eventId: "abc2",
-    name: "EventNameABC2",
-    type: "online",
-    startDate:"2022-04-16T19:20:30+01:00",
-    endDate: "2022-07-16T19:20:30+01:00",
-    createdDate: "2021-07-16T19:20:30+01:00",
-    location:"online",
-    category: "business",
-    address:"string;",
-    description: "This will host new categories",
-    price: "200",
-    mode: "online",
-    photoUrl: "",
-    totalTickets: "20",
-    link: "https://www.google.com",
-    url: "hgvdhgcdus",
-    privateMessage:"none",
-    orders: "",
-    userUID: "harshdeepkaur",
-    vendorUserName: "harshdeepkaur",
-    commission: "none",
-    bookedSlots: "",
-    status: "booked",
-  },
-  {
-    eventId: "abc3",
-    name: "Event Name ABC 3",
-    type: "online",
-    startDate:"2022-04-16T19:20:30+01:00",
-    endDate: "2022-07-16T19:20:30+01:00",
-    createdDate: "2021-07-16T19:20:30+01:00",
-    location:"online",
-    category: "business",
-    address:"string;",
-    description: "This will host new categories",
-    price: "250",
-    mode: "online",
-    photoUrl: "",
-    totalTickets: "20",
-    link: "https://www.google.com",
-    url: "hgvdhgcdus",
-    privateMessage: "none",
-    orders: "",
-    userUID: "harshdeepKaur",
-    vendorUserName: "harshdeepKaur",
-    commission: "none",
-    bookedSlots: "",
-    status: "booked",
-  },{
-    eventId: "abc4",
-    name: "EventName",
-    type: "online",
-    startDate:"2022-04-16T19:20:30+01:00",
-    endDate: "2022-07-16T19:20:30+01:00",
-    createdDate: "2021-07-16T19:20:30+01:00",
-    location:"online",
-    category: "business",
-    address:"string;",
-    description: "This will host new categories",
-    price: "500",
-    mode: "online",
-    photoUrl: "",
-    totalTickets: "20",
-    link: "https://www.google.com",
-    url: "hgvdhgcdus",
-    privateMessage:"none",
-    orders: "",
-    userUID: "harsshdeepKaur",
-    vendorUserName: "harshdeepKaur",
-    commission: "none",
-    bookedSlots: "",
-    status: "booked",
-  }],)
+  const [eventLoading, loaded] = React.useState(false);
+  const [events, evntsLoad] = React.useState([
+    {
+      eventId: "abc",
+      name: "Event Name ABC",
+      type: "online",
+      startDate: "2022-04-16T19:20:30+01:00",
+      endDate: "2022-07-16T19:20:30+01:00",
+      createdDate: "2021-07-16T19:20:30+01:00",
+      location: "online",
+      category: "business",
+      address: "string;",
+      description: "This will host new categories",
+      price: "300",
+      mode: "online",
+      photoUrl: "",
+      totalTickets: "20",
+      link: "https://www.google.com",
+      url: "hgvdhgcdus",
+      privateMessage: "none",
+      orders: "",
+      userUID: "harshdeepkaur",
+      vendorUserName: "harshdeepkaur",
+      commission: "none",
+      bookedSlots: "",
+      status: "booked",
+    },
+    {
+      eventId: "abc2",
+      name: "EventNameABC2",
+      type: "online",
+      startDate: "2022-04-16T19:20:30+01:00",
+      endDate: "2022-07-16T19:20:30+01:00",
+      createdDate: "2021-07-16T19:20:30+01:00",
+      location: "online",
+      category: "business",
+      address: "string;",
+      description: "This will host new categories",
+      price: "200",
+      mode: "online",
+      photoUrl: "",
+      totalTickets: "20",
+      link: "https://www.google.com",
+      url: "hgvdhgcdus",
+      privateMessage: "none",
+      orders: "",
+      userUID: "harshdeepkaur",
+      vendorUserName: "harshdeepkaur",
+      commission: "none",
+      bookedSlots: "",
+      status: "booked",
+    },
+    {
+      eventId: "abc3",
+      name: "Event Name ABC 3",
+      type: "online",
+      startDate: "2022-04-16T19:20:30+01:00",
+      endDate: "2022-07-16T19:20:30+01:00",
+      createdDate: "2021-07-16T19:20:30+01:00",
+      location: "online",
+      category: "business",
+      address: "string;",
+      description: "This will host new categories",
+      price: "250",
+      mode: "online",
+      photoUrl: "",
+      totalTickets: "20",
+      link: "https://www.google.com",
+      url: "hgvdhgcdus",
+      privateMessage: "none",
+      orders: "",
+      userUID: "harshdeepKaur",
+      vendorUserName: "harshdeepKaur",
+      commission: "none",
+      bookedSlots: "",
+      status: "booked",
+    },
+    {
+      eventId: "abc4",
+      name: "EventName",
+      type: "online",
+      startDate: "2022-04-16T19:20:30+01:00",
+      endDate: "2022-07-16T19:20:30+01:00",
+      createdDate: "2021-07-16T19:20:30+01:00",
+      location: "online",
+      category: "business",
+      address: "string;",
+      description: "This will host new categories",
+      price: "500",
+      mode: "online",
+      photoUrl: "",
+      totalTickets: "20",
+      link: "https://www.google.com",
+      url: "hgvdhgcdus",
+      privateMessage: "none",
+      orders: "",
+      userUID: "harsshdeepKaur",
+      vendorUserName: "harshdeepKaur",
+      commission: "none",
+      bookedSlots: "",
+      status: "booked",
+    },
+  ]);
   //Dummy data ends here
 
-  const handleTableCollapse=(index,value)=>{
+  const handleTableCollapse = (index, value) => {
     console.log(value);
     setTableContentsCollapse(
-            tableContentCollapse.map((tableContent,id) =>
-                    id === index
-                    ? value
-                    : tableContent
-            )
-        );
-  }
-  
+      tableContentCollapse.map((tableContent, id) =>
+        id === index ? value : tableContent
+      )
+    );
+  };
+
   const handleEventTypeChange = (event) => {
     setSelectedValue(event.target.value);
   };
@@ -396,18 +410,18 @@ const [eventLoading,loaded]=React.useState(false);
     sendNotification();
   };
 
-//  {if (loading || eventLoading) {
-//     return (
-//       <Grid className={classes.root}>
-//         <PageTitle title="Payorb | Customers" />
-//         <SkeletonLoading message={"Loading customers"} />
-//       </Grid>
-//     );
-//   }}
+  //  {if (loading || eventLoading) {
+  //     return (
+  //       <Grid className={classes.root}>
+  //         <PageTitle title="Payorb | Customers" />
+  //         <SkeletonLoading message={"Loading customers"} />
+  //       </Grid>
+  //     );
+  //   }}
 
   if (formattedCustomers && events) {
-    const eventList = events.map((e) =>e.name);
-    const priceList = events.map((e) =>e.price);
+    const eventList = events.map((e) => e.name);
+    const priceList = events.map((e) => e.price);
     const rows =
       selectedValueForFilter && selectedValueForFilter.length //if filter is present
         ? formattedCustomers
@@ -453,16 +467,16 @@ const [eventLoading,loaded]=React.useState(false);
       );
     }
 
-    React.useEffect(()=>{ 
-      rows.map((item,index)=>{
-        setTableContentsCollapse(tableContentCollapse=>[
-          ...tableContentCollapse, true,
-        ])
-      })  
-      },[]);
-    
+    React.useEffect(() => {
+      rows.map((item, index) => {
+        setTableContentsCollapse((tableContentCollapse) => [
+          ...tableContentCollapse,
+          true,
+        ]);
+      });
+    }, []);
+
     return (
-      
       <Grid className={classes.root}>
         <PageTitle title="Payorb | Customers" />
         <Grid
@@ -472,64 +486,84 @@ const [eventLoading,loaded]=React.useState(false);
           alignItems={"center"}
         >
           <Grid item xs={6} sm={6}>
-          <Typography
-            variant={"h6"}
-            className={`${globalClasses.boldSixHundred} ${classes.customersTitle}`}
-          >
-            Customers
-          </Typography>
+            <Typography
+              variant={"h6"}
+              className={`${globalClasses.boldSixHundred} ${classes.customersTitle}`}
+            >
+              Customers
+            </Typography>
           </Grid>
-          <Grid item xs={6} sm={6} >
+          <Grid item xs={6} sm={6}>
             {eventLoading ? (
               <CircularProgress />
             ) : (
-              <Grid container >
-                <Grid item xs={6} sm={6} >
-              <TextField
-              variant="outlined"
-              size="small"
-              InputProps={{
-                startAdornment:(
-                  <InputAdornment position="start">
-                    <SearchIcon style={{width:"1em",padding:"0.2em",color:"#8B8B8B"}}/>
-                  </InputAdornment>
-                )
-              }}
-
-              // label={<div style={{fontSize:"0.7em", padding:"0", alignItems:"center",color:"#8B8B8B"}}>Search</div>}
-              label={"Search"}
-              className={classes.search}
-            />
-            </Grid>
-            <Grid item xs={6} sm={6} >
-            <NativeSelect
-              id="demo-customized-select-native"
-             // value={selectedValue}
-              value={ selectedValueForFilter.length === 1
-                ? events.filter(
-                    (e) => e.link === selectedValueForFilter[0]
-                  )[0]["name"]
-                : <div style={{fontSize:"0.7em", padding:"0"}}><img src="/assets/vendorCustomers/filterIcon.svg"
-                style={{width:"0.8em", marginTop:"0.35em", padding:"0", marginRight:"0.5em"}} alt="filter-icon"/>Filter by Events</div>}
-              className={classes.filterSelect}
-              onChange={handleFilterChange}
-              input={<BootstrapInput />}
-              SelectDisplayProps={{
-                style: {
-                  width: "10em",
-                  background: "white",
-                  paddingTop: "0.75em",
-                  paddingBottom: "0.75em",
-                },
-              }}
-             >
+              <Grid container>
+                <Grid item xs={6} sm={6}>
+                  <TextField
+                    variant="outlined"
+                    size="small"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SearchIcon
+                            style={{
+                              width: "1em",
+                              padding: "0.2em",
+                              color: "#8B8B8B",
+                            }}
+                          />
+                        </InputAdornment>
+                      ),
+                    }}
+                    // label={<div style={{fontSize:"0.7em", padding:"0", alignItems:"center",color:"#8B8B8B"}}>Search</div>}
+                    label={"Search"}
+                    className={classes.search}
+                  />
+                </Grid>
+                <Grid item xs={6} sm={6}>
+                  <NativeSelect
+                    id="demo-customized-select-native"
+                    // value={selectedValue}
+                    value={
+                      selectedValueForFilter.length === 1 ? (
+                        events.filter(
+                          (e) => e.link === selectedValueForFilter[0]
+                        )[0]["name"]
+                      ) : (
+                        <div style={{ fontSize: "0.7em", padding: "0" }}>
+                          <img
+                            src="/assets/vendorCustomers/filterIcon.svg"
+                            style={{
+                              width: "0.8em",
+                              marginTop: "0.35em",
+                              padding: "0",
+                              marginRight: "0.5em",
+                            }}
+                            alt="filter-icon"
+                          />
+                          Filter by Events
+                        </div>
+                      )
+                    }
+                    className={classes.filterSelect}
+                    onChange={handleFilterChange}
+                    input={<BootstrapInput />}
+                    SelectDisplayProps={{
+                      style: {
+                        width: "10em",
+                        background: "white",
+                        paddingTop: "0.75em",
+                        paddingBottom: "0.75em",
+                      },
+                    }}
+                  >
                     {events.map((event) => (
-                              <MenuItem key={event.link} value={event.link}>
-                                {event.name}
+                      <MenuItem key={event.link} value={event.link}>
+                        {event.name}
                       </MenuItem>
                     ))}
-              </NativeSelect>
-              </Grid> 
+                  </NativeSelect>
+                </Grid>
               </Grid>
             )}
           </Grid>
@@ -543,7 +577,11 @@ const [eventLoading,loaded]=React.useState(false);
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ minWidth: column.minWidth, backgroundColor:"#EFF0F6",color:"#767676" }}
+                      style={{
+                        minWidth: column.minWidth,
+                        backgroundColor: "#EFF0F6",
+                        color: "#767676",
+                      }}
                     >
                       {column.label}
                     </TableCell>
@@ -551,76 +589,129 @@ const [eventLoading,loaded]=React.useState(false);
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row, index) => {                  
+                {rows.map((row, index) => {
                   return (
                     <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                       {columns.map((column) => {
                         const value = row[column.id];
-                        if(column.id==="events")
-                          {
-                            return(
-                              <TableCell key={column.id} align={column.align} className={classes.tableContents} style={{margin:0, padding:0}}>
-                                <Typography style={{fontWeight:"600", fontSize:"0.9em", padding:"0.2em"}}>
-                                {tableContentCollapse[index]? 
-                                  value[0]
-                                  :
-                                  value.map(val=>
-                                    <Grid>  
-                                    {val}
-                                    <Grid container justify={"space-evenly"} style={{marginTop:"-0.3em"}}>
-                                      <Grid item xs={6} container alignItems="center">
-                                        <img src="/assets/vendorCustomers/calendar.svg"></img>
-                                        <Typography style={{color:"#8B8B8B", fontSize:"0.6em", marginLeft:"0.1em"}}>
-                                          17 March 2002
-                                        </Typography>
+                        if (column.id === "events") {
+                          return (
+                            <TableCell
+                              key={column.id}
+                              align={column.align}
+                              className={classes.tableContents}
+                              style={{ margin: 0, padding: 0 }}
+                            >
+                              <Typography
+                                style={{
+                                  fontWeight: "600",
+                                  fontSize: "0.9em",
+                                  padding: "0.2em",
+                                }}
+                              >
+                                {tableContentCollapse[index]
+                                  ? value[0]
+                                  : value.map((val) => (
+                                      <Grid>
+                                        {val}
+                                        <Grid
+                                          container
+                                          justify={"space-evenly"}
+                                          style={{ marginTop: "-0.3em" }}
+                                        >
+                                          <Grid
+                                            item
+                                            xs={6}
+                                            container
+                                            alignItems="center"
+                                          >
+                                            <img src="/assets/vendorCustomers/calendar.svg"></img>
+                                            <Typography
+                                              style={{
+                                                color: "#8B8B8B",
+                                                fontSize: "0.6em",
+                                                marginLeft: "0.1em",
+                                              }}
+                                            >
+                                              17 March 2002
+                                            </Typography>
+                                          </Grid>
+                                          <Grid
+                                            item
+                                            xs={6}
+                                            container
+                                            alignItems="center"
+                                          >
+                                            <AccessTimeIcon
+                                              style={{
+                                                color: "#8B8B8B",
+                                                width: "0.6em",
+                                              }}
+                                            />
+                                            <Typography
+                                              style={{
+                                                color: "#8B8B8B",
+                                                fontSize: "0.6em",
+                                              }}
+                                            >
+                                              12:00 PM - 2:00 PM
+                                            </Typography>
+                                          </Grid>
+                                        </Grid>
                                       </Grid>
-                                      <Grid item xs={6} container alignItems="center">
-                                        <AccessTimeIcon style={{color:"#8B8B8B", width:"0.6em"}} />
-                                        <Typography  style={{color:"#8B8B8B", fontSize:"0.6em"}}>
-                                          12:00 PM - 2:00 PM
-                                        </Typography>
-                                      </Grid>
-                                    </Grid>
-                                   </Grid>
-                                )}
-
-                                </Typography>
-                                </TableCell>
-                            )
-                          }
-                          else if(column.id==="price")
-                          {
-                            return(
-                              <TableCell key={column.id} align={column.align} className={classes.tableContents} style={{margin:0, padding:0}}>
-                                <Typography style={{fontWeight:"600", fontSize:"0.9em", padding:"0"}}>
+                                    ))}
+                              </Typography>
+                            </TableCell>
+                          );
+                        } else if (column.id === "price") {
+                          return (
+                            <TableCell
+                              key={column.id}
+                              align={column.align}
+                              className={classes.tableContents}
+                              style={{ margin: 0, padding: 0 }}
+                            >
+                              <Typography
+                                style={{
+                                  fontWeight: "600",
+                                  fontSize: "0.9em",
+                                  padding: "0",
+                                }}
+                              >
                                 <Grid container justify={"space-between"}>
                                   <Grid item xs={9}>
-                                 
-                                  {tableContentCollapse[index]? 
-                                    <p> ₹{value[0]}</p> :
-                                    value.map(val=><p> ₹{val}</p>)}
-                                    </Grid>
+                                    {tableContentCollapse[index] ? (
+                                      <p> ₹{value[0]}</p>
+                                    ) : (
+                                      value.map((val) => <p> ₹{val}</p>)
+                                    )}
+                                  </Grid>
                                   <Grid item xs={3}>
-                                    <ArrowDropDownIcon onClick={()=>
-                                     {tableContentCollapse[index]? 
-                                      handleTableCollapse(index,false): 
-                                      handleTableCollapse(index,true)}
-                                    }/>
+                                    <ArrowDropDownIcon
+                                      onClick={() => {
+                                        tableContentCollapse[index]
+                                          ? handleTableCollapse(index, false)
+                                          : handleTableCollapse(index, true);
+                                      }}
+                                    />
                                   </Grid>
                                 </Grid>
-                                </Typography>
-                                </TableCell>
-                            )
-                          }
-                          else{
-                        return (                          
-                          <TableCell key={column.id} align={column.align} className={classes.tableContents}>
-                            {column.format && typeof value === "number"
-                              ? column.format(value)
-                              : value}
-                          </TableCell>
-                        );
-                          }
+                              </Typography>
+                            </TableCell>
+                          );
+                        } else {
+                          return (
+                            <TableCell
+                              key={column.id}
+                              align={column.align}
+                              className={classes.tableContents}
+                            >
+                              {column.format && typeof value === "number"
+                                ? column.format(value)
+                                : value}
+                            </TableCell>
+                          );
+                        }
                       })}
                     </TableRow>
                   );
@@ -628,26 +719,25 @@ const [eventLoading,loaded]=React.useState(false);
               </TableBody>
             </Table>
           </TableContainer>
-        </DashboardCard>      
-      <ReactPaginate
-       breakLabel="..."
-       previousLabel={"Previous"}
-       nextLabel={"Next"}
-       //onPageChange={handlePageClick}
-      // pageCount={Math.ceil(rows.length/rowsPerPage)}
-      pageCount={4}
-       pageRangeDisplayed={3}
-       marginPagesDisplayed={2}
-       renderOnZeroPageCount={null}
-       onPageChange={handleChangePage}
-       containerClassName={classes.pagination}
-       pageClassName={classes.pageItem}
-       previousClassName={classes.pageItem}
-       nextClassName={classes.pageItem}
-       activeClassName={classes.active}
-     />
+        </DashboardCard>
+        <ReactPaginate
+          breakLabel="..."
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          //onPageChange={handlePageClick}
+          // pageCount={Math.ceil(rows.length/rowsPerPage)}
+          pageCount={4}
+          pageRangeDisplayed={3}
+          marginPagesDisplayed={2}
+          renderOnZeroPageCount={null}
+          onPageChange={handleChangePage}
+          containerClassName={classes.pagination}
+          pageClassName={classes.pageItem}
+          previousClassName={classes.pageItem}
+          nextClassName={classes.pageItem}
+          activeClassName={classes.active}
+        />
       </Grid>
-      
     );
   }
 
@@ -655,10 +745,7 @@ const [eventLoading,loaded]=React.useState(false);
 }
 
 const columns = [
-  { id: "name"
-  , label: "Customers"
-  , minWidth: 80 
-  },
+  { id: "name", label: "Customers", minWidth: 80 },
   // {
   //   id: "date",
   //   label: "Date",
@@ -670,76 +757,77 @@ const columns = [
     label: "Contact",
     minWidth: 80,
     align: "center",
-    color:"#767676",
+    color: "#767676",
   },
   {
     id: "email",
     label: "Email ID",
     minWidth: 80,
     align: "center",
-    color:"#767676",
+    color: "#767676",
   },
   {
     id: "events",
     label: "Event Details",
     minWidth: 180,
     align: "left",
-    color:"#767676",
-    padding:"0.5em",
+    color: "#767676",
+    padding: "0.5em",
   },
   {
-    id:"price",
-    label:"Customer TLV",
-    minWidth:60,
-    align:"center",
-    color:"#767676",
-  }
+    id: "price",
+    label: "Customer TLV",
+    minWidth: 60,
+    align: "center",
+    color: "#767676",
+  },
 ];
 
 const styles = makeStyles((theme) => ({
   root: {
     width: "100%",
   },
-  filterSelect:{
-    marginRight:"3em",
+  filterSelect: {
+    marginRight: "3em",
   },
-  pagination:{
-  display:"flex",
-  listStyle:"none",
-  width:"fit-content",
-  right:"4em",
-  position:"relative",
-  float:"right",
-  marginTop:"-2em",
-  [theme.breakpoints.down("sm")]:{
-    marginTop:"0",
-    right:"1em",
-  }},
-  pageItem:{
-  border:"1px solid #DCDCDC",
-  padding:"0.5em",
-  fontSize:"0.8em",
-  "&:hover": {
-    background: "#767676",
-  },
-  },
-  active:{
-    background:"linear-gradient(180deg, #68FDF3 0%, #00D4FF 100%)",
-  },
-  container: {
-    border:"1px solid #DCDCDC",
-    marginTop:"-3.5em",
-    padding:"0",
+  pagination: {
+    display: "flex",
+    listStyle: "none",
+    width: "fit-content",
+    right: "4em",
+    position: "relative",
+    float: "right",
+    marginTop: "-2em",
     [theme.breakpoints.down("sm")]: {
-      height: "45vh",
-      marginTop:"3.5em",
+      marginTop: "0",
+      right: "1em",
     },
   },
-  titleContainer:{
-    position:"relative",
-    justifyContent:"right",
-    alignItems:"center",
-    justify:"space-around",
+  pageItem: {
+    border: "1px solid #DCDCDC",
+    padding: "0.5em",
+    fontSize: "0.8em",
+    "&:hover": {
+      background: "#767676",
+    },
+  },
+  active: {
+    background: "linear-gradient(180deg, #68FDF3 0%, #00D4FF 100%)",
+  },
+  container: {
+    border: "1px solid #DCDCDC",
+    marginTop: "-3.5em",
+    padding: "0",
+    [theme.breakpoints.down("sm")]: {
+      height: "45vh",
+      marginTop: "3.5em",
+    },
+  },
+  titleContainer: {
+    position: "relative",
+    justifyContent: "right",
+    alignItems: "center",
+    justify: "space-around",
   },
   collapseArrowDown: {
     transition: `transform .8s ease`,
@@ -750,24 +838,24 @@ const styles = makeStyles((theme) => ({
     transition: `transform .8s ease`,
   },
 
-  search:{
-      width:"12em",
-      height:"2em",
-      padding:"-0.8em",
-      color: "#BDBDBD",
-      [theme.breakpoints.down("sm")]: {
-        width: "100%",
-      },
+  search: {
+    width: "12em",
+    height: "2em",
+    padding: "-0.8em",
+    color: "#BDBDBD",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+    },
   },
-  customersTitle:{
-    marginTop:"-1em",
-    fontSize:"1em",
-    marginLeft:"3.9em",
+  customersTitle: {
+    marginTop: "-1em",
+    fontSize: "1em",
+    marginLeft: "3.9em",
   },
-  tableContents:{
-    fontWeight:"600",
-    fontSize:"0.8em",
-  }, 
+  tableContents: {
+    fontWeight: "600",
+    fontSize: "0.8em",
+  },
   dateAndTime: {
     color: "#68FDF3",
     background: "rgba(0,0,0,0.5)",

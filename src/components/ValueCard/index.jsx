@@ -30,10 +30,10 @@ const styles = makeStyles((theme) => ({
       padding: "1em",
     },
   },
-  spacing:{
-    paddingRight:"1em",
+  spacing: {
+    paddingRight: "1em",
     [theme.breakpoints.down("sm")]: {
-      paddingRight:"0",
+      paddingRight: "0",
     },
   },
   title: {
