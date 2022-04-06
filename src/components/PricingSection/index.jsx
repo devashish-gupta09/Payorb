@@ -40,7 +40,7 @@ function PricingSection({ content }) {
             </Box>
             <Box className={classes.contact}>
               <Typography variant="subtitle1" style={{ fontWeight: "400" }}>
-                Are you a freelancer?
+                Would you like to book a free demo?
               </Typography>
               <Typography className={classes.contactText} variant="subtitle1">
                 Contact Us
