@@ -103,7 +103,18 @@ export const styles = makeStyles((theme) => ({
     color: "#718096",
   },
   bannerContainer: {
-    minHeight: "10em",
-    padding: "0",
+    //minHeight: "12em",
+    //padding:'0',
+  },
+  bannerImage: {
+    minHeight: "11em",
+    backgroundImage: "url(/assets/solopreneur/SuccessStories/cover-issue1.svg)",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+  },
+  bannerText: {
+    marginLeft: "4em",
+    marginTop: "1em",
   },
 }));
