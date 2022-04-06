@@ -12,6 +12,7 @@ import CreateIcon from "@material-ui/icons/Create";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import ShareIcon from "@material-ui/icons/Share";
 import React from "react";
+import Carousel from "react-material-ui-carousel";
 import { useMediaQuery } from "react-responsive";
 
 import { EVENT_TYPES } from "../../constants/events";
@@ -24,6 +25,24 @@ import PostEventCreationDialog from "../PostEventCreationDialog";
 import ReadMore from "../ReadMore";
 import VendorEventCreationForm from "../VendorEventCreationForm";
 import { styles } from "./styles";
+
+const responsive = {
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 1,
+    // slidesToSlide: 3, // optional, default to 1.
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 1,
+    // slidesToSlide: 2, // optional, default to 1.
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1,
+    // slidesToSlide: 1, // optional, default to 1.
+  },
+};
 
 export function EventCardDate({ classes, startDate, endDate }) {
   return (
@@ -134,11 +153,30 @@ function EventCard({ event, handleEventDelete }) {
       )}
 
       <Card className={classes.cardContainer}>
-        <img
-          src={event.photoUrl || DEFAULT_EVENT_IMAGE}
-          alt="vendor-event"
-          className={classes.image}
-        />
+        {event?.coverBannerImages?.length ? (
+          <Carousel
+            autoPlay={false}
+            fullHeightHover={false}
+            swipe={true}
+            navButtonsAlwaysVisible={true}
+            className={classes.carouselContainer}
+          >
+            {event.coverBannerImages.map((cbi) => (
+              <img
+                key={cbi}
+                src={cbi}
+                alt="vendor-event"
+                className={classes.carouselImage}
+              />
+            ))}
+          </Carousel>
+        ) : (
+          <img
+            src={event?.photoUrl || DEFAULT_EVENT_IMAGE}
+            alt="vendor-event"
+            className={classes.image}
+          />
+        )}
 
         <Grid container className={classes.imgContainer}>
           <Grid container justifyContent="right" className={classes.topBanner}>

@@ -94,6 +94,11 @@ export const styles = makeStyles((theme) => ({
     width: "100%",
     objectFit: "cover",
   },
+  carouselImage: {
+    height: "12.5em",
+    width: "100%",
+    objectFit: "cover",
+  },
   textContainer: {
     width: "100%",
     padding: "0.4em 1em 0.6em 1.2em",
@@ -179,5 +184,9 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       display: "None",
     },
+  },
+  carouselContainer: {
+    width: "100%",
+    height: "100%",
   },
 }));
