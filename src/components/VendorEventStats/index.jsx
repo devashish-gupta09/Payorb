@@ -305,7 +305,6 @@ function VendorEventsStats() {
             rowsPerPage={rowsPerPage}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
-            count={rows}
           />
         </DashboardCard>
       </Grid>
