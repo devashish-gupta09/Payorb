@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/styles";
 import React from "react";
+import {Button} from "@material-ui/core";
 import Carousel from "react-multi-carousel";
 
 import WhyChooseUsCard from "../WhyChooseUsCard";
@@ -24,6 +25,17 @@ const responsive = {
   },
 };
 
+const CustomButtonGroup = ({ next, previous, goToSlide, carouselState }) => {
+  const { totalItems, currentSlide } = carouselState;
+  const classes = styles();
+  return (
+    <div className="custom-button-group">
+      <img src="/assets/whyChooseUs/prevButton.svg"  onClick={() => previous()} className={classes.button}/>
+      <img src="/assets/whyChooseUs/nextButton.svg"  onClick={() => next()} className={classes.button}/>
+    </div>
+  );
+};
+
 function WhyUsCarousel({ testimonies }) {
   const classes = styles();
   return (
@@ -31,15 +43,15 @@ function WhyUsCarousel({ testimonies }) {
       className={classes.container}
       swipeable={true}
       draggable={true}
-      showDots={true}
+      //showDots={true}
       responsive={responsive}
       ssr={true} // means to render carousel on server-side.
       infinite={true}
       // keyBoardControl={true}
       // transitionDuration={1000}
-      // containerClass={"carousel-container"}
-      removeArrowOnDeviceType={["tablet", "mobile"]}
-      dotListClass="custom-dot-list-style"
+      //removeArrowOnDeviceType={["tablet", "mobile"]}
+      arrows={false}
+      customButtonGroup={<CustomButtonGroup/>}
       itemClass={classes.itemClass}
       renderButtonGroupOutside={true}
     >
@@ -60,5 +72,16 @@ const styles = makeStyles((theme) => ({
   itemClass: {
     margin: "20px 0",
   },
+ button:{
+  width:"2em",
+  margin:"0.8em",
+  
+  "&:hover": {
+    transform:"scale(1.3)",
+  },
+  [theme.breakpoints.down("sm")]: {
+    margin:"0.5em",
+  },
+ }
 }));
 export default WhyUsCarousel;
