@@ -11,11 +11,12 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       background: "none",
       margin: "0",
-      padding: "1em 1em",
+      padding: "0em 1em",
       width: "100%",
     },
   },
   head: {
+    paddingTop: "1.5em",
     [theme.breakpoints.down("sm")]: {
       textAlign: "center",
     },
@@ -34,14 +35,11 @@ export const styles = makeStyles((theme) => ({
     },
   },
   imgBox: {
-    alignItems: "center",
-    margin: "0 auto",
     width: "100%",
     height: "100%",
   },
   img: {
     width: "100%",
     height: "100%",
-    margin: "0 auto",
   },
 }));

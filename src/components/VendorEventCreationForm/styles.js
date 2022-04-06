@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core";
 export const styles = makeStyles((theme) => ({
   baseBackground: {
     height: "100vh",
-    width: "100%",
+    width: "100vw",
     background: "url(/assets/create-event-bg.svg)",
     backgroundSize: "cover",
   },
@@ -13,23 +13,24 @@ export const styles = makeStyles((theme) => ({
   },
   container: {
     background: "white",
-    borderRadius: "10px",
-    padding: "2em 2em 1em 2em",
+    borderRadius: "5px",
+    padding: "1em 1em 1em 1em",
     [theme.breakpoints.down("sm")]: {
       padding: "1em",
     },
   },
   containerSave: {
+    width: "100%",
     height: "100%",
   },
   leftContainer: {
-    padding: "0.5em 2em 0 2em",
+    padding: "0.5em 1em 0 1em",
     [theme.breakpoints.down("sm")]: {
       padding: "0",
     },
   },
   rightContainer: {
-    padding: "0em 2em",
+    padding: "0em 1em",
     [theme.breakpoints.down("sm")]: {
       padding: "2em 0",
     },

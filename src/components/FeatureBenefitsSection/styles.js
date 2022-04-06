@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core";
 export const styles = makeStyles((theme) => ({
   container: {
     background:
-      "linear-gradient(180deg, #BCF4F1 0%, rgba(0, 212, 255, 0.33) 157.68%)",
+      "linear-gradient(180deg, #BCF4F1 0%, rgba(0, 212, 255, 0.72) 120.68%)",
     // padding: "4em 4em 5em 5em",
     [theme.breakpoints.down("sm")]: {
       height: "fit-content",
@@ -28,7 +28,7 @@ export const styles = makeStyles((theme) => ({
     background: "url(/assets/FeatureSection32.png)",
     backgroundPosition: "center",
     backgroundSize: "contain",
-    padding: "2em 0",
+    padding: "4em 0",
     backgroundRepeat: "no-repeat",
     [theme.breakpoints.down("sm")]: {
       alignItems: "center",
@@ -50,21 +50,25 @@ export const styles = makeStyles((theme) => ({
       padding: "0 1em",
     },
     "&>p": {
-      fontSize: "0.85em",
+      fontSize: "15",
       textAlign: "left",
       marginTop: "0",
       marginBottom: "1.25em",
+      lineHeight: "22px",
     },
     "&>b": {
-      fontSize: "0.85em",
+      fontSize: "15",
       marginBottom: "0.25em",
+      [theme.breakpoints.down("sm")]: {
+        textAlign: "left",
+      },
     },
   },
   mainTitle: {
     color: "#333333",
     fontWeight: "600",
     width: "50%",
-    fontSize: "2.5em",
+    fontSize: "60px",
     lineHeight: "1.15",
     [theme.breakpoints.down("sm")]: {
       width: "100%",

@@ -43,7 +43,6 @@ import {
   EVENT_MODES,
   EVENT_TYPES,
 } from "../../constants/events";
-import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { getUser } from "../../services/auth";
@@ -51,13 +50,13 @@ import { createEvent, editEvent, getEventsPublic } from "../../services/events";
 import { getVendorTrialClassQuota } from "../../services/vendor";
 import { delay } from "../../utils/dateTime";
 import { isEventPastDate } from "../../utils/events";
-import firebase from "../../utils/firebase";
+import { ImageUtils, IMAGE_TYPE } from "../../utils/images";
 import { removeStringAndAddSeperator } from "../../utils/strings";
 import { buildVendorDashboardUrl, getVendorIdFromUrl } from "../../utils/url";
 import { createEventValidationSchema } from "../../validations/events";
 import { FirebaseAuth } from "../AuthenticationContext";
 import ButtonCapsule from "../ButtonCapsule";
-import ImageEventUpload from "../ImageEventUpload";
+import { COVER_BANNER_LIMIT, EventCoverUpload } from "../EventCoverUpload";
 import OneOnOneDateSelector from "../OneOnOneDateSelector";
 import OneTimeDateSelector from "../OneTimeDateSelector";
 import PageTitle from "../PageTitle";
@@ -96,7 +95,7 @@ function getCreationFormInitialState(trialClass) {
     earlyBirdPrice: 0,
     earlyBirdDeadline: new Date(new Date().getHours() + 1),
     trialClass: trialClass === true ? true : false,
-    bannerImgUrl: getRandomEventBanner(),
+    coverImgUrl: getRandomEventBanner(),
   };
 }
 
@@ -114,6 +113,11 @@ function VendorEventCreationForm({
   handleClose,
   trialClass,
 }) {
+  // event.coverBannerImages = [
+  //   "/assets/footer-bg.png",
+  //   "/assets/feature-page-section.png",
+  //   "/assets/profile.jpg",
+  // ];
   const classes = styles();
   const router = useRouter();
   const [dialog, setDialog] = React.useState({ display: false, text: "" });
@@ -122,6 +126,9 @@ function VendorEventCreationForm({
   const [descriptionRows, setDescriptionRows] = React.useState(3);
   const [customMessageRows, setCustomMessageRows] = React.useState(3);
   const [croppedImg, setCroppedImage] = React.useState();
+  const [croppedCoverImage, setCroppedCoverImage] = React.useState();
+  const [croppedCoverBannerImages, setCroppedCoverBannerImages] =
+    React.useState(event?.coverBannerImages ?? []);
   const theme = useTheme();
   const [eventsLoading, setEventsLoading] = React.useState(false);
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
@@ -160,15 +167,27 @@ function VendorEventCreationForm({
     formik.setFieldValue("mode", event.target.value);
   };
 
-  const handleCroppedImage = React.useCallback((data) => {
-    setCroppedImage(data);
+  const handleBannerCroppedImage = React.useCallback((data) => {
+    setCroppedCoverImage(data);
   }, []);
+
+  const handleCroppedImgs = React.useCallback(
+    (data) => {
+      if (croppedCoverBannerImages.length < COVER_BANNER_LIMIT) {
+        setCroppedCoverBannerImages([...croppedCoverBannerImages, data]);
+      }
+    },
+    [croppedCoverBannerImages]
+  );
 
   const formik = useFormik({
     initialValues: event || getCreationFormInitialState(trialClass),
     validationSchema: createEventValidationSchema,
     validateOnBlur: true,
     onSubmit: async (values) => {
+      const auth = FirebaseAuth.Singleton();
+      const user = auth.getUser();
+
       if (values) {
         try {
           if (values.type === EVENT_TYPES.ONE_ON_ONE) {
@@ -209,21 +228,61 @@ function VendorEventCreationForm({
             const formatedLink = removeStringAndAddSeperator(values.url, "-");
             formik.setFieldValue("link", formatedLink);
 
-            let url;
-            if (croppedImg) {
-              url = await handleImageUpload(req.link);
+            let eventImageUrls;
+            if (croppedCoverBannerImages.length > 0) {
+              eventImageUrls = await Promise.all(
+                croppedCoverBannerImages.map(async (coverBannerImg) => {
+                  const fileName = ImageUtils.buildImageFileName(
+                    IMAGE_TYPE.EVENT_IMAGE,
+                    user.uid,
+                    formatedLink,
+                    0
+                  );
+                  return ImageUtils.handleImageUpload(coverBannerImg, fileName);
+                })
+              );
+            }
+
+            // Top Event Banner
+            let eventCoverUrl;
+            if (croppedCoverImage) {
+              const fileName = ImageUtils.buildImageFileName(
+                IMAGE_TYPE.EVENT_COVER,
+                user.uid,
+                formatedLink
+              );
+
+              eventCoverUrl = await ImageUtils.handleImageUpload(
+                croppedCoverImage,
+                fileName
+              );
+            } else {
+              eventCoverUrl = getRandomEventBanner();
             }
 
             await createEvent({
-              event: { ...req, photoUrl: url, url: formatedLink },
+              event: {
+                ...req,
+                // photoUrl: eventImageUrls,
+                coverBannerImages: eventImageUrls,
+                url: formatedLink,
+                coverImgUrl: eventCoverUrl,
+              },
             });
 
             setLoader(false);
             setPostEventDialog(true);
           } else {
             let url = undefined;
+
             if (croppedImg) {
-              url = await handleImageUpload(req.link);
+              const fileName = ImageUtils.buildImageFileName(
+                IMAGE_TYPE.EVENT_IMAGE,
+                user.uid,
+                req.link,
+                0
+              );
+              url = await ImageUtils.handleImageUpload(croppedImg, fileName);
             }
 
             delete req.revenue;
@@ -378,39 +437,6 @@ function VendorEventCreationForm({
     formik.setFieldValue("earlyBirdDeadline", date.toISOString());
   };
 
-  const handleImageUpload = React.useCallback(
-    async (link) => {
-      const type = croppedImg.substring(
-        croppedImg.indexOf(":") + 1,
-        croppedImg.indexOf(";")
-      );
-
-      const auth = FirebaseAuth.Singleton();
-      const user = auth.getUser();
-
-      const ref = firebase.storage().ref();
-      const childRef = ref.child(
-        `/events/${user.uid}-${link}.${type.split("/")[1]}`
-      );
-
-      try {
-        await childRef.putString(croppedImg, "data_url", {
-          cacheControl: "max-age=9999999999",
-          customMetadata: {
-            "Access-Control-Allow-Origin": "*",
-          },
-        });
-
-        return await childRef.getDownloadURL();
-      } catch (err) {
-        // Don't do anything if an image upload is unsuccessful
-        console.log("Error", err);
-        throw err;
-      }
-    },
-    [croppedImg]
-  );
-
   const backendValidation = React.useCallback((err) => {
     formik.setFieldError(err.details[0].context.key, err.details[0].message);
   }, []);
@@ -435,11 +461,6 @@ function VendorEventCreationForm({
     } else if (edit && formik.values.trialClass) {
       return true;
     }
-  };
-
-  const handleSlotDurationChange = (event) => {
-    const hours = parseFloat(parseFloat(event.target.value).toFixed(1));
-    formik.setFieldValue("slotDuration", hours);
   };
 
   React.useEffect(() => {
@@ -472,8 +493,25 @@ function VendorEventCreationForm({
     }
   }, [edit]);
 
+  const handleCoverBannerDelete = async (_index) => {
+    const result = croppedCoverBannerImages.filter(
+      (_, index) => index !== _index
+    );
+    setCroppedCoverBannerImages(result);
+    if (edit) {
+      await editEvent({
+        ...event,
+        coverBannerImages: croppedCoverBannerImages?.filter(
+          (_, index) => index !== _index
+        ),
+      });
+    }
+  };
+
   return (
-    <div style={{ position: "relative", width: "99vw" }}>
+    <div
+      style={{ position: "relative", width: edit || clone ? "80vw" : "99vw" }}
+    >
       <Grid
         style={{
           background:
@@ -486,7 +524,13 @@ function VendorEventCreationForm({
             // padding: "0 8% 6% 8%",
           }}
         >
-          <VendorEventBannerHeader isVendor={true} eventData={formik.values} />
+          <VendorEventBannerHeader
+            isVendor={true}
+            eventData={formik.values}
+            handleBannerCroppedImage={handleBannerCroppedImage}
+            croppedCoverImage={croppedCoverImage || formik.values.coverImgUrl}
+            customBackHandler={handleClose}
+          />
         </div>
       </Grid>
 
@@ -495,7 +539,6 @@ function VendorEventCreationForm({
           height: "100vh",
           width: "100%",
           background: "url(/assets/create-event-bg.svg)",
-          // backgroundSize: "",
           backgroundRepeat: "repeat",
         }}
       ></Grid>
@@ -726,7 +769,7 @@ function VendorEventCreationForm({
                 {/* EVENT MODE AND TICKET PRICE */}
                 <Grid item sm={12} container>
                   {/* EVENT MODE */}
-                  <Grid item sm={6}>
+                  <Grid item sm={8}>
                     <FormControl variant="outlined" style={{ width: "100%" }}>
                       <FormLabel component="legend">{"Event Mode"}</FormLabel>
                       <RadioGroup
@@ -749,26 +792,76 @@ function VendorEventCreationForm({
                         />
                       </RadioGroup>
                     </FormControl>
+
+                    {formik.values.mode !== EVENT_MODES.ONLINE && (
+                      <FormControl variant="outlined" style={{ width: "100%" }}>
+                        <FormLabel
+                          component="legend"
+                          style={{
+                            paddingBottom: "0.5em",
+                          }}
+                        >
+                          Location
+                        </FormLabel>
+                        <TextField
+                          fullWidth
+                          className={classes.textInput}
+                          style={{ width: "95%" }}
+                          id="location"
+                          variant="outlined"
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          value={formik.values.location}
+                          error={
+                            formik.touched.location &&
+                            Boolean(formik.errors.location)
+                          }
+                          helperText={
+                            formik.touched.location && formik.errors.location
+                          }
+                        />
+                      </FormControl>
+                    )}
                   </Grid>
 
                   {/* PRICE */}
-                  <Grid item sm={6}>
-                    <TextField
-                      type="number"
-                      fullWidth
-                      className={classes.textInput}
-                      id="price"
-                      label={"Ticket Price"}
+                  <Grid item sm={4} style={{ position: "relative" }}>
+                    <FormControl
                       variant="outlined"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.price}
-                      error={
-                        formik.touched.price && Boolean(formik.errors.price)
-                      }
-                      helperText={formik.touched.price && formik.errors.price}
-                      disabled={formik.values.trialClass || checkDisabled()}
-                    />
+                      style={{
+                        width: "100%",
+                        position:
+                          formik.values.mode === EVENT_MODES.ONLINE
+                            ? "initial"
+                            : "absolute",
+                        bottom:
+                          formik.values.mode === EVENT_MODES.ONLINE ? 100 : 0,
+                      }}
+                    >
+                      <FormLabel
+                        component="legend"
+                        style={{
+                          paddingBottom: "0.5em",
+                        }}
+                      >
+                        {"Ticket Price"}
+                      </FormLabel>
+                      <TextField
+                        type="number"
+                        fullWidth
+                        className={classes.textInput}
+                        id="price"
+                        variant="outlined"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.price}
+                        error={
+                          formik.touched.price && Boolean(formik.errors.price)
+                        }
+                        helperText={formik.touched.price && formik.errors.price}
+                        disabled={formik.values.trialClass || checkDisabled()}
+                      />
+                    </FormControl>
                   </Grid>
                 </Grid>
 
@@ -919,20 +1012,24 @@ function VendorEventCreationForm({
 
             <Grid item sm={4} className={classes.rightContainer}>
               <Grid className={`${classes.container} ${classes.containerSave}`}>
-                <FormControl variant="outlined">
+                <FormControl
+                  variant="outlined"
+                  style={{ width: "100%", marginBottom: "1em" }}
+                >
                   <FormLabel>
-                    <Typography variant="h6" style={{ fontWeight: "bold" }}>
+                    <Typography
+                      variant="h6"
+                      style={{ fontWeight: "bold", marginBottom: "0.75em" }}
+                    >
                       Event Cover
                     </Typography>
                   </FormLabel>
 
-                  <ImageEventUpload
-                    croppedImg={croppedImg}
-                    handleCroppedImage={handleCroppedImage}
-                    imageProps={{
-                      src: formik.values.photoUrl || DEFAULT_EVENT_IMAGE,
-                      className: classes.eventImage,
-                    }}
+                  <EventCoverUpload
+                    croppedImgs={croppedCoverBannerImages}
+                    eventData={event}
+                    handleDelete={handleCoverBannerDelete}
+                    handleCroppedImgs={handleCroppedImgs}
                   />
                 </FormControl>
 

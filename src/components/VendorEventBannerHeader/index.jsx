@@ -7,20 +7,15 @@ import {
   IconButton,
   makeStyles,
   Typography,
-  useTheme,
 } from "@material-ui/core";
 import { ArrowBack, CloudUpload, Delete, Edit } from "@material-ui/icons";
 import { useRouter } from "next/router";
 
 import * as React from "react";
 
-import { ALERT_TYPES } from "../../constants/alerts";
 import { EVENT_DEFAULT_BANNERS } from "../../constants/images";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { updateUser } from "../../services/auth";
-import { delay } from "../../utils/dateTime";
-import firebase from "../../utils/firebase";
-import { FirebaseAuth } from "../AuthenticationContext";
 import ButtonCapsule from "../ButtonCapsule";
 import ImageSelectAndCrop from "../ImageSelectAndCrop";
 
@@ -54,6 +49,7 @@ const styles = makeStyles((theme) => ({
     width: "100%",
     height: "100%",
     objectFit: "cover",
+    objectPosition: "top",
   },
   buttonLayer: {
     position: "absolute",
@@ -93,86 +89,38 @@ const styles = makeStyles((theme) => ({
   },
 }));
 
-const VendorEventBannerHeader = ({ eventData, updateEvent, isVendor }) => {
+const VendorEventBannerHeader = ({
+  eventData,
+  croppedCoverImage,
+  handleBannerCroppedImage,
+  isVendor,
+  customBackHandler,
+}) => {
   const classes = styles();
 
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const { Alert, showAlert } = useAlertSnackbar();
   const [progressLoader, setProgress] = React.useState(false);
   const [dataUrl, setDataUrl] = React.useState();
-  const [croppedImg, setCroppedImage] = React.useState();
-  const theme = useTheme();
   const router = useRouter();
-  const handleDataUrl = React.useCallback((data) => {
+
+  const handleDataUrl = (data) => {
     setDataUrl(data);
-  }, []);
+  };
 
   const handleDialog = (ds) => {
     if (typeof ds === "boolean") setDialogOpen(ds);
   };
 
-  const handleSave = async () => {
-    const type = dataUrl.substring(
-      dataUrl.indexOf(":") + 1,
-      dataUrl.indexOf(";")
-    );
-
-    const auth = FirebaseAuth.Singleton();
-    const user = auth.getUser();
-
-    const firebaseStorageObj = firebase.storage();
-    const ref = firebaseStorageObj.ref();
-    const childRef = ref.child(
-      `/event-banner/${user.uid}/${eventData}.${type.split("/")[1]}`
-    );
-
-    const task = childRef.putString(dataUrl, "data_url", {
-      cacheControl: "max-age=1654999999999",
-      customMetadata: {
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
-
-    setProgress(true);
-    task.on(
-      "state_changed",
-      (snapshot) => {
-        switch (snapshot.state) {
-          case firebase.storage.TaskState.CANCELED:
-            showAlert("Image upload canceled", ALERT_TYPES.ERROR);
-            break;
-        }
-      },
-      (error) => {
-        let message = "Image cannot be saved";
-        switch (error.code) {
-          case "storage/unauthorized":
-            message = "Unauthorized User";
-            break;
-          case "storage/canceled":
-            message = "User cancelled file upload";
-            break;
-        }
-
-        setProgress(false);
-        showAlert(message, ALERT_TYPES.ERROR);
-      },
-      () => {
-        task.snapshot.ref.getDownloadURL().then(async (res) => {
-          await delay(2000);
-          setProgress(false);
-          setCroppedImage(dataUrl);
-          updateEvent({ ...eventData, bannerImgUrl: res });
-          handleDialog(false);
-        });
-      }
-    );
+  const handleSave = () => {
+    handleBannerCroppedImage(dataUrl);
+    setDialogOpen(false);
   };
 
   const handleBannerDelete = async () => {
     try {
-      await updateUser({ bannerImgUrl: "" });
-      updateEvent({ ...eventData, bannerImgUrl: "" });
+      await updateUser({ coverImgUrl: "" });
+      // updateEvent({ ...eventData, coverImgUrl: "" });
       showAlert("Banner image deleted");
     } catch (err) {
       showAlert("Banner image failed to delete");
@@ -194,7 +142,9 @@ const VendorEventBannerHeader = ({ eventData, updateEvent, isVendor }) => {
             <ImageSelectAndCrop
               title="Select banner image"
               imagePath={
-                croppedImg || eventData?.bannerImgUrl || getRandomEventBanner()
+                croppedCoverImage ||
+                eventData?.coverImgUrl ||
+                getRandomEventBanner()
               }
               handleDataUrl={handleDataUrl}
               cropperAspectRatio={4.5}
@@ -236,8 +186,11 @@ const VendorEventBannerHeader = ({ eventData, updateEvent, isVendor }) => {
         </Dialog>
       )}
       <Grid className={classes.base}>
-        {eventData?.bannerImgUrl ? (
-          <img src={eventData.bannerImgUrl} className={classes.bannerImg} />
+        {croppedCoverImage || eventData?.coverImgUrl ? (
+          <img
+            src={croppedCoverImage || eventData.coverImgUrl}
+            className={classes.bannerImg}
+          />
         ) : (
           <Grid
             container
@@ -262,7 +215,7 @@ const VendorEventBannerHeader = ({ eventData, updateEvent, isVendor }) => {
             icon={<ArrowBack style={{ fontSize: "1.25em" }} />}
             iconBefore={true}
             buttonStyle={`${classes.backButton}`}
-            onClick={handleBack}
+            onClick={customBackHandler ?? handleBack}
           />
         </Grid>
         {isVendor ? (
@@ -275,7 +228,7 @@ const VendorEventBannerHeader = ({ eventData, updateEvent, isVendor }) => {
             >
               <Edit></Edit>
             </IconButton>
-            {eventData?.bannerImgUrl ? (
+            {eventData?.coverImgUrl ? (
               <IconButton
                 className={classes.deleteButton}
                 onClick={handleBannerDelete}

@@ -20,8 +20,8 @@ export const styles = makeStyles((theme) => ({
     },
   },
   heading: {
-    fontSize: "2.5em",
-    fontWeight: "bold",
+    fontSize: "40px",
+    fontWeight: "600",
     color: "#000000",
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.5em",
