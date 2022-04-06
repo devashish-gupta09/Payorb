@@ -33,12 +33,14 @@ export const styles = makeStyles((theme) => ({
     fontWeight: "bold",
     paddingBottom: "0.5em",
     fontFamily: "'Playfair Display', serif",
+    fontSize:"1.5em",
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.5em",
       paddingLeft: "3em",
     },
   },
   description: {
+    fontSize:"0.9em",
     [theme.breakpoints.down("sm")]: {
       fontSize: "0.85em",
       paddingTop: "1em",

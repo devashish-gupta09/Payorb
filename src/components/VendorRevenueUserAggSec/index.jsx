@@ -47,10 +47,10 @@ function VendorRevenueUserAggSec() {
 
   if (stats) {
     return (
-      <Grid style={{ width: "100%" }}>
+      <Grid className={classes.outerContainer}>
         <Typography
           variant={"h6"}
-          className={`${globalClasses.boldSixHundred} ${classes.title}`}
+          className={`${classes.dashboard} ${classes.title}`}
         >
           Dashboard
         </Typography>
@@ -58,7 +58,7 @@ function VendorRevenueUserAggSec() {
         <Grid item sm={12} xs={12} container className={classes.fix}>
           <Grid
             item
-            xs={5}
+            xs={10}
             sm={3}
             className={`${classes.box} ${classes.leftTopContainer}`}
           >
@@ -71,7 +71,7 @@ function VendorRevenueUserAggSec() {
           </Grid>
           <Grid
             item
-            xs={5}
+            xs={10}
             sm={3}
             className={`${classes.box} ${classes.rightTopContainer}`}
           >
@@ -84,7 +84,7 @@ function VendorRevenueUserAggSec() {
           </Grid>
           <Grid
             item
-            xs={5}
+            xs={10}
             sm={3}
             className={`${classes.box} ${classes.leftBottomContainer}`}
           >
@@ -99,7 +99,7 @@ function VendorRevenueUserAggSec() {
           </Grid>
           <Grid
             item
-            xs={5}
+            xs={10}
             sm={3}
             className={`${classes.box} ${classes.rightBottomContainer}`}
           >
@@ -113,7 +113,7 @@ function VendorRevenueUserAggSec() {
             />
           </Grid>
         </Grid>
-      </Grid>
+        </Grid>
     );
   }
 
@@ -124,14 +124,25 @@ const styles = makeStyles((theme) => ({
   root: {
     width: "fit-content",
   },
+  outerContainer:{
+    position:"relative",
+    marginLeft:"4em",
+    [theme.breakpoints.down("sm")]:{
+      position:"static",
+      marginLeft:"0",
+    }
+    },
   title: {
+    fontWeight:"600",
     fontSize: "1.2em",
     paddingBottom: "1em",
     marginLeft: "3.5em",
   },
   fix: {
-    // padding: "0.5em",
-    justifyContent: "center",
+    justifyContent:'flex-start',
+    [theme.breakpoints.down("sm")]:{
+      justifyContent:"center",
+    }
   },
   box: {
     boxShadow: " 0px 0px 10px rgba(0, 0, 0, 0.1)",
@@ -148,7 +159,7 @@ const styles = makeStyles((theme) => ({
   rightTopContainer: {
     borderTop: "0.3em solid #FFB648",
     [theme.breakpoints.down("sm")]: {
-      paddingLeft: "0.5em",
+      paddingRight: "0.5em",
     },
   },
   leftBottomContainer: {
