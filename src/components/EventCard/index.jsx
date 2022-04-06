@@ -12,14 +12,13 @@ import CreateIcon from "@material-ui/icons/Create";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import ShareIcon from "@material-ui/icons/Share";
 import React from "react";
-import { useMediaQuery } from "react-responsive";
 
 import { EVENT_TYPES } from "../../constants/events";
 import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
-import { useUserAuthDetails } from "../../context/UserAuthDetailContext";
 import { getEventDate, getEventMonth } from "../../utils/dateTime";
 import { formatEventType } from "../../utils/events";
 import CustomConfirmationDialog from "../CustomConfirmationDialog";
+import { EventCoverUpload } from "../EventCoverUpload";
 import PostEventCreationDialog from "../PostEventCreationDialog";
 import ReadMore from "../ReadMore";
 import VendorEventCreationForm from "../VendorEventCreationForm";
@@ -48,9 +47,9 @@ function EventCard({ event, handleEventDelete }) {
   const [edit, setEdit] = React.useState(false);
   const [clone, setClone] = React.useState(false);
   const [shareDialog, setShareDialog] = React.useState(false);
-  const { state } = useUserAuthDetails();
+  // const { state } = useUserAuthDetails();
   const [deleteBtn, setDelete] = React.useState(false);
-  const isTabletOrMobile = useMediaQuery({ maxWidth: 900 });
+  // const isTabletOrMobile = useMediaQuery({ maxWidth: 900 });
   const handleClone = () => setClone(true);
   const handleCloneFromClose = () => setClone(false);
 
@@ -134,13 +133,28 @@ function EventCard({ event, handleEventDelete }) {
       )}
 
       <Card className={classes.cardContainer}>
-        <img
-          src={event.photoUrl || DEFAULT_EVENT_IMAGE}
-          alt="vendor-event"
-          className={classes.image}
-        />
-
         <Grid container className={classes.imgContainer}>
+          <Grid
+            style={{
+              height: "100%",
+              width: "100%",
+            }}
+          >
+            {event?.coverBannerImages?.length ? (
+              <EventCoverUpload
+                allowUploads={false}
+                croppedImgs={event?.coverBannerImages}
+                eventData={event}
+                height="15em"
+              />
+            ) : (
+              <img
+                src={event?.photoUrl || DEFAULT_EVENT_IMAGE}
+                alt="vendor-event"
+                className={classes.image}
+              />
+            )}
+          </Grid>
           <Grid container justifyContent="right" className={classes.topBanner}>
             <Button
               size="medium"
