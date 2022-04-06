@@ -24,21 +24,27 @@ function ValueCard({ title, subTitle, photo, bottomText }) {
 
 const styles = makeStyles((theme) => ({
   container: {
-    padding: "1.5em 1em",
+    padding: "1.5em 0.5em",
     height: "100%",
     [theme.breakpoints.down("sm")]: {
       padding: "1em",
     },
   },
+  spacing:{
+    paddingRight:"1em",
+    [theme.breakpoints.down("sm")]: {
+      paddingRight:"0",
+    },
+  },
   title: {
-    fontSize: "1.4em",
+    fontSize: "1.2em",
     fontWeight: 500,
     [theme.breakpoints.down("sm")]: {
       fontSize: "1em",
     },
   },
   subTitle: {
-    fontSize: "1em",
+    fontSize: "0.8em",
     [theme.breakpoints.down("sm")]: {
       paddingTop: "0.3em",
       fontSize: "0.75em",

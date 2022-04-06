@@ -98,6 +98,8 @@ function SolopreneurSuccess({ content }) {
         >
           <Carousel
             interval={2500}
+            swipeable={true}
+            draggable={true}
             fullHeightHover={false}
             indicators={false}
             navButtonsAlwaysVisible

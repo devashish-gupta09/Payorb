@@ -10,9 +10,9 @@ import {
   TableRow,
   Typography,
 } from "@material-ui/core";
+import Checkbox from "@material-ui/core/Checkbox";
 import numeral from "numeral";
 import React from "react";
-import Checkbox from "@material-ui/core/Checkbox";
 
 import { globalStyles } from "../../../styles/globalStyles";
 import { EVENT_STATUS } from "../../constants/events";
@@ -24,7 +24,6 @@ import SkeletonLoading from "../SkeletonLoading";
 const styles = makeStyles((theme) => ({
   root: {
     width: "96%",
-    paddingTop: "1.5em",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
@@ -107,13 +106,22 @@ function VendorEventsStats() {
   const classes = styles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
+  const [allCheckedState, setAllCheckedState] = React.useState(false);
+  const [checkedState, setCheckedState] = React.useState([]);
   const { loading, events, changeLimit, loadMoreEvents } = useFetchEvents(
     true,
     {
       limit: 6,
     }
   );
+
+  React.useEffect(() => {
+    if (!loading && events?.length) {
+      events.map(() => {
+        setCheckedState((state) => [...state, false]);
+      });
+    }
+  }, [loading]);
 
   const globalClasses = globalStyles();
 
@@ -136,9 +144,31 @@ function VendorEventsStats() {
     }
     changeLimit(event.target.value + 1);
   };
-  const [checked, setChecked] = React.useState(true);
-  const handleCheckboxChange = (event) => {
-    setChecked(event.target.checked);
+
+  const handleOnChange = (position) => {
+    console.log(checkedState);
+    const updatedCheckedState = checkedState.map((item, index) =>
+      index === position ? !item : item
+    );
+    setCheckedState(updatedCheckedState);
+  };
+  //  { React.useEffect(()=>{
+  //     events?.map((row,index)=>{
+  //       setChecked(checked=>[
+  //             ...checked, false,
+  //      ])
+  //     })
+  //     },[]);}
+
+  const handleAllCheckboxChange = () => {
+    console.log(checkedState);
+    if (allCheckedState) {
+      setCheckedState(checkedState.map(() => false));
+      setAllCheckedState(false);
+    } else {
+      setCheckedState(checkedState.map(() => true));
+      setAllCheckedState(true);
+    }
   };
 
   if (loading) {
@@ -165,12 +195,12 @@ function VendorEventsStats() {
     const pageCount = Math.ceil(rows.length / 5);
     return (
       <Grid className={classes.root}>
-        <Typography
+        {/* {<Typography
           variant={"h6"}
           className={`${globalClasses.boldSixHundred} ${classes.title}`}
         >
           Events
-        </Typography>
+        </Typography>} */}
         <DashboardCard>
           <TableContainer className={classes.container}>
             <Table stickyHeader aria-label="sticky table">
@@ -212,39 +242,55 @@ function VendorEventsStats() {
                       >
                         <Checkbox
                           color="primary"
-                          onChange={handleCheckboxChange}
+                          checked={checkedState[index]}
+                          onChange={() => handleOnChange(index)}
                           className={classes.checkbox}
                           size="small"
                         />
+
                         {columns.map((column) => {
                           const value = row[column.id];
-                          return (
-                            <TableCell key={column.id} align={column.align}>
-                              {column.format && typeof value === "number" ? (
-                                column.format(value)
-                              ) : value === "Completed" ? (
-                                <Typography
-                                  className={`${classes.status} ${classes.statusCompleted}`}
-                                >
-                                  {value}
-                                </Typography>
-                              ) : value === "On Going" ? (
-                                <Typography
-                                  className={`${classes.status} ${classes.statusOnGoing}`}
-                                >
-                                  {value}
-                                </Typography>
-                              ) : value === "Upcoming" ? (
-                                <Typography
-                                  className={`${classes.status} ${classes.statusUpcoming}`}
-                                >
-                                  {value}
-                                </Typography>
-                              ) : (
-                                value
-                              )}
-                            </TableCell>
-                          );
+                          if (column.id == "name") {
+                            return (
+                              <TableCell
+                                key={column.id}
+                                align={column.align}
+                                style={{ fontWeight: "500", color: "black" }}
+                              >
+                                {column.format && typeof value === "number"
+                                  ? column.format(value)
+                                  : value}
+                              </TableCell>
+                            );
+                          } else {
+                            return (
+                              <TableCell key={column.id} align={column.align}>
+                                {column.format && typeof value === "number" ? (
+                                  column.format(value)
+                                ) : value === "Completed" ? (
+                                  <Typography
+                                    className={`${classes.status} ${classes.statusCompleted}`}
+                                  >
+                                    {value}
+                                  </Typography>
+                                ) : value === "On Going" ? (
+                                  <Typography
+                                    className={`${classes.status} ${classes.statusOnGoing}`}
+                                  >
+                                    {value}
+                                  </Typography>
+                                ) : value === "Upcoming" ? (
+                                  <Typography
+                                    className={`${classes.status} ${classes.statusUpcoming}`}
+                                  >
+                                    {value}
+                                  </Typography>
+                                ) : (
+                                  value
+                                )}
+                              </TableCell>
+                            );
+                          }
                         })}
                       </TableRow>
                     );
@@ -253,11 +299,12 @@ function VendorEventsStats() {
             </Table>
           </TableContainer>
           <TablePagination
-            page={page}
+            rowsPerPageOptions={[5, 10, 20]}
+            component="div"
+            count={rows.length}
             rowsPerPage={rowsPerPage}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
-            count={rows}
           />
         </DashboardCard>
       </Grid>

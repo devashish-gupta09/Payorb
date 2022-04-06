@@ -23,6 +23,7 @@ import VendorDashboardContainer from "../VendorDashboardContainer";
 import VendorEventCreationForm from "../VendorEventCreationForm";
 import VendorEvents from "../VendorEvents";
 import VendorFinancials from "../VendorFinancials";
+import VendorPromotions from "../VendorPromotions";
 import { styles } from "./styles";
 
 function VendorDashboard() {
@@ -57,6 +58,8 @@ function VendorDashboard() {
         switch (router.asPath) {
           case `/vendor/${vendorId}/financials`:
             return <VendorFinancials />;
+          case `/vendor/${vendorId}/promotions`:
+            return <VendorPromotions />;
           case `/vendor/${vendorId}/customers`:
             return <VendorCustomers />;
           case `/vendor/${vendorId}/events/create`:
