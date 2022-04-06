@@ -156,6 +156,7 @@ export const styles = makeStyles((theme) => ({
       height: "fit-content",
       margin: "0 auto",
       paddingBottom: "3em",
+      paddingTop: "1.5em",
       boxShadow: "none",
     },
   },
