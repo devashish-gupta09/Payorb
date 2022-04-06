@@ -113,7 +113,7 @@ function VendorRevenueUserAggSec() {
             />
           </Grid>
         </Grid>
-        </Grid>
+      </Grid>
     );
   }
 
@@ -124,25 +124,25 @@ const styles = makeStyles((theme) => ({
   root: {
     width: "fit-content",
   },
-  outerContainer:{
-    position:"relative",
-    marginLeft:"4em",
-    [theme.breakpoints.down("sm")]:{
-      position:"static",
-      marginLeft:"0",
-    }
+  outerContainer: {
+    position: "relative",
+    marginLeft: "4em",
+    [theme.breakpoints.down("sm")]: {
+      position: "static",
+      marginLeft: "0",
     },
+  },
   title: {
-    fontWeight:"600",
+    fontWeight: "600",
     fontSize: "1.2em",
     paddingBottom: "1em",
     marginLeft: "3.5em",
   },
   fix: {
-    justifyContent:'flex-start',
-    [theme.breakpoints.down("sm")]:{
-      justifyContent:"center",
-    }
+    justifyContent: "flex-start",
+    [theme.breakpoints.down("sm")]: {
+      justifyContent: "center",
+    },
   },
   box: {
     boxShadow: " 0px 0px 10px rgba(0, 0, 0, 0.1)",

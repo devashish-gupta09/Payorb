@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/styles";
 import React from "react";
-import {Button} from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import Carousel from "react-multi-carousel";
 
 import WhyChooseUsCard from "../WhyChooseUsCard";
@@ -30,8 +30,16 @@ const CustomButtonGroup = ({ next, previous, goToSlide, carouselState }) => {
   const classes = styles();
   return (
     <div className="custom-button-group">
-      <img src="/assets/whyChooseUs/prevButton.svg"  onClick={() => previous()} className={classes.button}/>
-      <img src="/assets/whyChooseUs/nextButton.svg"  onClick={() => next()} className={classes.button}/>
+      <img
+        src="/assets/whyChooseUs/prevButton.svg"
+        onClick={() => previous()}
+        className={classes.button}
+      />
+      <img
+        src="/assets/whyChooseUs/nextButton.svg"
+        onClick={() => next()}
+        className={classes.button}
+      />
     </div>
   );
 };
@@ -51,7 +59,7 @@ function WhyUsCarousel({ testimonies }) {
       // transitionDuration={1000}
       //removeArrowOnDeviceType={["tablet", "mobile"]}
       arrows={false}
-      customButtonGroup={<CustomButtonGroup/>}
+      customButtonGroup={<CustomButtonGroup />}
       itemClass={classes.itemClass}
       renderButtonGroupOutside={true}
     >
@@ -72,16 +80,16 @@ const styles = makeStyles((theme) => ({
   itemClass: {
     margin: "20px 0",
   },
- button:{
-  width:"2em",
-  margin:"0.8em",
-  
-  "&:hover": {
-    transform:"scale(1.3)",
+  button: {
+    width: "2em",
+    margin: "0.8em",
+
+    "&:hover": {
+      transform: "scale(1.3)",
+    },
+    [theme.breakpoints.down("sm")]: {
+      margin: "0.5em",
+    },
   },
-  [theme.breakpoints.down("sm")]: {
-    margin:"0.5em",
-  },
- }
 }));
 export default WhyUsCarousel;

@@ -42,7 +42,7 @@ export function EventCardDate({ classes, startDate, endDate }) {
   );
 }
 
-function EventCard({ event, handleEventDelete }) {
+function EventCard({ event, handleEventDelete, editable = true }) {
   const classes = styles();
   const [edit, setEdit] = React.useState(false);
   const [clone, setClone] = React.useState(false);
@@ -168,45 +168,48 @@ function EventCard({ event, handleEventDelete }) {
                 .join(" ")}
             </Button>
             <Button className={classes.topBannerButton}>Booking Open</Button>
-            <Grid className={classes.sideBar}>
-              <IconButton
-                size="medium"
-                className={classes.icon}
-                onClick={handleEdit}
-              >
-                <CreateIcon style={{ fontSize: "0.75em" }} />
-              </IconButton>
-              <IconButton size="medium" className={classes.icon}>
-                {" "}
-                <DeleteOutlineIcon
-                  style={{ fontSize: "0.75em" }}
-                  className={`${classes.deleteIcon}`}
-                  onClick={enableDelete}
-                  disabled={event.orders.length > 0}
-                />
-              </IconButton>
-              <IconButton
-                size="medium"
-                className={classes.icon}
-                onClick={handleClone}
-              >
-                {" "}
-                <AddToPhotosIcon
-                  style={{ fontSize: "0.75em" }}
-                  className={`${classes.AddToPhotosIcon}`}
-                />
-              </IconButton>
-              <IconButton
-                size="medium"
-                className={classes.icon}
-                onClick={handleShareDialog}
-              >
-                <ShareIcon
-                  style={{ fontSize: "0.75em" }}
-                  className={`${classes.shareIcon}`}
-                />
-              </IconButton>
-            </Grid>
+
+            {editable ? (
+              <Grid className={classes.sideBar}>
+                <IconButton
+                  size="medium"
+                  className={classes.icon}
+                  onClick={handleEdit}
+                >
+                  <CreateIcon style={{ fontSize: "0.75em" }} />
+                </IconButton>
+                <IconButton size="medium" className={classes.icon}>
+                  {" "}
+                  <DeleteOutlineIcon
+                    style={{ fontSize: "0.75em" }}
+                    className={`${classes.deleteIcon}`}
+                    onClick={enableDelete}
+                    disabled={event.orders.length > 0}
+                  />
+                </IconButton>
+                <IconButton
+                  size="medium"
+                  className={classes.icon}
+                  onClick={handleClone}
+                >
+                  {" "}
+                  <AddToPhotosIcon
+                    style={{ fontSize: "0.75em" }}
+                    className={`${classes.AddToPhotosIcon}`}
+                  />
+                </IconButton>
+                <IconButton
+                  size="medium"
+                  className={classes.icon}
+                  onClick={handleShareDialog}
+                >
+                  <ShareIcon
+                    style={{ fontSize: "0.75em" }}
+                    className={`${classes.shareIcon}`}
+                  />
+                </IconButton>
+              </Grid>
+            ) : null}
           </Grid>
           <Grid container className={classes.dateAndTime}>
             <Grid item xs={6} container alignItems="center">
