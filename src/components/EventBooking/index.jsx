@@ -22,10 +22,12 @@ import DashboardCard from "../DashboardCard";
 import DetailRow from "../DetailRow";
 import EventBookingForm from "../EventBookingForm";
 import EventBookingVendorCard from "../EventBookingVendorCard";
+import { EventCoverUpload } from "../EventCoverUpload";
 import EventImageContainer from "../EventImageContainer/Index";
 import PageTitle from "../PageTitle";
 import ReadMore from "../ReadMore";
 import SkeletonLoading from "../SkeletonLoading";
+import { VendorEventBannerHeader } from "../VendorEventBannerHeader";
 
 const getEventslotDuration = (startDate, endDate) => {
   if (startDate || endDate) {
@@ -106,68 +108,91 @@ function EventBooking({ eventLink, vendorId }) {
     return (
       <Grid style={{ width: "100%" }}>
         <PageTitle title="Payorb | Event Booking" />
-        <Grid
-          container
-          className={classes.root}
-          spacing={3}
-          alignItems={"flex-start"}
-        >
+        <VendorEventBannerHeader eventData={event} isVendor={false} />
+        <Grid container className={classes.root} alignItems={"flex-start"}>
           <Grid
             item
             container
             sm={8}
             spacing={3}
-            style={{ width: "100%", margin: 0 }}
+            style={{ width: "100%", margin: 0, padding: "0 5%" }}
           >
-            <Grid item sm={12} className={classes.fullWidth}>
-              <DashboardCard rootClass={classes.cardPadding}>
-                <Typography
-                  variant={"h3"}
-                  style={{ width: "95%", paddingBottom: "0.25em" }}
-                >
-                  {event.name}
-                </Typography>
+            <Grid style={{ width: "100%" }}>
+              <Grid item sm={12} className={classes.fullWidth}>
+                <DashboardCard rootClass={`${classes.posterRoot}`}>
+                  {event?.coverBannerImages?.length ? (
+                    <EventCoverUpload
+                      eventData={event}
+                      allowUploads={false}
+                      croppedImgs={event.coverBannerImages}
+                      height={"30em"}
+                    />
+                  ) : (
+                    <EventImageContainer
+                      url={event.photoUrl || DEFAULT_EVENT_IMAGE}
+                    />
+                  )}
+                </DashboardCard>
                 <Grid
+                  container
+                  justifyContent="flex-end"
                   style={{
-                    width: "95%",
-                    paddingBottom: "1em",
-                    whiteSpace: "pre-line",
+                    padding: "1em",
+                    background: "white",
                   }}
                 >
-                  <ReadMore percent={10} text={event.description} />
+                  <Typography>
+                    Ticket Price <b>&#8377; {event.price}</b>
+                  </Typography>
                 </Grid>
-                <Capsule>{`Mode : ${event.mode}`}</Capsule>
-              </DashboardCard>
-            </Grid>
-            <Grid item sm={12} className={classes.fullWidth}>
-              <DashboardCard rootClass={classes.cardPadding}>
-                <Grid className={classes.eventDetails}>
-                  {eventRows(event, {
-                    startDate: parseInt(from),
-                    endDate: parseInt(to),
-                  }).map((row, index) => {
-                    return (
-                      <DetailRow key={index} classes={classes} icon={row.icon}>
-                        <Typography>
-                          <DangerouslySetInnerHtml
-                            text={row.value}
-                          ></DangerouslySetInnerHtml>
-                        </Typography>
-                      </DetailRow>
-                    );
-                  })}
-                </Grid>
-              </DashboardCard>
-            </Grid>
-            <Grid item sm={12} className={classes.fullWidth}>
-              <DashboardCard rootClass={`${classes.posterRoot}`}>
-                <EventImageContainer
-                  url={event.photoUrl || DEFAULT_EVENT_IMAGE}
-                />
-              </DashboardCard>
+              </Grid>
+              <Grid item sm={12} className={classes.fullWidth}>
+                <DashboardCard rootClass={classes.cardPadding}>
+                  <Typography
+                    variant={"h3"}
+                    style={{ width: "95%", paddingBottom: "0.25em" }}
+                  >
+                    {event.name}
+                  </Typography>
+                  <Grid
+                    style={{
+                      width: "95%",
+                      paddingBottom: "1em",
+                      whiteSpace: "pre-line",
+                    }}
+                  >
+                    <ReadMore percent={10} text={event.description} />
+                  </Grid>
+                  <Capsule>{`Mode : ${event.mode}`}</Capsule>
+                </DashboardCard>
+              </Grid>
+              <Grid item sm={12} className={classes.fullWidth}>
+                <DashboardCard rootClass={classes.cardPadding}>
+                  <Grid className={classes.eventDetails}>
+                    {eventRows(event, {
+                      startDate: parseInt(from),
+                      endDate: parseInt(to),
+                    }).map((row, index) => {
+                      return (
+                        <DetailRow
+                          key={index}
+                          classes={classes}
+                          icon={row.icon}
+                        >
+                          <Typography>
+                            <DangerouslySetInnerHtml
+                              text={row.value}
+                            ></DangerouslySetInnerHtml>
+                          </Typography>
+                        </DetailRow>
+                      );
+                    })}
+                  </Grid>
+                </DashboardCard>
+              </Grid>
             </Grid>
           </Grid>
-          <Grid item container sm={4}>
+          <Grid item container sm={4} style={{ background: "white" }}>
             <Grid item sm={12}>
               <DashboardCard rootClass={`${classes.formContainer}`}>
                 <Typography
@@ -193,17 +218,6 @@ function EventBooking({ eventLink, vendorId }) {
               </DashboardCard>
             </Grid>
 
-            {/* <Grid sm={12}>
-              <ins
-                className="adsbygoogle"
-                style="display:block"
-                data-ad-client="ca-pub-9608205273509118"
-                data-ad-slot="9714251680"
-                data-ad-format="auto"
-                data-full-width-responsive="true"
-              ></ins>
-            </Grid> */}
-
             <Grid item sm={12} className={`${classes.vendorCardContainer}`}>
               <DashboardCard rootClass={`${classes.vendorCard}`}>
                 <EventBookingVendorCard vendorId={event.userUID} />
@@ -220,6 +234,9 @@ function EventBooking({ eventLink, vendorId }) {
 
 const styles = makeStyles((theme) => ({
   root: {
+    padding: "2em 5%",
+    background:
+      "linear-gradient(right, rgba(188, 244, 241, 1),rgba(0, 212, 255, 1) )",
     [theme.breakpoints.down("sm")]: {
       padding: "0.5em",
     },

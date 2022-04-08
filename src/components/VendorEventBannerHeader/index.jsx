@@ -63,6 +63,10 @@ const styles = makeStyles((theme) => ({
     background: "#FFFFFF",
     boxShadow: "none",
     padding: "0.35em 1em",
+    "&:hover": {
+      transform: "scale(1.05)",
+      background: "#FFFFFF",
+    },
   },
   editButton: {
     color: "#008EFF",
