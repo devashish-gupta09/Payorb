@@ -43,6 +43,11 @@ export const styles = makeStyles((theme) => ({
       marginTop: "1.3em",
     },
   },
+  img: {
+    borderRadius: "50%",
+    border: "3px solid #00D4FF",
+    width: "15em",
+  },
   divider: {
     color: "#00D4FF",
     backgroundColor: "#00D4FF",
