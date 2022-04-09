@@ -97,6 +97,7 @@ export const EventCoverUpload = ({
               alignItems="center"
               xs={3}
               style={{
+                maxWidth: "8em",
                 height: "4em",
               }}
             >
