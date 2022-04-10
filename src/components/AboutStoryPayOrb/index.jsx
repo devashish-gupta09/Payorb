@@ -29,9 +29,9 @@ function AboutStoryPayOrb({ content }) {
             <p>{content.section1}</p>
             <p>{content.section2}</p>
             <p>{content.section3}</p>
-            <Typography className={classes.desktop}>
+            {/* <Typography className={classes.desktop}>
               <p>{content.section4}</p>
-            </Typography>
+            </Typography> */}
           </Typography>
         </Grid>
       </Grid>

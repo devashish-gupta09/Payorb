@@ -42,6 +42,8 @@ export const styles = makeStyles((theme) => ({
     },
   },
   description: {
+    textAlign: "center",
+    alignItems: "center",
     [theme.breakpoints.down("sm")]: {
       textAlign: "center",
       alignItems: "center",
