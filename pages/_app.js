@@ -3,11 +3,13 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 
 import { useEffect } from "react";
+import { QueryClientProvider } from "react-query";
 
 import AuthenticationContextProvider from "../src/components/AuthenticationContext";
 import PageTitle from "../src/components/PageTitle";
 import theme from "../src/theme";
 import { pageview } from "../src/utils/ga";
+import { queryClient } from "../src/utils/reactQueryClient";
 import "../styles/globals.css";
 
 const CrispWithNoSSR = dynamic(() => import("../src/components/Crisp"), {
@@ -36,12 +38,14 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <PageTitle title="Payorb" />
-      <AuthenticationContextProvider>
-        <ThemeProvider theme={theme}>
-          <Component {...pageProps} />
-          <CrispWithNoSSR />
-        </ThemeProvider>
-      </AuthenticationContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthenticationContextProvider>
+          <ThemeProvider theme={theme}>
+            <Component {...pageProps} />
+            <CrispWithNoSSR />
+          </ThemeProvider>
+        </AuthenticationContextProvider>
+      </QueryClientProvider>
     </>
   );
 }

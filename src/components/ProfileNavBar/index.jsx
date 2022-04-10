@@ -7,8 +7,6 @@ function ProfileNavBar({ vendor = true }) {
   const detectMobile = useMobileDetect();
   const router = useRouter();
 
-  console.log(router.asPath);
-
   const isActive = () => {
     const section = router.asPath.split("#")[1];
     console.log(section);

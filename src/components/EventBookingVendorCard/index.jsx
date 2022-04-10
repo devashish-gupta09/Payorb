@@ -1,8 +1,8 @@
 import { Grid, makeStyles, Typography } from "@material-ui/core";
+import { WorkOutline } from "@material-ui/icons";
 import { useRouter } from "next/router";
 import React from "react";
 
-import { globalStyles } from "../../../styles/globalStyles";
 import { getUser } from "../../services/auth";
 import { buildVendorDashboardUrl } from "../../utils/url";
 import ButtonCapsule from "../ButtonCapsule";
@@ -11,7 +11,6 @@ function EventBookingVendorCard({ vendorId }) {
   const classes = styles();
   const router = useRouter();
   const [vendor, setVendor] = React.useState();
-  const globalClasses = globalStyles();
 
   const handleViewProfile = () => {
     if (vendor.userUID) {
@@ -38,8 +37,14 @@ function EventBookingVendorCard({ vendorId }) {
     <Grid className={classes.root}>
       {vendor ? (
         <>
-          <Grid container justify="center" spacing={3}>
-            <Grid item sm={12} container justify="center">
+          <Grid container>
+            <Grid
+              item
+              xs={3}
+              container
+              justifyContent="center"
+              alignItems="center"
+            >
               <img
                 className={classes.profile}
                 src={
@@ -49,23 +54,23 @@ function EventBookingVendorCard({ vendorId }) {
                 alt=""
               />
             </Grid>
-            <Grid item sm={12} container justify="center">
-              <Typography
-                variant="h6"
-                fullWidth
-                className={globalClasses.bold500}
-              >
+            <Grid item xs={9} style={{ padding: "0 1em 0 1em" }}>
+              <Typography fullWidth className={classes.name} gutterBottom>
                 {vendor.name}
               </Typography>
-              <Typography className={classes.occupation}>
-                {vendor.occupation}
-              </Typography>
-            </Grid>
-            <Grid item sm={12} container justify="center">
-              <ButtonCapsule
-                text={`View Profile`}
-                onClick={handleViewProfile}
-              />
+              <Grid container style={{ padding: "0.75em 0" }}>
+                <WorkOutline className={classes.occupationIcon} />
+                <Typography className={classes.occupation}>
+                  {vendor.occupation}
+                </Typography>
+              </Grid>
+              <Grid item sm={12} className={classes.profileButtonContainer}>
+                <ButtonCapsule
+                  text={`Profile`}
+                  onClick={handleViewProfile}
+                  buttonStyle={classes.profileButton}
+                />
+              </Grid>
             </Grid>
           </Grid>
         </>
@@ -76,20 +81,41 @@ function EventBookingVendorCard({ vendorId }) {
 
 const styles = makeStyles((theme) => ({
   root: {
-    padding: "1em 0",
+    padding: "0  0 0 0",
   },
   profile: {
-    minHeight: "100%",
+    width: "100%",
     maxHeight: "7.5em",
     borderRadius: "50%",
   },
+  name: {
+    fontSize: "1.25em",
+    fontWeight: "500",
+  },
   occupation: {
-    color: "#828282",
-    width: "100%",
-    textAlign: "center",
+    width: "fit-content",
+  },
+  occupationIcon: {
+    paddingRight: "0.25em",
+  },
+  occupationContainer: {
+    padding: "0.5em 0",
+    [theme.breakpoints.down("sm")]: {
+      padding: "0.25em 0",
+    },
   },
   view: {
     width: "100%",
+  },
+  profileButton: {
+    padding: "0.5em 1.5em",
+    fontSize: "1em",
+  },
+  profileButtonContainer: {
+    padding: "1em 0.5em 0 0.5em",
+    [theme.breakpoints.down("sm")]: {
+      padding: "0.25em 0.5em 0 0.5em",
+    },
   },
 }));
 

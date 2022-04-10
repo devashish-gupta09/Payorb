@@ -9,6 +9,7 @@ import {
   Tooltip,
   Typography,
 } from "@material-ui/core";
+import { CallMade } from "@material-ui/icons";
 import { useFormik } from "formik";
 import React from "react";
 
@@ -343,10 +344,14 @@ function EventBookingForm({
           <div id="sign-in-button"></div>
           <Grid container alignItems="center">
             <TextField
+              InputProps={{
+                disableUnderline: true,
+                className: classes.inputProps,
+              }}
               id="name"
               className={classes.textInput}
-              label={"Name"}
-              variant="outlined"
+              label={"Full Name"}
+              variant="filled"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.name}
@@ -363,14 +368,18 @@ function EventBookingForm({
               value={formik.values.email}
               error={formik.touched.email && Boolean(formik.errors.email)}
               helperText={formik.touched.email && formik.errors.email}
-              variant="outlined"
+              variant="filled"
               fullWidth
+              InputProps={{
+                disableUnderline: true,
+                className: classes.inputProps,
+              }}
             />
             <TextField
               id="phoneNumber"
               className={classes.textInput}
               label={"Phone Number"}
-              variant="outlined"
+              variant="filled"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.phoneNumber}
@@ -381,11 +390,20 @@ function EventBookingForm({
                 formik.touched.phoneNumber && formik.errors.phoneNumber
               }
               InputProps={{
+                className: classes.inputProps,
+                disableUnderline: true,
                 endAdornment: (
                   <InputAdornment position="end">
                     <Button
                       disabled={otpCountDown || disableOtpButton}
                       onClick={requestOTP}
+                      style={{
+                        color: "#0061FE",
+                        width: "fit-content",
+                        padding: "0.1em 0.2em 0.1em 0.2em",
+                        borderRadius: 0,
+                        borderBottom: "2px solid #0061FE",
+                      }}
                     >
                       {otpCountDown ? `Retry (${otpCountDown}s)` : "Get OTP"}
                     </Button>
@@ -395,10 +413,14 @@ function EventBookingForm({
               fullWidth
             />
             <TextField
+              InputProps={{
+                className: classes.inputProps,
+                disableUnderline: true,
+              }}
               id="otp"
               className={classes.textInput}
               label={"OTP"}
-              variant="outlined"
+              variant="filled"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.otp}
@@ -409,7 +431,12 @@ function EventBookingForm({
               autoComplete={"off"}
             />
 
-            <Grid container style={{ width: "100%" }} justify="center">
+            <Grid
+              container
+              style={{ width: "100%" }}
+              justifyContent="center"
+              alignItems="center"
+            >
               <Grid item xs={1}>
                 <Checkbox
                   checked={tAndC}
@@ -419,7 +446,7 @@ function EventBookingForm({
                 />
               </Grid>
               <Grid item xs={11} style={{ paddingLeft: "1em" }}>
-                <Typography>
+                <Typography style={{ fontSize: "1em" }}>
                   I have read and agree to the{" "}
                   <Link
                     target="_blank"
@@ -440,11 +467,14 @@ function EventBookingForm({
                   : ""
               }
             >
-              <div style={{ width: "100%" }}>
+              <Grid container justifyContent="center" style={{ width: "100%" }}>
                 <ButtonCapsule
                   showLoader={paymentProgLoader}
                   buttonStyle={classes.paybutton}
-                  disabled={(!otpSent && !confirmationResult) || !tAndC}
+                  rootStyle={classes.btnRootStyle}
+                  iconBefore={false}
+                  icon={<CallMade />}
+                  // disabled={(!otpSent && !confirmationResult) || !tAndC}
                   text={
                     earlyBird
                       ? parseInt(Date.parse(new Date(earlyBirdDeadline))) >
@@ -457,7 +487,7 @@ function EventBookingForm({
                   }
                   type={"submit"}
                 />
-              </div>
+              </Grid>
             </Tooltip>
           </Grid>
 
@@ -470,20 +500,33 @@ function EventBookingForm({
 
 const styles = makeStyles((theme) => ({
   textInput: {
+    "&.MuiTextField-root": {
+      background: "rgba(236, 237, 244, 0.5)",
+    },
     margin: "0.75em 0",
-    color: "#BDBDBD",
     [theme.breakpoints.down("sm")]: {
       marginBottom: "0.75em",
       width: "100%",
     },
   },
   paybutton: {
-    width: "100%",
+    width: "fit-cont",
     margin: "1em 0",
+    fontWeight: "600",
+    padding: "0.75em 1.5em",
   },
   snackbar: {
     padding: "1em 4em",
     background: "#BDF5F2",
+  },
+  inputProps: {
+    "&.MuiFilledInput-root": {
+      background: "rgba(236, 237, 244, 0.5)",
+    },
+  },
+  btnRootStyle: {
+    background:
+      "linear-gradient(right, rgba(104, 253, 243, 1),rgba(0, 212, 255, 1))",
   },
 }));
 

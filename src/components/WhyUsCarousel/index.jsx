@@ -1,6 +1,5 @@
 import { makeStyles } from "@material-ui/styles";
 import React from "react";
-import { Button } from "@material-ui/core";
 import Carousel from "react-multi-carousel";
 
 import WhyChooseUsCard from "../WhyChooseUsCard";
