@@ -28,8 +28,9 @@ import PageTitle from "../PageTitle";
 import ReadMore from "../ReadMore";
 import SkeletonLoading from "../SkeletonLoading";
 import { VendorEventBannerHeader } from "../VendorEventBannerHeader";
+import { VendorPublicEvents } from "../VendorPublicEvents";
 
-const getEventslotDuration = (startDate, endDate) => {
+export const getEventslotDuration = (startDate, endDate) => {
   if (startDate || endDate) {
     startDate = new Date(startDate);
     endDate = new Date(endDate);
@@ -57,15 +58,6 @@ const eventRows = (event, oneOnOneSlot) => [
       ? "Trial Class"
       : `Rs. ${event.price}`,
   },
-  // {
-  //   ...(event.type === EVENT_TYPES.ONE_TIME && {
-  //     icon: <ConfirmationNumber />,
-  //     key: "bookedSeats",
-  //     value: `${event.orders.length} ${
-  //       event.type === EVENT_TYPES.ONE_TIME ? `/${event.totalTickets}` : ""
-  //     }`,
-  //   }),
-  // },
   {
     icon: <ViewModule />,
     key: "category",
@@ -110,7 +102,9 @@ function EventBooking({ eventLink, vendorId }) {
     return (
       <Grid className={classes.foundation}>
         <PageTitle title="Payorb | Event Booking" />
-        <VendorEventBannerHeader eventData={event} isVendor={false} />
+        {event?.coverImgUrl ? (
+          <VendorEventBannerHeader eventData={event} isVendor={false} />
+        ) : null}
         <Grid container className={classes.root} alignItems={"flex-start"}>
           <Grid
             item
@@ -131,7 +125,7 @@ function EventBooking({ eventLink, vendorId }) {
                       eventData={event}
                       allowUploads={false}
                       croppedImgs={event.coverBannerImages}
-                      height={isMobile ? "15em" : "30em"}
+                      height={isMobile ? "15em" : "25em"}
                     />
                   ) : (
                     <EventImageContainer
@@ -218,7 +212,6 @@ function EventBooking({ eventLink, vendorId }) {
                   >
                     <ReadMore percent={100} text={event.description} />
                   </Grid>
-                  {/* <Capsule>{`Mode : ${event.mode}`}</Capsule> */}
                 </DashboardCard>
               </Grid>
             </Grid>
@@ -260,6 +253,17 @@ function EventBooking({ eventLink, vendorId }) {
             </Grid>
           </Grid>
         </Grid>
+        <Grid container className={classes.eventContainer} spacing={3}>
+          <Grid item sm={12}>
+            Events list
+          </Grid>
+          <Grid item sm={12}>
+            <VendorPublicEvents
+              vendorId={event.userUID}
+              exceptEventLink={event.link}
+            />
+          </Grid>
+        </Grid>
       </Grid>
     );
   }
@@ -268,6 +272,12 @@ function EventBooking({ eventLink, vendorId }) {
 }
 
 const styles = makeStyles((theme) => ({
+  eventContainer: {
+    padding: "1em 10%",
+    [theme.breakpoints.down("sm")]: {
+      padding: "1em 1em",
+    },
+  },
   foundation: {
     width: "100%",
     [theme.breakpoints.down("sm")]: {
@@ -275,7 +285,7 @@ const styles = makeStyles((theme) => ({
     },
   },
   root: {
-    padding: "2em 5%",
+    padding: "2em 10%",
     background:
       "linear-gradient(right, rgba(188, 244, 241, 1),rgba(0, 212, 255, 1) )",
     [theme.breakpoints.down("sm")]: {

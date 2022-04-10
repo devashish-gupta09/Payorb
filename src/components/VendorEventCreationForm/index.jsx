@@ -273,7 +273,7 @@ function VendorEventCreationForm({
             });
 
             formik.setFieldValue("coverBannerImages", eventImageUrls);
-            formik.setFieldValue("coverImgUrl",eventCoverUrl)
+            formik.setFieldValue("coverImgUrl", eventCoverUrl);
             setLoader(false);
             setPostEventDialog(true);
           } else {
