@@ -28,7 +28,6 @@ const styles = makeStyles((theme) => ({
     "--heightA": "100%",
     height: "calc(100vh/2.56)",
     width: "100vw",
-    backgroundColor: "pink",
     position: "relative",
     [theme.breakpoints.down("sm")]: {
       height: "25vh",

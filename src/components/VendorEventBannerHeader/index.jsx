@@ -7,8 +7,17 @@ import {
   IconButton,
   makeStyles,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@material-ui/core";
-import { ArrowBack, CloudUpload, Delete, Edit } from "@material-ui/icons";
+import {
+  ArrowBack,
+  CloudUpload,
+  Delete,
+  Edit,
+  Event,
+  Schedule,
+} from "@material-ui/icons";
 import { useRouter } from "next/router";
 
 import * as React from "react";
@@ -17,6 +26,8 @@ import { EVENT_DEFAULT_BANNERS } from "../../constants/images";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { updateUser } from "../../services/auth";
 import ButtonCapsule from "../ButtonCapsule";
+import Capsule from "../Capsule";
+import { getEventslotDuration } from "../EventBooking";
 import ImageSelectAndCrop from "../ImageSelectAndCrop";
 
 export function randomNumber(min, max) {
@@ -62,7 +73,11 @@ const styles = makeStyles((theme) => ({
   backButton: {
     background: "#FFFFFF",
     boxShadow: "none",
-    padding: "0.35em 1em",
+    padding: "0.45em 1em",
+    "&:hover": {
+      transform: "scale(1.05)",
+      background: "#FFFFFF",
+    },
   },
   editButton: {
     color: "#008EFF",
@@ -97,7 +112,8 @@ const VendorEventBannerHeader = ({
   customBackHandler,
 }) => {
   const classes = styles();
-
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const { Alert, showAlert } = useAlertSnackbar();
   const [progressLoader, setProgress] = React.useState(false);
@@ -204,6 +220,69 @@ const VendorEventBannerHeader = ({
           </Grid>
         )}
       </Grid>
+
+      {!isVendor && eventData?.name ? (
+        <Grid className={classes.base}>
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="center"
+            style={{ height: "100%", color: "white" }}
+          >
+            <Grid>
+              <Typography
+                variant="h2"
+                style={{
+                  color: "white",
+                  textAlign: "center",
+                  paddingBottom: "0.25em",
+                }}
+              >
+                {eventData.name}
+              </Typography>
+              <Grid container justifyContent="center">
+                <Grid
+                  item
+                  style={{
+                    width: "fit-content",
+                    marginRight: "1em",
+                    marginBottom: isMobile ? "0.5em" : 0,
+                  }}
+                  container
+                  alignItems="center"
+                >
+                  <Event style={{ marginRight: "0.25em" }} />
+                  <b>
+                    {
+                      getEventslotDuration(
+                        eventData.startDate,
+                        eventData.endDate
+                      ).date
+                    }
+                  </b>
+                </Grid>
+                <Grid
+                  item
+                  style={{ width: "fit-content" }}
+                  container
+                  alignItems="center"
+                >
+                  <Schedule style={{ marginRight: "0.25em" }} />
+                  <b>
+                    {
+                      getEventslotDuration(
+                        eventData.startDate,
+                        eventData.endDate
+                      ).time
+                    }
+                  </b>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      ) : null}
+
       <Grid
         container
         justifyContent="space-between"
@@ -237,7 +316,24 @@ const VendorEventBannerHeader = ({
               </IconButton>
             ) : null}
           </Grid>
-        ) : null}
+        ) : (
+          <Grid container style={{ width: "fit-content" }}>
+            <Capsule bgColor="#008EFF">Booking Open</Capsule>
+            <Capsule bgColor="#FF007F">{eventData.mode.toLowerCase()}</Capsule>
+            <Capsule bgColor="#1ECE7A">
+              {eventData.category
+                .split("_")
+                .map((el) => el.toLowerCase())
+                .join(" ")}
+            </Capsule>
+            <Capsule bgColor="#7B61FF">
+              {eventData.type
+                .split("_")
+                .map((el) => el.toLowerCase())
+                .join(" ")}
+            </Capsule>
+          </Grid>
+        )}
       </Grid>
     </Grid>
   );

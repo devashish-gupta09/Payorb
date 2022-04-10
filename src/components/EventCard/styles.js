@@ -189,4 +189,10 @@ export const styles = makeStyles((theme) => ({
     width: "100%",
     height: "100%",
   },
+  bookButton: {
+    padding: "0.5em 1.75em",
+    [theme.breakpoints.down("sm")]: {
+      margin: "1em 0",
+    },
+  },
 }));

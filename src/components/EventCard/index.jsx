@@ -5,6 +5,7 @@ import {
   IconButton,
   Typography,
   Card,
+  Link,
 } from "@material-ui/core";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
@@ -17,6 +18,7 @@ import { EVENT_TYPES } from "../../constants/events";
 import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 import { getEventDate, getEventMonth } from "../../utils/dateTime";
 import { formatEventType } from "../../utils/events";
+import ButtonCapsule from "../ButtonCapsule";
 import CustomConfirmationDialog from "../CustomConfirmationDialog";
 import { EventCoverUpload } from "../EventCoverUpload";
 import PostEventCreationDialog from "../PostEventCreationDialog";
@@ -47,6 +49,7 @@ function EventCard({ event, handleEventDelete, editable = true }) {
   const [edit, setEdit] = React.useState(false);
   const [clone, setClone] = React.useState(false);
   const [shareDialog, setShareDialog] = React.useState(false);
+
   // const { state } = useUserAuthDetails();
   const [deleteBtn, setDelete] = React.useState(false);
   // const isTabletOrMobile = useMediaQuery({ maxWidth: 900 });
@@ -81,6 +84,12 @@ function EventCard({ event, handleEventDelete, editable = true }) {
     await handleEventDelete(event.link);
     setDelete(false);
   };
+
+  console.log(
+    `/${event.vendorUserName ? event.vendorUserName : event.userUID}/${
+      event.url ? event.url : event.link
+    }`
+  );
 
   return (
     <Grid className={classes.root}>
@@ -227,57 +236,85 @@ function EventCard({ event, handleEventDelete, editable = true }) {
           </Grid>
         </Grid>
 
-        <Grid
-          container
-          justify={"space-between"}
-          className={classes.textContainer}
-        >
-          <Grid container justify={"space-between"}>
-            <Grid item xs={8}>
-              <Typography className={classes.headline}>{event.name}</Typography>
-            </Grid>
-            <Grid item xs={4}>
-              <Typography className={classes.cost}>
-                {event.trialClass ? "Trial Class" : <>&#8377; {event.price}</>}
-              </Typography>
-            </Grid>
-          </Grid>
-          <Typography className={classes.descriptionText}>
-            <ReadMore
-              percent={20}
-              text={event.description}
-              className={classes.descriptionText}
-            />
-          </Typography>
-
+        <Grid container>
           <Grid
+            item
+            sm={editable ? 12 : 10}
             container
             justify={"space-between"}
-            className={classes.bottomTextContainer}
+            className={classes.textContainer}
           >
-            <Grid item xs={4}>
-              <Typography className={classes.bottomText}>
-                Event Type <br />
-                {formatEventType(event.type)}
-              </Typography>
+            <Grid container justify={"space-between"}>
+              <Grid item xs={8}>
+                <Typography className={classes.headline}>
+                  {event.name}
+                </Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography className={classes.cost}>
+                  {event.trialClass ? (
+                    "Trial Class"
+                  ) : (
+                    <>&#8377; {event.price}</>
+                  )}
+                </Typography>
+              </Grid>
             </Grid>
-            <Grid item xs={4}>
-              <Typography className={classes.bottomText}>
-                Sold out Seats
-                <br /> {event.orders ? event.orders.length : 0}
-                {event.type === EVENT_TYPES.ONE_TIME &&
-                  `/${event.totalTickets}`}
-              </Typography>
-            </Grid>
-            <Grid item xs={4}>
-              <Typography className={classes.bottomText}>
-                Total Revenue <br />{" "}
-                <span style={{ color: "#0061FE" }}>
-                  &#8377; {`${event.revenue ? event.revenue : "0.0"}`}
-                </span>
-              </Typography>
+            <Typography className={classes.descriptionText}>
+              <ReadMore
+                percent={20}
+                text={event.description}
+                className={classes.descriptionText}
+              />
+            </Typography>
+
+            <Grid
+              container
+              justify={"space-between"}
+              className={classes.bottomTextContainer}
+            >
+              <Grid item xs={4}>
+                <Typography className={classes.bottomText}>
+                  Event Type <br />
+                  {formatEventType(event.type)}
+                </Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography className={classes.bottomText}>
+                  Sold out Seats
+                  <br /> {event.orders ? event.orders.length : 0}
+                  {event.type === EVENT_TYPES.ONE_TIME &&
+                    `/${event.totalTickets}`}
+                </Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography className={classes.bottomText}>
+                  Total Revenue <br />{" "}
+                  <span style={{ color: "#0061FE" }}>
+                    &#8377; {`${event.revenue ? event.revenue : "0.0"}`}
+                  </span>
+                </Typography>
+              </Grid>
             </Grid>
           </Grid>
+
+          {!editable ? (
+            <Grid
+              item
+              sm={2}
+              container
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Link
+                href={`/${
+                  event.vendorUserName ? event.vendorUserName : event.userUID
+                }/${event.url ? event.url : event.link}`}
+              >
+                <ButtonCapsule text={"Book"} buttonStyle={classes.bookButton} />
+              </Link>
+            </Grid>
+          ) : null}
         </Grid>
       </Card>
     </Grid>
