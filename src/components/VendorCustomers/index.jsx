@@ -12,28 +12,22 @@ import {
   TableHead,
   TableRow,
   Typography,
-  Tooltip,
   TextField,
   InputAdornment,
   MenuItem,
 } from "@material-ui/core";
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import SearchIcon from "@material-ui/icons/Search";
 import React from "react";
-import AccessTimeIcon from "@material-ui/icons/AccessTime";
+
+import ReactPaginate from "react-paginate";
+
 import { globalStyles } from "../../../styles/globalStyles";
-import { ALERT_TYPES } from "../../constants/alerts";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
-import useFetchVendorCustomers from "../../hooks/useFetchCustomers";
-import useFetchEvents from "../../hooks/useFetchEvents";
-import { sendNotificationToCustomers } from "../../services/notification";
 import { getMonthDate } from "../../utils/dateTime";
-import { getEventDate, getEventMonth } from "../../utils/dateTime";
-import { isEventPastDate } from "../../utils/events";
 import DashboardCard from "../DashboardCard";
 import PageTitle from "../PageTitle";
-import SkeletonLoading from "../SkeletonLoading";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import ReactPaginate from "react-paginate";
 
 function createData(
   name,

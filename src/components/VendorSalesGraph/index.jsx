@@ -92,6 +92,7 @@ const TitleText = withStyles(titleStyles)(({ classes, ...props }) => {
   );
 });
 
+// eslint-disable-next-line react/display-name
 const Point = (type, styles) => (props) => {
   const { arg, val, color } = props;
   return (
