@@ -15,9 +15,9 @@ function AboutBanner({ content }) {
             {content.titleSection2}
           </Typography>
         </Typography>
-        <Typography variant={"h6"} className={classes.descriptionText}>
+        {/* <Typography variant={"h6"} className={classes.descriptionText}>
           {content.description}
-        </Typography>
+        </Typography> */}
       </Grid>
     </Grid>
   );

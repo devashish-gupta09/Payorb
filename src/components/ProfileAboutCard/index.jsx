@@ -80,6 +80,7 @@ function ProfileAboutCard({ profileData, vendor = true, updateProfile }) {
               onBlur={formik.onBlur}
               maxRow={8}
               minRow={8}
+              disabled={!vendor}
               InputProps={{ disableUnderline: true }}
               placeholder="Please add some information about yourself"
             />

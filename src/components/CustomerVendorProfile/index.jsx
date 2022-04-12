@@ -11,6 +11,7 @@ import ProfileInfoCard from "../ProfileInfoCard";
 import { ProfileNavBar } from "../ProfileNavBar";
 import ProfileReviewSection from "../ProfileReviewSection";
 import SkeletonLoading from "../SkeletonLoading";
+import { VendorPublicEvents } from "../VendorPublicEvents";
 
 function CustomerVendorProfile({ userUID }) {
   const router = useRouter();
@@ -43,9 +44,11 @@ function CustomerVendorProfile({ userUID }) {
         <PageTitle title="Payorb | Profile" />
         <ProfileHeader profileData={profileData} vendor={false} />
         <Grid style={{ position: "relative" }}>
+          {/* Desktop */}
           <Grid className={classes.navbarDesktop}>
             <ProfileNavBar vendor={false} />
           </Grid>
+          {/* Mobile */}
           <Grid container alignItems="stretch">
             <ProfileInfoCard profileData={profileData} vendor={false} />
             <Grid className={classes.navbarMobile}>
@@ -54,12 +57,21 @@ function CustomerVendorProfile({ userUID }) {
             <ProfileDetailsSection profileData={profileData} vendor={false} />
           </Grid>
         </Grid>
-        <div id="gallery">
+        <div id="gallery" className={classes.galleryImageContainer}>
           <ProfileImageGallery profileInfo={profileData} vendor={false} />
         </div>
         <div id="review">
           <ProfileReviewSection />
         </div>
+
+        <Grid container className={classes.eventContainer} spacing={3}>
+          <Grid item sm={12}>
+            Events list
+          </Grid>
+          <Grid item sm={12}>
+            <VendorPublicEvents vendorId={profileData.userUID} />
+          </Grid>
+        </Grid>
 
         {/* To be done! */}
         {/* <CustomerVendorProfileEvents userUID={profileData.userUID} /> */}
@@ -71,6 +83,15 @@ function CustomerVendorProfile({ userUID }) {
 }
 
 const styles = makeStyles((theme) => ({
+  eventContainer: {
+    padding: "1em 7.5%",
+    [theme.breakpoints.down("sm")]: {
+      padding: "1em 1em",
+    },
+  },
+  // galleryImageContainer: {
+  //   paddingTop: "10%",
+  // },
   navbarMobile: {
     display: "none",
     [theme.breakpoints.down("sm")]: {

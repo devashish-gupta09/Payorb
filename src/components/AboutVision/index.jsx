@@ -33,10 +33,10 @@ function AboutVision({ content }) {
           <p>{content.para1}</p>
 
           <p>{content.para2}</p>
-          <p>{content.para3}</p>
+          {/* <p>{content.para3}</p>
           <Typography className={classes.desktop}>
             <p>{content.para4}</p>
-          </Typography>
+          </Typography> */}
         </Typography>
       </Grid>
     </Grid>

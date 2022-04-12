@@ -27,7 +27,7 @@ function AboutFounders({ content }) {
           return (
             <Grid key={index} item sm={6}>
               <Grid className={classes.founder}>
-                <img src={founder.image} />
+                <img className={classes.img} src={founder.image} />
                 <Typography className={classes.founderName}>
                   {founder.name}{" "}
                 </Typography>
