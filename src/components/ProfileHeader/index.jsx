@@ -26,12 +26,13 @@ import ImageSelectAndCrop from "../ImageSelectAndCrop";
 const styles = makeStyles((theme) => ({
   root: {
     "--heightA": "100%",
+    width: "100%",
     height: "calc(100vh/2.56)",
-    width: "100vw",
     backgroundColor: "pink",
     position: "relative",
     [theme.breakpoints.down("sm")]: {
       height: "25vh",
+      width: "100vw",
     },
   },
   base: {
