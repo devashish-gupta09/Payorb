@@ -1,13 +1,16 @@
 import {
   Button,
+  CircularProgress,
   Grid,
   makeStyles,
   TextField,
   Typography,
 } from "@material-ui/core";
+import axios from "axios";
 
 import { useFormik } from "formik";
 import React, { useState } from "react";
+import { useQuery } from "react-query";
 import useMobileDetect from "use-mobile-detect-hook";
 
 import { appColors } from "../../../styles/colors";
@@ -54,12 +57,29 @@ function getPaymentDetailsStatus(paymentDetails) {
   }
 }
 
+const fetchIFSCDetails = async (ifsc) => {
+  return (await axios.get(`https://ifsc.razorpay.com/${ifsc}`))?.data;
+};
+
 function ProfilePaymentSection({ profileData, updateProfile }) {
   const classes = styles();
   const { dispatch } = useUserAuthDetails();
   const { Alert, showAlert } = useAlertSnackbar();
   const [edit, setEdit] = useState();
   const { isMobile } = useMobileDetect();
+  // const [bankDetails, setBankDetails] = useState();
+
+  const [enabled, setEnabled] = useState();
+  const {
+    data: bankDetails,
+    isLoading: bankDataLoading,
+    error: bankDataFetchError,
+  } = useQuery(
+    "fetch-ifsc-details",
+    () => fetchIFSCDetails(formik.values.ifscCode),
+    { enabled: enabled, cacheTime: 0 }
+  );
+
   const formik = useFormik({
     initialValues: getPaymentSectionValues(profileData.paymentDetails),
     onSubmit: async (values) => {
@@ -83,6 +103,11 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
       }
     },
   });
+
+  const handleIFSCChange = (event) => {
+    setEnabled(false);
+    formik.setFieldValue("ifscCode", event.value);
+  };
 
   const handleEdit = () => {
     setEdit(!edit);
@@ -113,24 +138,25 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
         </Typography>
       </Grid>
       <form onSubmit={formik.handleSubmit}>
-        <Grid container spacing={isMobile() ? 0 : 5}>
-          <Grid container item sm={6} spacing={isMobile() ? 0 : 5}>
-            <Grid container item sm={6}>
-              <TextField
-                disabled={!edit}
-                fullWidth
-                className={classes.textInput}
-                id="name"
-                label="Your Name"
-                variant="outlined"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.name}
-                error={formik.touched.name && Boolean(formik.errors.name)}
-                helperText={formik.touched.name && formik.errors.name}
-              />
-            </Grid>
-            <Grid container item sm={6}>
+        <Grid container>
+          <Grid container item sm={8} spacing={isMobile() ? 0 : 5}>
+            <Grid container item sm={12} spacing={isMobile() ? 0 : 5}>
+              <Grid container item sm={6}>
+                <TextField
+                  disabled={!edit}
+                  fullWidth
+                  className={classes.textInput}
+                  id="name"
+                  label="Full Name"
+                  variant="outlined"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.name}
+                  error={formik.touched.name && Boolean(formik.errors.name)}
+                  helperText={formik.touched.name && formik.errors.name}
+                />
+              </Grid>
+              {/* <Grid container item sm={6}>
               <TextField
                 disabled={!edit}
                 fullWidth
@@ -146,14 +172,31 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
                 }
                 helperText={formik.touched.bankName && formik.errors.bankName}
               />
-            </Grid>
-            <Grid container item sm={6}>
-              <TextField
+            </Grid> */}
+              <Grid container item sm={6}>
+                <TextField
+                  fullWidth
+                  disabled={!edit}
+                  className={classes.textInput}
+                  id="accNumber"
+                  label="Account Number"
+                  variant="outlined"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.accNumber}
+                  error={
+                    formik.touched.accNumber && Boolean(formik.errors.accNumber)
+                  }
+                  helperText={
+                    formik.touched.accNumber && formik.errors.accNumber
+                  }
+                />
+                {/* <TextField
                 fullWidth
                 disabled={!edit}
                 className={classes.textInput}
                 id="accNumber"
-                label="Account Number"
+                label="Confirm Account Number"
                 variant="outlined"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -162,28 +205,28 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
                   formik.touched.accNumber && Boolean(formik.errors.accNumber)
                 }
                 helperText={formik.touched.accNumber && formik.errors.accNumber}
-              />
+              /> */}
+              </Grid>
+              <Grid container item sm={6}>
+                <TextField
+                  disabled={!edit}
+                  className={classes.textInput}
+                  id="ifscCode"
+                  label="IFSC Code"
+                  variant="outlined"
+                  fullWidth
+                  onChange={handleIFSCChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.ifscCode}
+                  error={
+                    formik.touched.ifscCode && Boolean(formik.errors.ifscCode)
+                  }
+                  helperText={formik.touched.ifscCode && formik.errors.ifscCode}
+                />
+              </Grid>
             </Grid>
-            <Grid container item sm={6}>
-              <TextField
-                disabled={!edit}
-                className={classes.textInput}
-                id="ifscCode"
-                label="IFSC Code"
-                variant="outlined"
-                fullWidth
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.ifscCode}
-                error={
-                  formik.touched.ifscCode && Boolean(formik.errors.ifscCode)
-                }
-                helperText={formik.touched.ifscCode && formik.errors.ifscCode}
-              />
-            </Grid>
-          </Grid>
-          <Grid container item sm={6} className={classes.bankAddrContainer}>
-            <TextField
+            <Grid container item sm={6} className={classes.bankAddrContainer}>
+              {/* <TextField
               disabled={!edit}
               multiline
               fullWidth
@@ -201,35 +244,132 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
                 formik.touched.bankAddress && formik.errors.bankAddress
               }
               rows={6}
-            />
-          </Grid>
+            /> */}
+            </Grid>
 
-          <Grid
-            container
-            item
-            sm={12}
-            justify="center"
-            alignItems="center"
-            className={classes.saveButtonContainer}
-          >
-            {edit ? (
-              <Grid container justify="center" alignItems="center">
-                <ButtonCapsule
-                  text="Save"
-                  type="submit"
-                  buttonStyle={classes.saveButton}
-                ></ButtonCapsule>
-                <Button onClick={handleEdit} className={classes.cancelButton}>
-                  Cancel
-                </Button>
-              </Grid>
-            ) : (
+            <Grid
+              container
+              item
+              sm={12}
+              justify="center"
+              alignItems="center"
+              className={classes.saveButtonContainer}
+            >
               <ButtonCapsule
-                buttonStyle={classes.saveButton}
-                text="Edit"
-                onClick={handleEdit}
+                text={"fetch details"}
+                onClick={() => setEnabled(!enabled)}
               ></ButtonCapsule>
-            )}
+
+              {edit ? (
+                <Grid container justify="center" alignItems="center">
+                  <ButtonCapsule
+                    text="Save"
+                    type="submit"
+                    buttonStyle={classes.saveButton}
+                  ></ButtonCapsule>
+                  <Button onClick={handleEdit} className={classes.cancelButton}>
+                    Cancel
+                  </Button>
+                </Grid>
+              ) : (
+                <ButtonCapsule
+                  buttonStyle={classes.saveButton}
+                  text="Edit"
+                  onClick={handleEdit}
+                ></ButtonCapsule>
+              )}
+            </Grid>
+          </Grid>
+          <Grid item sm={4}>
+            {bankDataLoading ? (
+              <CircularProgress />
+            ) : bankDetails ? (
+              <Grid
+                style={{
+                  background: "#FFFAEB",
+                  borderRadius: "8px",
+                  padding: "0.5em",
+                }}
+              >
+                <Grid style={{ paddingBottom: "0.5em" }}>
+                  <Typography
+                    style={{
+                      color: "#8B8B8B",
+                      paddingBottom: "0",
+                      fontWeight: "300",
+                    }}
+                    variant="subtitle2"
+                  >
+                    Full name
+                  </Typography>
+                  <Typography style={{ color: "#000000 " }} variant="body1">
+                    {formik.values.name}
+                  </Typography>
+                </Grid>
+                <Grid style={{ paddingBottom: "0.5em" }}>
+                  <Typography
+                    style={{
+                      color: "#8B8B8B",
+                      paddingBottom: "0",
+                      fontWeight: "300",
+                    }}
+                    variant="subtitle2"
+                  >
+                    Bank Name
+                  </Typography>
+                  <Typography style={{ color: "#000000 " }} variant="body1">
+                    {bankDetails.BANK}
+                  </Typography>
+                </Grid>
+                <Grid style={{ paddingBottom: "0.5em" }}>
+                  <Typography
+                    style={{
+                      color: "#8B8B8B",
+                      paddingBottom: "0",
+                      fontWeight: "300",
+                    }}
+                    variant="subtitle2"
+                  >
+                    Account Number
+                  </Typography>
+                  <Typography style={{ color: "#000000 " }} variant="body1">
+                    {formik.values.accNumber}
+                  </Typography>
+                </Grid>
+                <Grid style={{ paddingBottom: "0.5em" }}>
+                  <Typography
+                    style={{
+                      color: "#8B8B8B",
+                      paddingBottom: "0",
+                      fontWeight: "300",
+                    }}
+                    variant="subtitle2"
+                  >
+                    IFSC Code
+                  </Typography>
+                  <Typography style={{ color: "#000000 " }} variant="body1">
+                    {bankDetails.IFSC}
+                  </Typography>
+                </Grid>
+                <Grid style={{ paddingBottom: "0.5em" }}>
+                  <Typography
+                    style={{
+                      color: "#8B8B8B",
+                      paddingBottom: "0",
+                      fontWeight: "300",
+                    }}
+                    variant="subtitle2"
+                  >
+                    Branch Address
+                  </Typography>
+                  <Typography style={{ color: "#000000 " }} variant="body1">
+                    {bankDetails.ADDRESS}
+                  </Typography>
+                </Grid>
+              </Grid>
+            ) : bankDataFetchError ? (
+              <h1>{JSON.stringify(bankDataFetchError)}</h1>
+            ) : null}
           </Grid>
         </Grid>
       </form>
@@ -306,6 +446,14 @@ const styles = makeStyles((theme) => ({
       paddingLeft: 0,
       paddingTop: 0,
     },
+  },
+  detailRowContainer: {
+    paddingBottom: "0.5em",
+  },
+  detailRowTitle: {
+    color: "#8B8B8B",
+    paddingBottom: "0",
+    fontWeight: "300",
   },
 }));
 
