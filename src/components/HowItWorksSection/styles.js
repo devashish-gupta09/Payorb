@@ -35,7 +35,7 @@ export const styles = makeStyles((theme) => ({
     alignItems: "center",
     margin: "2em auto",
     position: "relative",
-    boxShadow: "0 0 2px 4px rgba(0, 212, 255, 1)",
+    // boxShadow: "0 0 2px 4px rgba(0, 212, 255, 1)",
     "& > div": {
       display: (props) => (props === true ? "none" : "flex"),
     },
