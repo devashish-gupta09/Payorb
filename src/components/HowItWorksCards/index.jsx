@@ -7,10 +7,10 @@ function WorkCards({ title, description, image }) {
   const classes = styles();
   return (
     <Grid container className={classes.container}>
-      <Grid item sm={3}>
+      <Grid item sm={3} className={classes.imgBox}>
         <img src={image} className={classes.img} />
       </Grid>
-      <Grid item sm={9}>
+      <Grid item sm={9} className={classes.textBox}>
         <Typography className={classes.title} variant="h6">
           {title}
         </Typography>
