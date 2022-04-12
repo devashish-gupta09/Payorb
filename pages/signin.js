@@ -34,5 +34,10 @@ const styles = makeStyles((theme) => ({
     background: "url(/assets/sign-in-bg.svg) no-repeat center",
     backgroundSize: "cover",
     height: "100vh",
+    overflow: "hidden",
+    [theme.breakpoints.down("sm")]: {
+      background: "url(/assets/signin-bg-mobile.svg) no-repeat",
+      backgroundSize: "contain",
+    },
   },
 }));
