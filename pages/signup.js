@@ -36,5 +36,9 @@ const styles = makeStyles((theme) => ({
     backgroundSize: "cover",
     height: "fit-content",
     minHeight: "100vh",
+    [theme.breakpoints.down("sm")]: {
+      background: "url(/assets/signin-bg-mobile.svg) no-repeat",
+      backgroundSize: "contain",
+    },
   },
 }));

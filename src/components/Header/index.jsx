@@ -18,7 +18,7 @@ const styles = makeStyles((theme) => ({
       zIndex: "1301",
       position: "fixed",
       top: "0",
-      backgroundColor: "white",
+      // backgroundColor: "white",
       padding: "0.5em 1em",
     },
     boxShadow: "none",

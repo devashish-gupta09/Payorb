@@ -3,8 +3,10 @@ import { makeStyles } from "@material-ui/core";
 export const styles = makeStyles((theme) => ({
   container: {
     height: "100%",
+    overflow: "hidden",
     [theme.breakpoints.down("sm")]: {
       alignItems: "center",
+      alignContent: "flex-end",
     },
   },
   leftContainer: {

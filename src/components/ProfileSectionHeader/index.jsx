@@ -55,12 +55,7 @@ function ProfileSectionHeader({ image, name }) {
   };
 
   return (
-    <Grid
-      container
-      justify="space-evenly"
-      alignItems="center"
-      style={{ color: "#333333" }}
-    >
+    <Grid container alignItems="center" style={{ color: "#333333" }}>
       <Grid style={{ padding: "0 1em", display: "contents" }}>
         {image ? (
           <Avatar className={classes.avatar} src={image} />
@@ -177,7 +172,10 @@ const styles = makeStyles((theme) => ({
     },
   },
   avatar: {
-    marginRight: "4px",
+    marginRight: "5%",
+    [theme.breakpoints.down("sm")]: {
+      marginRight: "4px",
+    },
   },
   arrow: {
     position: "absolute",

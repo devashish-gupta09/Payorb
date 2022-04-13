@@ -1,9 +1,6 @@
 import { Box, Container, Grid, Typography } from "@material-ui/core";
-import { Pause, PlayArrow } from "@material-ui/icons";
 
-import React, { useRef, useState } from "react";
-
-import { GENERAL_VIDEO_URL } from "../../constants/video";
+import React from "react";
 
 import WorkCards from "../HowItWorksCards";
 
@@ -21,19 +18,7 @@ const ColoredLine = () => (
 );
 
 function HowItWorksSection({ content }) {
-  const videoPlayerRef = useRef(null);
-  const [videoPlaying, setVideoPlaying] = useState(false);
-  const classes = styles(videoPlaying);
-
-  const handleVideoControl = () => {
-    if (!videoPlaying) {
-      videoPlayerRef.current.play();
-      setVideoPlaying(true);
-    } else {
-      videoPlayerRef.current.pause();
-      setVideoPlaying(false);
-    }
-  };
+  const classes = styles();
 
   return (
     <Box className={classes.bg}>
@@ -43,36 +28,7 @@ function HowItWorksSection({ content }) {
         </Typography>
         <ColoredLine />
         <Box className={classes.box}>
-          <video
-            autopictureinpicture
-            loop
-            ref={videoPlayerRef}
-            src={GENERAL_VIDEO_URL}
-            className={classes.videoImg}
-            poster={"/assets/default-video.png"}
-          />
-          <Grid
-            className={classes.actionButtonContainer}
-            style={{
-              "& > div": {
-                display: "none",
-              },
-            }}
-          >
-            <Grid
-              container
-              justifyContent="center"
-              alignItems="center"
-              className={classes.videoActionContainer}
-              onClick={handleVideoControl}
-            >
-              {videoPlaying ? (
-                <Pause className={classes.videoActions} />
-              ) : (
-                <PlayArrow className={classes.videoActions} />
-              )}
-            </Grid>
-          </Grid>
+          <img src={content.image} layout="fill" className={classes.videoImg} />
         </Box>
         <Grid container>
           {content.works.map((work, index) => {
