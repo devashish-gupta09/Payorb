@@ -28,7 +28,7 @@ const styles = makeStyles((theme) => ({
     "--heightA": "100%",
     width: "100%",
     height: "calc(100vh/2.56)",
-    backgroundColor: "pink",
+    width: "100vw",
     position: "relative",
     [theme.breakpoints.down("sm")]: {
       height: "25vh",

@@ -12,26 +12,27 @@ import {
   TableHead,
   TableRow,
   Typography,
-  Tooltip,
   TextField,
   InputAdornment,
   InputBase,
 } from "@material-ui/core";
-import DashboardCard from "../DashboardCard";
-import SearchIcon from "@material-ui/icons/Search";
-import { globalStyles } from "../../../styles/globalStyles";
-import React from "react";
-import { getMonthDate } from "../../utils/dateTime";
-import { EVENT_STATUS } from "../../constants/events";
-import SkeletonLoading from "../SkeletonLoading";
+
 import Checkbox from "@material-ui/core/Checkbox";
-import useFetchEvents from "../../hooks/useFetchEvents";
-import PageTitle from "../PageTitle";
-import { isEventPastDate } from "../../utils/events";
+import { Send } from "@material-ui/icons";
+import SearchIcon from "@material-ui/icons/Search";
+
+import React from "react";
+
 import ReactPaginate from "react-paginate";
-import ButtonCapsule from "../ButtonCapsule";
-import { Send, Info } from "@material-ui/icons";
+
+import { globalStyles } from "../../../styles/globalStyles";
+import { EVENT_STATUS } from "../../constants/events";
+
 import { sendNotificationToCustomers } from "../../services/notification";
+import { getMonthDate } from "../../utils/dateTime";
+import ButtonCapsule from "../ButtonCapsule";
+import DashboardCard from "../DashboardCard";
+import PageTitle from "../PageTitle";
 
 function createData(name, date, category, count, status, startDate, endDate) {
   return {

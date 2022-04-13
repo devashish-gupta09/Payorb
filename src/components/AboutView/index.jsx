@@ -1,7 +1,7 @@
 import { Grid, makeStyles } from "@material-ui/core";
 import React from "react";
 
-import AboutAdvisors from "../AboutAdvisors";
+// import AboutAdvisors from "../AboutAdvisors";
 import AboutBanner from "../AboutBanner";
 import AboutFounders from "../AboutFounders";
 import AboutStoryPayOrb from "../AboutStoryPayOrb";
@@ -33,9 +33,9 @@ function AboutView({ content }) {
       </Grid>
 
       <AboutVision content={content.vision} />
-      <AboutStoryPayOrb content={content.story} />
+      <AboutStoryPayOrb content={content.whyWeHere} />
       <AboutFounders content={content.founders} />
-      <AboutAdvisors content={content.advisors} />
+      {/* <AboutAdvisors content={content.advisors} /> */}
       <Footer />
     </Grid>
   );

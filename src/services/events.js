@@ -113,3 +113,16 @@ export const deleteEvent = async (eventId) => {
     return err.response.data || err.message;
   }
 };
+
+// no-auth required
+// vendorId : string
+export const getOpenEvents = async (vendorId) => {
+  try {
+    const res = await axios.get(`${API_URL}/${END_POINTS.EVENTS}/open`, {
+      params: { vendorId, currentDate: new Date().toISOString() },
+    });
+    return res.data;
+  } catch (err) {
+    throw err.response.data || err.message;
+  }
+};
