@@ -4,6 +4,7 @@ export const styles = makeStyles((theme) => ({
   container: {
     height: "100%",
     [theme.breakpoints.down("sm")]: {
+      paddingTop: "4em",
       height: "fit-content",
     },
   },
@@ -15,13 +16,13 @@ export const styles = makeStyles((theme) => ({
   imageRight: {
     flex: 1,
     [theme.breakpoints.down("sm")]: {
-      display: "None",
+      display: "none",
     },
   },
   imageTop: {
     display: "None",
     [theme.breakpoints.down("sm")]: {
-      display: "contents",
+      display: "none",
       height: "min-content",
     },
   },

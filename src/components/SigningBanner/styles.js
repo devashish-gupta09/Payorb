@@ -2,9 +2,14 @@ import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
   container: {
-    height: "100%",
-    background: "linear-gradient(115.52deg, #BDF5F2 0%, #79DFDF 100%)",
+    // height: "100%",
     padding: "2em",
+    position: "absolute",
+    bottom: "2em",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
     [theme.breakpoints.down("sm")]: {
       padding: "1em",
       height: "fit-content",
@@ -24,15 +29,17 @@ export const styles = makeStyles((theme) => ({
   },
   titleSection: {
     color: "#333333",
-    fontWeight: "bolder",
+    fontSize: "2.2em",
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.5em",
     },
   },
   titleSectionContainer: {
     paddingLeft: "1em",
+    width: "75%",
+    marginLeft: "11.5em",
   },
-  whiteText: {
-    color: "white",
+  boldText: {
+    fontWeight: "bold",
   },
 }));

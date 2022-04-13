@@ -202,7 +202,7 @@ function SigninForm() {
   return (
     <Grid className={classes.container}>
       {Alert()}
-      <Typography className={classes.sectionTitle}>SIGN IN</Typography>
+      <Typography variant={"h4"}>Sign In</Typography>
       <Typography variant={"h4"} className={classes.title}>
         Welcome back
       </Typography>
@@ -228,6 +228,7 @@ function SigninForm() {
                 }
                 helperText={formik.touched.username && formik.errors.username}
                 InputProps={{
+                  style: { borderRadius: "100px" },
                   endAdornment: (
                     <InputAdornment position="end">
                       <AccountCircle
@@ -270,6 +271,7 @@ function SigninForm() {
                 }
                 helperText={formik.touched.password && formik.errors.password}
                 InputProps={{
+                  style: { borderRadius: "100px" },
                   endAdornment: (
                     <InputAdornment position="end">
                       <Lock style={{ color: "rgba(189, 189, 189, 1" }} />
@@ -294,6 +296,7 @@ function SigninForm() {
               value={formik.values.otp}
               type="password"
               InputProps={{
+                style: { borderRadius: "100px" },
                 endAdornment: (
                   <InputAdornment position="end">
                     <Grid style={{ display: "flex", flexDirection: "column" }}>
@@ -336,7 +339,7 @@ function SigninForm() {
           </Typography>
 
           <Button
-            className={classes.socialMediaButtons}
+            className={classes.googleButton}
             startIcon={
               <img
                 src={"../assets/googleSignup.png"}
@@ -349,7 +352,7 @@ function SigninForm() {
           </Button>
 
           <Button
-            className={classes.socialMediaButtons}
+            className={classes.facebookButton}
             startIcon={
               <img
                 src={"../assets/facebookSignup.png"}
@@ -358,11 +361,13 @@ function SigninForm() {
             }
             onClick={() => handleFederatedSignIn(AUTH_PROVIDERS.FACEBOOK)}
           >
-            Sign in with Facebook
+            Connect with Facebook
           </Button>
           <Typography align="center" className={classes.signupMessage}>
             {`Don't have an account ? `}
-            <Link href={PAGE_PATHS.SIGNUP}>Sign Up</Link>
+            <Link href={PAGE_PATHS.SIGNUP}>
+              <Typography className={classes.signupText}>Sign Up</Typography>
+            </Link>
           </Typography>
         </FormControl>
       </form>

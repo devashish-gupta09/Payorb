@@ -16,10 +16,10 @@ import {
 import CustomHeader from "../Header";
 
 import Logo from "../Logo";
-import SignInHeaderProfile from "../SignInHeaderProfile";
+import SignUpHeaderProfile from "../SignUpHeaderProfile";
 import { styles } from "./styles";
 
-function SigningHeader() {
+function SignupHeader() {
   const classes = styles();
   const router = useRouter();
   const [appMenu, setAppMenu] = React.useState(false);
@@ -87,21 +87,17 @@ function SigningHeader() {
               Become a Solopreneur
             </li>
 
-            <SignInHeaderProfile handleLinkClick={handleClick} />
+            <SignUpHeaderProfile handleLinkClick={handleClick} />
           </Grid>
         </Grid>
       </Drawer>
 
       <Toolbar>
-        <Grid container justify="space-between" alignItems="center">
+        <Grid container justifyContent="space-between" alignItems="center">
           {/* Will be replaced with logo */}
           <Logo redirectToHome={true} dark={true} width={"6em"}></Logo>
 
-          <Grid
-            className={classes.buttonContainer}
-            container
-            justify="space-evenly"
-          >
+          <Grid className={classes.buttonContainer} container>
             <Link href={PAGE_PATHS.HOME}>
               <Button
                 onClick={() =>
@@ -175,8 +171,9 @@ function SigningHeader() {
                 </Button>
               )}
             </Link>
-
-            <SignInHeaderProfile />
+            <Grid>
+              <SignUpHeaderProfile />
+            </Grid>
           </Grid>
           <Grid className={classes.menuButtonContainer}>
             <Menu style={{ color: "black" }} onClick={toggleDrawer} />
@@ -187,4 +184,4 @@ function SigningHeader() {
   );
 }
 
-export default SigningHeader;
+export default SignupHeader;

@@ -4,16 +4,18 @@ export const styles = makeStyles((theme) => ({
   container: {
     height: "100%",
     [theme.breakpoints.down("sm")]: {
-      height: "fit-content",
+      alignItems: "center",
+      alignContent: "flex-end",
     },
   },
   leftContainer: {
+    height: "fit-content",
     [theme.breakpoints.down("sm")]: {
       height: "fit-content",
     },
   },
   imageRight: {
-    flex: 1,
+    height: "100%",
     [theme.breakpoints.down("sm")]: {
       display: "None",
     },
@@ -21,7 +23,7 @@ export const styles = makeStyles((theme) => ({
   imageTop: {
     display: "None",
     [theme.breakpoints.down("sm")]: {
-      display: "contents",
+      display: "none",
       height: "min-content",
     },
   },
