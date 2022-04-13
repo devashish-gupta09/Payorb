@@ -32,7 +32,7 @@ export const styles = makeStyles((theme) => ({
     },
   },
   container: {
-    padding: "4em 8em",
+    padding: "2em 8em",
     [theme.breakpoints.down("sm")]: {
       padding: "2em",
       width: "100%",
@@ -74,7 +74,7 @@ export const styles = makeStyles((theme) => ({
     boxShadow: "0px 0px 4px rgba(0, 0, 0, 0.25)",
   },
   orText: {
-    padding: "2em 0",
+    padding: "1em 0",
     color: "#333333",
   },
   signupMessage: {

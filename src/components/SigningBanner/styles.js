@@ -2,8 +2,10 @@ import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
   container: {
-    height: "80vh",
+    // height: "100%",
     padding: "2em",
+    position: "absolute",
+    bottom: "2em",
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-end",

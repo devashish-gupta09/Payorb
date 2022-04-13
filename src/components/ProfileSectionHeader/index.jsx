@@ -1,9 +1,7 @@
 import {
   Avatar,
-  Box,
   Button,
   Grid,
-  IconButton,
   makeStyles,
   Tab,
   Tabs,
@@ -55,67 +53,38 @@ function ProfileSectionHeader({ image, name }) {
   };
 
   return (
-    <Grid container alignItems="center" style={{ color: "#333333" }}>
-      <Grid style={{ padding: "0 1em", display: "contents" }}>
-        {image ? (
-          <Avatar className={classes.avatar} src={image} />
-        ) : (
-          <Avatar
-            className={classes.avatar}
-            src={
-              "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/assets%2Fprofile.jpg?alt=media&token=eea58cd4-50ea-4525-93fb-e7fe83350b59"
-            }
-          />
-        )}
-      </Grid>
-      <Typography>
-        <Box className={classes.name}>{name ? name : "Welcome User"}</Box>
-        <IconButton className={classes.arrow} onClick={toggleTooltip}>
-          <ExpandMoreIcon />
-        </IconButton>
-      </Typography>
+    <Grid
+      container
+      alignItems="center"
+      style={{
+        color: "#333333",
+        width: "15em",
+      }}
+    >
+      {image ? (
+        <Avatar className={classes.avatar} src={image} />
+      ) : (
+        <Avatar
+          className={classes.avatar}
+          src={
+            "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/assets%2Fprofile.jpg?alt=media&token=eea58cd4-50ea-4525-93fb-e7fe83350b59"
+          }
+        />
+      )}
+      <Typography>{name ? name : "Welcome User"}</Typography>
+      <div onClick={toggleTooltip} style={{ padding: "0 0.25em" }}>
+        <ExpandMoreIcon />
+      </div>
       {expanded ? (
-        //   {router.pathname == `/vendor/[vendorId]` ? (
-        //     <>
-        //       <Button
-        //         className={classes.btn}
-        //         onClick={handleProfileClick}
-        //         value={0}
-        //       >
-        //         <AssignmentIndIcon /> My Dashboard
-        //       </Button>
-        //       <Logout />
-        //     </>
-        //   ) : (
-        //     <>
-        //       <Button
-        //         className={classes.btn}
-        //         onClick={handleProfileClick}
-        //         value={0}
-        //       >
-        //         <AssignmentIndIcon /> My Profile
-        //       </Button>
-        //       <Logout />
-        //     </>
-        //   )}{" "}
-        //   {/* <Button className={classes.btn} onClick={handleProfileClick}>
-        //   <AssignmentIndIcon /> My Profile //{" "}
-        //   </Button>
-        //   <Logout /> */}
-
         <Grid className={classes.expand}>
           {router.pathname == `/vendor/[vendorId]` ? (
             <Tabs
               value={currentTab}
               onChange={handleTabChange}
               textColor="primary"
-              // TabIndicatorProps={{
-              //   className: classes.activeTab,
-              // }}
             >
               <Tab
                 className={classes.tab}
-                // className={isActive("events") && classes.activeLink}
                 disableFocusRipple
                 label={
                   <>
@@ -165,8 +134,6 @@ export default ProfileSectionHeader;
 
 const styles = makeStyles((theme) => ({
   name: {
-    verticalAlign: "middle",
-    display: "contents",
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
@@ -178,8 +145,8 @@ const styles = makeStyles((theme) => ({
     },
   },
   arrow: {
-    position: "absolute",
-    marginTop: "-12px",
+    width: "fit-content",
+    height: "fit-content",
     [theme.breakpoints.down("sm")]: {
       marginTop: "-24px",
       right: "-24px",

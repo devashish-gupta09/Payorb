@@ -3,19 +3,19 @@ import { makeStyles } from "@material-ui/core";
 export const styles = makeStyles((theme) => ({
   container: {
     height: "100%",
-    overflow: "hidden",
     [theme.breakpoints.down("sm")]: {
       alignItems: "center",
       alignContent: "flex-end",
     },
   },
   leftContainer: {
+    height: "fit-content",
     [theme.breakpoints.down("sm")]: {
       height: "fit-content",
     },
   },
   imageRight: {
-    flex: 1,
+    height: "100%",
     [theme.breakpoints.down("sm")]: {
       display: "None",
     },

@@ -70,16 +70,18 @@ function SignInHeaderProfile({ handleLinkClick }) {
   if (vendor && vendor.userUID) {
     return (
       <>
-        <Link href={buildVendorDashboardUrl(vendor.username || vendor.userUID)}>
-          {matches ? (
+        {matches ? (
+          <Link
+            href={buildVendorDashboardUrl(vendor.username || vendor.userUID)}
+          >
             <li className={classes.list}>Profile</li>
-          ) : (
-            <ProfileSectionHeader
-              image={vendor.profileImgUrl}
-              name={vendor.name || "User"}
-            />
-          )}
-        </Link>
+          </Link>
+        ) : (
+          <ProfileSectionHeader
+            image={vendor.profileImgUrl}
+            name={vendor.name || "User"}
+          />
+        )}
       </>
     );
   } else {
