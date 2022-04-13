@@ -35,6 +35,7 @@ export const styles = makeStyles((theme) => ({
     padding: "4em 8em",
     [theme.breakpoints.down("sm")]: {
       padding: "2em",
+      paddingTop: "20em",
       width: "100%",
     },
   },

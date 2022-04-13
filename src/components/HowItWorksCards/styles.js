@@ -2,20 +2,21 @@ import { makeStyles } from "@material-ui/core";
 
 export const styles = makeStyles((theme) => ({
   container: {
-    alignItems: "flex-start ",
-    justifyContent: "center",
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
     width: "100%",
-    padding: "0 3em",
+    padding: "0 1em",
   },
   imgBox: {
-    position: "relative",
-    display: "inline-block",
-    left: "5%",
-    width: "80%",
-    height: "80%",
+    // position: "relative",
+    // display: "inline-block",
+    // left: "5%",
+    // width: "80%",
+    // height: "80%",
     [theme.breakpoints.down("sm")]: {
-      width: "80px",
-      height: "80px",
+      display: "inline",
     },
   },
   img: {
@@ -24,6 +25,12 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       width: "60px",
       height: "60px",
+    },
+  },
+  textBox: {
+    [theme.breakpoints.down("sm")]: {
+      display: "inline",
+      width: "80%",
     },
   },
   box: {

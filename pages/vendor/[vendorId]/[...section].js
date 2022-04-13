@@ -1,5 +1,6 @@
 import { Grid } from "@material-ui/core";
 import React from "react";
+
 import { AppFooter } from "../../../src/components/AppFooter";
 
 import { Context } from "../../../src/components/AuthenticationContext";
