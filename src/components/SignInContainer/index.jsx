@@ -24,7 +24,13 @@ function SignInContainer({ content }) {
           <SigningBanner content={content} />
         </Grid>
       </Grid>
-      <Grid item sm={6} container alignItems="stretch">
+      <Grid
+        item
+        sm={6}
+        container
+        alignItems="stretch"
+        style={{ height: "100%" }}
+      >
         <Grid className={classes.formBottom}>
           <SignInForm />
         </Grid>

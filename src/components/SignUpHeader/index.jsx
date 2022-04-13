@@ -93,15 +93,11 @@ function SignupHeader() {
       </Drawer>
 
       <Toolbar>
-        <Grid container justify="space-between" alignItems="center">
+        <Grid container justifyContent="space-between" alignItems="center">
           {/* Will be replaced with logo */}
           <Logo redirectToHome={true} dark={true} width={"6em"}></Logo>
 
-          <Grid
-            className={classes.buttonContainer}
-            container
-            justify="space-evenly"
-          >
+          <Grid className={classes.buttonContainer} container>
             <Link href={PAGE_PATHS.HOME}>
               <Button
                 onClick={() =>
@@ -175,8 +171,9 @@ function SignupHeader() {
                 </Button>
               )}
             </Link>
-
-            <SignUpHeaderProfile />
+            <Grid>
+              <SignUpHeaderProfile />
+            </Grid>
           </Grid>
           <Grid className={classes.menuButtonContainer}>
             <Menu style={{ color: "black" }} onClick={toggleDrawer} />

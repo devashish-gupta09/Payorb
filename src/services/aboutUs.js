@@ -74,12 +74,12 @@ export const getFoundersData = async () => {
   return {
     details: [
       {
-        image: "/assets/aboutUs/madhurimaRoy.jpeg",
+        image: "/assets/aboutUs/madhurimaRoy.png",
         name: "MADHURIMA ROY",
         title: "Operations & Marketing",
       },
       {
-        image: "/assets/aboutUs/abhinavVishwa.jpeg",
+        image: "/assets/aboutUs/abhinavVishwa.png",
         name: "ABHINAV VISHWA",
         title: "Tech",
       },
