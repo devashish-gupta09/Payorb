@@ -120,11 +120,11 @@ export const getFaqsContent = async () => {
       },
       {
         ques: "Does PayOrb help me in getting new clients?",
-        ans: "We have specially designed features to help Solopreneurs grow their client base. Our ‘Trial Class feature’ helps you take your business from 0 to 1 (get your first client), Our ‘promotion automation tool’ helps you promote your services to hundreds of prospective customers on one click and double your customer acquisition. ",
+        ans: "We have specially designed features to help Solopreneurs grow their client base. Our ‘Trial Class feature’ helps you take your business from 0 to 1 (get your first client), Our ‘promotion automation tool’ helps you promote your services to hundreds of prospective customers on one click and double your customer acquisition.",
       },
       {
         ques: "Do my clients need to create an account on PayOrb to buy my offerings?",
-        ans: "We have specially designed features to help Solopreneurs grow their client base. Our ‘Trial Class feature’ helps you take your business from 0 to 1 (get your first client), Our ‘promotion automation tool’ helps you promote your services to hundreds of prospective customers on one click and double your customer acquisition. ",
+        ans: "No. We make customer acquisition journey simpler with our one click booking & checkout feature for your clients.",
       },
       {
         ques: "What all payment methods are accepted?",
