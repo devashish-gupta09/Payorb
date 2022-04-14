@@ -113,11 +113,6 @@ function VendorEventCreationForm({
   handleClose,
   trialClass,
 }) {
-  // event.coverBannerImages = [
-  //   "/assets/footer-bg.png",
-  //   "/assets/feature-page-section.png",
-  //   "/assets/profile.jpg",
-  // ];
   const classes = styles();
   const router = useRouter();
   const [dialog, setDialog] = React.useState({ display: false, text: "" });
@@ -339,6 +334,7 @@ function VendorEventCreationForm({
             router.reload();
           }
         } catch (err) {
+          console.log("ERROR:VendorCreate", err);
           if (err?.errors?.length > 0) {
             setLoader(false);
 
@@ -544,6 +540,15 @@ function VendorEventCreationForm({
     }
   };
 
+  const handleSlotDurationChange = (event) => {
+    try {
+      const hours = parseFloat(parseFloat(event.target.value).toFixed(1));
+      formik.setFieldValue("slotDuration", hours);
+    } catch (error) {
+      console.log("Slot change error", error);
+    }
+  };
+
   return (
     <div
       className={classes.foundation}
@@ -727,6 +732,34 @@ function VendorEventCreationForm({
                   </FormHelperText>
                 </Grid>
 
+                {formik.values.type === EVENT_TYPES.ONE_ON_ONE && (
+                  <Grid item sm={4}>
+                    <TextField
+                      fullWidth
+                      className={classes.textInput}
+                      type="number"
+                      id="slotDuration"
+                      label={"Slot duration (in hrs)"}
+                      variant="filled"
+                      InputProps={{
+                        style: { background: "#ECEDF4", borderRadius: "4px" },
+                        disableUnderline: true,
+                      }}
+                      onChange={handleSlotDurationChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.slotDuration}
+                      error={
+                        formik.touched.slotDuration &&
+                        Boolean(formik.errors.slotDuration)
+                      }
+                      helperText={
+                        formik.touched.slotDuration &&
+                        formik.errors.slotDuration
+                      }
+                    />
+                  </Grid>
+                )}
+
                 {/* EVENT DATES */}
                 <Grid
                   item
@@ -749,58 +782,85 @@ function VendorEventCreationForm({
                     />
                   )}
                 </Grid>
-                {/* EVENT DATES */}
-                {/* <Grid item sm={12} container style={{ width: "100%" }}>
-                <p style={{ color: "#ff0000" }}>{dateError}</p>
-              </Grid> */}
-
-                {/* <Grid item sm={12} container spacing={2}> */}
 
                 {/* EVENT DESCRIPTION FIELD */}
                 <Grid item sm={12} style={{ width: "100%" }}>
-                  <TextField
-                    multiline
-                    fullWidth
-                    className={classes.textInput}
-                    id="description"
-                    label={"Event description"}
-                    variant="outlined"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.description}
-                    error={
-                      formik.touched.description &&
-                      Boolean(formik.errors.description)
-                    }
-                    InputProps={{
-                      style: { background: "#ECEDF4" },
-                    }}
-                    helperText={
-                      formik.touched.description && formik.errors.description
-                    }
-                    rows={descriptionRows}
-                  />
+                  <FormControl style={{ width: "100%" }}>
+                    <FormLabel
+                      component="legend"
+                      style={{
+                        paddingBottom: "0.5em",
+                      }}
+                    >
+                      Event Description
+                    </FormLabel>
+                    <TextField
+                      multiline
+                      fullWidth
+                      className={classes.textInput}
+                      id="description"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.description}
+                      error={
+                        formik.touched.description &&
+                        Boolean(formik.errors.description)
+                      }
+                      InputProps={{
+                        inputProps: {
+                          style: {
+                            padding: "1em",
+                            background: "#ECEDF4",
+                            borderRadius: "5px",
+                          },
+                        },
+                        disableUnderline: true,
+                      }}
+                      helperText={
+                        formik.touched.description && formik.errors.description
+                      }
+                      rows={descriptionRows}
+                    />
+                  </FormControl>
                 </Grid>
 
                 {/* PRIVATE MESSAGE FIELD */}
                 <Grid item sm={12} style={{ width: "100%" }}>
-                  <TextField
-                    multiline
-                    fullWidth
-                    className={classes.textInput}
-                    id="privateMessage"
-                    label={"Message to Customers"}
-                    variant="outlined"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.privateMessage}
-                    error={
-                      formik.touched.privateMessage &&
-                      Boolean(formik.errors.privateMessage)
-                    }
-                    rows={customMessageRows}
-                    FormHelperTextProps={{ className: classes.helperText }}
-                  />
+                  <FormControl style={{ width: "100%" }}>
+                    <FormLabel
+                      component="legend"
+                      style={{
+                        paddingBottom: "0.5em",
+                      }}
+                    >
+                      Message To Customers
+                    </FormLabel>
+                    <TextField
+                      multiline
+                      fullWidth
+                      className={classes.textInput}
+                      id="privateMessage"
+                      InputProps={{
+                        inputProps: {
+                          style: {
+                            padding: "1em",
+                            background: "#ECEDF4",
+                            borderRadius: "5px",
+                          },
+                        },
+                        disableUnderline: true,
+                      }}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.privateMessage}
+                      error={
+                        formik.touched.privateMessage &&
+                        Boolean(formik.errors.privateMessage)
+                      }
+                      rows={customMessageRows}
+                      FormHelperTextProps={{ className: classes.helperText }}
+                    />
+                  </FormControl>
                 </Grid>
 
                 {/* EVENT MODE AND TICKET PRICE */}
@@ -831,7 +891,7 @@ function VendorEventCreationForm({
                     </FormControl>
 
                     {formik.values.mode !== EVENT_MODES.ONLINE && (
-                      <FormControl variant="outlined" style={{ width: "100%" }}>
+                      <FormControl style={{ width: "100%" }}>
                         <FormLabel
                           component="legend"
                           style={{
@@ -843,9 +903,18 @@ function VendorEventCreationForm({
                         <TextField
                           fullWidth
                           className={classes.textInput}
-                          style={{ width: "95%" }}
                           id="location"
-                          variant="outlined"
+                          InputProps={{
+                            style: { paddingRight: "0.5em" },
+                            inputProps: {
+                              style: {
+                                padding: "1em",
+                                background: "#ECEDF4",
+                                borderRadius: "4px",
+                              },
+                            },
+                            disableUnderline: true,
+                          }}
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                           value={formik.values.location}
@@ -888,7 +957,16 @@ function VendorEventCreationForm({
                         fullWidth
                         className={classes.textInput}
                         id="price"
-                        variant="outlined"
+                        InputProps={{
+                          inputProps: {
+                            style: {
+                              padding: "1em",
+                              background: "#ECEDF4",
+                              borderRadius: "4px",
+                            },
+                          },
+                          disableUnderline: true,
+                        }}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.price}
@@ -907,22 +985,41 @@ function VendorEventCreationForm({
                 {/* EVENT ADDRESS FIELD */}
                 {formik.values.mode !== EVENT_MODES.ONLINE ? (
                   <Grid item sm={12} container>
-                    <TextField
-                      fullWidth
-                      className={classes.textInput}
-                      id="address"
-                      label={"Event Address"}
-                      variant="outlined"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.address}
-                      error={
-                        formik.touched.address && Boolean(formik.errors.address)
-                      }
-                      helperText={
-                        formik.touched.address && formik.errors.address
-                      }
-                    />
+                    <FormControl style={{ width: "100%" }}>
+                      <FormLabel
+                        component="legend"
+                        style={{
+                          paddingBottom: "0.5em",
+                        }}
+                      >
+                        Event Address
+                      </FormLabel>
+                      <TextField
+                        fullWidth
+                        className={classes.textInput}
+                        id="address"
+                        InputProps={{
+                          inputProps: {
+                            style: {
+                              padding: "1em",
+                              background: "#ECEDF4",
+                              borderRadius: "4px",
+                            },
+                          },
+                          disableUnderline: true,
+                        }}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.address}
+                        error={
+                          formik.touched.address &&
+                          Boolean(formik.errors.address)
+                        }
+                        helperText={
+                          formik.touched.address && formik.errors.address
+                        }
+                      />
+                    </FormControl>
                   </Grid>
                 ) : null}
 
@@ -1082,7 +1179,16 @@ function VendorEventCreationForm({
                       className={classes.textInput}
                       id="totalTickets"
                       type="number"
-                      variant="filled"
+                      InputProps={{
+                        inputProps: {
+                          style: {
+                            padding: "1em",
+                            background: "#ECEDF4",
+                            borderRadius: "5px",
+                          },
+                        },
+                        disableUnderline: true,
+                      }}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       value={formik.values.totalTickets}
@@ -1107,7 +1213,6 @@ function VendorEventCreationForm({
                     fullWidth
                     className={classes.textInput}
                     id="url"
-                    variant="filled"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.url}
@@ -1121,6 +1226,19 @@ function VendorEventCreationForm({
                     }
                     FormHelperTextProps={{ className: classes.helperText }}
                     InputProps={{
+                      style: {
+                        background: "#ECEDF4",
+                        borderRadius: "5px",
+                        paddingLeft: "1em",
+                      },
+                      inputProps: {
+                        style: {
+                          padding: "1em 1em 1em 0em",
+                          background: "#ECEDF4",
+                          borderRadius: "5px",
+                        },
+                      },
+                      disableUnderline: true,
                       startAdornment: (
                         <InputAdornment position="start">
                           payorb/
@@ -1176,9 +1294,12 @@ const EventTypeSelect = ({ formik, checkDisabled, handleEventTypeChange }) => {
         style={{
           width: "100%",
           marginTop: "0.5em",
-          background: "#ECEDF4",
-          "&:hover": {
-            background: "pink",
+          border: "none",
+        }}
+        SelectDisplayProps={{
+          style: {
+            background: "#ECEDF4",
+            border: "none",
           },
         }}
         error={formik.touched.type && Boolean(formik.errors.type)}
@@ -1193,6 +1314,7 @@ const EventTypeSelect = ({ formik, checkDisabled, handleEventTypeChange }) => {
               formik.values.type === EVENT_TYPES.ONE_TIME
                 ? {
                     padding: "0.5em",
+                    background: "rgba(0, 142, 255, 0.06)",
                   }
                 : { padding: "0.5em 0.5em 0.5em 2em" }
             }

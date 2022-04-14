@@ -49,6 +49,10 @@ export const styles = makeStyles((theme) => ({
       padding: "3em",
     },
   },
+  internalInputStyle: {
+    padding: "1em",
+    background: "pink ",
+  },
   textInput: {
     borderRadius: "4px",
     [theme.breakpoints.down("sm")]: {
