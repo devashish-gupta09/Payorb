@@ -13,7 +13,7 @@ function CustomHeader({ children }) {
 const styles = makeStyles((theme) => ({
   root: {
     backgroundColor: "transparent",
-    padding: "0.5% 2.5em 0.5% 2.5em",
+    padding: "0.15% 2.5em 0.15% 2.5em",
     [theme.breakpoints.down("sm")]: {
       zIndex: "1301",
       position: "fixed",

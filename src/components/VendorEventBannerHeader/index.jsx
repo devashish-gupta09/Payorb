@@ -51,7 +51,7 @@ const VendorEventBannerHeader = ({
   isVendor,
   customBackHandler,
 }) => {
-  const classes = styles();
+  const classes = styles(isVendor);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [dialogOpen, setDialogOpen] = React.useState(false);
@@ -294,6 +294,7 @@ const styles = makeStyles((theme) => ({
     position: "absolute",
     width: "100%",
     height: "100%",
+    background: ({ isVendor }) => (!isVendor ? "rgba(0, 0, 0, 0.2)" : "none"),
   },
   bannerImg: {
     width: "100%",

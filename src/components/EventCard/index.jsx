@@ -44,7 +44,12 @@ export function EventCardDate({ classes, startDate, endDate }) {
   );
 }
 
-function EventCard({ event, handleEventDelete, editable = true }) {
+function EventCard({
+  event,
+  handleEventDelete,
+  editable = true,
+  isVendor = true,
+}) {
   const classes = styles();
   const [edit, setEdit] = React.useState(false);
   const [clone, setClone] = React.useState(false);
@@ -298,7 +303,7 @@ function EventCard({ event, handleEventDelete, editable = true }) {
             </Grid>
           </Grid>
 
-          {!editable ? (
+          {!editable && !isVendor ? (
             <Grid
               item
               sm={2}

@@ -24,7 +24,7 @@ export const VendorPublicEvents = ({ vendorId, exceptEventLink = "" }) => {
           .filter((event) => event.link !== exceptEventLink)
           .map((event) => (
             <Grid key={event.url} item sm={6}>
-              <EventCard event={event} editable={false} />
+              <EventCard event={event} editable={false} isVendor={false} />
             </Grid>
           ))}
       </Grid>

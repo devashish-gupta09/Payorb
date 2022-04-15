@@ -21,7 +21,6 @@ export const EventCategoryField = ({ formik, checkDisabled }) => {
       !formik.values.coverImgUrl ||
       event.target.value !== formik.values.category
     ) {
-      console.log("FLAG !! ");
       formik.setFieldValue(
         "coverImgUrl",
         getRandomEventBanner(event.target.value)

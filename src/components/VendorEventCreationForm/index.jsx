@@ -252,7 +252,7 @@ function VendorEventCreationForm({
                 fileName
               );
             } else {
-              eventCoverUrl = getRandomEventBanner();
+              eventCoverUrl = getRandomEventBanner(values.category);
             }
 
             const updateReq = {
@@ -356,6 +356,8 @@ function VendorEventCreationForm({
       }
     },
   });
+
+  console.log(formik.errors);
 
   React.useEffect(() => {
     const auth = FirebaseAuth.Singleton();
