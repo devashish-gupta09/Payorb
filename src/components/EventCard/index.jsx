@@ -20,6 +20,7 @@ import { getEventDate, getEventMonth } from "../../utils/dateTime";
 import { formatEventType } from "../../utils/events";
 import ButtonCapsule from "../ButtonCapsule";
 import CustomConfirmationDialog from "../CustomConfirmationDialog";
+import { getEventslotDuration } from "../EventBooking";
 import { EventCoverUpload } from "../EventCoverUpload";
 import PostEventCreationDialog from "../PostEventCreationDialog";
 import ReadMore from "../ReadMore";
@@ -89,12 +90,6 @@ function EventCard({
     await handleEventDelete(event.link);
     setDelete(false);
   };
-
-  console.log(
-    `/${event.vendorUserName ? event.vendorUserName : event.userUID}/${
-      event.url ? event.url : event.link
-    }`
-  );
 
   return (
     <Grid className={classes.root}>
@@ -181,7 +176,17 @@ function EventCard({
                 .map((x) => x.charAt(0).toUpperCase() + x.slice(1))
                 .join(" ")}
             </Button>
-            <Button className={classes.topBannerButton}>Booking Open</Button>
+            <Button
+              className={classes.topBannerButton}
+              style={{
+                background:
+                  new Date(event.endDate) < new Date() ? "#FC6767" : "#008EFF",
+              }}
+            >
+              {new Date(event.endDate) < new Date()
+                ? "Booking Closed"
+                : "Booking Open"}
+            </Button>
 
             {editable ? (
               <Grid className={classes.sideBar}>
@@ -229,13 +234,19 @@ function EventCard({
             <Grid item xs={6} container alignItems="center">
               <img src="/assets/vendorEventsCard/calender.svg"></img>
               <Typography style={{ paddingLeft: "0.25em" }}>
-                {getEventDate(event.startDate, event.endDate)}
+                {getEventslotDuration(event.startDate, event.endDate).date}
               </Typography>
             </Grid>
-            <Grid item xs={6} container alignItems="center">
+            <Grid
+              item
+              xs={6}
+              container
+              alignItems="center"
+              justifyContent="flex-end"
+            >
               <AccessTimeIcon />
               <Typography style={{ paddingLeft: "0.25em" }}>
-                12:00 PM - 2:00 PM
+                {getEventslotDuration(event.startDate, event.endDate).time}
               </Typography>
             </Grid>
           </Grid>

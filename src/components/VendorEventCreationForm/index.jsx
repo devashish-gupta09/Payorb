@@ -95,7 +95,7 @@ function getCreationFormInitialState(trialClass) {
     earlyBirdPrice: 0,
     earlyBirdDeadline: new Date(new Date().getHours() + 1),
     trialClass: trialClass === true ? true : false,
-    coverImgUrl: "",
+    coverImgUrl: getRandomEventBanner(EVENT_CATEGORY.EDUCATION),
   };
 }
 
@@ -225,17 +225,24 @@ function VendorEventCreationForm({
 
             let eventImageUrls;
             if (croppedCoverBannerImages.length > 0) {
-              eventImageUrls = await Promise.all(
-                croppedCoverBannerImages.map(async (coverBannerImg, index) => {
-                  const fileName = ImageUtils.buildImageFileName(
-                    IMAGE_TYPE.EVENT_IMAGE,
-                    user.uid,
-                    formatedLink,
-                    index
+              eventImageUrls = clone
+                ? values.coverBannerImages
+                : await Promise.all(
+                    croppedCoverBannerImages.map(
+                      async (coverBannerImg, index) => {
+                        const fileName = ImageUtils.buildImageFileName(
+                          IMAGE_TYPE.EVENT_IMAGE,
+                          user.uid,
+                          formatedLink,
+                          index
+                        );
+                        return ImageUtils.handleImageUpload(
+                          coverBannerImg,
+                          fileName
+                        );
+                      }
+                    )
                   );
-                  return ImageUtils.handleImageUpload(coverBannerImg, fileName);
-                })
-              );
             }
 
             // Top Event Banner
@@ -247,11 +254,15 @@ function VendorEventCreationForm({
                 formatedLink
               );
 
-              eventCoverUrl = await ImageUtils.handleImageUpload(
-                croppedCoverImage,
-                fileName
-              );
+              eventCoverUrl = clone
+                ? values.coverImgUrl
+                : await ImageUtils.handleImageUpload(
+                    croppedCoverImage,
+                    fileName
+                  );
             } else {
+              console.log("Adklsajfkasjfkajfklds", values.category);
+
               eventCoverUrl = getRandomEventBanner(values.category);
             }
 
@@ -270,7 +281,11 @@ function VendorEventCreationForm({
             formik.setFieldValue("coverBannerImages", eventImageUrls);
             formik.setFieldValue("coverImgUrl", eventCoverUrl);
             setLoader(false);
-            setPostEventDialog(true);
+            if (clone) {
+              router.reload();
+            } else {
+              setPostEventDialog(true);
+            }
           } else {
             let eventImageUrls;
             if (croppedCoverBannerImages.length > 0) {
@@ -311,7 +326,7 @@ function VendorEventCreationForm({
                 fileName
               );
             } else {
-              eventCoverUrl = getRandomEventBanner();
+              eventCoverUrl = getRandomEventBanner(values.category);
             }
 
             delete req.revenue;
@@ -356,8 +371,6 @@ function VendorEventCreationForm({
       }
     },
   });
-
-  console.log(formik.errors);
 
   React.useEffect(() => {
     const auth = FirebaseAuth.Singleton();
@@ -1258,6 +1271,7 @@ function VendorEventCreationForm({
                   text={"Host Event"}
                   showLoader={loader}
                 ></ButtonCapsule>
+                {dateError || formik.errors.url}
 
                 {matches && (
                   <Button fullWidth onClick={handleCancel}>

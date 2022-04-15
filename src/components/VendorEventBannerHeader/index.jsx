@@ -22,8 +22,6 @@ import { useRouter } from "next/router";
 
 import * as React from "react";
 
-import { EVENT_CATEGORY } from "../../constants/events";
-
 import { EVENT_DEFAULT_BANNERS } from "../../constants/images";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { updateUser } from "../../services/auth";
@@ -37,8 +35,7 @@ export function randomNumber(min, max) {
 }
 
 export const getRandomEventBanner = (category) => {
-  console.log("CATEGORY", category);
-  const banners = EVENT_DEFAULT_BANNERS[EVENT_CATEGORY[category]];
+  const banners = EVENT_DEFAULT_BANNERS[category];
   console.log("Banner length", banners.length);
   const index = randomNumber(0, 1);
   return banners[index];
@@ -100,7 +97,7 @@ const VendorEventBannerHeader = ({
               imagePath={
                 croppedCoverImage ||
                 eventData?.coverImgUrl ||
-                getRandomEventBanner()
+                getRandomEventBanner(eventData.category)
               }
               handleDataUrl={handleDataUrl}
               cropperAspectRatio={4.5}

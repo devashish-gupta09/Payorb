@@ -154,7 +154,7 @@ export const styles = makeStyles((theme) => ({
     // height: "100%",
     color: "#68FDF3",
     background: "rgba(0,0,0,0.5)",
-    padding: "0.25em 0.5em",
+    padding: "0.25em 1em",
     position: "absolute",
     bottom: 0,
   },

@@ -23,7 +23,7 @@ export const EventCategoryField = ({ formik, checkDisabled }) => {
     ) {
       formik.setFieldValue(
         "coverImgUrl",
-        getRandomEventBanner(event.target.value)
+        getRandomEventBanner(EVENT_CATEGORY[event.target.value])
       );
     }
     formik.setFieldValue("category", event.target.value);

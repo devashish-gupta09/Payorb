@@ -1,4 +1,4 @@
-import { Grid, makeStyles } from "@material-ui/core";
+import { Grid, makeStyles, Typography } from "@material-ui/core";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -64,9 +64,14 @@ function CustomerVendorProfile({ userUID }) {
           <ProfileReviewSection />
         </div>
 
-        <Grid container className={classes.eventContainer} spacing={3}>
+        <Grid
+          container
+          className={classes.eventContainer}
+          spacing={3}
+          id="events"
+        >
           <Grid item sm={12}>
-            Events list
+            <Typography variant={"h6"}>Events list</Typography>
           </Grid>
           <Grid item sm={12}>
             <VendorPublicEvents vendorId={profileData.userUID} />
