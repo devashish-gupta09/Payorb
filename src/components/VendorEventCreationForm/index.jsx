@@ -95,7 +95,7 @@ function getCreationFormInitialState(trialClass) {
     earlyBirdPrice: 0,
     earlyBirdDeadline: new Date(new Date().getHours() + 1),
     trialClass: trialClass === true ? true : false,
-    coverImgUrl: getRandomEventBanner(),
+    coverImgUrl: "",
   };
 }
 
@@ -1287,21 +1287,22 @@ const EventTypeSelect = ({ formik, checkDisabled, handleEventTypeChange }) => {
     <>
       <Select
         displayEmpty
-        variant="outlined"
         id="type"
         value={formik.values.type}
         onChange={handleEventTypeChange}
         style={{
           width: "100%",
-          marginTop: "0.5em",
-          border: "none",
+          margin: "0.5em 0",
         }}
         SelectDisplayProps={{
           style: {
             background: "#ECEDF4",
+            padding: "1em",
+            borderRadius: "4px",
             border: "none",
           },
         }}
+        disableUnderline
         error={formik.touched.type && Boolean(formik.errors.type)}
         disabled={checkDisabled()}
         renderValue={() => <EventTypeSelectSender value={formik.values.type} />}

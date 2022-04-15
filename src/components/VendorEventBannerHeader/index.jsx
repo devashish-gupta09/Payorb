@@ -22,6 +22,8 @@ import { useRouter } from "next/router";
 
 import * as React from "react";
 
+import { EVENT_CATEGORY } from "../../constants/events";
+
 import { EVENT_DEFAULT_BANNERS } from "../../constants/images";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { updateUser } from "../../services/auth";
@@ -34,75 +36,13 @@ export function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-export const getRandomEventBanner = () => {
-  const banners = EVENT_DEFAULT_BANNERS;
-  const index = randomNumber(1, 16);
+export const getRandomEventBanner = (category) => {
+  console.log("CATEGORY", category);
+  const banners = EVENT_DEFAULT_BANNERS[EVENT_CATEGORY[category]];
+  console.log("Banner length", banners.length);
+  const index = randomNumber(0, 1);
   return banners[index];
 };
-
-const styles = makeStyles((theme) => ({
-  root: {
-    "--heightA": "100%",
-    height: "calc(100vh/3)",
-    width: "100%",
-    position: "relative",
-    // padding: "0.5em 0",
-    [theme.breakpoints.down("sm")]: {
-      height: "25vh",
-    },
-  },
-  base: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-  },
-  bannerImg: {
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-    objectPosition: "top",
-  },
-  buttonLayer: {
-    position: "absolute",
-    width: "100%",
-    padding: "1em 2.5em",
-    [theme.breakpoints.down("sm")]: {
-      padding: "1em 1.5em",
-    },
-  },
-  backButton: {
-    background: "#FFFFFF",
-    boxShadow: "none",
-    padding: "0.45em 1em",
-    "&:hover": {
-      transform: "scale(1.05)",
-      background: "#FFFFFF",
-    },
-  },
-  editButton: {
-    color: "#008EFF",
-    background: "#FFFFFF",
-  },
-  deleteButton: {
-    background: "#FFFFFF",
-    boxShadow: "none",
-    color: "#FC6767",
-    marginLeft: "0.5em",
-  },
-  defaultBackgroundContainer: {
-    width: "100%",
-    height: "100%",
-  },
-  defaultBannerText: {
-    fontSize: "2.5em",
-    fontWeight: "600",
-    color: "#FFFFFF",
-    // opacity: "0.35",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "2em",
-    },
-  },
-}));
 
 const VendorEventBannerHeader = ({
   eventData,
@@ -338,4 +278,69 @@ const VendorEventBannerHeader = ({
     </Grid>
   );
 };
+
+const styles = makeStyles((theme) => ({
+  root: {
+    "--heightA": "100%",
+    height: "calc(100vh/3)",
+    width: "100%",
+    position: "relative",
+    // padding: "0.5em 0",
+    [theme.breakpoints.down("sm")]: {
+      height: "25vh",
+    },
+  },
+  base: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+  },
+  bannerImg: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    objectPosition: "top",
+  },
+  buttonLayer: {
+    position: "absolute",
+    width: "100%",
+    padding: "1em 2.5em",
+    [theme.breakpoints.down("sm")]: {
+      padding: "1em 1.5em",
+    },
+  },
+  backButton: {
+    background: "#FFFFFF",
+    boxShadow: "none",
+    padding: "0.45em 1em",
+    "&:hover": {
+      transform: "scale(1.05)",
+      background: "#FFFFFF",
+    },
+  },
+  editButton: {
+    color: "#008EFF",
+    background: "#FFFFFF",
+  },
+  deleteButton: {
+    background: "#FFFFFF",
+    boxShadow: "none",
+    color: "#FC6767",
+    marginLeft: "0.5em",
+  },
+  defaultBackgroundContainer: {
+    width: "100%",
+    height: "100%",
+  },
+  defaultBannerText: {
+    fontSize: "2.5em",
+    fontWeight: "600",
+    color: "#FFFFFF",
+    // opacity: "0.35",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "2em",
+    },
+  },
+}));
+
 export { VendorEventBannerHeader };
