@@ -60,7 +60,6 @@ function ImageSelectAndCrop({
         .getCroppedCanvas()
         .toDataURL("image/jpeg", height * width > 1054000 ? 0.6 : 0.75);
 
-      console.log("FLAG : handleCrop", imageEl);
       handleDataUrl(imageEl);
     } catch (err) {
       return;

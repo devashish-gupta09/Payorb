@@ -84,7 +84,13 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
     onSubmit: async (values) => {
       try {
         const res = await updateUser({
-          paymentDetails: values,
+          paymentDetails: {
+            name: values.name,
+            accNumber: values.accNumber,
+            ifscCode: values.ifscCode,
+            bankAddress: bankDetails.ADDRESS,
+            bankName: bankDetails.BANK,
+          },
         });
         if (res?.success) {
           showAlert("Payment Details updated.");
@@ -239,6 +245,7 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
                       <ButtonCapsule
                         text="Save"
                         type="submit"
+                        disabled={bankDetails ? false : true}
                         buttonStyle={classes.saveButton}
                       ></ButtonCapsule>
                       <Button

@@ -64,7 +64,7 @@ export const createEventValidationSchema = Yup.object({
   slotDuration: Yup.number().when("type", {
     is: (value) => value === EVENT_TYPES.ONE_ON_ONE,
     then: Yup.number()
-      .moreThan(0, "Slot Duration greater that 0 hours")
+      .moreThan(0, "Slot Duration greater than 0 hours")
       .required(),
   }),
   slotStartTimePerDay: Yup.date().when("type", {

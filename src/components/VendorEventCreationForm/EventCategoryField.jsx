@@ -2,6 +2,7 @@ import { FormHelperText, MenuItem, Select, TextField } from "@material-ui/core";
 import React from "react";
 
 import { EVENT_CATEGORY } from "../../constants/events";
+import { getRandomEventBanner } from "../VendorEventBannerHeader";
 
 export const EventCategoryField = ({ formik, checkDisabled }) => {
   const [other, setOther] = React.useState(false);
@@ -15,6 +16,16 @@ export const EventCategoryField = ({ formik, checkDisabled }) => {
     } else if (other) {
       setOther(false);
     }
+
+    if (
+      !formik.values.coverImgUrl ||
+      event.target.value !== formik.values.category
+    ) {
+      formik.setFieldValue(
+        "coverImgUrl",
+        getRandomEventBanner(EVENT_CATEGORY[event.target.value])
+      );
+    }
     formik.setFieldValue("category", event.target.value);
   };
 
@@ -27,11 +38,23 @@ export const EventCategoryField = ({ formik, checkDisabled }) => {
     <>
       <Select
         displayEmpty
-        variant="outlined"
+        // variant="standard"
         id="type"
+        SelectDisplayProps={{
+          style: {
+            background: "#ECEDF4",
+            padding: "1em",
+            borderRadius: "4px",
+            border: "none",
+          },
+        }}
+        disableUnderline
         value={formik.values.category}
         onChange={handleEventCategoryChange}
-        style={{ width: "100%", margin: "0.5em 0", background: "#ECEDF4" }}
+        style={{
+          width: "100%",
+          margin: "0.5em 0",
+        }}
         error={formik.touched.category && Boolean(formik.errors.category)}
         helperText={formik.touched.name && formik.errors.name}
         disabled={checkDisabled()}

@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core";
 export const styles = makeStyles((theme) => ({
   foundation: {
     position: "relative",
+    background: "pink",
     [theme.breakpoints.down("sm")]: {
       paddingTop: "4.5em",
     },
@@ -48,6 +49,10 @@ export const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       padding: "3em",
     },
+  },
+  internalInputStyle: {
+    padding: "1em",
+    background: "pink ",
   },
   textInput: {
     borderRadius: "4px",

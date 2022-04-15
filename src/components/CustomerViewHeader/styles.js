@@ -14,11 +14,12 @@ export const styles = makeStyles((theme) => ({
     padding: "0 1em",
   },
   signupButton: {
-    background: "linear-gradient(115.52deg, #BDF5F2 0%, #79DFDF 100%)",
+    padding: "0.75em 1em",
+    fontWeight: "600",
+    background: "white",
+    boxShadow: "inset 0px 0px 0px 2px black",
+    fontSize: "0.8em",
     borderRadius: "2em",
-    fontWeight: "bold",
-    padding: "0.5em 0.75em",
-    marginLeft: "1em",
   },
   buttonContainer: {
     width: "fit-content",
