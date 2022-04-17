@@ -26,6 +26,7 @@
     "axios": "^0.21.1",
     "chart.js": "^3.0.2",
     "clipboard-copy": "^4.0.1",
+    "clsx": "^1.1.1",
     "create-hash": "^1.2.0",
     "cropperjs": "^1.5.11",
     "currency.js": "^2.0.3",

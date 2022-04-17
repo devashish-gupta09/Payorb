@@ -3,13 +3,22 @@ import {
   Button,
   Divider,
   Grid,
+  IconButton,
   makeStyles,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@material-ui/core";
 
-import { Calendar, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import clsx from "clsx";
+import {
+  endOfWeek,
+  format,
+  isSameDay,
+  isWithinInterval,
+  startOfWeek,
+} from "date-fns";
 import moment from "moment";
 
 import { useRouter } from "next/router";
@@ -18,10 +27,10 @@ import React from "react";
 import { EVENT_TYPES } from "../../constants/events";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import useFetchEvents from "../../hooks/useFetchEvents";
-import CustomerEventCard from "../CustomerEventCard";
-import DashboardCard from "../DashboardCard";
 import PageTitle from "../PageTitle";
 import SkeletonLoading from "../SkeletonLoading";
+import { VendorEventBannerHeader } from "../VendorEventBannerHeader";
+import { VendorPublicEvents } from "../VendorPublicEvents";
 
 function generateOneOnOneEventSlots(event) {
   const result = {};
@@ -75,6 +84,48 @@ function generateOneOnOneEventSlots(event) {
   }
 
   return result;
+}
+
+// minDate and maxDate => Date objects
+function CustomerCalenderDay({
+  date,
+  selectedDate,
+  dayInCurrentMonth,
+  minDate,
+  maxDate,
+}) {
+  const classes = useStyles();
+  console.log(date, selectedDate, dayInCurrentMonth, minDate, maxDate);
+  // const minDateMoment = moment(minDate);
+  // const maxDateMoment = moment(maxDate);
+
+  const start = startOfWeek({ ...selectedDate });
+  const end = endOfWeek({ ...selectedDate });
+
+  const dayIsBetween = isWithinInterval({ ...date }, { start, end });
+  const isFirstDay = isSameDay({ ...date }, start);
+  const isLastDay = isSameDay({ ...date }, end);
+
+  // const dayDiff = moment.duration(maxDateMoment.diff(minDateMoment)).asDays();
+
+  const wrapperClassName = clsx({
+    [classes.highlight]: dayIsBetween,
+    [classes.firstHighlight]: isFirstDay,
+    [classes.endHighlight]: isLastDay,
+  });
+
+  const dayClassName = clsx(classes.day, {
+    [classes.nonCurrentMonthDay]: !dayInCurrentMonth,
+    [classes.highlightNonCurrentMonthDay]: !dayInCurrentMonth && dayIsBetween,
+  });
+
+  return (
+    <div className={wrapperClassName}>
+      <IconButton className={dayClassName}>
+        <span> {format({ ...date }, "d")} </span>
+      </IconButton>
+    </div>
+  );
 }
 
 function CustomerEventScheduler({ eventLink, vendorId }) {
@@ -138,86 +189,132 @@ function CustomerEventScheduler({ eventLink, vendorId }) {
         <Grid>
           <PageTitle title="Payorb | Event Booking" />
           {Alert()}
-          <Grid style={{ padding: "1em 0" }}>
-            <CustomerEventCard
-              event={event}
-              expand={true}
-              onBook={() => {
-                handleBookButton(timeChosen.time, event.slotDuration);
-              }}
-            ></CustomerEventCard>
-          </Grid>
-          <DashboardCard>
-            <Grid container spacing={3}>
-              <Grid item sm={12}>
-                <Typography
-                  style={{
-                    paddingLeft: "1em",
-                    paddingTop: "1em",
-                    fontSize: "1.2em",
-                    fontWeight: "500",
-                  }}
-                >
-                  Select Date and Time
-                </Typography>
-              </Grid>
-              <Divider />
-              <Grid item sm={5} style={{ width: "100%" }}>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <Calendar
-                    date={startDate.toDate()}
-                    onChange={handleChange}
-                    minDate={new Date(event.startDate)}
-                    maxDate={new Date(event.endDate)}
-                  />
-                </MuiPickersUtilsProvider>
-              </Grid>
+          {event.coverImgUrl && (
+            <VendorEventBannerHeader eventData={event} isVendor={false} />
+          )}
 
+          <Grid className={classes.root}>
+            <Grid className={classes.calenderContainer}>
               <Grid
                 container
-                item
-                sm={7}
-                spacing={2}
-                style={{ height: "fit-content", padding: "0 2em" }}
+                style={{ width: "100%", padding: "1em 1em" }}
+                justifyContent="flex-end"
               >
-                <Grid item xs={12}>
+                <Button
+                  onClick={() =>
+                    handleBookButton(timeChosen.time, event.slotDuration)
+                  }
+                  className={classes.bookButton}
+                  disabled={!timeChosen.selected}
+                >
+                  Book
+                </Button>
+              </Grid>
+              <Grid container spacing={3}>
+                <Grid item sm={12}>
                   <Typography
                     style={{
+                      paddingLeft: "1em",
                       paddingTop: "1em",
                       fontSize: "1.2em",
                       fontWeight: "500",
                     }}
-                    fullWidth
                   >
-                    {`${moment(new Date(week || startDate)).format("LL")}`}
+                    Select Date and Time
                   </Typography>
                 </Grid>
-                {calenderViewEvents[startDate.format("YYYY-MM-DD")] &&
-                  calenderViewEvents[startDate.format("YYYY-MM-DD")].map(
-                    (slot, index) => {
-                      return (
-                        <Grid item key={index} xs={matches ? 4 : 3}>
-                          <Button
-                            fullWidth
-                            className={`${classes.timeButton} ${
-                              timeChosen.time &&
-                              timeChosen.time.toISOString() ===
-                                slot.startDate.toISOString()
-                                ? classes.activeTimeButton
-                                : classes.inActiveTimeButton
-                            }`}
-                            variant={"outlined"}
-                            onClick={() => handleTimeClick(slot.startDate)}
-                          >
-                            {moment(slot.startDate).format("LT")}
-                          </Button>
-                        </Grid>
-                      );
-                    }
-                  )}
+                <Divider />
+                <Grid item sm={5} style={{ width: "100%" }}>
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <DatePicker
+                      value={startDate.toDate()}
+                      variant="static"
+                      openTo="date"
+                      onChange={handleChange}
+                      minDate={new Date(event.startDate)}
+                      maxDate={new Date(event.endDate)}
+                      disableToolbar
+                      // renderDay={(date, selectedDate, dayInCurrentMonth) => (
+                      //   <CustomerCalenderDay
+                      //     date={date}
+                      //     selectedDate={selectedDate}
+                      //     minDate={new Date(event.startDate)}
+                      //     maxDate={new Date(event.endDate)}
+                      //     dayInCurrentMonth={dayInCurrentMonth}
+                      //   />
+                      // )}
+                    />
+                    {/* <Calendar
+                      date={startDate.toDate()}
+                      onChange={handleChange}
+                      minDate={new Date(event.startDate)}
+                      maxDate={new Date(event.endDate)}
+                      renderDay={(day, selectedDate, x, dayComponent) => (
+                        <CustomerCalenderDay
+                          day={day}
+                          selectedDate={selectedDate}
+                          minDate={new Date(event.startDate)}
+                          maxDate={new Date(event.endDate)}
+                          dayComponent={dayComponent}
+                        />
+                      )}
+                    /> */}
+                  </MuiPickersUtilsProvider>
+                </Grid>
+
+                <Grid
+                  container
+                  item
+                  sm={7}
+                  spacing={2}
+                  style={{ height: "fit-content", padding: "0 2em" }}
+                >
+                  <Grid item xs={12}>
+                    <Typography
+                      style={{
+                        paddingTop: "1em",
+                        fontSize: "1.2em",
+                        fontWeight: "500",
+                      }}
+                      fullWidth
+                    >
+                      {`${moment(new Date(week || startDate)).format("LL")}`}
+                    </Typography>
+                  </Grid>
+                  {calenderViewEvents[startDate.format("YYYY-MM-DD")] &&
+                    calenderViewEvents[startDate.format("YYYY-MM-DD")].map(
+                      (slot, index) => {
+                        return (
+                          <Grid item key={index} xs={matches ? 4 : 3}>
+                            <Button
+                              fullWidth
+                              className={`${classes.timeButton} ${
+                                timeChosen.time &&
+                                timeChosen.time.toISOString() ===
+                                  slot.startDate.toISOString()
+                                  ? classes.activeTimeButton
+                                  : classes.inActiveTimeButton
+                              }`}
+                              variant={"outlined"}
+                              onClick={() => handleTimeClick(slot.startDate)}
+                            >
+                              {moment(slot.startDate).format("LT")}
+                            </Button>
+                          </Grid>
+                        );
+                      }
+                    )}
+                </Grid>
               </Grid>
             </Grid>
-          </DashboardCard>
+          </Grid>
+
+          <Grid className={classes.eventList}>
+            <Typography variant="h6" gutterBottom>
+              Events List
+            </Typography>
+            <VendorPublicEvents vendorId={event.userUID} />
+          </Grid>
         </Grid>
       );
     }
@@ -229,6 +326,17 @@ function CustomerEventScheduler({ eventLink, vendorId }) {
 }
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: "2em 10%",
+    background:
+      "linear-gradient(right, rgba(188, 244, 241, 1),rgba(0, 212, 255, 1) )",
+    [theme.breakpoints.down("sm")]: {
+      padding: "0em 0.5em 0.5em 0.5em",
+    },
+  },
+  calenderContainer: {
+    background: "white",
+  },
   button: {
     height: "fit-content",
   },
@@ -238,15 +346,68 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "0.75em",
     },
   },
+  bookButton: {
+    padding: "0.75em 2em",
+    fontWeight: "600",
+    background: "white",
+    boxShadow: "inset 0px 0px 0px 2px black",
+    fontSize: "0.8em",
+    borderRadius: "2em",
+  },
   inActiveTimeButton: {
-    color: "grey",
-    border: "1.5px grey solid",
+    color: "#8B8B8B",
+    border: "1px #CBCBCB solid",
   },
   activeTimeButton: {
     fontWeight: "600",
-    color: "#71c3de",
+    color: "#0061FE",
     border: "1.5px solid",
-    borderColor: "#71c3de",
+    borderColor: "#008EFF",
+  },
+  eventList: {
+    padding: "2em 10%",
+    [theme.breakpoints.down("sm")]: {
+      padding: "1em",
+    },
+  },
+  dayWrapper: {
+    position: "relative",
+  },
+  day: {
+    width: 36,
+    height: 36,
+    fontSize: theme.typography.caption.fontSize,
+    margin: "0 2px",
+    color: "inherit",
+  },
+  customDayHighlight: {
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: "2px",
+    right: "2px",
+    border: `1px solid ${theme.palette.secondary.main}`,
+    borderRadius: "50%",
+  },
+  nonCurrentMonthDay: {
+    color: theme.palette.text.disabled,
+  },
+  highlightNonCurrentMonthDay: {
+    color: "#676767",
+  },
+  highlight: {
+    background: theme.palette.primary.main,
+    color: theme.palette.common.white,
+  },
+  firstHighlight: {
+    extend: "highlight",
+    borderTopLeftRadius: "50%",
+    borderBottomLeftRadius: "50%",
+  },
+  endHighlight: {
+    extend: "highlight",
+    borderTopRightRadius: "50%",
+    borderBottomRightRadius: "50%",
   },
 }));
 

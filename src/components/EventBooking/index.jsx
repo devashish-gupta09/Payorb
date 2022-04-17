@@ -36,7 +36,7 @@ export const getEventslotDuration = (startDate, endDate) => {
     endDate = new Date(endDate);
 
     return {
-      date: `${getMonthDate(startDate, endDate)} , ${startDate.getFullYear()}`,
+      date: `${getMonthDate(startDate, endDate)}, ${startDate.getFullYear()}`,
       time: `${moment(startDate).format("LT")} - ${moment(endDate).format(
         "LT"
       )}`,
@@ -87,6 +87,8 @@ function EventBooking({ eventLink, vendorId }) {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { to, from } = router.query;
 
+  console.log(to, from);
+
   const { loading, events } = useFetchEvents(false, {
     link: eventLink,
     vendorId,
@@ -103,7 +105,12 @@ function EventBooking({ eventLink, vendorId }) {
       <Grid className={classes.foundation}>
         <PageTitle title="Payorb | Event Booking" />
         {event?.coverImgUrl ? (
-          <VendorEventBannerHeader eventData={event} isVendor={false} />
+          <VendorEventBannerHeader
+            eventData={event}
+            isVendor={false}
+            from={from}
+            to={to}
+          />
         ) : null}
         <Grid container className={classes.root} alignItems={"flex-start"}>
           <Grid

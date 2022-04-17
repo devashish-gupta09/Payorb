@@ -65,10 +65,11 @@ function useFetchOpenEvents({ userUID }) {
   return {
     loading,
     events,
+    setEvents,
     error,
     moreEvents,
     loadMoreEvents,
   };
 }
 
-export default useFetchEvents;
+export default useFetchOpenEvents;

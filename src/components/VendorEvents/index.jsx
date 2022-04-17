@@ -2,7 +2,6 @@ import {
   Button,
   Grid,
   makeStyles,
-  Typography,
   useMediaQuery,
   useTheme,
 } from "@material-ui/core";
@@ -12,43 +11,33 @@ import { useRouter } from "next/router";
 
 import React from "react";
 
-import Skeleton from "react-loading-skeleton";
-
 import { globalStyles } from "../../../styles/globalStyles";
 
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 
-import { deleteEvent, getEventsVendorDashboard } from "../../services/events";
-import { delay } from "../../utils/dateTime";
-import { isEventPastDate } from "../../utils/events";
 import { buildVendorDashboardUrl } from "../../utils/url";
 import ButtonCapsule from "../ButtonCapsule";
-import DashboardCard from "../DashboardCard";
-import EventsViewList from "../EventsViewList";
 import PageTitle from "../PageTitle";
 
 import VendorEventsCalenderView from "../VendorEventsCalenderView";
+import { VendorCloseEvents } from "./VendorCloseEvents";
+import { VendorOpenEvents } from "./VendorOpenEvents";
 
 function VendorEvents() {
   const globalClasses = globalStyles();
   const classes = styles();
-  const theme = useTheme();
-  const desktop = useMediaQuery(theme.breakpoints.up("sm"));
-  const [listView, setListView] = React.useState(true);
-  const [events, setEvents] = React.useState();
-  const [eventsParams, setEventsParams] = React.useState({
-    limit: 5,
-    orderBy: "createdDate",
-    orderType: "desc",
-    startFrom: 0,
-  });
-  const [loadMore, setLoadMore] = React.useState(true);
-  const router = useRouter();
 
+  const [listView, setListView] = React.useState(true);
   const [buttonColorOpen, setButtonColorOpen] = React.useState(classes.blue);
   const [buttonColorClosed, setButtonColorClosed] = React.useState(
     classes.white
   );
+
+  const theme = useTheme();
+  const desktop = useMediaQuery(theme.breakpoints.up("sm"));
+  const router = useRouter();
+
+  const { vendorId } = router.query;
 
   const btnCompleted = () => {
     setButtonColorOpen(classes.white);
@@ -81,62 +70,21 @@ function VendorEvents() {
     setListView(!listView);
   };
 
-  const loadMoreEvents = async () => {
-    try {
-      const res = await getEventsVendorDashboard({
-        ...eventsParams,
-        startFrom: eventsParams.startFrom,
-      });
-      if (res.data.events.length > 0) {
-        setEventsParams({
-          ...eventsParams,
-          startFrom: res.data.lastEvent,
-        });
-        setEvents([...events, ...res.data.events]);
-      } else {
-        setLoadMore(false);
-      }
-    } catch (err) {
-      console.log("error", err);
-    }
-  };
-
-  const handleEventDelete = React.useCallback(
-    async (eventId) => {
-      try {
-        const res = await deleteEvent(eventId);
-        if (res.success) {
-          showAlert("Event deleted.");
-          await delay(300);
-          setEvents([...events.filter((event) => event.link !== eventId)]);
-        }
-      } catch (err) {
-        showAlert(err?.error || err?.message);
-      }
-    },
-    [events]
-  );
-
-  React.useEffect(() => {
-    getEventsVendorDashboard(eventsParams)
-      .then(async (res) => {
-        if (res.success) {
-          if (res.data) {
-            await delay(50);
-            setEvents(res.data.events);
-            setEventsParams({
-              ...eventsParams,
-              startFrom: res.data.lastEvent,
-            });
-          }
-        } else {
-          setEvents([]);
-        }
-      })
-      .catch((err) => {
-        console.log("Error", err);
-      });
-  }, []);
+  // const handleEventDelete = React.useCallback(
+  //   async (eventId) => {
+  //     try {
+  //       const res = await deleteEvent(eventId);
+  //       if (res.success) {
+  //         showAlert("Event deleted.");
+  //         await delay(300);
+  //         setEvents([...events.filter((event) => event.link !== eventId)]);
+  //       }
+  //     } catch (err) {
+  //       showAlert(err?.error || err?.message);
+  //     }
+  //   },
+  //   [events]
+  // );
 
   return (
     <Grid className={classes.root}>
@@ -200,80 +148,15 @@ function VendorEvents() {
         </Grid>
       </Grid>
       {listView ? (
-        events ? (
-          <Grid className={classes.container}>
-            {
-              events.length > 0 ? (
-                <div>
-                  {buttonColorOpen == classes.blue ? (
-                    <Grid className={classes.events}>
-                      <Typography
-                        variant="h6"
-                        style={{
-                          marginBottom: "0.5em",
-                          fontSize: "1em",
-                        }}
-                      >
-                        Open Events (
-                        {events.filter((e) => !isEventPastDate(e)).length})
-                      </Typography>
-                      <EventsViewList
-                        showOpen={true}
-                        events={events}
-                        handleEventDelete={handleEventDelete}
-                      />
-                    </Grid>
-                  ) : (
-                    <Grid className={classes.events}>
-                      <Typography
-                        variant="h6"
-                        style={{
-                          marginBottom: "0.5em",
-                          fontSize: "1em",
-                        }}
-                      >
-                        Completed Events (
-                        {events.filter((e) => isEventPastDate(e)).length})
-                      </Typography>
-                      <EventsViewList
-                        showOpen={false}
-                        events={events}
-                        handleEventDelete={handleEventDelete}
-                      />
-                    </Grid>
-                  )}
-
-                  <Grid
-                    style={{ marginBottom: "1em" }}
-                    container
-                    alignItems="center"
-                    justify="center"
-                  >
-                    {loadMore ? (
-                      <Button onClick={loadMoreEvents}>Load more</Button>
-                    ) : (
-                      <Typography>All events loaded</Typography>
-                    )}
-                  </Grid>
-                </div>
-              ) : null
-              // <Grid container justifyContent="center" alignItems="center">
-              //   <img
-              //     src="/assets/vendorEvents/noPastEvents.svg"
-              //     className={classes.imgContainer}
-              //   />
-              //   <Typography variant="h6" className={classes.noEventMsg}>
-              //     No past events found. Start creating new events...
-              //   </Typography>
-              // </Grid>
-            }
-          </Grid>
-        ) : (
-          <DashboardCard rootClass={classes.skeleton}>
-            <h3>Loading Events</h3>
-            <Skeleton count={5} />
-          </DashboardCard>
-        )
+        <Grid className={classes.container}>
+          <div>
+            {buttonColorOpen == classes.blue ? (
+              <VendorOpenEvents vendorId={vendorId} />
+            ) : (
+              <VendorCloseEvents vendorId={vendorId} />
+            )}
+          </div>
+        </Grid>
       ) : (
         <VendorEventsCalenderView />
       )}

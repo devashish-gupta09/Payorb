@@ -22,6 +22,8 @@ import { useRouter } from "next/router";
 
 import * as React from "react";
 
+import { EVENT_TYPES } from "../../constants/events";
+
 import { EVENT_DEFAULT_BANNERS } from "../../constants/images";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { updateUser } from "../../services/auth";
@@ -42,6 +44,8 @@ export const getRandomEventBanner = (category) => {
 };
 
 const VendorEventBannerHeader = ({
+  from = 0,
+  to = 0,
   eventData,
   croppedCoverImage,
   handleBannerCroppedImage,
@@ -168,7 +172,7 @@ const VendorEventBannerHeader = ({
           >
             <Grid>
               <Typography
-                variant="h2"
+                variant="h3"
                 style={{
                   color: "white",
                   textAlign: "center",
@@ -190,12 +194,12 @@ const VendorEventBannerHeader = ({
                 >
                   <Event style={{ marginRight: "0.25em" }} />
                   <b>
-                    {
-                      getEventslotDuration(
-                        eventData.startDate,
-                        eventData.endDate
-                      ).date
-                    }
+                    {eventData?.type === EVENT_TYPES.ONE_TIME || (!from && !to)
+                      ? getEventslotDuration(
+                          eventData.startDate,
+                          eventData.endDate
+                        ).date
+                      : getEventslotDuration(parseInt(from), parseInt(to)).date}
                   </b>
                 </Grid>
                 <Grid
@@ -206,12 +210,12 @@ const VendorEventBannerHeader = ({
                 >
                   <Schedule style={{ marginRight: "0.25em" }} />
                   <b>
-                    {
-                      getEventslotDuration(
-                        eventData.startDate,
-                        eventData.endDate
-                      ).time
-                    }
+                    {eventData?.type === EVENT_TYPES.ONE_TIME || (!from && !to)
+                      ? getEventslotDuration(
+                          eventData.startDate,
+                          eventData.endDate
+                        ).time
+                      : getEventslotDuration(parseInt(from), parseInt(to)).time}
                   </b>
                 </Grid>
               </Grid>
@@ -279,7 +283,7 @@ const VendorEventBannerHeader = ({
 const styles = makeStyles((theme) => ({
   root: {
     "--heightA": "100%",
-    height: "calc(100vh/3)",
+    height: "calc(100vh/2.75)",
     width: "100%",
     position: "relative",
     // padding: "0.5em 0",
