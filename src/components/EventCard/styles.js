@@ -81,7 +81,7 @@ export const styles = makeStyles((theme) => ({
   },
   headline: {
     fontWeight: "600",
-    fontSize: "1.5em",
+    fontSize: "1.25em",
   },
   imgContainer: {
     width: "100%",
@@ -113,7 +113,7 @@ export const styles = makeStyles((theme) => ({
   cost: {
     float: "right",
     fontWeight: "600",
-    fontSize: "1.5em",
+    fontSize: "1.56em",
   },
   bottomText: {
     fontSize: "0.95em",

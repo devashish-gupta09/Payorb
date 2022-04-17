@@ -19,7 +19,6 @@ import SearchIcon from "@material-ui/icons/Search";
 import React from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
-import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import useFetchVendorCustomers from "../../hooks/useFetchCustomers";
 import useFetchEvents from "../../hooks/useFetchEvents";
 import { getMonthDate } from "../../utils/dateTime";
@@ -358,6 +357,8 @@ function VendorCustomers() {
                         minWidth: column.minWidth ?? 0,
                         backgroundColor: "#EFF0F6",
                         color: "#767676",
+                        fontSize: "0.8em",
+                        fontWeight: "400",
                       }}
                     >
                       {column.label}
@@ -553,7 +554,7 @@ const styles = makeStyles((theme) => ({
     },
   },
   customersTitle: {
-    fontSize: "1em",
+    // fontSize: "1em",
   },
   tableContents: {
     fontWeight: "600",
