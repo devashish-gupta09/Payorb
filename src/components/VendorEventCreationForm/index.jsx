@@ -564,10 +564,21 @@ function VendorEventCreationForm({
     }
   };
 
+  const getHeight = () => {
+    const child = document.getElementById("form-container");
+
+    if (child)
+      return parseInt(window?.getComputedStyle(child).height) + 300 + "px";
+    else return "120vh";
+  };
+
   return (
     <div
       className={classes.foundation}
-      style={{ width: edit || clone ? "80vw" : "99vw" }}
+      style={{
+        width: edit || clone ? "80vw" : "99vw",
+        height: getHeight(),
+      }}
     >
       <Grid
         style={{
@@ -591,16 +602,7 @@ function VendorEventCreationForm({
         </div>
       </Grid>
 
-      <Grid
-        style={{
-          height: "100vh",
-          width: "100%",
-          background: "url(/assets/create-event-bg.svg)",
-          backgroundRepeat: "repeat",
-        }}
-      ></Grid>
-
-      <Grid style={{ position: "absolute", top: "18%" }}>
+      <Grid style={{ position: "absolute", top: "12%" }} id="form-container">
         <PageTitle title="Payorb | Create Event" />
         {Alert()}
         <PostEventCreationDialog
