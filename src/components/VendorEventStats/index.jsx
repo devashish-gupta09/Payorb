@@ -208,7 +208,7 @@ function VendorEventsStats() {
                 <TableRow className={classes.tableStyle}>
                   <Checkbox
                     color="primary"
-                    onChange={handleCheckboxChange}
+                    // onChange={handleCheckboxChange}
                     size="small"
                     className={classes.checkbox}
                   />

@@ -3,16 +3,15 @@ import { makeStyles } from "@material-ui/core";
 export const styles = makeStyles((theme) => ({
   foundation: {
     position: "relative",
-    background: "pink",
+    background: "url(/assets/create-event-bg.svg)",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
     [theme.breakpoints.down("sm")]: {
       paddingTop: "4.5em",
     },
   },
   baseBackground: {
-    height: "100vh",
     width: "100vw",
-    background: "url(/assets/create-event-bg.svg)",
-    backgroundSize: "cover",
   },
   root: {
     width: "100%",

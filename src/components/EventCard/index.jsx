@@ -109,6 +109,7 @@ function EventCard({
           />
         </Dialog>
       )}
+
       {edit && (
         <Dialog
           PaperProps={{
@@ -190,22 +191,27 @@ function EventCard({
 
             {editable ? (
               <Grid className={classes.sideBar}>
-                <IconButton
-                  size="medium"
-                  className={classes.icon}
-                  onClick={handleEdit}
-                >
-                  <CreateIcon style={{ fontSize: "0.75em" }} />
-                </IconButton>
-                <IconButton size="medium" className={classes.icon}>
-                  {" "}
-                  <DeleteOutlineIcon
-                    style={{ fontSize: "0.75em" }}
-                    className={`${classes.deleteIcon}`}
-                    onClick={enableDelete}
-                    disabled={event.orders.length > 0}
-                  />
-                </IconButton>
+                {!(new Date(event.endDate) < new Date()) && (
+                  <>
+                    <IconButton
+                      size="medium"
+                      className={classes.icon}
+                      onClick={handleEdit}
+                    >
+                      <CreateIcon style={{ fontSize: "0.75em" }} />
+                    </IconButton>
+                    <IconButton size="medium" className={classes.icon}>
+                      {" "}
+                      <DeleteOutlineIcon
+                        style={{ fontSize: "0.75em" }}
+                        className={`${classes.deleteIcon}`}
+                        onClick={enableDelete}
+                        disabled={event.orders.length > 0}
+                      />
+                    </IconButton>
+                  </>
+                )}
+
                 <IconButton
                   size="medium"
                   className={classes.icon}
@@ -230,6 +236,7 @@ function EventCard({
               </Grid>
             ) : null}
           </Grid>
+
           <Grid container className={classes.dateAndTime}>
             <Grid item xs={6} container alignItems="center">
               <img src="/assets/vendorEventsCard/calender.svg"></img>
@@ -255,7 +262,7 @@ function EventCard({
         <Grid container>
           <Grid
             item
-            sm={editable ? 12 : 10}
+            sm={editable ? 12 : 9}
             container
             justify={"space-between"}
             className={classes.textContainer}
@@ -284,40 +291,47 @@ function EventCard({
               />
             </Typography>
 
-            <Grid
-              container
-              justify={"space-between"}
-              className={classes.bottomTextContainer}
-            >
-              <Grid item xs={4}>
-                <Typography className={classes.bottomText}>
-                  Event Type <br />
-                  {formatEventType(event.type)}
-                </Typography>
+            {isVendor && (
+              <Grid
+                container
+                justify={"space-between"}
+                className={classes.bottomTextContainer}
+              >
+                <Grid item xs={4}>
+                  <Typography className={classes.bottomText}>
+                    Event Type <br />
+                    {formatEventType(event.type)}
+                  </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography className={classes.bottomText}>
+                    Sold out Seats
+                    <br /> {event.orders ? event.orders.length : 0}
+                    {event.type === EVENT_TYPES.ONE_TIME &&
+                      `/${event.totalTickets}`}
+                  </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography className={classes.bottomText}>
+                    Total Revenue <br />{" "}
+                    <span style={{ color: "#0061FE" }}>
+                      &#8377;{" "}
+                      {`${
+                        parseFloat(
+                          (event?.orders?.length ?? 0) * parseInt(event.price)
+                        ).toFixed(2) ?? "0.00"
+                      }`}
+                    </span>
+                  </Typography>
+                </Grid>
               </Grid>
-              <Grid item xs={4}>
-                <Typography className={classes.bottomText}>
-                  Sold out Seats
-                  <br /> {event.orders ? event.orders.length : 0}
-                  {event.type === EVENT_TYPES.ONE_TIME &&
-                    `/${event.totalTickets}`}
-                </Typography>
-              </Grid>
-              <Grid item xs={4}>
-                <Typography className={classes.bottomText}>
-                  Total Revenue <br />{" "}
-                  <span style={{ color: "#0061FE" }}>
-                    &#8377; {`${event.revenue ? event.revenue : "0.0"}`}
-                  </span>
-                </Typography>
-              </Grid>
-            </Grid>
+            )}
           </Grid>
 
           {!editable && !isVendor ? (
             <Grid
               item
-              sm={2}
+              sm={3}
               container
               alignItems="center"
               justifyContent="center"

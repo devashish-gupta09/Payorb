@@ -214,14 +214,7 @@ function VendorDashboardSidebar({ profileData }) {
         justify="space-between"
         alignItems="center"
         className={classes.mobile}
-      >
-        {/* <Grid item>
-          <Logo redirectToHome={true} dark={true} width={"5em"}></Logo>
-        </Grid> */}
-        {/* <Grid className={classes.menuButtonContainer}>
-          <Menu style={{ color: "black" }} onClick={toggleDrawer} />
-        </Grid> */}
-      </Grid>
+      ></Grid>
 
       {/* For Desktop and wide screens */}
 
