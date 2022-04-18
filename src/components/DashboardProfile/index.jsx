@@ -12,6 +12,7 @@ function ProfileSectionSidebar({ image, name, occupation }) {
           <Avatar className={classes.avatar} src={image} />
         ) : (
           <Avatar
+            className={classes.avatar}
             src={
               "https://firebasestorage.googleapis.com/v0/b/payorb-92ef0.appspot.com/o/assets%2Fprofile.jpg?alt=media&token=eea58cd4-50ea-4525-93fb-e7fe83350b59"
             }
@@ -22,12 +23,15 @@ function ProfileSectionSidebar({ image, name, occupation }) {
         <Typography className={classes.name} variant="h6" align="center">
           {name ? name : "Welcome User"}
         </Typography>
-        <Typography variant="body1" align="center">
-          <WorkOutlineIcon
-            style={{ verticalAlign: "middle", marginRight: "0.5em" }}
-          />
-          {occupation ? occupation : "Occupation"}
-        </Typography>
+
+        {occupation ? (
+          <Typography variant="body1" align="center">
+            <WorkOutlineIcon
+              style={{ verticalAlign: "middle", marginRight: "0.5em" }}
+            />
+            {occupation}
+          </Typography>
+        ) : null}
       </Box>
     </Box>
   );
@@ -45,9 +49,9 @@ const styles = makeStyles((theme) => ({
   avatar: {
     display: "block",
     margin: "0 auto",
-    border: "0.75em solid white",
-    width: "12em",
-    height: "12em",
+    border: "0.5em solid white",
+    width: "10em",
+    height: "10em",
     borderRadius: "50%",
   },
   content: {

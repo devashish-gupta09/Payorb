@@ -318,7 +318,7 @@ function EventCard({
                       &#8377;{" "}
                       {`${
                         parseFloat(
-                          event?.orders?.length * parseInt(event.price)
+                          (event?.orders?.length ?? 0) * parseInt(event.price)
                         ).toFixed(2) ?? "0.00"
                       }`}
                     </span>

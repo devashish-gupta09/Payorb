@@ -1,4 +1,3 @@
-import DateFnsUtils from "@date-io/date-fns";
 import {
   Button,
   FormControl,
@@ -21,11 +20,6 @@ import {
   DialogContentText,
 } from "@material-ui/core";
 import { CheckCircle } from "@material-ui/icons";
-import {
-  KeyboardDatePicker,
-  KeyboardTimePicker,
-  MuiPickersUtilsProvider,
-} from "@material-ui/pickers";
 
 import createHash from "create-hash";
 import { useFormik } from "formik";
@@ -65,6 +59,7 @@ import {
   getRandomEventBanner,
   VendorEventBannerHeader,
 } from "../VendorEventBannerHeader";
+import { EarlyBirdSection } from "./EarlyBirdSection";
 import { EventCategoryField } from "./EventCategoryField";
 import { styles } from "./styles";
 
@@ -908,7 +903,17 @@ function VendorEventCreationForm({
                   {/* EVENT MODE */}
                   <Grid item sm={8}>
                     <FormControl variant="outlined" style={{ width: "100%" }}>
-                      <FormLabel component="legend">{"Event Mode"}</FormLabel>
+                      <FormLabel
+                        component="legend"
+                        style={{
+                          color: "#000000",
+                          fontSize: "1em",
+                          fontWeight: "500",
+                          paddingBottom: "0.5em",
+                        }}
+                      >
+                        {"Event Mode"}
+                      </FormLabel>
                       <RadioGroup
                         row
                         id="mode"
@@ -987,6 +992,9 @@ function VendorEventCreationForm({
                       <FormLabel
                         component="legend"
                         style={{
+                          color: "#000000",
+                          fontSize: "1em",
+                          fontWeight: "500",
                           paddingBottom: "0.5em",
                         }}
                       >
@@ -1030,6 +1038,9 @@ function VendorEventCreationForm({
                         component="legend"
                         style={{
                           paddingBottom: "0.5em",
+                          color: "#000000",
+                          fontSize: "1em",
+                          fontWeight: "500",
                         }}
                       >
                         Event Address
@@ -1064,123 +1075,12 @@ function VendorEventCreationForm({
                 ) : null}
 
                 {/* Early Bird */}
-
-                <Grid item container sm={8} alignItems="center">
-                  <b>Early Bird</b>
-                  <Switch
-                    id="earlyBird"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    checked={formik.values.earlyBird}
-                    error={
-                      formik.touched.earlyBird &&
-                      Boolean(formik.errors.earlyBird)
-                    }
-                    helperText={
-                      formik.touched.earlyBird && formik.errors.earlyBird
-                    }
-                    disabled={checkDisabled() || formik.values.trialClass}
-                  />
-                </Grid>
-                <Grid item sm={4}>
-                  {formik.values.earlyBird ? (
-                    <TextField
-                      type="number"
-                      fullWidth
-                      className={classes.textInput}
-                      id="earlyBirdPrice"
-                      label={"Early bird price"}
-                      variant="outlined"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.earlyBirdPrice}
-                      error={
-                        formik.touched.earlyBirdPrice &&
-                        Boolean(formik.errors.earlyBirdPrice)
-                      }
-                      helperText={
-                        formik.touched.earlyBirdPrice &&
-                        formik.errors.earlyBirdPrice
-                      }
-                    />
-                  ) : null}
-                </Grid>
-                <Grid item sm={8}>
-                  {formik.values.earlyBird ? (
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                      <Grid
-                        item
-                        sm={12}
-                        container
-                        spacing={1}
-                        alignItems="center"
-                      >
-                        <Grid item xs={6}>
-                          <KeyboardDatePicker
-                            disablePast={true}
-                            KeyboardButtonProps={{
-                              style: {
-                                paddingLeft: "0.2em",
-                                paddingRight: "0.4em",
-                              },
-                            }}
-                            InputProps={{
-                              style: {
-                                padding: 0,
-                              },
-                            }}
-                            inputVariant="outlined"
-                            margin="normal"
-                            id="earlyBirdEndDate"
-                            label="Offer End Date"
-                            format="dd/MM/yyyy"
-                            value={formik.values.earlyBirdDeadline}
-                            onChange={handleEarlyBirdDeadlineChange}
-                            helperText={
-                              formik.touched.earlyBirdDeadline &&
-                              formik.errors.earlyBirdDeadline
-                            }
-                            error={
-                              formik.touched.earlyBirdDeadline &&
-                              Boolean(formik.errors.earlyBirdDeadline)
-                            }
-                            disabled={checkDisabled()}
-                          />
-                        </Grid>
-                        <Grid item xs={6}>
-                          <KeyboardTimePicker
-                            KeyboardButtonProps={{
-                              style: {
-                                paddingLeft: "0.2em",
-                                paddingRight: "0.4em",
-                              },
-                            }}
-                            InputProps={{
-                              style: {
-                                padding: 0,
-                              },
-                            }}
-                            inputVariant="outlined"
-                            margin="normal"
-                            id="time-picker"
-                            label="Offer End Time"
-                            value={formik.values.earlyBirdDeadline}
-                            onChange={handleEarlyBirdDeadlineChange}
-                            helperText={
-                              formik.touched.earlyBirdDeadline &&
-                              formik.errors.earlyBirdDeadline
-                            }
-                            error={
-                              formik.touched.earlyBirdDeadline &&
-                              Boolean(formik.errors.earlyBirdDeadline)
-                            }
-                            disabled={checkDisabled()}
-                          />
-                        </Grid>
-                      </Grid>
-                    </MuiPickersUtilsProvider>
-                  ) : null}
-                </Grid>
+                <EarlyBirdSection
+                  formik={formik}
+                  checkDisabled={checkDisabled}
+                  classes={classes}
+                  handleEarlyBirdDeadlineChange={handleEarlyBirdDeadlineChange}
+                />
               </Grid>
             </Grid>
 
@@ -1193,7 +1093,12 @@ function VendorEventCreationForm({
                   <FormLabel>
                     <Typography
                       variant="h6"
-                      style={{ fontWeight: "bold", marginBottom: "0.75em" }}
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: "1.25em ",
+                        marginBottom: "0.75em",
+                        color: "#000",
+                      }}
                     >
                       Event Cover
                     </Typography>
@@ -1211,7 +1116,14 @@ function VendorEventCreationForm({
 
                 {formik.values.type !== EVENT_TYPES.ONE_ON_ONE && (
                   <FormControl style={{ width: "100%", marginBottom: "1em" }}>
-                    <FormLabel style={{ paddingBottom: "0.5em" }}>
+                    <FormLabel
+                      style={{
+                        color: "#000000",
+                        fontSize: "1em",
+                        fontWeight: "500",
+                        paddingBottom: "0.5em",
+                      }}
+                    >
                       Number of Tickets
                     </FormLabel>
                     <TextField
