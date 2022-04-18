@@ -35,11 +35,12 @@ function ImageEventUpload({
   }, []);
 
   const handleSave = () => {
-    handleCroppedImage(dataUrl);
+    // handleCroppedImage(dataUrl);
     setDialogOpen(false);
   };
 
   const handleAddMore = () => {
+    // setDataUrl();
     handleCroppedImage(dataUrl);
   };
 
@@ -67,7 +68,6 @@ function ImageEventUpload({
                 allowAdd={
                   croppedImgs?.length < COVER_BANNER_LIMIT ? true : false
                 }
-                // cropperAspectRatio={16 / 9}
               />
             </div>
 
@@ -144,7 +144,7 @@ function ImageEventUpload({
               }}
             >
               {(croppedImgs ?? eventData?.coverBannerImages)?.length <
-              COVER_BANNER_LIMIT - 1 ? (
+              COVER_BANNER_LIMIT ? (
                 <Button
                   onClick={handleAddMore}
                   style={{

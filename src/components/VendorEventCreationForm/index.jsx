@@ -96,6 +96,7 @@ function getCreationFormInitialState(trialClass) {
     earlyBirdDeadline: new Date(new Date().getHours() + 1),
     trialClass: trialClass === true ? true : false,
     coverImgUrl: getRandomEventBanner(EVENT_CATEGORY.EDUCATION),
+    coverBannerImages: [],
   };
 }
 
@@ -115,6 +116,7 @@ function VendorEventCreationForm({
 }) {
   const classes = styles();
   const router = useRouter();
+
   const [dialog, setDialog] = React.useState({ display: false, text: "" });
   const [dateError, setDateError] = React.useState(null);
   const [postEventDialog, setPostEventDialog] = React.useState(false);
@@ -126,12 +128,14 @@ function VendorEventCreationForm({
     React.useState(event?.coverBannerImages ?? []);
   const theme = useTheme();
   const [eventsLoading, setEventsLoading] = React.useState(false);
-  const matches = useMediaQuery(theme.breakpoints.down("sm"));
-  const { Alert, showAlert } = useAlertSnackbar();
   const [loader, setLoader] = React.useState(false);
   const [trialClassQuotaExhausted, setTrialClassQuotaExhausted] =
     React.useState(true);
   const [trialErrorModalOpen, setTrialErrorModalOpen] = React.useState(false);
+
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+  const { Alert, showAlert } = useAlertSnackbar();
+
   const handlePostCreationDialogClose = () => {
     router.push(buildVendorDashboardUrl(getVendorIdFromUrl(router), "/events"));
     handleCancel();
@@ -207,6 +211,8 @@ function VendorEventCreationForm({
             values.startDate = momentStartDate.toISOString();
           }
 
+          console.log("VALUES", values);
+
           const req = {
             ...values,
             category: values.otherField || values.category,
@@ -223,7 +229,7 @@ function VendorEventCreationForm({
             const formatedLink = removeStringAndAddSeperator(values.url, "-");
             formik.setFieldValue("link", formatedLink);
 
-            let eventImageUrls;
+            let eventImageUrls = [];
             if (croppedCoverBannerImages.length > 0) {
               eventImageUrls = clone
                 ? values.coverBannerImages
@@ -261,9 +267,11 @@ function VendorEventCreationForm({
                     fileName
                   );
             } else {
-              console.log("Adklsajfkasjfkajfklds", values.category);
-
-              eventCoverUrl = getRandomEventBanner(values.category);
+              eventCoverUrl = getRandomEventBanner(
+                Object.keys(EVENT_CATEGORY).includes(values.category)
+                  ? EVENT_CATEGORY[values.category]
+                  : values.category
+              );
             }
 
             const updateReq = {
@@ -288,6 +296,7 @@ function VendorEventCreationForm({
             }
           } else {
             let eventImageUrls;
+
             if (croppedCoverBannerImages.length > 0) {
               eventImageUrls = await Promise.all(
                 croppedCoverBannerImages
@@ -326,18 +335,26 @@ function VendorEventCreationForm({
                 fileName
               );
             } else {
-              eventCoverUrl = getRandomEventBanner(values.category);
+              eventCoverUrl = getRandomEventBanner(
+                Object.values(EVENT_CATEGORY).includes(values.category)
+                  ? values.category
+                  : EVENT_CATEGORY[values.category]
+              );
             }
 
             delete req.revenue;
+
+            const commonBannerImages = croppedCoverBannerImages.filter((cbi) =>
+              event?.coverBannerImages?.includes(cbi)
+            );
 
             await editEvent({
               event: {
                 ...req,
                 // photoUrl: eventImageUrls,
                 coverBannerImages: [
-                  ...event.coverBannerImages,
-                  ...eventImageUrls,
+                  ...(commonBannerImages ?? []),
+                  ...(eventImageUrls ?? []),
                 ],
                 coverImgUrl: eventCoverUrl,
               },
@@ -371,6 +388,119 @@ function VendorEventCreationForm({
       }
     },
   });
+
+  const fetchVendorTrialClassQuota = async (startDate) => {
+    await getVendorTrialClassQuota(startDate)
+      .then((res) => {
+        if (res.data) {
+          if (res.data.trialClassQuota === true) {
+            setTrialErrorModalOpen(true);
+          }
+          setTrialClassQuotaExhausted(res.data.trialClassQuota);
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+  const handleEarlyBirdDeadlineChange = (date) => {
+    formik.setFieldValue("earlyBirdDeadline", date.toISOString());
+  };
+
+  const backendValidation = React.useCallback((err) => {
+    formik.setFieldError(err.details[0].context.key, err.details[0].message);
+  }, []);
+
+  const handleCancel = () => {
+    if (edit || clone) {
+      handleClose();
+    } else {
+      router.push(
+        buildVendorDashboardUrl(getVendorIdFromUrl(router), "/events")
+      );
+    }
+  };
+
+  const handleDialogClose = React.useCallback(() => {
+    setDialog({ display: false, text: "" });
+  }, []);
+
+  const checkDisabled = () => {
+    if (edit && event?.orders && event?.orders?.length > 0) {
+      return true;
+    } else if (edit && formik.values.trialClass) {
+      return true;
+    }
+  };
+
+  const handleCoverBannerDelete = async (_index) => {
+    console.log("CROPPED IMAGE-", croppedCoverBannerImages, "-asfdsaf");
+    const result = croppedCoverBannerImages.filter(
+      (_, index) => index !== _index
+    );
+
+    console.log("RESULT", result, "CROPPED IMG", croppedCoverBannerImages);
+
+    if (edit) {
+      console.log("INSIDE LOG", event, formik.values);
+      await editEvent({
+        event: {
+          ...event,
+          coverBannerImages: result,
+        },
+      });
+    }
+
+    setCroppedCoverBannerImages(result);
+  };
+
+  const handleSlotDurationChange = (event) => {
+    try {
+      const hours = parseFloat(parseFloat(event.target.value).toFixed(1));
+      formik.setFieldValue("slotDuration", hours);
+    } catch (error) {
+      console.log("Slot change error", error);
+    }
+  };
+
+  const getHeight = () => {
+    const child = document.getElementById("form-container");
+
+    if (child)
+      return parseInt(window?.getComputedStyle(child).height) + 300 + "px";
+    else return "120vh";
+  };
+
+  React.useEffect(() => {
+    if (event && clone && !edit) {
+      formik.setFieldValue(
+        "url",
+        isEventPastDate(event.endDate) && event.url
+          ? event.url
+          : hash.digest("hex").substr(0, 6)
+      );
+      formik.setFieldValue("link", hash.digest("hex").substr(0, 6));
+      formik.setFieldValue("orders", undefined);
+      formik.setFieldValue("bookedSlots", undefined);
+      formik.setFieldValue("customers", undefined);
+      formik.setFieldValue("reviews", undefined);
+      formik.setFieldValue("revenue", undefined);
+      formik.setFieldValue("createdDate", undefined);
+      formik.setFieldValue("userUID", undefined);
+      formik.setFieldValue("status", undefined);
+      formik.setFieldValue("updatedAt", undefined);
+      formik.setFieldValue("vendorUserName", undefined);
+      formik.setFieldValue("price", parseInt(event.price));
+      formik.setFieldValue("earlyBirdPrice", parseInt(event.earlyBirdPrice));
+    }
+  }, [event, clone]);
+
+  React.useEffect(() => {
+    if (edit) {
+      formik.setFieldValue("vendorUserName", undefined);
+    }
+  }, [edit]);
 
   React.useEffect(() => {
     const auth = FirebaseAuth.Singleton();
@@ -429,21 +559,6 @@ function VendorEventCreationForm({
     }
   }, [formik.values.startDate, formik.values.endDate]);
 
-  const fetchVendorTrialClassQuota = async (startDate) => {
-    await getVendorTrialClassQuota(startDate)
-      .then((res) => {
-        if (res.data) {
-          if (res.data.trialClassQuota === true) {
-            setTrialErrorModalOpen(true);
-          }
-          setTrialClassQuotaExhausted(res.data.trialClassQuota);
-        }
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  };
-
   React.useEffect(() => {
     fetchVendorTrialClassQuota(formik.values.startDate);
   }, [formik.values.startDate]);
@@ -479,98 +594,6 @@ function VendorEventCreationForm({
       setCustomMessageRows(3 + toAddMessage);
     }
   }, [formik.values.description, formik.values.privateMessage]);
-
-  const handleEarlyBirdDeadlineChange = (date) => {
-    formik.setFieldValue("earlyBirdDeadline", date.toISOString());
-  };
-
-  const backendValidation = React.useCallback((err) => {
-    formik.setFieldError(err.details[0].context.key, err.details[0].message);
-  }, []);
-
-  const handleCancel = () => {
-    if (edit || clone) {
-      handleClose();
-    } else {
-      router.push(
-        buildVendorDashboardUrl(getVendorIdFromUrl(router), "/events")
-      );
-    }
-  };
-
-  const handleDialogClose = React.useCallback(() => {
-    setDialog({ display: false, text: "" });
-  }, []);
-
-  const checkDisabled = () => {
-    if (edit && event?.orders && event?.orders?.length > 0) {
-      return true;
-    } else if (edit && formik.values.trialClass) {
-      return true;
-    }
-  };
-
-  React.useEffect(() => {
-    if (event && clone && !edit) {
-      formik.setFieldValue(
-        "url",
-        isEventPastDate(event.endDate) && event.url
-          ? event.url
-          : hash.digest("hex").substr(0, 6)
-      );
-      formik.setFieldValue("link", hash.digest("hex").substr(0, 6));
-      formik.setFieldValue("orders", undefined);
-      formik.setFieldValue("bookedSlots", undefined);
-      formik.setFieldValue("customers", undefined);
-      formik.setFieldValue("reviews", undefined);
-      formik.setFieldValue("revenue", undefined);
-      formik.setFieldValue("createdDate", undefined);
-      formik.setFieldValue("userUID", undefined);
-      formik.setFieldValue("status", undefined);
-      formik.setFieldValue("updatedAt", undefined);
-      formik.setFieldValue("vendorUserName", undefined);
-      formik.setFieldValue("price", parseInt(event.price));
-      formik.setFieldValue("earlyBirdPrice", parseInt(event.earlyBirdPrice));
-    }
-  }, [event, clone]);
-
-  React.useEffect(() => {
-    if (edit) {
-      formik.setFieldValue("vendorUserName", undefined);
-    }
-  }, [edit]);
-
-  const handleCoverBannerDelete = async (_index) => {
-    const result = croppedCoverBannerImages.filter(
-      (_, index) => index !== _index
-    );
-    setCroppedCoverBannerImages(result);
-    if (edit) {
-      await editEvent({
-        ...event,
-        coverBannerImages: croppedCoverBannerImages?.filter(
-          (_, index) => index !== _index
-        ),
-      });
-    }
-  };
-
-  const handleSlotDurationChange = (event) => {
-    try {
-      const hours = parseFloat(parseFloat(event.target.value).toFixed(1));
-      formik.setFieldValue("slotDuration", hours);
-    } catch (error) {
-      console.log("Slot change error", error);
-    }
-  };
-
-  const getHeight = () => {
-    const child = document.getElementById("form-container");
-
-    if (child)
-      return parseInt(window?.getComputedStyle(child).height) + 300 + "px";
-    else return "120vh";
-  };
 
   return (
     <div

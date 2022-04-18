@@ -64,7 +64,7 @@ export const EventCoverUpload = ({
             imageProps={{
               src:
                 croppedImgs?.[viewPortIndex] ||
-                eventData?.coverBannerImages[viewPortIndex],
+                eventData?.coverBannerImages?.[viewPortIndex],
               className: classes.eventImage,
             }}
             eventData={eventData}
