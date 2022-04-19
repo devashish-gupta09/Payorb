@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   Grid,
   IconButton,
@@ -50,6 +49,7 @@ function EventCard({
   handleEventDelete,
   editable = true,
   isVendor = true,
+  paymentDetails = {},
 }) {
   const classes = styles();
   const [edit, setEdit] = React.useState(false);
@@ -166,18 +166,14 @@ function EventCard({
             )}
           </Grid>
           <Grid container justifyContent="right" className={classes.topBanner}>
-            <Button
-              size="medium"
-              fontSize="medium"
-              className={`${classes.topBannerButton} ${classes.cooking}`}
-            >
+            <div className={`${classes.topBannerButton} ${classes.cooking}`}>
               {event.category
                 .split("_")
                 .map((x) => x.toLowerCase())
                 .map((x) => x.charAt(0).toUpperCase() + x.slice(1))
                 .join(" ")}
-            </Button>
-            <Button
+            </div>
+            <div
               className={classes.topBannerButton}
               style={{
                 background:
@@ -187,7 +183,7 @@ function EventCard({
               {new Date(event.endDate) < new Date()
                 ? "Booking Closed"
                 : "Booking Open"}
-            </Button>
+            </div>
 
             {editable ? (
               <Grid className={classes.sideBar}>
@@ -209,6 +205,16 @@ function EventCard({
                         disabled={event.orders.length > 0}
                       />
                     </IconButton>
+                    <IconButton
+                      size="medium"
+                      className={classes.icon}
+                      onClick={handleShareDialog}
+                    >
+                      <ShareIcon
+                        style={{ fontSize: "0.75em" }}
+                        className={`${classes.shareIcon}`}
+                      />
+                    </IconButton>
                   </>
                 )}
 
@@ -221,16 +227,6 @@ function EventCard({
                   <AddToPhotosIcon
                     style={{ fontSize: "0.75em" }}
                     className={`${classes.AddToPhotosIcon}`}
-                  />
-                </IconButton>
-                <IconButton
-                  size="medium"
-                  className={classes.icon}
-                  onClick={handleShareDialog}
-                >
-                  <ShareIcon
-                    style={{ fontSize: "0.75em" }}
-                    className={`${classes.shareIcon}`}
                   />
                 </IconButton>
               </Grid>
