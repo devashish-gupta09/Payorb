@@ -1,11 +1,16 @@
 import { makeStyles, Tabs, Tab } from "@material-ui/core";
+import { CloudCircle } from "@material-ui/icons";
 import { useRouter } from "next/router";
 import useMobileDetect from "use-mobile-detect-hook";
+
+import { useFetchUserAuthDetails } from "../../context/UserAuthDetailContext";
 
 function ProfileNavBar({ vendor = true }) {
   const classes = styles();
   const detectMobile = useMobileDetect();
   const router = useRouter();
+
+  const { verifiedDetails } = useFetchUserAuthDetails();
 
   const isActive = () => {
     const section = router.asPath.split("#")[1];
@@ -22,7 +27,7 @@ function ProfileNavBar({ vendor = true }) {
       <Tab label="Gallery" href="#gallery"></Tab>
       <Tab label="Reviews" href="#review"></Tab>
       {vendor ? (
-        <Tab label="Payments" href="#payment"></Tab>
+        <Tab label={<CloudCircle />} href="#payment"></Tab>
       ) : (
         <Tab label="Events" href="#events"></Tab>
       )}

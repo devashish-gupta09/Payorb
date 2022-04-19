@@ -2,12 +2,18 @@ import { Grid, makeStyles, TextField, Typography } from "@material-ui/core";
 import { useFormik } from "formik";
 import React from "react";
 
+import * as Yup from "yup";
+
 import { appColors } from "../../../styles/colors";
 import { ALERT_TYPES } from "../../constants/alerts";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { updateUser } from "../../services/auth";
 import ButtonCapsule from "../ButtonCapsule";
 import VideoUpload from "../VideoUpload";
+
+const profileAboutSectionValidation = Yup.object({
+  about: Yup.string().max(500),
+});
 
 function ProfileAboutCard({ profileData, vendor = true, updateProfile }) {
   const classes = styles();
@@ -17,6 +23,8 @@ function ProfileAboutCard({ profileData, vendor = true, updateProfile }) {
     initialValues: {
       about: profileData.about || "",
     },
+    validationSchema: profileAboutSectionValidation,
+    validateOnChange: true,
     onSubmit: async (values) => {
       try {
         const res = await updateUser(values);
@@ -56,6 +64,9 @@ function ProfileAboutCard({ profileData, vendor = true, updateProfile }) {
                   buttonStyle={`${classes.previewButton}`}
                 ></ButtonCapsule>
                 <ButtonCapsule
+                  disabled={
+                    formik.touched.about && Boolean(formik.errors.about)
+                  }
                   text="Save Profile"
                   buttonStyle={`${classes.saveButton}`}
                   onClick={formik.handleSubmit}
@@ -77,20 +88,31 @@ function ProfileAboutCard({ profileData, vendor = true, updateProfile }) {
               fullWidth
               value={formik.values.about}
               onChange={formik.handleChange}
-              onBlur={formik.onBlur}
+              onBlur={formik.handleBlur}
               maxRow={8}
               minRow={8}
               disabled={!vendor}
               InputProps={{ disableUnderline: true }}
-              placeholder="Please add some information about yourself"
+              error={formik.touched.about && Boolean(formik.errors.about)}
+              placeholder={
+                vendor ? "Please add some information about yourself" : ""
+              }
             />
+
             {vendor ? (
               <Grid
                 container
                 justifyContent="flex-end"
                 style={{ padding: "0.5em 0" }}
               >
-                {formik.values.about.length} / 500 characters
+                <Grid>
+                  <Typography align="right">
+                    {formik.values.about.length} / 500 characters
+                  </Typography>
+                  <Typography style={{ color: "red" }}>
+                    {formik.touched.about && formik.errors.about}
+                  </Typography>
+                </Grid>
               </Grid>
             ) : null}
           </Grid>

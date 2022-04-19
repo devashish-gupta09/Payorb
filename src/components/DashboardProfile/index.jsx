@@ -56,6 +56,9 @@ const styles = makeStyles((theme) => ({
   },
   content: {
     margin: "1em",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
   },
   name: {
     fontWeight: "500",

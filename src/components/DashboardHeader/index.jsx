@@ -1,4 +1,13 @@
-import { Box, Drawer, Grid, Tab, Tabs, Toolbar } from "@material-ui/core";
+import {
+  Box,
+  Drawer,
+  Grid,
+  Tab,
+  Tabs,
+  Toolbar,
+  useTheme,
+  useMediaQuery,
+} from "@material-ui/core";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -14,6 +23,9 @@ function VendorDashboardHeader({ profileData }) {
   const [appMenu, setAppMenu] = React.useState(false);
   const router = useRouter();
   const [currentTab, setCurrentTab] = React.useState(false);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const isActive = (value) => {
     if (window.location.pathname.includes(value)) {
@@ -59,7 +71,7 @@ function VendorDashboardHeader({ profileData }) {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", marginBottom: isMobile ? "5em" : 0 }}>
       <CustomHeader>
         <Toolbar>
           <Grid container alignItems="center">
@@ -80,7 +92,7 @@ function VendorDashboardHeader({ profileData }) {
                   <Logo redirectToHome={true} dark={true} width={"5em"}></Logo>
                 </Grid>
               </Grid>
-              <Grid item>
+              <Grid item style={{ width: "fit-content" }}>
                 <ProfileSectionHeader image={profileData.profileImgUrl} />
               </Grid>
             </Grid>

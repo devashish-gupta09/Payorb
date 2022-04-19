@@ -4,7 +4,6 @@ import { appColors } from "../../../styles/colors";
 
 export const styles = makeStyles((theme) => ({
   root: {
-    backgroundColor: "white",
     padding: "0.5em 4em",
     [theme.breakpoints.down("sm")]: {
       padding: "0.5em 1em",
@@ -44,6 +43,9 @@ export const styles = makeStyles((theme) => ({
   drawerItemContainer: {
     padding: "0 1.5em",
     width: "95vw",
+    [theme.breakpoints.down("sm")]: {
+      padding: " 5em 1.5em",
+    },
   },
   drawerTitleContainer: { padding: "3em 0 2em 0" },
   drawerClose: { color: "black" },
