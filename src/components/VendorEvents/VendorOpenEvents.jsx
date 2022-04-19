@@ -1,24 +1,24 @@
-import {
-  CircularProgress,
-  Grid,
-  makeStyles,
-  Typography,
-} from "@material-ui/core";
+import { Grid, makeStyles, Typography } from "@material-ui/core";
 import { useCallback } from "react";
 
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 
 import useFetchOpenEvents from "../../hooks/useFetchOpenEvents";
+import useFetchVendorVerifiedDetails from "../../hooks/useFetchVendorAuth";
 import { deleteEvent } from "../../services/events";
 import { delay } from "../../utils/dateTime";
 import ButtonCapsule from "../ButtonCapsule";
 import EventsViewList from "../EventsViewList";
+import PageTitle from "../PageTitle";
+import SkeletonLoading from "../SkeletonLoading";
 
 export const VendorOpenEvents = ({ vendorId }) => {
   const classes = styles();
 
   const { loading, events, error, moreEvents, loadMoreEvents, setEvents } =
     useFetchOpenEvents({ userUID: vendorId });
+  const { loading: paymentDetailsLoading, verifiedDetails } =
+    useFetchVendorVerifiedDetails();
   const { Alert, showAlert } = useAlertSnackbar();
 
   const handleEventDelete = useCallback(
@@ -37,7 +37,13 @@ export const VendorOpenEvents = ({ vendorId }) => {
     [events]
   );
 
-  if (loading) return <CircularProgress size="5em" />;
+  if (loading || paymentDetailsLoading)
+    return (
+      <Grid className={classes.root}>
+        <PageTitle title="Payorb | Events" />
+        <SkeletonLoading message={"Loading events"} />
+      </Grid>
+    );
 
   if (error)
     return (
@@ -62,6 +68,9 @@ export const VendorOpenEvents = ({ vendorId }) => {
           showOpen={true}
           events={events}
           handleEventDelete={handleEventDelete}
+          paymentDetails={verifiedDetails.find(
+            (vd) => vd.name === "paymentDetails"
+          )}
         />
         {moreEvents && (
           <Grid

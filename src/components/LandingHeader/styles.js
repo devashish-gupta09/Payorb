@@ -22,6 +22,9 @@ export const styles = makeStyles((theme) => ({
       width: "25% !important",
     },
   },
+  imageIcon: {
+    paddingTop: "0.5em",
+  },
   signupButton: {
     background: "linear-gradient(115.52deg, #BDF5F2 0%, #79DFDF 100%)",
     borderRadius: "2em",

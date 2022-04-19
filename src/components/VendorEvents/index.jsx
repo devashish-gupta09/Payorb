@@ -233,7 +233,7 @@ const styles = makeStyles((theme) => ({
     minHeight: "80vh",
     maxHeight: "max-content",
     [theme.breakpoints.down("sm")]: {
-      padding: "5em 0 0 0",
+      padding: "0 0 0 0",
       margin: "0",
     },
   },

@@ -43,7 +43,12 @@ function CustomerVendorProfile({ userUID }) {
       <Grid>
         <PageTitle title="Payorb | Profile" />
         <ProfileHeader profileData={profileData} vendor={false} />
-        <Grid style={{ position: "relative" }}>
+        <Grid
+          style={{
+            position: "relative",
+            minHeight: "400px",
+          }}
+        >
           {/* Desktop */}
           <Grid className={classes.navbarDesktop}>
             <ProfileNavBar vendor={false} />
