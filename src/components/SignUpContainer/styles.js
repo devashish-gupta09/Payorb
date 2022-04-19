@@ -14,7 +14,8 @@ export const styles = makeStyles((theme) => ({
     },
   },
   imageRight: {
-    flex: 1,
+    position: "absolute",
+    top: "135%",
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },

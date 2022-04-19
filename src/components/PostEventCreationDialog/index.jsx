@@ -97,7 +97,7 @@ function PostEventCreationDialog(props) {
     if (vendor && (vendor.username || vendor.userUID)) {
       setEventLink(
         `/${vendor.username ? vendor.username : vendor.userUID}/${
-          event.url ? event.url : event.link
+          event.url ? event.url.toLowerCase() : event.link
         }`
       );
     }
