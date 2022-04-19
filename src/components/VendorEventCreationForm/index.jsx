@@ -49,7 +49,6 @@ import { removeStringAndAddSeperator } from "../../utils/strings";
 import { buildVendorDashboardUrl, getVendorIdFromUrl } from "../../utils/url";
 import { createEventValidationSchema } from "../../validations/events";
 import { FirebaseAuth } from "../AuthenticationContext";
-import ButtonCapsule from "../ButtonCapsule";
 import { COVER_BANNER_LIMIT, EventCoverUpload } from "../EventCoverUpload";
 import OneOnOneDateSelector from "../OneOnOneDateSelector";
 import OneTimeDateSelector from "../OneTimeDateSelector";
@@ -61,6 +60,7 @@ import {
 } from "../VendorEventBannerHeader";
 import { EarlyBirdSection } from "./EarlyBirdSection";
 import { EventCategoryField } from "./EventCategoryField";
+import { HostButtonSection } from "./HostButtonSection";
 import { styles } from "./styles";
 
 const hash = createHash("sha256");
@@ -1201,14 +1201,21 @@ function VendorEventCreationForm({
                   />
                 </FormControl>
 
-                <ButtonCapsule
+                <HostButtonSection
+                  loader={loader}
+                  dateError={dateError}
+                  formik={formik}
+                  classes={classes}
+                />
+
+                {/* <ButtonCapsule
                   disabled={loader || dateError || formik.errors.url}
                   buttonStyle={classes.saveButton}
                   type={"submit"}
                   text={"Host Event"}
                   showLoader={loader}
                 ></ButtonCapsule>
-                {dateError || formik.errors.url}
+                {dateError || formik.errors.url} */}
 
                 {matches && (
                   <Button fullWidth onClick={handleCancel}>

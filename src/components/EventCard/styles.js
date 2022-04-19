@@ -134,6 +134,9 @@ export const styles = makeStyles((theme) => ({
     color: "white",
     height: "2.5em",
     textTransform: "none",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   cooking: {
     background: "#1ECE7A",
