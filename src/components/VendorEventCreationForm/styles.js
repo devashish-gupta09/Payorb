@@ -71,6 +71,11 @@ export const styles = makeStyles((theme) => ({
     margin: "1em 0",
     padding: "0.75em",
   },
+  draftButton: {
+    width: "100%",
+    margin: "1em 0",
+    padding: "0.75em",
+  },
   editTitle: {
     paddingLeft: "0.5em",
     fontWeight: "bold",
