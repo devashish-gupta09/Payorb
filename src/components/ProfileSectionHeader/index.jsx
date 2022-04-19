@@ -6,6 +6,8 @@ import {
   Tab,
   Tabs,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@material-ui/core";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import DashboardIcon from "@material-ui/icons/Dashboard";
@@ -21,6 +23,9 @@ function ProfileSectionHeader({ image, name }) {
   const [expanded, setExpanded] = React.useState(false);
   const [currentTab, setCurrentTab] = React.useState(false);
   const router = useRouter();
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const isActive = (value) => {
     if (window.location.pathname.includes(value)) {
@@ -58,7 +63,8 @@ function ProfileSectionHeader({ image, name }) {
       alignItems="center"
       style={{
         color: "#333333",
-        width: "15em",
+        width: isMobile ? "fit-content" : "15em",
+        // display: isMobile ? "none" : "flex",
       }}
     >
       {image ? (
@@ -71,7 +77,9 @@ function ProfileSectionHeader({ image, name }) {
           }
         />
       )}
-      <Typography>{name ? name : "Welcome User"}</Typography>
+      {isMobile ? null : (
+        <Typography>{name ? name : "Welcome User"}</Typography>
+      )}
       <div onClick={toggleTooltip} style={{ padding: "0 0.25em" }}>
         <ExpandMoreIcon />
       </div>

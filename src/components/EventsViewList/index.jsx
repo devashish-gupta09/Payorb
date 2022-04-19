@@ -1,11 +1,14 @@
-import { Grid, makeStyles, Typography } from "@material-ui/core";
+import { Grid, makeStyles } from "@material-ui/core";
 import React from "react";
-
-import { isEventPastDate } from "../../utils/events";
 
 import EventCard from "../EventCard";
 
-function EventsViewList({ events, handleEventDelete, showOpen }) {
+function EventsViewList({
+  events,
+  handleEventDelete,
+  // showOpen,
+  paymentDetails = {},
+}) {
   const classes = styles();
 
   return (
@@ -15,72 +18,26 @@ function EventsViewList({ events, handleEventDelete, showOpen }) {
       justifyContent="flex-start"
       spacing={3}
     >
-      {showOpen ? (
-        events.filter((e) => !isEventPastDate(e)).length ? (
-          events
-            .filter((e) => !isEventPastDate(e))
-            .map((event, index) => {
-              return (
-                <Grid
-                  key={index}
-                  item
-                  sm={12}
-                  md={6}
-                  xl={4}
-                  style={{
-                    width: "100%",
-                  }}
-                >
-                  <EventCard
-                    event={event}
-                    handleEventDelete={handleEventDelete}
-                  />
-                </Grid>
-              );
-            })
-        ) : (
+      {events.map((event, index) => {
+        return (
           <Grid
-            style={{ marginBottom: "1em" }}
-            container
-            alignItems="center"
-            justify="center"
+            key={index}
+            item
+            sm={12}
+            md={6}
+            xl={4}
+            style={{
+              width: "100%",
+            }}
           >
-            <Typography>No Open events found...</Typography>
+            <EventCard
+              event={event}
+              handleEventDelete={handleEventDelete}
+              paymentDetails={paymentDetails}
+            />
           </Grid>
-        )
-      ) : events.filter((e) => isEventPastDate(e)).length ? (
-        events
-          .filter((e) => isEventPastDate(e))
-          .map((event, index) => {
-            return (
-              <Grid
-                key={index}
-                item
-                sm={12}
-                md={6}
-                xl={4}
-                style={{
-                  padding: "1em",
-                  width: "100%",
-                }}
-              >
-                <EventCard
-                  event={event}
-                  handleEventDelete={handleEventDelete}
-                />
-              </Grid>
-            );
-          })
-      ) : (
-        <Grid
-          style={{ marginBottom: "1em" }}
-          container
-          alignItems="center"
-          justify="center"
-        >
-          <Typography>No Completed events found...</Typography>
-        </Grid>
-      )}
+        );
+      })}
     </Grid>
   );
 }

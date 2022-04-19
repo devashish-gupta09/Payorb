@@ -1,7 +1,6 @@
 import {
   Grid,
   makeStyles,
-  MenuItem,
   Table,
   TableBody,
   TableCell,
@@ -13,7 +12,7 @@ import {
   InputAdornment,
 } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
-import { FilterList, Send } from "@material-ui/icons";
+import { Send } from "@material-ui/icons";
 import SearchIcon from "@material-ui/icons/Search";
 import clsx from "clsx";
 

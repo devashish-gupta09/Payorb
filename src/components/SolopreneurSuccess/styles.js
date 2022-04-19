@@ -31,11 +31,6 @@ export const styles = makeStyles((theme) => ({
       width: "inherit",
     },
   },
-  desktop: {
-    [theme.breakpoints.down("sm")]: {
-      display: "none",
-    },
-  },
   title: {
     color: "#000000",
     alignItems: "center",

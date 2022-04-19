@@ -1,5 +1,13 @@
-import { Button, Drawer, Grid, Toolbar, Typography } from "@material-ui/core";
-import { Close, Menu } from "@material-ui/icons";
+import {
+  Box,
+  Button,
+  Drawer,
+  Grid,
+  Toolbar,
+  useMediaQuery,
+  useTheme,
+} from "@material-ui/core";
+import { Menu } from "@material-ui/icons";
 import Link from "next/link";
 import React from "react";
 
@@ -12,15 +20,19 @@ function CustomerViewHeader() {
   const classes = styles();
   const [appMenu, setAppMenu] = React.useState(false);
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const toggleDrawer = () => {
     setAppMenu(!appMenu);
   };
 
   return (
-    <CustomHeader>
-      <Drawer anchor={"left"} open={appMenu} onClose={toggleDrawer}>
-        <Grid className={classes.drawerItemContainer}>
-          <Grid
+    <Box sx={{ display: "flex", marginBottom: isMobile ? "5em" : 0 }}>
+      <CustomHeader>
+        <Drawer anchor={"left"} open={appMenu} onClose={toggleDrawer}>
+          <Grid className={classes.drawerItemContainer}>
+            {/* <Grid
             container
             justify={"space-between"}
             className={classes.drawerTitleContainer}
@@ -29,44 +41,45 @@ function CustomerViewHeader() {
             <Typography className={classes.drawerClose} onClick={toggleDrawer}>
               <Close />
             </Typography>
-          </Grid>
+          </Grid> */}
 
-          <Grid className={classes.drawerList}>
-            <Link href="/">
-              <li>Home</li>
-            </Link>
-            <Link href="/signup">
-              <li>Sign Up as Vendor</li>
-            </Link>
+            <Grid className={classes.drawerList}>
+              <Link href="/">
+                <li>Home</li>
+              </Link>
+              <Link href="/signup">
+                <li>Sign Up as Vendor</li>
+              </Link>
+            </Grid>
           </Grid>
-        </Grid>
-      </Drawer>
+        </Drawer>
 
-      <Toolbar>
-        <Grid container justify="space-between" alignItems="center">
-          <Logo dark={true} width="5em" redirectToHome={true} />
+        <Toolbar>
+          <Grid container justify="space-between" alignItems="center">
+            <Logo dark={true} width="5em" redirectToHome={true} />
 
-          <Grid
-            className={classes.buttonContainer}
-            container
-            justify="space-evenly"
-          >
-            <Link href="/signup">
-              <Button className={classes.signupButton}>
-                Sign up as Vendor
-              </Button>
-            </Link>
+            <Grid
+              className={classes.buttonContainer}
+              container
+              justify="space-evenly"
+            >
+              <Link href="/signup">
+                <Button className={classes.signupButton}>
+                  Sign up as Vendor
+                </Button>
+              </Link>
+            </Grid>
+            <Grid
+              className={classes.menuButtonContainer}
+              container
+              justify="space-evenly"
+            >
+              <Menu style={{ color: "black" }} onClick={toggleDrawer} />
+            </Grid>
           </Grid>
-          <Grid
-            className={classes.menuButtonContainer}
-            container
-            justify="space-evenly"
-          >
-            <Menu style={{ color: "black" }} onClick={toggleDrawer} />
-          </Grid>
-        </Grid>
-      </Toolbar>
-    </CustomHeader>
+        </Toolbar>
+      </CustomHeader>
+    </Box>
   );
 }
 

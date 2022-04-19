@@ -173,17 +173,31 @@ function EventCard({
                 .map((x) => x.charAt(0).toUpperCase() + x.slice(1))
                 .join(" ")}
             </div>
-            <div
-              className={classes.topBannerButton}
-              style={{
-                background:
-                  new Date(event.endDate) < new Date() ? "#FC6767" : "#008EFF",
-              }}
-            >
-              {new Date(event.endDate) < new Date()
-                ? "Booking Closed"
-                : "Booking Open"}
-            </div>
+
+            {paymentDetails?.status === "COMPLETE" ? (
+              <div
+                className={classes.topBannerButton}
+                style={{
+                  background:
+                    new Date(event.endDate) < new Date()
+                      ? "#FC6767"
+                      : "#008EFF",
+                }}
+              >
+                {new Date(event.endDate) < new Date()
+                  ? "Booking Closed"
+                  : "Booking Open"}
+              </div>
+            ) : (
+              <div
+                className={classes.topBannerButton}
+                style={{
+                  background: "#F59E0B",
+                }}
+              >
+                Draft Event
+              </div>
+            )}
 
             {editable ? (
               <Grid className={classes.sideBar}>
@@ -205,16 +219,18 @@ function EventCard({
                         disabled={event.orders.length > 0}
                       />
                     </IconButton>
-                    <IconButton
-                      size="medium"
-                      className={classes.icon}
-                      onClick={handleShareDialog}
-                    >
-                      <ShareIcon
-                        style={{ fontSize: "0.75em" }}
-                        className={`${classes.shareIcon}`}
-                      />
-                    </IconButton>
+                    {paymentDetails?.status === "COMPLETE" && (
+                      <IconButton
+                        size="medium"
+                        className={classes.icon}
+                        onClick={handleShareDialog}
+                      >
+                        <ShareIcon
+                          style={{ fontSize: "0.75em" }}
+                          className={`${classes.shareIcon}`}
+                        />
+                      </IconButton>
+                    )}
                   </>
                 )}
 
