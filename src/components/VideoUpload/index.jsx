@@ -6,26 +6,53 @@ import {
   Tooltip,
   Typography,
 } from "@material-ui/core";
-import { CloudUpload, Edit, Movie } from "@material-ui/icons";
+import {
+  CloudUpload,
+  DeleteOutline,
+  Edit,
+  Info,
+  Movie,
+} from "@material-ui/icons";
+import { withStyles } from "@material-ui/styles";
 import React from "react";
 import "cropperjs/dist/cropper.css";
 
 import { ALERT_TYPES } from "../../constants/alerts";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
+import { updateUser } from "../../services/auth";
 import { delay } from "../../utils/dateTime";
 import firebase from "../../utils/firebase";
 import { FirebaseAuth } from "../AuthenticationContext";
 import ButtonCapsule from "../ButtonCapsule";
-import Capsule from "../Capsule";
 import VideoSelect from "../VideoSelect";
 
-function VideoUpload({ videoProps, vendor }) {
+const LightTooltip = withStyles((theme) => ({
+  tooltip: {
+    backgroundColor: theme.palette.common.white,
+    color: "rgba(0, 0, 0, 0.87)",
+    boxShadow: theme.shadows[1],
+    fontSize: "0.75em",
+  },
+}))(Tooltip);
+
+function VideoUpload({ videoProps, isVendor, updateProfile, profileData }) {
   const classes = styles();
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [dataUrl, setDataUrl] = React.useState();
   const [savedUrl, setSavedUrl] = React.useState();
   const { Alert, showAlert } = useAlertSnackbar();
   const [progressLoader, setProgress] = React.useState(false);
+
+  const handleVideoDelete = async () => {
+    showAlert("Deleting the video");
+    const temp = { ...profileData };
+    temp.videoLink = "";
+    await updateUser({ videoLink: "" });
+    updateProfile(temp);
+    setDataUrl("");
+    setSavedUrl("");
+    showAlert("Video Deleted");
+  };
 
   const handleDialog = React.useCallback((ds) => {
     if (typeof ds === "boolean") setDialogOpen(ds);
@@ -114,16 +141,35 @@ function VideoUpload({ videoProps, vendor }) {
       )}
 
       <div className={classes.imageContainer}>
-        {vendor && (
-          <div
-            onClick={() => {
-              handleDialog(true);
-            }}
-            className={classes.editDiv}
-          >
-            <Tooltip title="Add introductory video">
-              <Edit />
-            </Tooltip>
+        {isVendor && (
+          <div className={classes.editDiv}>
+            <LightTooltip
+              arrow={true}
+              title={
+                <Grid>
+                  <ul>
+                    <li>Size of the video should be less than 5 MB</li>
+                    <li>
+                      Duration of video should be less than <b>1:00 mins</b>
+                    </li>
+                  </ul>
+                </Grid>
+              }
+            >
+              <Info />
+            </LightTooltip>
+            <Edit
+              style={{ color: "#008EFF", marginLeft: "0.5em" }}
+              onClick={() => {
+                handleDialog(true);
+              }}
+            />
+            {savedUrl || videoProps.src ? (
+              <DeleteOutline
+                onClick={handleVideoDelete}
+                style={{ color: "#FC6767", marginLeft: "0.5em" }}
+              />
+            ) : null}
           </div>
         )}
 
@@ -134,29 +180,12 @@ function VideoUpload({ videoProps, vendor }) {
             src={savedUrl || videoProps.src}
           ></video>
         ) : (
-          vendor && (
+          isVendor && (
             <Grid className={classes.previewText}>
               <Grid style={{ padding: "0.5em" }}>
-                <Typography
-                  variant="h6"
-                  style={{ fontWeight: "bold" }}
-                  gutterBottom
-                >
-                  Introductory video
-                </Typography>
-                <Grid container className={classes.capsuleContainer}>
-                  <Capsule>{"Max Size : 5 MB"}</Capsule>
-                  <Capsule>{"Duration : 2:00 mins"}</Capsule>
-                </Grid>
                 <Typography align="center" style={{ paddingTop: "1em" }}>
                   <Movie style={{ height: "100px", width: "100px" }}></Movie>
                 </Typography>
-                <ul>
-                  <li>Size of the video should be less than 5 MB</li>
-                  <li>
-                    Duration of video should be less than <b>1:00 mins</b>
-                  </li>
-                </ul>
               </Grid>
             </Grid>
           )
@@ -194,13 +223,18 @@ const styles = makeStyles((theme) => ({
   imageContainer: {
     position: "relative",
     height: "100%",
+    background: "#ECEDF4",
+    borderRadius: "8px",
+    minHeight: "400px",
     [theme.breakpoints.down("sm")]: {
       border: 0,
-      borderRadius: 0,
+      borderRadius: "8px",
+      minHeight: "fit-content",
     },
   },
   videoPreview: {
     width: "100%",
+    borderRadius: "8px",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
@@ -208,14 +242,10 @@ const styles = makeStyles((theme) => ({
   editDiv: {
     position: "absolute",
     color: "#BDBDBD",
-    padding: "0.2em 0.3em",
-    background: "white",
     top: 20,
-    cursor: "pointer",
     zIndex: "1",
     right: 20,
-    borderRadius: "50%",
-    boxShadow: "0px 0px 6px 2px #BDBDBD",
+    "& > svg": { fontSize: "1.75em" },
     [theme.breakpoints.down("sm")]: {
       top: 20,
       right: 10,
@@ -226,13 +256,12 @@ const styles = makeStyles((theme) => ({
   },
   previewText: {
     padding: "2em 0",
-    height: "100%",
+    minHeight: "400px",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     color: "#BDBDBD",
-    boxShadow: "0px 0px 16px 2px #BDBDBD",
-    borderRadius: "1em",
+    borderRadius: "8px",
     [theme.breakpoints.down("sm")]: {
       padding: "2em 1em 2em 1em",
       "& > div": {

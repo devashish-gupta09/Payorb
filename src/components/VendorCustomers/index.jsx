@@ -1,9 +1,6 @@
 import {
-  CircularProgress,
   Grid,
   makeStyles,
-  MenuItem,
-  Select,
   Table,
   TableBody,
   TableCell,
@@ -11,38 +8,117 @@ import {
   TableHead,
   TableRow,
   Typography,
-  Tooltip,
+  TextField,
+  InputAdornment,
+  MenuItem,
 } from "@material-ui/core";
-import { Send, Info } from "@material-ui/icons";
+import { CalendarToday, FilterList } from "@material-ui/icons";
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import SearchIcon from "@material-ui/icons/Search";
 import React from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
-import { ALERT_TYPES } from "../../constants/alerts";
-import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import useFetchVendorCustomers from "../../hooks/useFetchCustomers";
 import useFetchEvents from "../../hooks/useFetchEvents";
-import { sendNotificationToCustomers } from "../../services/notification";
 import { getMonthDate } from "../../utils/dateTime";
-import { isEventPastDate } from "../../utils/events";
-import ButtonCapsule from "../ButtonCapsule";
-import ConfirmationAlertDialog from "../ConfirmationAlertDialog";
 import DashboardCard from "../DashboardCard";
-import Multiselect from "../Multiselect";
+import { getEventslotDuration } from "../EventBooking";
 import PageTitle from "../PageTitle";
 import SkeletonLoading from "../SkeletonLoading";
-function createData(name, phoneNumber, email, date, events, eventList) {
+
+function createData(
+  name,
+  phoneNumber,
+  email,
+  date,
+  events,
+  eventList,
+  priceList
+) {
+  console.log("Events", events);
   return {
     name,
     phoneNumber,
     email,
     events: events.length
+      ? [...new Set(events.filter((e) => eventList.includes(e.name)))]
+      : "",
+    price: events.length
       ? [
           ...new Set(
-            events.map((e) => e.name).filter((e) => eventList.includes(e))
+            events.map((e) => e.price).filter((e) => priceList.includes(e))
           ),
-        ].join(",")
+        ]
       : "",
   };
+}
+
+function EventDetailsCell({
+  classes,
+  value,
+  column,
+  index,
+  tableContentCollapse,
+}) {
+  return (
+    <TableCell
+      key={column.id}
+      align={column.align}
+      className={classes.tableContents}
+      style={{ margin: 0, padding: "0.25em" }}
+    >
+      <Typography
+        style={{
+          fontWeight: "600",
+          fontSize: "0.9em",
+          padding: "0.2em",
+        }}
+      >
+        {tableContentCollapse[index]
+          ? value[0]
+          : value.map((val, index) => (
+              <Grid key={index}>
+                {val.name}
+                <Grid container justify={"space-evenly"}>
+                  <Grid item xs={6} container alignItems="center">
+                    <CalendarToday
+                      style={{
+                        transform: "scale(0.6)",
+                      }}
+                    />
+                    <Typography
+                      style={{
+                        color: "#8B8B8B",
+                        fontSize: "0.85em",
+                        marginLeft: "0.1em",
+                      }}
+                    >
+                      {getEventslotDuration(val.startDate, val.endDate).date}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6} container alignItems="center">
+                    <AccessTimeIcon
+                      style={{
+                        color: "#8B8B8B",
+                        transform: "scale(0.6)",
+                      }}
+                    />
+                    <Typography
+                      style={{
+                        color: "#8B8B8B",
+                        fontSize: "0.85em",
+                      }}
+                    >
+                      12:00 PM - 2:00 PM
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
+            ))}
+      </Typography>
+    </TableCell>
+  );
 }
 
 function VendorCustomers() {
@@ -52,11 +128,13 @@ function VendorCustomers() {
   const [selectedValueForFilter, setSelectedValueForFilter] = React.useState(
     []
   );
-  const [confirmationDialogOpen, setConfirmationDialogOpen] =
-    React.useState(false);
+
   const [collapsed, setCollapsed] = React.useState(true);
-  // const [sendBtnLoading, setSendBtnLoading] = React.useState(false);
-  const { Alert, showAlert } = useAlertSnackbar();
+
+  const [tableContentCollapse, setTableContentsCollapse] = React.useState([]);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
   const [formattedCustomers, setFormattedCustomers] = React.useState([]);
   const { customers, loading } = useFetchVendorCustomers();
   const { events, loading: eventLoading } = useFetchEvents(true, {
@@ -79,13 +157,27 @@ function VendorCustomers() {
           events: [...formattedEvents],
         });
       });
-      console.log(formattedCustomersData);
+
       setFormattedCustomers([...formattedCustomersData]);
     }
   }, [customers, events]);
 
-  const handleEventTypeChange = (event) => {
-    setSelectedValue(event.target.value);
+  // React.useEffect(() => {
+  //   rows.map((item, index) => {
+  //     setTableContentsCollapse((tableContentCollapse) => [
+  //       ...tableContentCollapse,
+  //       true,
+  //     ]);
+  //   });
+  // }, []);
+
+  const handleTableCollapse = (index, value) => {
+    console.log(value);
+    setTableContentsCollapse(
+      tableContentCollapse.map((tableContent, id) =>
+        id === index ? value : tableContent
+      )
+    );
   };
 
   const handleFilterChange = (link) => {
@@ -98,49 +190,9 @@ function VendorCustomers() {
       setSelectedValueForFilter([...temp]);
     }
   };
-
-  const onReject = () => {
-    console.log("closed");
-    setConfirmationDialogOpen(false);
-  };
-
-  const onAccept = () => {
-    sendNotification();
-  };
-
-  const sendNotification = async () => {
-    if (
-      selectedValueForFilter.length === 0 &&
-      confirmationDialogOpen === false
-    ) {
-      setConfirmationDialogOpen(true);
-      return;
-    }
-    try {
-      if (!selectedValue) {
-        throw new Error("Please select an event from the drop down");
-      }
-      const res = await sendNotificationToCustomers({
-        eventId: selectedValue,
-        filterEventIds: selectedValueForFilter,
-      });
-
-      if (res) {
-        showAlert("Notification sent");
-      }
-      setConfirmationDialogOpen(false);
-    } catch (err) {
-      if (err.message) {
-        showAlert(err.message, ALERT_TYPES.ERROR);
-        setConfirmationDialogOpen(false);
-        return;
-      } else if (err.error) {
-        showAlert(err.error, ALERT_TYPES.ERROR);
-        setConfirmationDialogOpen(false);
-        return;
-      }
-    }
-  };
+  // const onAccept = () => {
+  //   sendNotification();
+  // };
 
   if (loading || eventLoading) {
     return (
@@ -151,8 +203,22 @@ function VendorCustomers() {
     );
   }
 
+  if (!formattedCustomers.length) {
+    return (
+      <DashboardCard>
+        <PageTitle title="Payorb | Customers" />
+        <h2>There are no customers to display</h2>
+        <Typography>
+          Create new events and start sharing by heading over to the events
+          section
+        </Typography>
+      </DashboardCard>
+    );
+  }
+
   if (formattedCustomers && events) {
     const eventList = events.map((e) => e.name);
+    const priceList = events.map((e) => e.price);
     const rows =
       selectedValueForFilter && selectedValueForFilter.length //if filter is present
         ? formattedCustomers
@@ -169,6 +235,7 @@ function VendorCustomers() {
                 getMonthDate(customer.createdAt, customer.createdAt),
                 customer.events,
                 eventList,
+                priceList,
                 selectedValueForFilter
               )
             )
@@ -180,130 +247,103 @@ function VendorCustomers() {
               getMonthDate(customer.createdAt, customer.createdAt),
               customer.events,
               eventList,
+              priceList,
               selectedValueForFilter
             )
           );
-    if (!formattedCustomers.length) {
-      return (
-        <DashboardCard>
-          <PageTitle title="Payorb | Customers" />
-          <h2>There are no customers to display</h2>
-          <Typography>
-            Create new events and start sharing by heading over to the events
-            section
-          </Typography>
-        </DashboardCard>
-      );
-    }
 
     return (
       <Grid className={classes.root}>
         <PageTitle title="Payorb | Customers" />
-        {Alert()}
-        {confirmationDialogOpen ? (
-          <ConfirmationAlertDialog
-            open={confirmationDialogOpen}
-            onAccept={onAccept}
-            onReject={onReject}
-            message={
-              "Are you sure you wish to send promotional email to all customers? If not, please filter relevant customers based on past events."
-            }
-          />
-        ) : null}
+
+        {/* Title, search and filter events */}
         <Grid
-          className={`${classes.title}`}
           container
-          justify="space-between"
-          alignItems="center"
+          className={classes.titleContainer}
+          alignItems={"center"}
+          justifyContent="space-between"
         >
-          <Typography
-            variant={"h6"}
-            className={`${globalClasses.boldSixHundred} `}
-          >
-            Customers
-          </Typography>
-        </Grid>
-        <Grid
-          className={`${classes.title}`}
-          container
-          justify="space-between"
-          alignItems="center"
-        >
-          <div
-            className={classes.collapseController}
-            onClick={() => setCollapsed(!collapsed)}
-          >
-            <Typography>Filter by Events</Typography>
-            {eventLoading ? (
-              <CircularProgress />
-            ) : (
-              <Multiselect
-                className={classes.select}
-                events={events}
-                setSelected={handleFilterChange}
-                selected={selectedValueForFilter}
-                label={
-                  selectedValueForFilter.length === 1
-                    ? events.filter(
-                        (e) => e.link === selectedValueForFilter[0]
-                      )[0]["name"]
-                    : selectedValueForFilter.length + " Selected"
-                }
-              />
-            )}
-          </div>
-          <Grid className={classes.selectDesktopView}>
-            {eventLoading ? (
-              <CircularProgress />
-            ) : events && events.length ? (
-              <Grid container alignItems={"center"}>
-                <Typography style={{ margin: "0.5em 0.5em" }}>
-                  Promote Event
-                </Typography>
-                <Tooltip
-                  title="Send promotional emails for upcoming events"
-                  placement="top"
+          <Grid>
+            <Typography
+              variant={"h6"}
+              className={`${globalClasses.boldSixHundred} ${classes.customersTitle}`}
+            >
+              Customers
+            </Typography>
+          </Grid>
+
+          <Grid container alignItems="center" style={{ width: "fit-content" }}>
+            <TextField
+              placeholder="Search"
+              InputProps={{
+                inputProps: {
+                  style: {
+                    fontSize: "0.8em",
+                    height: "100%",
+                  },
+                },
+                disableUnderline: true,
+                style: {
+                  border: "2px solid #8B8B8B",
+                  borderRadius: "5px",
+                },
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon
+                      style={{
+                        transform: "scale(0.8)",
+                        color: "#8B8B8B",
+                      }}
+                    />
+                  </InputAdornment>
+                ),
+              }}
+              className={classes.search}
+            />
+            <TextField
+              select
+              className={classes.filterSelect}
+              onChange={handleFilterChange}
+              InputProps={{
+                disableUnderline: true,
+                inputProps: {
+                  style: {
+                    fontSize: "0.8em",
+                    height: "100%",
+                  },
+                },
+                style: {
+                  border: "2px solid #8B8B8B",
+                  borderRadius: "5px",
+                  fontSize: "0.8em",
+                },
+                startAdornment: (
+                  <InputAdornment>
+                    <FilterList
+                      style={{
+                        transform: "scale(0.8)",
+                        color: "#8B8B8B",
+                      }}
+                    />
+                  </InputAdornment>
+                ),
+              }}
+            >
+              {events.map((event) => (
+                <MenuItem
+                  style={{ fontSize: "0.8em" }}
+                  key={event.link}
+                  value={event.link}
                 >
-                  <Info style={{ fontSize: "1rem", color: "#808080" }} />
-                </Tooltip>
-                <Select
-                  style={{ margin: "0.5em 0.5em" }}
-                  className={classes.select}
-                  variant="outlined"
-                  value={selectedValue}
-                  onChange={handleEventTypeChange}
-                  SelectDisplayProps={{
-                    style: {
-                      width: "10em",
-                      background: "white",
-                      paddingTop: "0.75em",
-                      paddingBottom: "0.75em",
-                    },
-                  }}
-                  MenuProps={{
-                    style: {},
-                  }}
-                >
-                  {events &&
-                    events
-                      .filter((e) => !isEventPastDate(e))
-                      .map((event) => (
-                        <MenuItem key={event.link} value={event.link}>
-                          {event.name}
-                        </MenuItem>
-                      ))}
-                </Select>
-                <ButtonCapsule
-                  buttonStyle={classes.sendButton}
-                  text={`Send`}
-                  icon={<Send />}
-                  onClick={sendNotification}
-                ></ButtonCapsule>
-              </Grid>
-            ) : null}
+                  {event.name}
+                </MenuItem>
+              ))}
+            </TextField>
           </Grid>
         </Grid>
-        <DashboardCard>
+
+        {/* Table below ! */}
+        <Grid>
           <TableContainer className={classes.container}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
@@ -312,7 +352,14 @@ function VendorCustomers() {
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ minWidth: column.minWidth }}
+                      style={{
+                        maxWidth: column.maxWidth ?? 0,
+                        minWidth: column.minWidth ?? 0,
+                        backgroundColor: "#EFF0F6",
+                        color: "#767676",
+                        fontSize: "0.8em",
+                        fontWeight: "400",
+                      }}
                     >
                       {column.label}
                     </TableCell>
@@ -325,14 +372,61 @@ function VendorCustomers() {
                     <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                       {columns.map((column) => {
                         const value = row[column.id];
-
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === "number"
-                              ? column.format(value)
-                              : value}
-                          </TableCell>
-                        );
+                        if (column.id === "events") {
+                          return (
+                            <EventDetailsCell
+                              classes={classes}
+                              value={value}
+                              column={column}
+                              index={index}
+                              tableContentCollapse={tableContentCollapse}
+                            />
+                          );
+                        } else if (column.id === "price") {
+                          return (
+                            <TableCell
+                              key={column.id}
+                              align={column.align}
+                              className={classes.tableContents}
+                              style={{ margin: 0, padding: "1em" }}
+                            >
+                              <Grid
+                                container
+                                alignItems="center"
+                                justifyContent={"space-between"}
+                              >
+                                <Grid item xs={8} container>
+                                  {tableContentCollapse[index] ? (
+                                    <p> ₹{value[0]}</p>
+                                  ) : (
+                                    value.map((val) => <p key={val}> ₹{val}</p>)
+                                  )}
+                                </Grid>
+                                <Grid item xs={4}>
+                                  <ArrowDropDownIcon
+                                    onClick={() => {
+                                      tableContentCollapse[index]
+                                        ? handleTableCollapse(index, false)
+                                        : handleTableCollapse(index, true);
+                                    }}
+                                  />
+                                </Grid>
+                              </Grid>
+                            </TableCell>
+                          );
+                        } else {
+                          return (
+                            <TableCell
+                              key={column.id}
+                              align={column.align}
+                              className={classes.tableContents}
+                            >
+                              {column.format && typeof value === "number"
+                                ? column.format(value)
+                                : value}
+                            </TableCell>
+                          );
+                        }
                       })}
                     </TableRow>
                   );
@@ -340,57 +434,24 @@ function VendorCustomers() {
               </TableBody>
             </Table>
           </TableContainer>
-        </DashboardCard>
-        <Grid className={classes.selectMobileView}>
-          {eventLoading ? (
-            <CircularProgress />
-          ) : events && events.length ? (
-            <Grid container alignItems={"center"}>
-              <Typography style={{ margin: "0.5em 0.5em" }}>
-                Promote Event
-              </Typography>
-              <Tooltip
-                title="Send promotional emails for upcoming events"
-                placement="top"
-              >
-                <Info style={{ fontSize: "1rem", color: "#808080" }} />
-              </Tooltip>
-              <Select
-                style={{ margin: "0.5em 0.5em" }}
-                className={classes.select}
-                variant="outlined"
-                value={selectedValue}
-                onChange={handleEventTypeChange}
-                SelectDisplayProps={{
-                  style: {
-                    width: "10em",
-                    background: "white",
-                    paddingTop: "0.75em",
-                    paddingBottom: "0.75em",
-                  },
-                }}
-                MenuProps={{
-                  style: {},
-                }}
-              >
-                {events &&
-                  events
-                    .filter((e) => !isEventPastDate(e))
-                    .map((event) => (
-                      <MenuItem key={event.link} value={event.link}>
-                        {event.name}
-                      </MenuItem>
-                    ))}
-              </Select>
-              <ButtonCapsule
-                buttonStyle={classes.sendButton}
-                text={`Send`}
-                icon={<Send />}
-                onClick={sendNotification}
-              ></ButtonCapsule>
-            </Grid>
-          ) : null}
         </Grid>
+        {/* <ReactPaginate
+          breakLabel="..."
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          //onPageChange={handlePageClick}
+          // pageCount={Math.ceil(rows.length/rowsPerPage)}
+          pageCount={4}
+          pageRangeDisplayed={3}
+          marginPagesDisplayed={2}
+          renderOnZeroPageCount={null}
+          // onPageChange={handleChangePage}
+          containerClassName={classes.pagination}
+          pageClassName={classes.pageItem}
+          previousClassName={classes.pageItem}
+          nextClassName={classes.pageItem}
+          activeClassName={classes.active}
+        /> */}
       </Grid>
     );
   }
@@ -399,67 +460,82 @@ function VendorCustomers() {
 }
 
 const columns = [
-  { id: "name", label: "Customers", minWidth: 170 },
-  // {
-  //   id: "date",
-  //   label: "Date",
-  //   minWidth: 100,
-  //   align: "center",
-  // },
+  { id: "name", label: "Customers", minWidth: 60 },
+
   {
     id: "phoneNumber",
     label: "Contact",
-    minWidth: 100,
-    align: "center",
+    minWidth: 60,
+    align: "left",
+    color: "#767676",
   },
   {
     id: "email",
-    label: "Email",
-    minWidth: 100,
-    align: "center",
+    label: "Email ID",
+    minWidth: 60,
+    align: "left",
+    color: "#767676",
   },
   {
     id: "events",
-    label: "Events",
+    label: "Event Details",
+    minWidth: 180,
+    align: "left",
+    color: "#767676",
+    padding: "0.5em",
+  },
+  {
+    id: "price",
+    label: "Customer TLV",
     minWidth: 100,
-    align: "center",
+    align: "left",
+    color: "#767676",
   },
 ];
 
 const styles = makeStyles((theme) => ({
   root: {
-    width: "96%",
-    paddingTop: "1.5em",
+    width: "100%",
+    padding: "2em",
+  },
+  filterSelect: {
+    width: "10em",
+    marginLeft: "0.5em",
+  },
+  pagination: {
+    display: "flex",
+    listStyle: "none",
+    width: "fit-content",
+    right: "4em",
+    position: "relative",
+    float: "right",
+    marginTop: "-2em",
     [theme.breakpoints.down("sm")]: {
-      width: "100%",
+      marginTop: "0",
+      right: "1em",
     },
+  },
+  pageItem: {
+    border: "1px solid #DCDCDC",
+    padding: "0.5em",
+    fontSize: "0.8em",
+    "&:hover": {
+      background: "#767676",
+    },
+  },
+  active: {
+    background: "linear-gradient(180deg, #68FDF3 0%, #00D4FF 100%)",
   },
   container: {
+    border: "1px solid #DCDCDC",
+    padding: "0",
     [theme.breakpoints.down("sm")]: {
       height: "45vh",
+      marginTop: "3.5em",
     },
   },
-  title: {
-    fontSize: "1.2em",
-    paddingBottom: "1em",
-  },
-  selectMobileView: {
-    [theme.breakpoints.up("sm")]: {
-      display: "none",
-    },
-  },
-  selectDesktopView: {
-    [theme.breakpoints.down("sm")]: {
-      display: "none",
-    },
-  },
-  chips: {
-    margin: "0px 5px 5px 0",
-  },
-  collapseController: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "start",
+  titleContainer: {
+    marginBottom: "1em",
   },
   collapseArrowDown: {
     transition: `transform .8s ease`,
@@ -469,19 +545,27 @@ const styles = makeStyles((theme) => ({
     transform: `rotate(-180deg)`,
     transition: `transform .8s ease`,
   },
-  sendButton: {
-    background: "white",
-    padding: "0.5em 2em",
-    height: "fit-content",
-    "& > span > svg": {
-      marginLeft: "0.5em",
-    },
-    "&:hover": {
-      background: "#dedede",
-    },
+  search: {
+    color: "#BDBDBD",
+    height: "100%",
+    // background: "#ECEDF4",
     [theme.breakpoints.down("sm")]: {
-      width: "30%",
+      width: "100%",
     },
+  },
+  customersTitle: {
+    // fontSize: "1em",
+  },
+  tableContents: {
+    fontWeight: "600",
+    fontSize: "0.8em",
+  },
+  dateAndTime: {
+    color: "#68FDF3",
+    background: "rgba(0,0,0,0.5)",
+    padding: "0.25em 0.5em",
+    position: "absolute",
+    bottom: 0,
   },
 }));
 

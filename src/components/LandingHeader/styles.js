@@ -67,7 +67,4 @@ export const styles = makeStyles((theme) => ({
       display: "none",
     },
   },
-  iconRoot: {
-    marginRight: "1em",
-  },
 }));

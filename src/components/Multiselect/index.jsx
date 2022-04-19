@@ -21,17 +21,25 @@ const Multiselect = ({ selected, events, setSelected, label }) => {
         onChange={null}
         value={null}
         error={null}
-        style={{ margin: "0.5em 0.5em" }}
+        size="small"
+        margin="normal"
+        style={{ margin: "0em 0 0.2em 0", padding: "0", fontSize: "0.8em" }}
         onClick={() => setShow(true)}
         InputProps={{
           style: {
-            width: "10em",
+            width: "12em",
+            padding: "o",
+            margin: "0",
             background: "white",
           },
           endAdornment: (
             <KeyboardArrowDown
               position="end"
-              style={{ color: "rgba(189, 189, 189, 1" }}
+              style={{
+                color: "rgba(189, 189, 189, 1",
+                width: "0.6em",
+                marginLeft: "0.4em",
+              }}
             ></KeyboardArrowDown>
           ),
         }}
@@ -41,11 +49,10 @@ const Multiselect = ({ selected, events, setSelected, label }) => {
           style={{
             position: "absolute",
             width: "10em",
-            height: "300px",
+            height: "8em",
             zIndex: "50",
             backgroundColor: "#ffffff",
             boxShadow: "0px 0px 4px 1px grey",
-            padding: "1em 0em 1em 0em",
             borderRadius: "0.4em",
           }}
           className="multiselect"
@@ -54,7 +61,7 @@ const Multiselect = ({ selected, events, setSelected, label }) => {
             style={{
               display: "flex",
               justifyContent: "flex-end",
-              padding: "0em 1em 0em 1em",
+              padding: "0em 0.4em 0em 0.4em",
             }}
           >
             <small
@@ -62,7 +69,8 @@ const Multiselect = ({ selected, events, setSelected, label }) => {
                 textAlign: "right",
                 fontWeight: "bold",
                 cursor: "pointer",
-                marginBottom: "1em",
+                marginBottom: "0.3em",
+                fontSize: "0.6em",
               }}
               onClick={() => setShow(false)}
             >
@@ -82,15 +90,16 @@ const Multiselect = ({ selected, events, setSelected, label }) => {
                       cursor: "pointer",
                       display: "flex",
                       justifyContent: "flex-start",
-                      padding: "0em 1em 0em 1em",
+                      padding: "0em 0.4em 0em 0.4em",
                       fontWeight: selected.includes(d.link) ? "600" : "normal",
                       backgroundColor: selected.includes(d.link)
                         ? "rgba(189,245,242, 0.4)"
                         : "white",
+                      fontSize: "0.9em",
                     }}
                     onClick={() => setSelected(d.link)}
                   >
-                    <p style={{ margin: "0.5em 0px" }}>
+                    <p style={{ margin: "0.2em 0px", fontSize: "0.9em" }}>
                       {/* {d.name.length < 10 || d.name.includes(" ")
                       ? d.name
                       : d.name.slice(0, 10) + "  ..."} */}
@@ -110,10 +119,12 @@ export default Multiselect;
 
 const styles = makeStyles((theme) => ({
   textInput: {
-    margin: "0.75em 0",
+    padding: "-0.8em",
     color: "#BDBDBD",
+    float: "right",
+    position: "relative",
+    right: "5em",
     [theme.breakpoints.down("sm")]: {
-      marginBottom: "0.75em",
       width: "100%",
     },
   },

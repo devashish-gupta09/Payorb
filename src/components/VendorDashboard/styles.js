@@ -8,6 +8,23 @@ export const styles = makeStyles((theme) => ({
     maxHeight: "fit-content",
     [theme.breakpoints.down("sm")]: {
       padding: "2em 1em",
+      width: "100vw",
+    },
+  },
+  dashboard: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  sidebar: {
+    width: "340px",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
+  mainContainer: {
+    width: "100vw",
+    [theme.breakpoints.up("sm")]: {
+      width: "calc(100% - 340px)",
     },
   },
 }));

@@ -1,5 +1,6 @@
 import { Grid, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
+
 import { isEventPastDate } from "../../utils/events";
 
 import EventCard from "../EventCard";
@@ -8,14 +9,28 @@ function EventsViewList({ events, handleEventDelete, showOpen }) {
   const classes = styles();
 
   return (
-    <Grid container className={classes.root} spacing={4}>
+    <Grid
+      container
+      className={classes.root}
+      justifyContent="flex-start"
+      spacing={3}
+    >
       {showOpen ? (
         events.filter((e) => !isEventPastDate(e)).length ? (
           events
             .filter((e) => !isEventPastDate(e))
             .map((event, index) => {
               return (
-                <Grid key={index} item sm={12}>
+                <Grid
+                  key={index}
+                  item
+                  sm={12}
+                  md={6}
+                  xl={4}
+                  style={{
+                    width: "100%",
+                  }}
+                >
                   <EventCard
                     event={event}
                     handleEventDelete={handleEventDelete}
@@ -38,7 +53,17 @@ function EventsViewList({ events, handleEventDelete, showOpen }) {
           .filter((e) => isEventPastDate(e))
           .map((event, index) => {
             return (
-              <Grid key={index} item sm={12}>
+              <Grid
+                key={index}
+                item
+                sm={12}
+                md={6}
+                xl={4}
+                style={{
+                  padding: "1em",
+                  width: "100%",
+                }}
+              >
                 <EventCard
                   event={event}
                   handleEventDelete={handleEventDelete}
@@ -63,7 +88,12 @@ function EventsViewList({ events, handleEventDelete, showOpen }) {
 const styles = makeStyles((theme) => ({
   root: {
     height: "100%",
-    paddingBottom: "2em",
+    //paddingBottom: "2em",
+    padding: "2em 0em",
+    [theme.breakpoints.down("sm")]: {
+      width: "100vw",
+      padding: "1em 0",
+    },
   },
 }));
 

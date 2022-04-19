@@ -104,6 +104,7 @@ function ImageProfileUpload({ imageProps, vendor }) {
               title="Select profile image"
               imagePath={croppedImg || imageProps.src}
               handleDataUrl={handleDataUrl}
+              cropperAspectRatio={1}
             />
 
             <Grid
@@ -152,7 +153,7 @@ function ImageProfileUpload({ imageProps, vendor }) {
             className={classes.editDiv}
           >
             <Tooltip title="Edit Profile">
-              <Edit style={{ fontSize: "1rem" }} />
+              <Edit style={{ fontSize: "1.25rem" }} />
             </Tooltip>
           </div>
         )}
@@ -180,7 +181,7 @@ const styles = makeStyles((theme) => ({
   },
   imageContainer: {
     position: "relative",
-    padding: "2em 0",
+    padding: "1.5em 0",
     [theme.breakpoints.down("sm")]: {
       padding: "1em 0",
     },
@@ -191,8 +192,8 @@ const styles = makeStyles((theme) => ({
     padding: "0.2em 0.3em",
     background: "white",
     borderRadius: "50%",
-    right: 5,
-    top: 30,
+    right: 10,
+    top: 40,
     cursor: "pointer",
     zIndex: "1",
     boxShadow: "0px 0px 4px 1px grey",

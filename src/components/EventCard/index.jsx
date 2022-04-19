@@ -1,27 +1,26 @@
 import {
-  Button,
   Dialog,
   Grid,
   IconButton,
-  Tooltip,
   Typography,
+  Card,
+  Link,
 } from "@material-ui/core";
-import { DeleteRounded, Share, FileCopy } from "@material-ui/icons";
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
+import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
+import CreateIcon from "@material-ui/icons/Create";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import ShareIcon from "@material-ui/icons/Share";
 import React from "react";
-import { useMediaQuery } from "react-responsive";
 
-import { globalStyles } from "../../../styles/globalStyles";
 import { EVENT_TYPES } from "../../constants/events";
 import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
-import { useUserAuthDetails } from "../../context/UserAuthDetailContext";
 import { getEventDate, getEventMonth } from "../../utils/dateTime";
-import { formatEventType, isEventPastDate } from "../../utils/events";
-import { isPaymentDetailsIncomplete } from "../../utils/vendor";
-import AuthAlertGrid from "../AuthAlertGrid";
+import { formatEventType } from "../../utils/events";
 import ButtonCapsule from "../ButtonCapsule";
 import CustomConfirmationDialog from "../CustomConfirmationDialog";
-import DashboardCard from "../DashboardCard";
-import EventImageContainer from "../EventImageContainer/Index";
+import { getEventslotDuration } from "../EventBooking";
+import { EventCoverUpload } from "../EventCoverUpload";
 import PostEventCreationDialog from "../PostEventCreationDialog";
 import ReadMore from "../ReadMore";
 import VendorEventCreationForm from "../VendorEventCreationForm";
@@ -45,16 +44,21 @@ export function EventCardDate({ classes, startDate, endDate }) {
   );
 }
 
-function EventCard({ event, handleEventDelete }) {
+function EventCard({
+  event,
+  handleEventDelete,
+  editable = true,
+  isVendor = true,
+  paymentDetails = {},
+}) {
   const classes = styles();
-  const globalClasses = globalStyles();
   const [edit, setEdit] = React.useState(false);
   const [clone, setClone] = React.useState(false);
   const [shareDialog, setShareDialog] = React.useState(false);
-  const { state } = useUserAuthDetails();
+
+  // const { state } = useUserAuthDetails();
   const [deleteBtn, setDelete] = React.useState(false);
-  const isTabletOrMobile = useMediaQuery({ maxWidth: 900 });
-  console.log(state);
+  // const isTabletOrMobile = useMediaQuery({ maxWidth: 900 });
   const handleClone = () => setClone(true);
   const handleCloneFromClose = () => setClone(false);
 
@@ -88,7 +92,7 @@ function EventCard({ event, handleEventDelete }) {
   };
 
   return (
-    <DashboardCard rootClass={classes.root}>
+    <Grid className={classes.root}>
       {clone && (
         <Dialog
           PaperProps={{
@@ -105,6 +109,7 @@ function EventCard({ event, handleEventDelete }) {
           />
         </Dialog>
       )}
+
       {edit && (
         <Dialog
           PaperProps={{
@@ -137,227 +142,208 @@ function EventCard({ event, handleEventDelete }) {
         />
       )}
 
-      <Grid container alignItems={"stretch"}>
-        <Grid item sm={3} className={classes.imageContainer}>
-          <EventImageContainer url={event.photoUrl || DEFAULT_EVENT_IMAGE} />
-        </Grid>
-
-        <Grid className={classes.eventDetailContainer} item sm={9}>
-          <Grid container>
-            {/* First Row - Event name and Booking Dates */}
-            <Grid item sm={10} style={{ width: "100%" }}>
-              <Typography className={`${globalClasses.bold} ${classes.title}`}>
-                {event.name}
-              </Typography>
-              <Grid style={{ width: "95%", whiteSpace: "pre-line" }}>
-                <ReadMore percent={10} text={event.description} />
-              </Grid>
-            </Grid>
-
-            {/* Date and month section */}
-            <Grid
-              item
-              sm={2}
-              container
-              className={classes.desktop}
-              justify="flex-end"
+      <Card className={classes.cardContainer}>
+        <Grid container className={classes.imgContainer}>
+          <Grid
+            style={{
+              height: "100%",
+              width: "100%",
+            }}
+          >
+            {event?.coverBannerImages?.length ? (
+              <EventCoverUpload
+                allowUploads={false}
+                croppedImgs={event?.coverBannerImages}
+                eventData={event}
+                height="15em"
+              />
+            ) : (
+              <img
+                src={event?.photoUrl || DEFAULT_EVENT_IMAGE}
+                alt="vendor-event"
+                className={classes.image}
+              />
+            )}
+          </Grid>
+          <Grid container justifyContent="right" className={classes.topBanner}>
+            <div className={`${classes.topBannerButton} ${classes.cooking}`}>
+              {event.category
+                .split("_")
+                .map((x) => x.toLowerCase())
+                .map((x) => x.charAt(0).toUpperCase() + x.slice(1))
+                .join(" ")}
+            </div>
+            <div
+              className={classes.topBannerButton}
               style={{
-                height: "100%",
+                background:
+                  new Date(event.endDate) < new Date() ? "#FC6767" : "#008EFF",
               }}
             >
-              <Grid className={classes.datesInnerContainer}>
-                <EventCardDate
-                  classes={classes}
-                  startDate={event.startDate}
-                  endDate={event.endDate}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid container>
-            <Grid item sm={3} className={classes.generalInfoContainer}>
-              <Typography
-                variant="body2"
-                gutterBottom
-                className={classes.greyFont}
-              >
-                {"Event Type"}
-              </Typography>
-              <Typography className={globalClasses.bold500} gutterBottom>
-                {formatEventType(event.type)}
-              </Typography>
-            </Grid>
-            <Grid item sm={3} className={classes.generalInfoContainer}>
-              <Typography
-                variant="body2"
-                gutterBottom
-                className={classes.greyFont}
-              >
-                {"Regular Price"}
-              </Typography>
-              <Typography className={globalClasses.bold800} gutterBottom>
-                {event.trialClass ? "Trial Class" : <>&#8377; {event.price}</>}
-              </Typography>
-            </Grid>
-            {event.earlyBird ? (
-              <>
-                <Grid item sm={3} className={classes.generalInfoContainer}>
-                  <Typography
-                    variant="body2"
-                    gutterBottom
-                    className={classes.greyFont}
-                  >
-                    {"Early Bird Price"}
-                  </Typography>
-                  <Typography className={globalClasses.bold500} gutterBottom>
-                    {event.trialClass ? (
-                      "Trial Class"
-                    ) : (
-                      <>&#8377; {event.earlyBirdPrice}</>
-                    )}
-                  </Typography>
-                </Grid>
-                <Grid item sm={3} className={classes.generalInfoContainer}>
-                  <Typography
-                    variant="body2"
-                    gutterBottom
-                    className={classes.greyFont}
-                  >
-                    {"Early Bird Deadline"}
-                  </Typography>
-                  <Typography className={globalClasses.bold500} gutterBottom>
-                    {new Date(
-                      Date.parse(event.earlyBirdDeadline)
-                    ).toLocaleString("en-GB", {
-                      hour12: true,
-                    })}
-                  </Typography>
-                </Grid>
-              </>
-            ) : null}
-          </Grid>
+              {new Date(event.endDate) < new Date()
+                ? "Booking Closed"
+                : "Booking Open"}
+            </div>
 
-          {/* third Row : Event Type and General information */}
-          <Grid container>
-            <Grid item container sm={8} xs={8} md={8} lg={8} xl={8}>
-              <Grid
-                container
-                item
-                sm={12}
-                xs={12}
-                md={6}
-                lg={6}
-                xl={6}
-                className={classes.generalInfoContainer}
-              >
-                <Typography className={`${classes.greyFont} ${classes.seats}`}>
-                  Sold out seats: {event.orders ? event.orders.length : 0}
-                  {event.type === EVENT_TYPES.ONE_TIME &&
-                    `/${event.totalTickets}`}
-                </Typography>
-              </Grid>
-
-              <Grid
-                item
-                container
-                sm={12}
-                xs={12}
-                md={6}
-                lg={6}
-                xl={6}
-                className={classes.generalInfoContainer}
-              >
-                <Typography className={`${classes.greyFont} ${classes.seats}`}>
-                  Total Revenue: &#8377;
-                  {`${event.revenue ? event.revenue : "0.0"}`}
-                </Typography>
-              </Grid>
-            </Grid>
-            {isTabletOrMobile ? (
-              <Grid item container sm={4} xs={4} md={0} lg={0} xl={0}>
-                <Grid
-                  container
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Grid
-                    className={classes.mobile}
-                    style={{
-                      height: "100%",
-                    }}
-                  >
-                    <Grid className={classes.datesInnerContainer}>
-                      <EventCardDate
-                        classes={classes}
-                        startDate={event.startDate}
-                        endDate={event.endDate}
-                      />
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid>
-            ) : null}
-            <Grid
-              item
-              sm={4}
-              container
-              alignItems="flex-end"
-              className={classes.editButtonContainer}
-            >
-              {state &&
-              state.details &&
-              !isPaymentDetailsIncomplete(state.details) ? (
-                !isEventPastDate(event) ? (
-                  <Grid>
-                    <ButtonCapsule
-                      buttonStyle={`${globalClasses.bold} ${classes.editButton}`}
-                      text="Edit"
+            {editable ? (
+              <Grid className={classes.sideBar}>
+                {!(new Date(event.endDate) < new Date()) && (
+                  <>
+                    <IconButton
+                      size="medium"
+                      className={classes.icon}
                       onClick={handleEdit}
-                    ></ButtonCapsule>
-                    <Tooltip title="Share">
-                      <IconButton onClick={handleShareDialog}>
-                        <Share />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Delete">
-                      <IconButton
+                    >
+                      <CreateIcon style={{ fontSize: "0.75em" }} />
+                    </IconButton>
+                    <IconButton size="medium" className={classes.icon}>
+                      {" "}
+                      <DeleteOutlineIcon
+                        style={{ fontSize: "0.75em" }}
+                        className={`${classes.deleteIcon}`}
                         onClick={enableDelete}
                         disabled={event.orders.length > 0}
-                      >
-                        <DeleteRounded />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Clone">
-                      <IconButton onClick={handleClone}>
-                        <FileCopy />
-                      </IconButton>
-                    </Tooltip>
-                  </Grid>
-                ) : (
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <Button disabled>Event Completed</Button>
-                    <Tooltip title="Clone">
-                      <IconButton onClick={handleClone}>
-                        <FileCopy />
-                      </IconButton>
-                    </Tooltip>
-                  </div>
-                )
-              ) : null}
-            </Grid>
-          </Grid>
+                      />
+                    </IconButton>
+                    <IconButton
+                      size="medium"
+                      className={classes.icon}
+                      onClick={handleShareDialog}
+                    >
+                      <ShareIcon
+                        style={{ fontSize: "0.75em" }}
+                        className={`${classes.shareIcon}`}
+                      />
+                    </IconButton>
+                  </>
+                )}
 
-          <Grid container item sm={12}>
-            {state && state.details ? (
-              <AuthAlertGrid details={state.details} />
+                <IconButton
+                  size="medium"
+                  className={classes.icon}
+                  onClick={handleClone}
+                >
+                  {" "}
+                  <AddToPhotosIcon
+                    style={{ fontSize: "0.75em" }}
+                    className={`${classes.AddToPhotosIcon}`}
+                  />
+                </IconButton>
+              </Grid>
             ) : null}
           </Grid>
+
+          <Grid container className={classes.dateAndTime}>
+            <Grid item xs={6} container alignItems="center">
+              <img src="/assets/vendorEventsCard/calender.svg"></img>
+              <Typography style={{ paddingLeft: "0.25em" }}>
+                {getEventslotDuration(event.startDate, event.endDate).date}
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={6}
+              container
+              alignItems="center"
+              justifyContent="flex-end"
+            >
+              <AccessTimeIcon />
+              <Typography style={{ paddingLeft: "0.25em" }}>
+                {getEventslotDuration(event.startDate, event.endDate).time}
+              </Typography>
+            </Grid>
+          </Grid>
         </Grid>
-      </Grid>
-    </DashboardCard>
+
+        <Grid container>
+          <Grid
+            item
+            sm={editable ? 12 : 9}
+            container
+            justify={"space-between"}
+            className={classes.textContainer}
+          >
+            <Grid container justify={"space-between"}>
+              <Grid item xs={8}>
+                <Typography className={classes.headline}>
+                  {event.name}
+                </Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography className={classes.cost}>
+                  {event.trialClass ? (
+                    "Trial Class"
+                  ) : (
+                    <>&#8377; {event.price}</>
+                  )}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Typography className={classes.descriptionText}>
+              <ReadMore
+                percent={20}
+                text={event.description}
+                className={classes.descriptionText}
+              />
+            </Typography>
+
+            {isVendor && (
+              <Grid
+                container
+                justify={"space-between"}
+                className={classes.bottomTextContainer}
+              >
+                <Grid item xs={4}>
+                  <Typography className={classes.bottomText}>
+                    Event Type <br />
+                    {formatEventType(event.type)}
+                  </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography className={classes.bottomText}>
+                    Sold out Seats
+                    <br /> {event.orders ? event.orders.length : 0}
+                    {event.type === EVENT_TYPES.ONE_TIME &&
+                      `/${event.totalTickets}`}
+                  </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography className={classes.bottomText}>
+                    Total Revenue <br />{" "}
+                    <span style={{ color: "#0061FE" }}>
+                      &#8377;{" "}
+                      {`${
+                        parseFloat(
+                          (event?.orders?.length ?? 0) * parseInt(event.price)
+                        ).toFixed(2) ?? "0.00"
+                      }`}
+                    </span>
+                  </Typography>
+                </Grid>
+              </Grid>
+            )}
+          </Grid>
+
+          {!editable && !isVendor ? (
+            <Grid
+              item
+              sm={3}
+              container
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Link
+                href={`/${
+                  event.vendorUserName ? event.vendorUserName : event.userUID
+                }/${event.url ? event.url : event.link}`}
+              >
+                <ButtonCapsule text={"Book"} buttonStyle={classes.bookButton} />
+              </Link>
+            </Grid>
+          ) : null}
+        </Grid>
+      </Card>
+    </Grid>
   );
 }
 

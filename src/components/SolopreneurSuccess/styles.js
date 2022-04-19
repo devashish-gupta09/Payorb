@@ -62,6 +62,13 @@ export const styles = makeStyles((theme) => ({
       height: "0.2em",
     },
   },
+  desktop: {
+    display: "block",
+    margin: "0 3em 0 3em",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
   mobileView: {
     display: "none",
     [theme.breakpoints.down("sm")]: {

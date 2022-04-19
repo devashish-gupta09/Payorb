@@ -1,10 +1,5 @@
-import {
-  Button,
-  Link,
-  makeStyles,
-  useMediaQuery,
-  useTheme,
-} from "@material-ui/core";
+import { Link, makeStyles, useMediaQuery, useTheme } from "@material-ui/core";
+import CallMadeIcon from "@material-ui/icons/CallMade";
 import React, { useContext } from "react";
 
 import { appColors } from "../../../styles/colors";
@@ -49,10 +44,9 @@ function LandingHeaderProfile({ handleLinkClick }) {
 
   if (loading && userContext.userState !== "UNAUTHENTICATED") {
     return (
-      <>
-        {/* {matches ? } */}
-
+      <div style={{ paddingLeft: "2em" }}>
         {matches ? (
+          // Mobile Designs
           <li
             onClick={() => {
               handleLinkClick(PAGE_PATHS.SIGNIN);
@@ -62,8 +56,12 @@ function LandingHeaderProfile({ handleLinkClick }) {
             Sign In
           </li>
         ) : (
+          // Desktop
           <Link href={PAGE_PATHS.SIGNIN}>
-            <Button className={classes.buttonSpacing}>Sign In</Button>
+            <ButtonCapsule
+              buttonStyle={classes.buttonSpacing}
+              text="Sign In"
+            ></ButtonCapsule>
           </Link>
         )}
 
@@ -74,17 +72,18 @@ function LandingHeaderProfile({ handleLinkClick }) {
             }}
             className={classes.list}
           >
-            Sign Up for Vendor
+            Sign Up as Vendor
           </li>
         ) : (
           <Link href={PAGE_PATHS.SIGNUP}>
             <ButtonCapsule
               buttonStyle={classes.btnCapSpacing}
-              text="Sign Up For Vendor"
+              text="Sign Up as Vendor"
+              icon={<CallMadeIcon />}
             ></ButtonCapsule>
           </Link>
         )}
-      </>
+      </div>
     );
   }
 
@@ -105,7 +104,7 @@ function LandingHeaderProfile({ handleLinkClick }) {
     );
   } else {
     return (
-      <>
+      <div className={classes.sideBtnContainer}>
         {/* {matches ? } */}
 
         {matches ? (
@@ -119,7 +118,10 @@ function LandingHeaderProfile({ handleLinkClick }) {
           </li>
         ) : (
           <Link href={PAGE_PATHS.SIGNIN}>
-            <Button className={classes.buttonSpacing}>Sign In</Button>
+            <ButtonCapsule
+              buttonStyle={classes.buttonSpacing}
+              text="Sign In"
+            ></ButtonCapsule>
           </Link>
         )}
 
@@ -130,37 +132,48 @@ function LandingHeaderProfile({ handleLinkClick }) {
             }}
             className={classes.list}
           >
-            Sign Up for Vendor
+            Sign Up as Vendor
           </li>
         ) : (
           <Link href={PAGE_PATHS.SIGNUP}>
             <ButtonCapsule
               buttonStyle={classes.btnCapSpacing}
-              text="Sign Up For Vendor"
+              text="Sign Up as Vendor"
+              icon={<CallMadeIcon />}
             ></ButtonCapsule>
           </Link>
         )}
-      </>
+      </div>
     );
   }
 }
 
 const styles = makeStyles((theme) => ({
   btnCapSpacing: {
-    padding: "0.5em 2.25em",
+    padding: "0.5em 1em",
     fontWeight: "600",
-    textTransform: "uppercase",
+    background: "white",
+    boxShadow: "inset 0px 0px 0px 2px black",
+    fontSize: "0.8em",
   },
   buttonSpacing: {
-    padding: "0.5em 2em",
-    textTransform: "uppercase",
-    marginRight: "0.5em",
+    padding: "0.5em 1.25em",
+    marginRight: "1em",
+    background: "linear-gradient(178.83deg, #68FDF3 1%, #00D4FF 183.74%)",
+    boxShadow: "none",
+    fontSize: "0.8em",
   },
   list: {
     listStyleType: "None",
     padding: "1em 0",
     color: appColors.grey,
     letterSpacing: "1px",
+  },
+  sideBtnContainer: {
+    paddingLeft: "0.75em",
+    [theme.breakpoints.down("sm")]: {
+      padding: "0",
+    },
   },
 }));
 

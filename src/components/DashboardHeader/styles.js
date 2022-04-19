@@ -10,6 +10,9 @@ export const styles = makeStyles((theme) => ({
       padding: "0.5em 1em",
     },
   },
+  header: {
+    boxShadow: "0px 0px 4px rgba(0, 0, 0, 0.25)",
+  },
   buttonSpacing: {
     padding: "0 1.5em",
   },
@@ -42,7 +45,7 @@ export const styles = makeStyles((theme) => ({
     },
   },
   drawerItemContainer: {
-    padding: "2.5em 1.5em",
+    padding: "2.5em 0",
     width: "95vw",
   },
   drawerTitleContainer: { padding: "3em 0 2em 0" },
@@ -55,17 +58,34 @@ export const styles = makeStyles((theme) => ({
   },
   wideScreen: {
     display: "flex",
+    justifyContent: "space-between",
     [theme.breakpoints.down("sm")]: {
       display: "None",
     },
   },
-  activeLink: {
-    fontWeight: "bold",
-    color: "#79DFDF !important",
-    // borderBottom: "4px solid"
-  },
   activeTab: {
     background: "#79DFDF",
     height: "0.2em",
+    justifyContent: "flex-end",
+  },
+
+  btn: {
+    maxWidth: "100%",
+    textAlign: "left",
+    padding: "1em",
+  },
+  activeLink: {
+    fontWeight: "bold",
+    color: "#000000 !important",
+    [theme.breakpoints.down("sm")]: {
+      background: "linear-gradient(180deg, #68FDF3 0%, #00D4FF 183.33%)",
+      maxWidth: "100%",
+      padding: "1em",
+      color: "#000000",
+    },
+  },
+  navItem: {
+    width: "100%",
+    textAlign: "left",
   },
 }));

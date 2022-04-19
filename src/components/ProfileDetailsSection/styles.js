@@ -2,9 +2,14 @@ import { makeStyles } from "@material-ui/core";
 
 import { appColors } from "../../../styles/colors";
 
-export const styles = makeStyles(() => ({
+export const styles = makeStyles((theme) => ({
   container: {
-    paddingTop: "2em 0",
+    width: "65%",
+    padding: "4em 4% 0 0",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      padding: "3em 1em 2em 1em",
+    },
   },
   indicator: {
     display: "flex",

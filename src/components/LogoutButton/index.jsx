@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 import { ExitToApp } from "@material-ui/icons";
 import { useRouter } from "next/router";
 import React from "react";
@@ -9,6 +9,7 @@ import { FirebaseAuth } from "../AuthenticationContext";
 import CustomConfirmationDialog from "../CustomConfirmationDialog";
 
 function Logout(props) {
+  const classes = styles();
   const router = useRouter();
   const { Alert, showAlert } = useAlertSnackbar();
   const [logoutDialog, setLogoutDialog] = React.useState(false);
@@ -40,11 +41,33 @@ function Logout(props) {
         show={logoutDialog}
         title={"Logout"}
       />
-      <Button title="Logout" onClick={showConfirmDialog} {...props}>
-        <ExitToApp />
+      <Button
+        className={classes.btn}
+        title="Logout"
+        onClick={showConfirmDialog}
+        {...props}
+      >
+        <ExitToApp className={classes.icon} />
+        Logout
       </Button>
     </>
   );
 }
 
 export default Logout;
+
+const styles = makeStyles((theme) => ({
+  btn: {
+    width: "100%",
+    height: "48px",
+    justifyContent: "flex-start",
+    color: "#7B7B7B",
+    "&:hover": {
+      background: "rgba(0, 142, 255, 0.06)",
+      color: "#008EFF",
+    },
+  },
+  icon: {
+    marginRight: "4px",
+  },
+}));

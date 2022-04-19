@@ -36,7 +36,7 @@ function CustomerViewHeader() {
               <li>Home</li>
             </Link>
             <Link href="/signup">
-              <li>Sign Up for Vendor</li>
+              <li>Sign Up as Vendor</li>
             </Link>
           </Grid>
         </Grid>
@@ -53,7 +53,7 @@ function CustomerViewHeader() {
           >
             <Link href="/signup">
               <Button className={classes.signupButton}>
-                Sign up for Vendor
+                Sign up as Vendor
               </Button>
             </Link>
           </Grid>

@@ -10,9 +10,10 @@ import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { getUser } from "../../services/auth";
 import { delay } from "../../utils/dateTime";
 import { buildVendorDashboardUrl } from "../../utils/url";
-import AuthAlertBanner from "../AuthAlertBanner";
+import { AppFooter } from "../AppFooter";
 import { Context } from "../AuthenticationContext";
 import VendorDashboardHeader from "../DashboardHeader";
+import VendorDashboardSidebar from "../DashboardSidebar";
 import FallbackLoading from "../FallbackLoading";
 import FallbackPage from "../FallbackPage";
 import PageTitle from "../PageTitle";
@@ -22,13 +23,33 @@ import VendorDashboardContainer from "../VendorDashboardContainer";
 import VendorEventCreationForm from "../VendorEventCreationForm";
 import VendorEvents from "../VendorEvents";
 import VendorFinancials from "../VendorFinancials";
+import VendorPromotions from "../VendorPromotions";
+import { styles } from "./styles";
 
 function VendorDashboard() {
+  const classes = styles();
   const router = useRouter();
   const userContext = React.useContext(Context);
   const [loading, setLoading] = React.useState(true);
   const [profileData, setProfileData] = React.useState(null);
   const { Alert, showAlert } = useAlertSnackbar();
+
+  const checkIfSideBarAllowed = () => {
+    const { vendorId } = router.query;
+
+    if (router.query.section) {
+      switch (router.asPath) {
+        case `/vendor/${vendorId}/events/create`:
+        case `/vendor/${vendorId}/events/create?trialClass=true`:
+          return false;
+        default:
+          return true;
+      }
+    }
+
+    // Side bar not allowed on profile page
+    return false;
+  };
 
   const getComponent = (profileData) => {
     if (profileData && profileData.userUID) {
@@ -37,6 +58,8 @@ function VendorDashboard() {
         switch (router.asPath) {
           case `/vendor/${vendorId}/financials`:
             return <VendorFinancials />;
+          case `/vendor/${vendorId}/promotions`:
+            return <VendorPromotions />;
           case `/vendor/${vendorId}/customers`:
             return <VendorCustomers />;
           case `/vendor/${vendorId}/events/create`:
@@ -53,14 +76,14 @@ function VendorDashboard() {
               />
             );
         }
-      } else {
-        return (
-          <>
-            <PageTitle title="Payorb | Profile" />
-            <Profile profileData={profileData} />;
-          </>
-        );
       }
+
+      return (
+        <>
+          <PageTitle title="Payorb | Profile" />
+          <Profile profileData={profileData} />
+        </>
+      );
     }
   };
 
@@ -105,14 +128,6 @@ function VendorDashboard() {
           await delay(750);
           router.replace(PAGE_PATHS.SIGNUP);
         });
-      // } else {
-      //   showAlert("Access Denied");
-      //   delay(1000).then(async () => {
-      //     showAlert("Redirecting to home page");
-      //     await delay(500);
-      //     router.replace(PAGE_PATHS.LANDING);
-      //   });
-      // }
     } else if (userContext.userState === "UNAUTHENTICATED") {
       router.replace(PAGE_PATHS.SIGNUP);
     }
@@ -127,10 +142,27 @@ function VendorDashboard() {
         <UserAuthDetailsProvider>
           <Grid>
             <VendorDashboardHeader profileData={profileData} />
-            <AuthAlertBanner />
-            <VendorDashboardContainer>
-              {getComponent(profileData)}
-            </VendorDashboardContainer>
+            {checkIfSideBarAllowed() ? (
+              <Grid container className={classes.dashboard}>
+                <Grid item className={classes.sidebar}>
+                  <VendorDashboardSidebar profileData={profileData} />
+                </Grid>
+                <Grid item className={classes.mainContainer}>
+                  <VendorDashboardContainer>
+                    {getComponent(profileData)}
+                  </VendorDashboardContainer>
+                </Grid>
+              </Grid>
+            ) : (
+              <VendorDashboardContainer>
+                {getComponent(profileData)}
+              </VendorDashboardContainer>
+            )}
+            {/* <AuthAlertBanner /> */}
+
+            {router.asPath === `/vendor/${router.query.vendorId}` && (
+              <AppFooter />
+            )}
           </Grid>
         </UserAuthDetailsProvider>
       )}
