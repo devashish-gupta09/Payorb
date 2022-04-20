@@ -174,7 +174,7 @@ function EventCard({
                 .join(" ")}
             </div>
 
-            {paymentDetails?.status === "COMPLETE" ? (
+            {!isVendor ?? paymentDetails?.status === "COMPLETE" ? (
               <div
                 className={classes.topBannerButton}
                 style={{
