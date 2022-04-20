@@ -96,7 +96,7 @@ export const VendorCloseEvents = ({ vendorId }) => {
     <Grid style={{ padding: "5% 0" }}>
       <Grid container justifyContent="center">
         <img
-          src="/assets/vendorEvents/noPastEvents.svg"
+          src="/assets/no-completed-events.svg"
           className={classes.imgContainer}
         />
       </Grid>

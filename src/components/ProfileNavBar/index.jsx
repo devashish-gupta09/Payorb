@@ -1,16 +1,16 @@
-import { makeStyles, Tabs, Tab } from "@material-ui/core";
-import { CloudCircle } from "@material-ui/icons";
+import { makeStyles, Tabs, Tab, Grid } from "@material-ui/core";
+import { InfoOutlined } from "@material-ui/icons";
 import { useRouter } from "next/router";
 import useMobileDetect from "use-mobile-detect-hook";
 
-import { useFetchUserAuthDetails } from "../../context/UserAuthDetailContext";
+import useFetchVendorVerifiedDetails from "../../hooks/useFetchVendorAuth";
 
 function ProfileNavBar({ vendor = true }) {
   const classes = styles();
   const detectMobile = useMobileDetect();
   const router = useRouter();
 
-  const { verifiedDetails } = useFetchUserAuthDetails();
+  const { verifiedDetails, loading } = useFetchVendorVerifiedDetails();
 
   const isActive = () => {
     const section = router.asPath.split("#")[1];
@@ -26,8 +26,21 @@ function ProfileNavBar({ vendor = true }) {
     >
       <Tab label="Gallery" href="#gallery"></Tab>
       <Tab label="Reviews" href="#review"></Tab>
-      {vendor ? (
-        <Tab label={<CloudCircle />} href="#payment"></Tab>
+      {vendor && !loading ? (
+        <Tab
+          label={
+            <Grid container alignItems="center">
+              {verifiedDetails?.find((vd) => vd.name === "paymentDetails")
+                ?.status !== "COMPLETE" && (
+                <InfoOutlined
+                  style={{ paddingRight: "0.25em", color: "red" }}
+                />
+              )}
+              Payment
+            </Grid>
+          }
+          href="#payment"
+        ></Tab>
       ) : (
         <Tab label="Events" href="#events"></Tab>
       )}

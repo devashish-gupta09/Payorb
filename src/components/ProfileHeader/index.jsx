@@ -18,8 +18,8 @@ import { useRouter } from "next/router";
 import * as React from "react";
 
 import { ALERT_TYPES } from "../../constants/alerts";
-import { useFetchUserAuthDetails } from "../../context/UserAuthDetailContext";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
+import useFetchVendorVerifiedDetails from "../../hooks/useFetchVendorAuth";
 import { updateUser } from "../../services/auth";
 import { delay } from "../../utils/dateTime";
 import firebase from "../../utils/firebase";
@@ -95,7 +95,8 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
   const [dataUrl, setDataUrl] = React.useState();
   const [croppedImg, setCroppedImage] = React.useState();
 
-  const { verifiedDetails } = useFetchUserAuthDetails();
+  const { verifiedDetails, loading: detailsLoading } =
+    useFetchVendorVerifiedDetails();
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -238,8 +239,9 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
       )}
       <Grid className={classes.base}>
         {isVendor &&
-          verifiedDetails?.find((vd) => vd.name === "payment").status !==
-            "COMPLETE" && (
+          !detailsLoading &&
+          verifiedDetails?.find((vd) => vd.name === "paymentDetails")
+            ?.status !== "COMPLETE" && (
             <MuiAlert
               severity="warning"
               variant="filled"
