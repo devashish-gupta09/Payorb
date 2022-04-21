@@ -91,12 +91,14 @@ export const VendorOpenEvents = ({ vendorId }) => {
     );
 
   return (
-    <Grid container justifyContent="center" alignItems="center">
-      <img
-        src="/assets/vendorEvents/noPastEvents.svg"
-        className={classes.imgContainer}
-      />
-      <Typography variant="h6" className={classes.noEventMsg}>
+    <Grid style={{ padding: "5% 0" }}>
+      <Grid container justifyContent="center">
+        <img
+          src="/assets/vendorEvents/noPastEvents.svg"
+          className={classes.imgContainer}
+        />
+      </Grid>
+      <Typography variant="h6" align="center" className={classes.noEventMsg}>
         No past events found. Start creating new events...
       </Typography>
     </Grid>
@@ -135,13 +137,16 @@ const styles = makeStyles((theme) => ({
     borderRadius: "2em",
   },
   noEventMsg: {
-    position: "absolute",
-    textAlign: "center",
-    justifyContent: "center",
     fontSize: "1em",
-    bottom: "6em",
+    marginTop: "3em",
     [theme.breakpoints.down("sm")]: {
       bottom: "12em",
+    },
+  },
+  imgContainer: {
+    width: "20em",
+    [theme.breakpoints.down("sm")]: {
+      top: 0,
     },
   },
   root: {
@@ -172,18 +177,6 @@ const styles = makeStyles((theme) => ({
     // padding: "2em",
     [theme.breakpoints.down("sm")]: {
       paddingBottom: "3em",
-    },
-  },
-
-  imgContainer: {
-    position: "absolute",
-    margin: "auto",
-    top: "6em",
-    left: 0,
-    right: 0,
-    bottom: 0,
-    [theme.breakpoints.down("sm")]: {
-      top: 0,
     },
   },
 }));

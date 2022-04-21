@@ -10,7 +10,6 @@ import {
   TableRow,
   Typography,
 } from "@material-ui/core";
-import Checkbox from "@material-ui/core/Checkbox";
 import numeral from "numeral";
 import React from "react";
 
@@ -18,12 +17,12 @@ import { globalStyles } from "../../../styles/globalStyles";
 import { EVENT_STATUS } from "../../constants/events";
 import useFetchEvents from "../../hooks/useFetchEvents";
 import { getMonthDate } from "../../utils/dateTime";
-import DashboardCard from "../DashboardCard";
 import SkeletonLoading from "../SkeletonLoading";
 
 const styles = makeStyles((theme) => ({
   root: {
-    width: "96%",
+    width: "100%",
+    padding: "2em",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
@@ -35,11 +34,11 @@ const styles = makeStyles((theme) => ({
   },
   title: {
     fontSize: "1.2em",
-    marginLeft: "3.5em",
+    // marginLeft: "3.5em",
     marginTop: "2em",
   },
   tableStyle: {
-    backgroundColor: "#DCDCDC",
+    backgroundColor: "#EFF0F6",
     color: "#767676",
   },
   ul: {
@@ -152,13 +151,6 @@ function VendorEventsStats() {
     );
     setCheckedState(updatedCheckedState);
   };
-  //  { React.useEffect(()=>{
-  //     events?.map((row,index)=>{
-  //       setChecked(checked=>[
-  //             ...checked, false,
-  //      ])
-  //     })
-  //     },[]);}
 
   const handleAllCheckboxChange = () => {
     console.log(checkedState);
@@ -192,7 +184,7 @@ function VendorEventsStats() {
       )
     );
 
-    const pageCount = Math.ceil(rows.length / 5);
+    // const pageCount = Math.ceil(rows.length / 5);
     return (
       <Grid className={classes.root}>
         {/* {<Typography
@@ -201,24 +193,24 @@ function VendorEventsStats() {
         >
           Events
         </Typography>} */}
-        <DashboardCard>
+        <Grid>
           <TableContainer className={classes.container}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow className={classes.tableStyle}>
-                  <Checkbox
+                  {/* <Checkbox
                     color="primary"
                     // onChange={handleCheckboxChange}
                     size="small"
                     className={classes.checkbox}
-                  />
+                  /> */}
                   {columns.map((column) => (
                     <TableCell
                       key={column.id}
                       align={column.align}
                       style={{
                         minWidth: column.minWidth,
-                        backgroundColor: "#DCDCDC",
+                        background: "#EFF0F6",
                         color: "#767676",
                         fontWeight: "600",
                       }}
@@ -240,13 +232,13 @@ function VendorEventsStats() {
                         key={index}
                         className={classes.container}
                       >
-                        <Checkbox
+                        {/* <Checkbox
                           color="primary"
                           checked={checkedState[index]}
                           onChange={() => handleOnChange(index)}
                           className={classes.checkbox}
                           size="small"
-                        />
+                        /> */}
 
                         {columns.map((column) => {
                           const value = row[column.id];
@@ -306,7 +298,7 @@ function VendorEventsStats() {
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
-        </DashboardCard>
+        </Grid>
       </Grid>
     );
   }

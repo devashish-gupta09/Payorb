@@ -38,7 +38,7 @@ function LandingHeader() {
 
   return (
     <Box sx={{ display: "flex", marginBottom: isMobile ? "5em" : 0 }}>
-      <CustomHeader>
+      <CustomHeader bgColor="transparent" shadow="none">
         <Drawer anchor={"left"} open={appMenu} onClose={toggleDrawer}>
           <Grid className={classes.drawerItemContainer}>
             <Grid className={classes.drawerList}>

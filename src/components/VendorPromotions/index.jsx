@@ -88,7 +88,7 @@ function VendorPromotions() {
 
   const handleFilterChange = (event) => {
     const link = event.target.value;
-    console.log("SELECTED LINK EVENT", link);
+    // console.log("SELECTED LINK EVENT", link);
     let temp = [...selectedValueForFilter];
     if (temp.includes(link)) {
       temp = temp.filter((l) => l !== link);
@@ -188,8 +188,6 @@ function VendorPromotions() {
           ? selectedValueForFilter.includes(val.link)
           : true
       );
-
-    console.log("ROWS", rows);
 
     return (
       <Grid className={classes.root}>

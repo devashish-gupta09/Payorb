@@ -34,7 +34,7 @@ function SignupHeader() {
   };
 
   return (
-    <CustomHeader>
+    <CustomHeader shadow="none" bgColor="transparent">
       <Drawer anchor={"left"} open={appMenu} onClose={toggleDrawer}>
         <Grid className={classes.drawerItemContainer}>
           <Grid className={classes.drawerList}>
