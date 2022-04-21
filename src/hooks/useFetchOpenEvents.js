@@ -14,6 +14,8 @@ function useFetchOpenEvents({ userUID }) {
     userUID,
   });
 
+  const [totalEvents, setTotalEvents] = React.useState(0);
+
   const [moreEvents, setLoadMore] = React.useState(true);
 
   const loadMoreEvents = async () => {
@@ -25,6 +27,7 @@ function useFetchOpenEvents({ userUID }) {
           ...eventsParams,
           startFrom: res.data.lastEvent,
         });
+        setTotalEvents(res.data.totalEvents);
         setEvents([...events, ...res.data.events]);
       } else {
         setLoadMore(false);
@@ -44,6 +47,7 @@ function useFetchOpenEvents({ userUID }) {
           // We recieve an object instead of array when fetching a single
           // event
           setEvents(res.data.events || [res.data.event]);
+          setTotalEvents(res.data.totalEvents);
           setEventsParams({ ...eventsParams, startFrom: res.data.lastEvent });
         }
       })
@@ -69,6 +73,7 @@ function useFetchOpenEvents({ userUID }) {
     error,
     moreEvents,
     loadMoreEvents,
+    totalEvents,
   };
 }
 

@@ -17,6 +17,8 @@ function useFetchClosedEvents({ userUID }) {
 
   const [moreEvents, setLoadMore] = React.useState(true);
 
+  const [totalEvents, setTotalEvents] = React.useState(0);
+
   const loadMoreEvents = async () => {
     try {
       const res = await getClosedEvents(eventsParams);
@@ -26,6 +28,7 @@ function useFetchClosedEvents({ userUID }) {
           ...eventsParams,
           startFrom: res.data.lastEvent,
         });
+        setTotalEvents(res.data.totalEvents);
         setEvents([...events, ...res.data.events]);
       } else {
         setLoadMore(false);
@@ -45,6 +48,7 @@ function useFetchClosedEvents({ userUID }) {
           // We recieve an object instead of array when fetching a single
           // event
           setEvents(res.data.events || [res.data.event]);
+          setTotalEvents(res.data.totalEvents);
           setEventsParams({ ...eventsParams, startFrom: res.data.lastEvent });
         }
       })
@@ -70,6 +74,7 @@ function useFetchClosedEvents({ userUID }) {
     error,
     moreEvents,
     loadMoreEvents,
+    totalEvents,
   };
 }
 
