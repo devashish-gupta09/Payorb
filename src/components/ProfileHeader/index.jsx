@@ -185,6 +185,10 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
     }
   };
 
+  const paymentDetails = verifiedDetails?.find(
+    (vd) => vd.name === "paymentDetails"
+  );
+
   return (
     <Grid className={classes.root}>
       {Alert()}
@@ -238,52 +242,51 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
         </Dialog>
       )}
       <Grid className={classes.base}>
-        {isVendor &&
-          !detailsLoading &&
-          verifiedDetails?.find((vd) => vd.name === "paymentDetails")
-            ?.status !== "COMPLETE" && (
-            <MuiAlert
-              severity="warning"
-              variant="filled"
-              style={{
-                transform:
-                  `translateX(${isMobile ? "80px" : 0}) ` +
-                  `scale(${isMobile ? 0.5 : 1})`,
-                position: "absolute",
-                right: isMobile ? 2 : 10,
-                top: "35%",
-                background: "#F2C94C",
-                color: "black",
-              }}
-            >
-              <Grid container style={{ width: "300px" }} alignItems="center">
-                <Grid item xs={9} style={{ width: "fit-content" }}>
-                  <Typography
-                    gutterBottom
-                    style={{ fontSize: "1em", width: "fit-content" }}
-                  >
-                    Payment Section Incomplete
-                  </Typography>
-                  <Typography style={{ fontSize: "0.85em" }}>
-                    To update your events and services, please add your payment
-                    details.
-                  </Typography>
-                </Grid>
-                <Grid item xs={3} style={{ width: "fit-content" }}>
-                  <Link
-                    style={{
-                      fontSize: "0.85em",
-                      color: "black",
-                      textDecoration: "underline",
-                    }}
-                    href="#payment"
-                  >
-                    Check Now
-                  </Link>
-                </Grid>
+        {isVendor && !detailsLoading && paymentDetails?.status !== "COMPLETE" && (
+          <MuiAlert
+            severity="warning"
+            variant="filled"
+            style={{
+              transform:
+                `translateX(${isMobile ? "80px" : 0}) ` +
+                `scale(${isMobile ? 0.5 : 1})`,
+              position: "absolute",
+              right: isMobile ? 2 : 10,
+              top: "35%",
+              background: "#F2C94C",
+              color: "black",
+            }}
+          >
+            <Grid container style={{ width: "300px" }} alignItems="center">
+              <Grid item xs={9} style={{ width: "fit-content" }}>
+                <Typography
+                  gutterBottom
+                  style={{ fontSize: "1em", width: "fit-content" }}
+                >
+                  {paymentDetails.status === "MISSING"
+                    ? "Payment Section Incomplete"
+                    : "Account Under Processing"}
+                </Typography>
+                <Typography style={{ fontSize: "0.85em" }}>
+                  To update your events and services, please add your payment
+                  details.
+                </Typography>
               </Grid>
-            </MuiAlert>
-          )}
+              <Grid item xs={3} style={{ width: "fit-content" }}>
+                <Link
+                  style={{
+                    fontSize: "0.85em",
+                    color: "black",
+                    textDecoration: "underline",
+                  }}
+                  href="#payment"
+                >
+                  Check Now
+                </Link>
+              </Grid>
+            </Grid>
+          </MuiAlert>
+        )}
 
         {dataUrl || profileData?.bannerImgUrl ? (
           <img src={profileData.bannerImgUrl} className={classes.bannerImg} />

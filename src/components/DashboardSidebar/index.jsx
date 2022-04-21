@@ -45,7 +45,7 @@ function VendorDashboardSidebar({ profileData }) {
         return;
       case 4:
         router.push(
-          buildVendorDashboardUrl(getVendorIdFromUrl(router), "/myschedule")
+          buildVendorDashboardUrl(getVendorIdFromUrl(router), "/schedule")
         );
         return;
       default:
@@ -182,7 +182,7 @@ function VendorDashboardSidebar({ profileData }) {
                     />
                     <Tab
                       className={
-                        (isActive("myschedule") && classes.activeLink) ||
+                        (isActive("schedule") && classes.activeLink) ||
                         classes.btn
                       }
                       label={
@@ -324,8 +324,7 @@ function VendorDashboardSidebar({ profileData }) {
                 />
                 <Tab
                   className={
-                    (isActive("myschedule") && classes.activeLink) ||
-                    classes.btn
+                    (isActive("schedule") && classes.activeLink) || classes.btn
                   }
                   label={
                     <div className={classes.navItem}>
