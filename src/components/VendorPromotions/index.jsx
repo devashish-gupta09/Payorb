@@ -8,12 +8,9 @@ import {
   TableHead,
   TableRow,
   Typography,
-  TextField,
-  InputAdornment,
 } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 import { Send } from "@material-ui/icons";
-import SearchIcon from "@material-ui/icons/Search";
 import clsx from "clsx";
 
 import React from "react";
@@ -214,7 +211,7 @@ function VendorPromotions() {
           </Grid>
 
           <Grid container alignItems="center" style={{ width: "fit-content" }}>
-            <TextField
+            {/* <TextField
               placeholder="Search"
               InputProps={{
                 inputProps: {
@@ -240,7 +237,7 @@ function VendorPromotions() {
                 ),
               }}
               className={classes.search}
-            />
+            /> */}
             {/* <TextField
               select
               value={

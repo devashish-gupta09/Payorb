@@ -52,39 +52,33 @@ function VendorRevenueUserAggSec() {
           Dashboard
         </Typography>
 
-        <Grid item sm={12} xs={12} container className={classes.fix}>
-          <Grid
-            item
-            xs={10}
-            sm={3}
-            className={`${classes.box} ${classes.leftTopContainer}`}
-          >
+        <Grid
+          item
+          sm={12}
+          xs={12}
+          container
+          className={classes.fix}
+          justifyContent="center"
+        >
+          <Grid item xs={10} sm={6} className={`${classes.box}`}>
             <ValueCard
               title={`₹ ${numeral(stats.totalRevenue).format("0,0")}`}
               subTitle={"Total Revenue"}
               photo={"/assets/vendorDashboard/yearlyTotalRevenue.svg"}
               bottomText={"This year"}
+              topBorderColor={"#465DD6"}
             />
           </Grid>
-          <Grid
-            item
-            xs={10}
-            sm={3}
-            className={`${classes.box} ${classes.rightTopContainer}`}
-          >
+          <Grid item xs={10} sm={6} className={`${classes.box}`}>
             <ValueCard
               title={`${numeral(stats.totalCustomers).format("0,0")}`}
               subTitle={"Total Bookings"}
               photo={"/assets/vendorDashboard/yearlyTotalBookings.svg"}
               bottomText={"This year"}
+              topBorderColor="#FFB648"
             />
           </Grid>
-          <Grid
-            item
-            xs={10}
-            sm={3}
-            className={`${classes.box} ${classes.leftBottomContainer}`}
-          >
+          <Grid item xs={10} sm={6} className={`${classes.box}`}>
             <ValueCard
               title={`₹ ${numeral(stats.lastMonthSummary.revenue).format(
                 "0,0"
@@ -92,14 +86,10 @@ function VendorRevenueUserAggSec() {
               subTitle={`Total Revenue (last month)`}
               photo={"/assets/vendorDashboard/totalRevenue.svg"}
               bottomText={"Last Month"}
+              topBorderColor="#FF007F"
             />
           </Grid>
-          <Grid
-            item
-            xs={10}
-            sm={3}
-            className={`${classes.box} ${classes.rightBottomContainer}`}
-          >
+          <Grid item xs={10} sm={6} className={`${classes.box}`}>
             <ValueCard
               title={`${numeral(stats.lastMonthSummary.customers).format(
                 "0,0"
@@ -107,6 +97,7 @@ function VendorRevenueUserAggSec() {
               subTitle={"Total bookings (last month)"}
               photo={"/assets/vendorDashboard/totalBookings.svg"}
               bottomText={"Last Month"}
+              topBorderColor="#4BDE97"
             />
           </Grid>
         </Grid>
@@ -133,25 +124,21 @@ const styles = makeStyles((theme) => ({
     fontWeight: "600",
     fontSize: "1.2em",
     paddingBottom: "1em",
+
     // marginLeft: "3.5em",
   },
   fix: {
-    justifyContent: "flex-start",
+    padding: "0 10%",
     [theme.breakpoints.down("sm")]: {
       justifyContent: "center",
+      padding: "0",
     },
   },
   box: {
-    boxShadow: " 0px 0px 10px rgba(0, 0, 0, 0.1)",
+    // boxShadow: " 0px 0px 10px rgba(0, 0, 0, 0.1)",
     borderRadius: "0.4em",
     marginTop: "0.4em",
-    margin: "0.2em",
-  },
-  leftTopContainer: {
-    borderTop: "0.3em solid #465DD6",
-    [theme.breakpoints.down("sm")]: {
-      paddingRight: "0.5em",
-    },
+    // margin: "0.2em",
   },
   rightTopContainer: {
     borderTop: "0.3em solid #FFB648",
