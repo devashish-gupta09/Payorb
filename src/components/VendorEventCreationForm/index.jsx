@@ -1326,8 +1326,10 @@ const EventTypeSelect = ({ formik, checkDisabled, handleEventTypeChange }) => {
             )}
 
             <Grid item>
-              <Typography>One Time</Typography>
-              <Typography>
+              <Typography gutterBottom>
+                <b>One Time</b>
+              </Typography>
+              <Typography style={{ fontSize: "0.8em" }}>
                 Fixed schedule of event / service. <br></br>Open to one or more
                 clients.
               </Typography>
@@ -1354,8 +1356,10 @@ const EventTypeSelect = ({ formik, checkDisabled, handleEventTypeChange }) => {
             )}
 
             <Grid>
-              <Typography>One on One</Typography>
-              <Typography>
+              <Typography gutterBottom>
+                <b>One on One</b>
+              </Typography>
+              <Typography style={{ fontSize: "0.8em" }}>
                 Clients can book individual service
                 <br /> sessions with you from calender <br />
                 availability
