@@ -49,9 +49,9 @@ function EventCard({
   handleEventDelete,
   editable = true,
   isVendor = true,
+  share = false,
   paymentDetails = {},
 }) {
-  console.log(paymentDetails);
   const classes = styles();
   const [edit, setEdit] = React.useState(false);
   const [clone, setClone] = React.useState(false);
@@ -175,7 +175,7 @@ function EventCard({
                 .join(" ")}
             </div>
 
-            {!isVendor || paymentDetails?.status === "COMPLETE" ? (
+            {share || !isVendor || paymentDetails?.status === "COMPLETE" ? (
               <div
                 className={classes.topBannerButton}
                 style={{
