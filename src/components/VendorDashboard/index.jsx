@@ -24,6 +24,7 @@ import VendorEventCreationForm from "../VendorEventCreationForm";
 import VendorEvents from "../VendorEvents";
 import VendorFinancials from "../VendorFinancials";
 import VendorPromotions from "../VendorPromotions";
+import { VendorSchedule } from "../VendorSchedule";
 import { styles } from "./styles";
 
 function VendorDashboard() {
@@ -68,6 +69,8 @@ function VendorDashboard() {
             return <VendorEventCreationForm trialClass={true} />;
           case `/vendor/${vendorId}/events`:
             return <VendorEvents />;
+          case `/vendor/${vendorId}/schedule`:
+            return <VendorSchedule />;
           default:
             return (
               <FallbackPage

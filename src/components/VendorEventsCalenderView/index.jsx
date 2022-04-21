@@ -10,6 +10,7 @@ import {
   DateNavigator,
   MonthView,
   AppointmentTooltip,
+  TodayButton,
 } from "@devexpress/dx-react-scheduler-material-ui";
 import {
   Button,
@@ -27,7 +28,6 @@ import * as React from "react";
 import { EVENT_TYPES } from "../../constants/events";
 
 import useFetchEventsBetween from "../../hooks/useFetchEventsBetween";
-import DashboardCard from "../DashboardCard";
 import PostEventCreationDialog from "../PostEventCreationDialog";
 import SkeletonLoading from "../SkeletonLoading";
 import VendorEventCreationForm from "../VendorEventCreationForm";
@@ -109,7 +109,7 @@ function VendorEventsCalenderView() {
   if (events) {
     const transformedEvents = transformEvents(events);
     return (
-      <DashboardCard>
+      <Grid>
         <Scheduler height={matches ? 500 : 600} data={transformedEvents}>
           <ViewState
             currentDate={startDate}
@@ -124,6 +124,7 @@ function VendorEventsCalenderView() {
 
           <Toolbar />
           <DateNavigator />
+          <TodayButton />
           <ViewSwitcher onChange={handleViewChange} />
           <Appointments />
           <AppointmentTooltip
@@ -133,7 +134,7 @@ function VendorEventsCalenderView() {
           />
           <AllDayPanel />
         </Scheduler>
-      </DashboardCard>
+      </Grid>
     );
   }
 
@@ -165,7 +166,7 @@ function CustomAppointmentHeader({ onHide, appointmentData }) {
     setShareDialog(false);
   };
   return (
-    <Grid container justify="flex-end">
+    <Grid container>
       {edit && event.type === EVENT_TYPES.ONE_TIME && (
         <Dialog
           PaperProps={{
