@@ -51,6 +51,7 @@ function EventCard({
   isVendor = true,
   paymentDetails = {},
 }) {
+  console.log(paymentDetails);
   const classes = styles();
   const [edit, setEdit] = React.useState(false);
   const [clone, setClone] = React.useState(false);
@@ -174,7 +175,7 @@ function EventCard({
                 .join(" ")}
             </div>
 
-            {!isVendor ?? paymentDetails?.status === "COMPLETE" ? (
+            {!isVendor || paymentDetails?.status === "COMPLETE" ? (
               <div
                 className={classes.topBannerButton}
                 style={{
@@ -274,7 +275,7 @@ function EventCard({
         <Grid container>
           <Grid
             item
-            sm={editable ? 12 : 9}
+            sm={editable ? 12 : isVendor ? 12 : 9}
             container
             justify={"space-between"}
             className={classes.textContainer}

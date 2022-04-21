@@ -5,7 +5,7 @@ import PageTitle from "../PageTitle";
 
 import VendorEventsStats from "../VendorEventStats";
 import VendorRevenueUserAggSec from "../VendorRevenueUserAggSec";
-import VendorSalesGraph from "../VendorSalesGraph";
+// import VendorSalesGraph from "../VendorSalesGraph";
 
 function VendorFinancials() {
   const classes = styles();
@@ -14,7 +14,7 @@ function VendorFinancials() {
       <PageTitle title="Payorb | Financials" />
       <VendorRevenueUserAggSec></VendorRevenueUserAggSec>
       <VendorEventsStats></VendorEventsStats>
-      <VendorSalesGraph />
+      {/* <VendorSalesGraph /> */}
     </Grid>
   );
 }

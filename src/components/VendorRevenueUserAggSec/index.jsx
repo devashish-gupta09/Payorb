@@ -48,10 +48,7 @@ function VendorRevenueUserAggSec() {
   if (stats) {
     return (
       <Grid className={classes.outerContainer}>
-        <Typography
-          variant={"h6"}
-          className={`${classes.dashboard} ${classes.title}`}
-        >
+        <Typography variant={"h6"} className={`${classes.title}`}>
           Dashboard
         </Typography>
 
@@ -125,8 +122,8 @@ const styles = makeStyles((theme) => ({
     width: "fit-content",
   },
   outerContainer: {
-    position: "relative",
-    marginLeft: "4em",
+    width: "100%",
+    padding: "2em",
     [theme.breakpoints.down("sm")]: {
       position: "static",
       marginLeft: "0",
@@ -136,7 +133,7 @@ const styles = makeStyles((theme) => ({
     fontWeight: "600",
     fontSize: "1.2em",
     paddingBottom: "1em",
-    marginLeft: "3.5em",
+    // marginLeft: "3.5em",
   },
   fix: {
     justifyContent: "flex-start",

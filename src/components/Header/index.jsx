@@ -1,8 +1,12 @@
 import { AppBar, makeStyles } from "@material-ui/core";
 import React from "react";
 
-function CustomHeader({ children, bgColor = "white" }) {
-  const classes = styles({ bgColor });
+function CustomHeader({
+  children,
+  bgColor = "white",
+  shadow = "0px 1px 3px 1px rgba(0,0,0,0.15)",
+}) {
+  const classes = styles({ bgColor, shadow });
   return (
     <AppBar className={classes.root} position="relative">
       {children}
@@ -22,7 +26,7 @@ const styles = makeStyles((theme) => ({
       padding: "0.5em 1em",
       // marginBottom: "5em",
     },
-    boxShadow: "none",
+    boxShadow: ({ shadow }) => shadow,
   },
 }));
 
