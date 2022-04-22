@@ -1,16 +1,19 @@
 import {
   Grid,
+  InputAdornment,
   makeStyles,
+  MenuItem,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
   Typography,
 } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
-import { Send } from "@material-ui/icons";
+import { FilterList, Send } from "@material-ui/icons";
 import clsx from "clsx";
 
 import React from "react";
@@ -89,10 +92,10 @@ function VendorPromotions() {
     let temp = [...selectedValueForFilter];
     if (temp.includes(link)) {
       temp = temp.filter((l) => l !== link);
-      setSelectedValueForFilter([...temp]);
+      setSelectedValueForFilter([link]);
     } else {
       temp = [...temp];
-      setSelectedValueForFilter([...temp]);
+      setSelectedValueForFilter([link]);
     }
   };
 
@@ -238,7 +241,7 @@ function VendorPromotions() {
               }}
               className={classes.search}
             /> */}
-            {/* <TextField
+            <TextField
               select
               value={
                 selectedValueForFilter.length === 1
@@ -283,7 +286,7 @@ function VendorPromotions() {
                   {event.name}
                 </MenuItem>
               ))}
-            </TextField> */}
+            </TextField>
           </Grid>
         </Grid>
 
@@ -371,7 +374,10 @@ function VendorPromotions() {
                                 icon={
                                   <Send
                                     size="small"
-                                    style={{ color: "#767676" }}
+                                    style={{
+                                      color: "#585858",
+                                      transform: "scale(0.5)",
+                                    }}
                                   />
                                 }
                                 onClick={() => sendNotification(rows)}
@@ -483,12 +489,15 @@ const styles = makeStyles((theme) => ({
     marginBottom: "1em",
   },
   sendButton: {
+    border: "1px solid #585858",
     margin: "0",
+    fontSize: "0.875em",
     background: "white",
-    padding: "0.1em 0.5em",
+    color: "#585858",
+    padding: "0.1em 1em",
     height: "fit-content",
     "& > span > svg": {
-      marginLeft: "0.5em",
+      marginLeft: "0.1em",
     },
     "&:hover": {
       background: "#dedede",
