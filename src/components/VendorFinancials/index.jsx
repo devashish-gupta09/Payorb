@@ -21,6 +21,7 @@ function VendorFinancials() {
 
 const styles = makeStyles((theme) => ({
   root: {
+    paddingBottom: "2em",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
