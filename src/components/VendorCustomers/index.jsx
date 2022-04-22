@@ -180,20 +180,31 @@ function VendorCustomers() {
     }
   }, [customers, events]);
 
-  const handleTableCollapse = (rowId) => {
+  const handleTableCollapse = (row) => {
+    const index = formattedCustomers.findIndex(
+      (x) => x.phoneNumber === row.phoneNumber
+    );
+
     const temp = [...formattedCustomers];
-    temp[rowId].collapsed = !temp[rowId].collapsed;
+
+    temp[index].collapsed = !temp[index].collapsed;
     setFormattedCustomers([...temp]);
   };
 
-  const handleFilterChange = (link) => {
-    let temp = [...selectedValueForFilter];
-    if (temp.includes(link)) {
-      temp = temp.filter((l) => l !== link);
-      setSelectedValueForFilter([...temp]);
+  const handleFilterChange = (event) => {
+    const link = event.target.value;
+
+    if (link) {
+      let temp = [...selectedValueForFilter];
+      if (temp.includes(link)) {
+        temp = temp.filter((l) => l !== link);
+        setSelectedValueForFilter([link]);
+      } else {
+        temp = [...temp, link];
+        setSelectedValueForFilter([link]);
+      }
     } else {
-      temp = [...temp, link];
-      setSelectedValueForFilter([...temp]);
+      setSelectedValueForFilter([]);
     }
   };
 
@@ -261,6 +272,7 @@ function VendorCustomers() {
             )
           );
 
+    console.log(rows);
     return (
       <Grid className={classes.root}>
         <PageTitle title="Payorb | Customers" />
@@ -311,6 +323,9 @@ function VendorCustomers() {
                 ),
               }}
             >
+              <MenuItem style={{ fontSize: "0.8em" }} value={""}>
+                {"None"}
+              </MenuItem>
               {events.map((event) => (
                 <MenuItem
                   style={{ fontSize: "0.8em" }}
@@ -409,7 +424,7 @@ function VendorCustomers() {
                                       ]
                                     }
                                     onClick={() => {
-                                      handleTableCollapse(index);
+                                      handleTableCollapse(row);
                                     }}
                                   />
                                 </Grid>
@@ -437,7 +452,7 @@ function VendorCustomers() {
             </Table>
             {formattedCustomers?.length > rowsPerPage && (
               <TablePagination
-                count={formattedCustomers.length}
+                count={rows}
                 rowsPerPageOptions={[10]}
                 rowsPerPage={rowsPerPage}
                 page={page}
