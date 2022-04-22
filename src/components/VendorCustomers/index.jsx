@@ -11,6 +11,7 @@ import {
   TextField,
   InputAdornment,
   MenuItem,
+  TablePagination,
 } from "@material-ui/core";
 import { CalendarToday, FilterList } from "@material-ui/icons";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
@@ -151,7 +152,7 @@ function VendorCustomers() {
 
   const [tableContentCollapse, setTableContentsCollapse] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const [formattedCustomers, setFormattedCustomers] = React.useState([]);
   const { customers, loading } = useFetchVendorCustomers();
@@ -162,7 +163,6 @@ function VendorCustomers() {
 
   React.useEffect(() => {
     if (customers && events) {
-      console.log("Customers", customers);
       let formattedCustomersData = customers.map((customer) => {
         let formattedEvents = customer?.events
           ?.map((link) => {
@@ -176,8 +176,6 @@ function VendorCustomers() {
           collapsed: true,
         };
       });
-
-      console.log("Fmt Customers", formattedCustomersData.length);
       setFormattedCustomers([...formattedCustomersData]);
     }
   }, [customers, events]);
@@ -197,6 +195,10 @@ function VendorCustomers() {
       temp = [...temp, link];
       setSelectedValueForFilter([...temp]);
     }
+  };
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
   };
 
   if (loading || eventLoading) {
@@ -347,7 +349,10 @@ function VendorCustomers() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row, index) => {
+                {(rowsPerPage > 0
+                  ? rows.slice(page * rowsPerPage, (page + 1) * rowsPerPage)
+                  : rows
+                ).map((row, index) => {
                   return (
                     <TableRow tabIndex={-1} key={index}>
                       {columns.map((column) => {
@@ -430,25 +435,18 @@ function VendorCustomers() {
                 })}
               </TableBody>
             </Table>
+            {formattedCustomers?.length > rowsPerPage && (
+              <TablePagination
+                count={formattedCustomers.length}
+                rowsPerPageOptions={[10]}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                component="div"
+                onPageChange={handleChangePage}
+              />
+            )}
           </TableContainer>
         </Grid>
-        {/* <ReactPaginate
-          breakLabel="..."
-          previousLabel={"Previous"}
-          nextLabel={"Next"}
-          //onPageChange={handlePageClick}
-          // pageCount={Math.ceil(rows.length/rowsPerPage)}
-          pageCount={4}
-          pageRangeDisplayed={3}
-          marginPagesDisplayed={2}
-          renderOnZeroPageCount={null}
-          // onPageChange={handleChangePage}
-          containerClassName={classes.pagination}
-          pageClassName={classes.pageItem}
-          previousClassName={classes.pageItem}
-          nextClassName={classes.pageItem}
-          activeClassName={classes.active}
-        /> */}
       </Grid>
     );
   }
@@ -493,7 +491,7 @@ const columns = [
 const styles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    padding: "2em",
+    padding: "2em 2em 5em 2em",
   },
   filterSelect: {
     width: "10em",
@@ -514,7 +512,7 @@ const styles = makeStyles((theme) => ({
   },
   pageItem: {
     border: "1px solid #DCDCDC",
-    padding: "0.5em",
+    padding: "0.5em 1.25em",
     fontSize: "0.8em",
     "&:hover": {
       background: "#767676",
