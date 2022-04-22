@@ -27,7 +27,7 @@ import DashboardContainer from "../VendorDashboardContainer";
  * @returns React.FunctionalComponent
  */
 
-function CustomersView() {
+function CustomersView({ needHeader = true }) {
   const router = useRouter();
 
   const getComponent = () => {
@@ -64,7 +64,7 @@ function CustomersView() {
 
   return (
     <Grid>
-      <CustomerViewHeader />
+      {needHeader && <CustomerViewHeader />}
       <DashboardContainer>{getComponent()}</DashboardContainer>
     </Grid>
   );

@@ -15,7 +15,6 @@ import {
 import { CalendarToday, FilterList } from "@material-ui/icons";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import SearchIcon from "@material-ui/icons/Search";
 import React from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
@@ -273,7 +272,7 @@ function VendorCustomers() {
           </Grid>
 
           <Grid container alignItems="center" style={{ width: "fit-content" }}>
-            <TextField
+            {/* <TextField
               placeholder="Search"
               InputProps={{
                 inputProps: {
@@ -299,7 +298,7 @@ function VendorCustomers() {
                 ),
               }}
               className={classes.search}
-            />
+            /> */}
             <TextField
               select
               className={classes.filterSelect}

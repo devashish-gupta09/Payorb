@@ -1,5 +1,6 @@
 import { Grid, makeStyles, TextField, Typography } from "@material-ui/core";
 import { useFormik } from "formik";
+import { useRouter } from "next/router";
 import React from "react";
 
 import * as Yup from "yup";
@@ -8,6 +9,7 @@ import { appColors } from "../../../styles/colors";
 import { ALERT_TYPES } from "../../constants/alerts";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { updateUser } from "../../services/auth";
+import { buildVendorDashboardUrl, getVendorIdFromUrl } from "../../utils/url";
 import ButtonCapsule from "../ButtonCapsule";
 import VideoUpload from "../VideoUpload";
 
@@ -17,6 +19,7 @@ const profileAboutSectionValidation = Yup.object({
 
 function ProfileAboutCard({ profileData, vendor = true, updateProfile }) {
   const classes = styles();
+  const router = useRouter();
   const { Alert, showAlert } = useAlertSnackbar();
 
   const formik = useFormik({
@@ -41,6 +44,12 @@ function ProfileAboutCard({ profileData, vendor = true, updateProfile }) {
     },
   });
 
+  const handleOnProfileClick = () => {
+    router.push(
+      buildVendorDashboardUrl(getVendorIdFromUrl(router), "/preview")
+    );
+  };
+
   return (
     <Grid className={classes.root}>
       {Alert()}
@@ -60,6 +69,7 @@ function ProfileAboutCard({ profileData, vendor = true, updateProfile }) {
             {vendor ? (
               <Grid>
                 <ButtonCapsule
+                  onClick={handleOnProfileClick}
                   text="Profile Preview"
                   buttonStyle={`${classes.previewButton}`}
                 ></ButtonCapsule>

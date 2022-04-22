@@ -20,6 +20,7 @@ import {
   DialogContentText,
 } from "@material-ui/core";
 import { CheckCircle } from "@material-ui/icons";
+import MuiAlert from "@material-ui/lab/Alert";
 
 import createHash from "create-hash";
 import { useFormik } from "formik";
@@ -49,6 +50,7 @@ import { removeStringAndAddSeperator } from "../../utils/strings";
 import { buildVendorDashboardUrl, getVendorIdFromUrl } from "../../utils/url";
 import { createEventValidationSchema } from "../../validations/events";
 import { FirebaseAuth } from "../AuthenticationContext";
+import ButtonCapsule from "../ButtonCapsule";
 import { COVER_BANNER_LIMIT, EventCoverUpload } from "../EventCoverUpload";
 import OneOnOneDateSelector from "../OneOnOneDateSelector";
 import OneTimeDateSelector from "../OneTimeDateSelector";
@@ -60,7 +62,6 @@ import {
 } from "../VendorEventBannerHeader";
 import { EarlyBirdSection } from "./EarlyBirdSection";
 import { EventCategoryField } from "./EventCategoryField";
-import { HostButtonSection } from "./HostButtonSection";
 import { styles } from "./styles";
 
 const hash = createHash("sha256");
@@ -88,7 +89,7 @@ function getCreationFormInitialState(trialClass) {
     otherField: "",
     earlyBird: false,
     earlyBirdPrice: 0,
-    earlyBirdDeadline: new Date(new Date().getHours() + 1),
+    earlyBirdDeadline: new Date(new Date().getTime() + 60 * 60000),
     trialClass: trialClass === true ? true : false,
     coverImgUrl: getRandomEventBanner(EVENT_CATEGORY.EDUCATION),
     coverBannerImages: [],
@@ -767,6 +768,25 @@ function VendorEventCreationForm({
                   </FormHelperText>
                 </Grid>
 
+                <Grid item sm={12}>
+                  <MuiAlert
+                    icon={<></>}
+                    severity="warning"
+                    variant="filled"
+                    style={{
+                      background: "rgba(255, 206, 49, 0.17)",
+                      color: "black",
+                      width: "100%",
+                    }}
+                  >
+                    <b>{`NOTE: `}</b>{" "}
+                    <span style={{ fontWeight: "400" }}>
+                      Event category selection will change the Banner image from
+                      our repository
+                    </span>
+                  </MuiAlert>
+                </Grid>
+
                 {formik.values.type === EVENT_TYPES.ONE_ON_ONE && (
                   <Grid item sm={4}>
                     <TextField
@@ -896,6 +916,25 @@ function VendorEventCreationForm({
                       FormHelperTextProps={{ className: classes.helperText }}
                     />
                   </FormControl>
+                </Grid>
+
+                <Grid item sm={12}>
+                  <MuiAlert
+                    icon={<></>}
+                    severity="warning"
+                    variant="filled"
+                    style={{
+                      background: "rgba(255, 206, 49, 0.17)",
+                      color: "black",
+                      width: "100%",
+                    }}
+                  >
+                    <b>{`NOTE: `}</b>{" "}
+                    <span style={{ fontWeight: "400" }}>
+                      Customers will receive this message on email after they
+                      complete their purchase
+                    </span>
+                  </MuiAlert>
                 </Grid>
 
                 {/* EVENT MODE AND TICKET PRICE */}
@@ -1163,6 +1202,7 @@ function VendorEventCreationForm({
                   </FormLabel>
                   <TextField
                     fullWidth
+                    autoComplete={"off"}
                     className={classes.textInput}
                     id="url"
                     onChange={formik.handleChange}
@@ -1172,8 +1212,6 @@ function VendorEventCreationForm({
                     helperText={
                       formik.errors.url
                         ? formik.errors.url
-                        : edit
-                        ? ""
                         : "You can also personalize your event link, e.g. YogaWithNeha, CookieBakingWorkshop"
                     }
                     FormHelperTextProps={{ className: classes.helperText }}
@@ -1201,21 +1239,20 @@ function VendorEventCreationForm({
                   />
                 </FormControl>
 
-                <HostButtonSection
+                {/* <HostButtonSection
                   loader={loader}
                   dateError={dateError}
                   formik={formik}
                   classes={classes}
-                />
+                /> */}
 
-                {/* <ButtonCapsule
+                <ButtonCapsule
                   disabled={loader || dateError || formik.errors.url}
                   buttonStyle={classes.saveButton}
                   type={"submit"}
                   text={"Host Event"}
                   showLoader={loader}
                 ></ButtonCapsule>
-                {dateError || formik.errors.url} */}
 
                 {matches && (
                   <Button fullWidth onClick={handleCancel}>
@@ -1289,8 +1326,10 @@ const EventTypeSelect = ({ formik, checkDisabled, handleEventTypeChange }) => {
             )}
 
             <Grid item>
-              <Typography>One Time</Typography>
-              <Typography>
+              <Typography gutterBottom>
+                <b>One Time</b>
+              </Typography>
+              <Typography style={{ fontSize: "0.8em" }}>
                 Fixed schedule of event / service. <br></br>Open to one or more
                 clients.
               </Typography>
@@ -1317,8 +1356,10 @@ const EventTypeSelect = ({ formik, checkDisabled, handleEventTypeChange }) => {
             )}
 
             <Grid>
-              <Typography>One on One</Typography>
-              <Typography>
+              <Typography gutterBottom>
+                <b>One on One</b>
+              </Typography>
+              <Typography style={{ fontSize: "0.8em" }}>
                 Clients can book individual service
                 <br /> sessions with you from calender <br />
                 availability

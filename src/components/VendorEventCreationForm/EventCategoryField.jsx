@@ -83,6 +83,19 @@ export const EventCategoryField = ({ formik, checkDisabled }) => {
           variant={"outlined"}
           fullWidth
           label="Add Category"
+          InputProps={{
+            inputProps: {
+              style: {
+                padding: "1em",
+                background: "#ECEDF4",
+                borderRadius: "5px",
+              },
+            },
+            disableUnderline: true,
+          }}
+          style={{
+            marginTop: "0.5em",
+          }}
         ></TextField>
       ) : null}
       <FormHelperText

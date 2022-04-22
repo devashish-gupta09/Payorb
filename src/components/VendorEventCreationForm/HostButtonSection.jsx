@@ -23,7 +23,6 @@ export const HostButtonSection = ({ loader, dateError, formik, classes }) => {
     const paymentDetails = verifiedDetails.find(
       (vd) => vd.name === "paymentDetails"
     );
-    console.log(paymentDetails);
 
     // if (paymentDetails.status !== "COMPLETE") {
     //   return (

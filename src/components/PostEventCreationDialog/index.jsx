@@ -122,7 +122,13 @@ function PostEventCreationDialog(props) {
         </Grid>
       </DialogTitle>
       <DialogContent className={classes.container}>
-        <EventCard event={event} editable={false} />
+        {/* its hacked */}
+        <EventCard
+          event={event}
+          editable={false}
+          isVendor={true}
+          share={true}
+        />
         <Grid container style={{ padding: "1em 0.5em" }} alignItems="stretch">
           <Grid item xs={isMobile ? 5 : 3}>
             <Typography style={{ fontWeight: "500" }} gutterBottom>

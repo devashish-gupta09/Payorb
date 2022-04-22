@@ -2,23 +2,24 @@ import { makeStyles, Typography, Grid } from "@material-ui/core";
 import React from "react";
 
 import { appColors } from "../../../styles/colors";
-import DashboardCard from "../DashboardCard";
 
-function ValueCard({ title, subTitle, photo, bottomText }) {
-  const classes = styles();
+function ValueCard({ title, subTitle, photo, bottomText, topBorderColor }) {
+  const classes = styles({ topBorderColor });
   return (
-    <DashboardCard rootClass={classes.container}>
-      <Grid container>
-        <Grid item xs={4}>
-          <img src={photo} className={classes.img} />
-        </Grid>
-        <Grid item xs={8}>
-          <Typography className={classes.title}>{title}</Typography>
-          <Typography className={classes.subTitle}>{subTitle}</Typography>
-          <Typography className={classes.bottomText}>{bottomText}</Typography>
+    <Grid style={{ padding: "1em 1em 0 0" }}>
+      <Grid className={classes.container}>
+        <Grid container>
+          <Grid item xs={4}>
+            <img src={photo} className={classes.img} />
+          </Grid>
+          <Grid item xs={8}>
+            <Typography className={classes.title}>{title}</Typography>
+            <Typography className={classes.subTitle}>{subTitle}</Typography>
+            <Typography className={classes.bottomText}>{bottomText}</Typography>
+          </Grid>
         </Grid>
       </Grid>
-    </DashboardCard>
+    </Grid>
   );
 }
 
@@ -26,6 +27,10 @@ const styles = makeStyles((theme) => ({
   container: {
     padding: "1.5em 0.5em",
     height: "100%",
+    borderTop: "0.3em solid",
+    borderRadius: "0.4em",
+    boxShadow: " 0px 0px 10px rgba(0, 0, 0, 0.1)",
+    borderTopColor: ({ topBorderColor }) => topBorderColor || "black",
     [theme.breakpoints.down("sm")]: {
       padding: "1em",
     },

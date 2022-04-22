@@ -15,8 +15,15 @@ import SkeletonLoading from "../SkeletonLoading";
 export const VendorOpenEvents = ({ vendorId }) => {
   const classes = styles();
 
-  const { loading, events, error, moreEvents, loadMoreEvents, setEvents } =
-    useFetchOpenEvents({ userUID: vendorId });
+  const {
+    loading,
+    events,
+    error,
+    moreEvents,
+    loadMoreEvents,
+    setEvents,
+    totalEvents,
+  } = useFetchOpenEvents({ userUID: vendorId });
   const { loading: paymentDetailsLoading, verifiedDetails } =
     useFetchVendorVerifiedDetails();
   const { Alert, showAlert } = useAlertSnackbar();
@@ -62,7 +69,7 @@ export const VendorOpenEvents = ({ vendorId }) => {
             fontSize: "1em",
           }}
         >
-          Open Events
+          Open Events ({totalEvents})
         </Typography>
         <EventsViewList
           showOpen={true}
