@@ -98,13 +98,18 @@ function VendorPromotions() {
 
   const handleFilterChange = (event) => {
     const link = event.target.value;
-    let temp = [...selectedValueForFilter];
-    if (temp.includes(link)) {
-      temp = temp.filter((l) => l !== link);
-      setSelectedValueForFilter([link]);
+
+    if (link) {
+      let temp = [...selectedValueForFilter];
+      if (temp.includes(link)) {
+        temp = temp.filter((l) => l !== link);
+        setSelectedValueForFilter([link]);
+      } else {
+        temp = [...temp];
+        setSelectedValueForFilter([link]);
+      }
     } else {
-      temp = [...temp];
-      setSelectedValueForFilter([link]);
+      setSelectedValueForFilter([]);
     }
   };
 
@@ -239,13 +244,6 @@ function VendorPromotions() {
           <Grid container alignItems="center" style={{ width: "fit-content" }}>
             <TextField
               select
-              // value={
-              //   selectedValueForFilter.length === 1
-              //     ? events.filter(
-              //         (e) => e.link === selectedValueForFilter[0]
-              //       )[0]["name"]
-              //     : "Filter events"
-              // }
               className={classes.filterSelect}
               onChange={handleFilterChange}
               InputProps={{
@@ -273,6 +271,9 @@ function VendorPromotions() {
                 ),
               }}
             >
+              <MenuItem style={{ fontSize: "0.8em" }} value={""}>
+                {"None"}
+              </MenuItem>
               {events.map((event) => (
                 <MenuItem
                   style={{ fontSize: "0.8em" }}
@@ -413,23 +414,6 @@ function VendorPromotions() {
             />
           )}
         </Grid>
-        {/* <ReactPaginate
-              breakLabel="..."
-              previousLabel={"Previous"}
-              nextLabel={"Next"}
-              //onPageChange={handlePageClick}
-              // pageCount={Math.ceil(rows.length/rowsPerPage)}
-              pageCount={4}
-              pageRangeDisplayed={3}
-              marginPagesDisplayed={2}
-              renderOnZeroPageCount={null}
-              onPageChange={handleChangePage}
-              containerClassName={classes.pagination}
-              pageClassName={classes.pageItem}
-              previousClassName={classes.pageItem}
-              nextClassName={classes.pageItem}
-              activeClassName={classes.active}
-            /> */}
       </Grid>
     );
   }
@@ -474,7 +458,7 @@ const columns = [
 const styles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    padding: "2em",
+    padding: "2em 2em 5em 2em",
   },
   checkbox: {
     position: "relative",
