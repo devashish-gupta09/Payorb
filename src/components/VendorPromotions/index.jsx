@@ -113,7 +113,7 @@ function VendorPromotions() {
     }
   };
 
-  const sendNotification = async (rows) => {
+  const sendNotification = async () => {
     try {
       const filteredEvents =
         selectedValueForFilter.length > 0
