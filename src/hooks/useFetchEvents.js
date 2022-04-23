@@ -7,6 +7,7 @@ function useFetchEvents(isVendor, filterParams) {
   const [loading, setLoading] = React.useState(true);
   const [events, setEvents] = React.useState();
   const [error, setError] = React.useState();
+  const [totalEvents, setTotalEvents] = React.useState(0);
 
   const [eventsParams, setEventsParams] = React.useState({
     orderBy: "createdDate",
@@ -67,6 +68,7 @@ function useFetchEvents(isVendor, filterParams) {
             await delay(50);
             setLoading(false);
             setEvents(res.data.events);
+            setTotalEvents(res.data.totalEvents);
             setEventsParams({ ...eventsParams, startFrom: res.data.lastEvent });
           }
         })
@@ -109,6 +111,7 @@ function useFetchEvents(isVendor, filterParams) {
     moreEvents,
     loadMoreEvents,
     changeLimit: handleLimitChange,
+    totalEvents,
   };
 }
 

@@ -13,7 +13,6 @@ import {
 import numeral from "numeral";
 import React from "react";
 
-import { globalStyles } from "../../../styles/globalStyles";
 import { EVENT_STATUS } from "../../constants/events";
 import useFetchEvents from "../../hooks/useFetchEvents";
 import { getMonthDate } from "../../utils/dateTime";
@@ -53,7 +52,7 @@ const styles = makeStyles((theme) => ({
     borderRadius: "2em",
     fontWeight: "500",
     fontSize: "0.8em",
-    padding: "0.5em 0 0.5em 0",
+    padding: "0.75em 0 0.75em 0",
   },
   statusCompleted: {
     border: "1px solid #1ECE7A",
@@ -105,26 +104,13 @@ function VendorEventsStats() {
   const classes = styles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [allCheckedState, setAllCheckedState] = React.useState(false);
-  const [checkedState, setCheckedState] = React.useState([]);
-  const { loading, events, changeLimit, loadMoreEvents } = useFetchEvents(
-    true,
-    {
+  const { loading, events, changeLimit, loadMoreEvents, totalEvents } =
+    useFetchEvents(true, {
       limit: 6,
-    }
-  );
-
-  React.useEffect(() => {
-    if (!loading && events?.length) {
-      events.map(() => {
-        setCheckedState((state) => [...state, false]);
-      });
-    }
-  }, [loading]);
-
-  const globalClasses = globalStyles();
+    });
 
   const handleChangePage = async (event, newPage) => {
+    console.log("NEW PAGE", newPage);
     if (newPage > page) {
       await loadMoreEvents();
     }
@@ -142,25 +128,6 @@ function VendorEventsStats() {
       await loadMoreEvents();
     }
     changeLimit(event.target.value + 1);
-  };
-
-  const handleOnChange = (position) => {
-    console.log(checkedState);
-    const updatedCheckedState = checkedState.map((item, index) =>
-      index === position ? !item : item
-    );
-    setCheckedState(updatedCheckedState);
-  };
-
-  const handleAllCheckboxChange = () => {
-    console.log(checkedState);
-    if (allCheckedState) {
-      setCheckedState(checkedState.map(() => false));
-      setAllCheckedState(false);
-    } else {
-      setCheckedState(checkedState.map(() => true));
-      setAllCheckedState(true);
-    }
   };
 
   if (loading) {
@@ -184,26 +151,14 @@ function VendorEventsStats() {
       )
     );
 
-    // const pageCount = Math.ceil(rows.length / 5);
+    const pageCount = Math.ceil(totalEvents / rowsPerPage);
     return (
       <Grid className={classes.root}>
-        {/* {<Typography
-          variant={"h6"}
-          className={`${globalClasses.boldSixHundred} ${classes.title}`}
-        >
-          Events
-        </Typography>} */}
         <Grid>
           <TableContainer className={classes.container}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow className={classes.tableStyle}>
-                  {/* <Checkbox
-                    color="primary"
-                    // onChange={handleCheckboxChange}
-                    size="small"
-                    className={classes.checkbox}
-                  /> */}
                   {columns.map((column) => (
                     <TableCell
                       key={column.id}
@@ -221,83 +176,80 @@ function VendorEventsStats() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
-                    return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={index}
-                        className={classes.container}
-                      >
-                        {/* <Checkbox
-                          color="primary"
-                          checked={checkedState[index]}
-                          onChange={() => handleOnChange(index)}
-                          className={classes.checkbox}
-                          size="small"
-                        /> */}
-
-                        {columns.map((column) => {
-                          const value = row[column.id];
-                          if (column.id == "name") {
-                            return (
-                              <TableCell
-                                key={column.id}
-                                align={column.align}
-                                style={{ fontWeight: "500", color: "black" }}
-                              >
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          } else {
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number" ? (
-                                  column.format(value)
-                                ) : value === "Completed" ? (
-                                  <Typography
-                                    className={`${classes.status} ${classes.statusCompleted}`}
-                                  >
-                                    {value}
-                                  </Typography>
-                                ) : value === "On Going" ? (
-                                  <Typography
-                                    className={`${classes.status} ${classes.statusOnGoing}`}
-                                  >
-                                    {value}
-                                  </Typography>
-                                ) : value === "Upcoming" ? (
-                                  <Typography
-                                    className={`${classes.status} ${classes.statusUpcoming}`}
-                                  >
-                                    {value}
-                                  </Typography>
-                                ) : (
-                                  value
-                                )}
-                              </TableCell>
-                            );
-                          }
-                        })}
-                      </TableRow>
-                    );
-                  })}
+                {(rowsPerPage > 0
+                  ? rows.slice(
+                      page * rowsPerPage,
+                      page * rowsPerPage + rowsPerPage
+                    )
+                  : rows
+                ).map((row, index) => {
+                  return (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={index}
+                      className={classes.container}
+                    >
+                      {columns.map((column) => {
+                        const value = row[column.id];
+                        if (column.id == "name") {
+                          return (
+                            <TableCell
+                              key={column.id}
+                              align={column.align}
+                              style={{ fontWeight: "500", color: "black" }}
+                            >
+                              {column.format && typeof value === "number"
+                                ? column.format(value)
+                                : value}
+                            </TableCell>
+                          );
+                        } else {
+                          return (
+                            <TableCell key={column.id} align={column.align}>
+                              {column.format && typeof value === "number" ? (
+                                column.format(value)
+                              ) : value === "Completed" ? (
+                                <Typography
+                                  className={`${classes.status} ${classes.statusCompleted}`}
+                                >
+                                  {value}
+                                </Typography>
+                              ) : value === "On Going" ? (
+                                <Typography
+                                  className={`${classes.status} ${classes.statusOnGoing}`}
+                                >
+                                  {value}
+                                </Typography>
+                              ) : value === "Upcoming" ? (
+                                <Typography
+                                  className={`${classes.status} ${classes.statusUpcoming}`}
+                                >
+                                  {value}
+                                </Typography>
+                              ) : (
+                                value
+                              )}
+                            </TableCell>
+                          );
+                        }
+                      })}
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
+            <TablePagination
+              page={page}
+              rowsPerPageOptions={[5, 10, 20]}
+              component="div"
+              count={totalEvents}
+              rowsPerPage={rowsPerPage}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
           </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 20]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
         </Grid>
       </Grid>
     );

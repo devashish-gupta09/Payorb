@@ -165,7 +165,6 @@ function VendorDashboard() {
               {getComponent(profileData)}
             </VendorDashboardContainer>
           )}
-          {/* <AuthAlertBanner /> */}
 
           {router.asPath === `/vendor/${router.query.vendorId}` && (
             <AppFooter />

@@ -1,16 +1,20 @@
 import {
   Grid,
+  InputAdornment,
   makeStyles,
+  MenuItem,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
+  TablePagination,
   TableRow,
+  TextField,
   Typography,
 } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
-import { Send } from "@material-ui/icons";
+import { FilterList, Send } from "@material-ui/icons";
 import clsx from "clsx";
 
 import React from "react";
@@ -36,7 +40,8 @@ function createData(
   count,
   status,
   startDate,
-  endDate
+  endDate,
+  selected
 ) {
   return {
     name,
@@ -45,6 +50,7 @@ function createData(
     count,
     status: getEventStatus(startDate, endDate),
     link,
+    selected,
   };
 }
 
@@ -69,44 +75,67 @@ function VendorPromotions() {
   const [selectedValueForFilter, setSelectedValueForFilter] = React.useState(
     []
   );
-  const [checkedState, setCheckedState] = React.useState([]);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [allCheckedState, setAllCheckedState] = React.useState(false);
   const [confirmationDialogOpen, setConfirmationDialogOpen] = React.useState();
-  // const [rows, setRows] =
-
+  const [formattedEvents, setFormattedEvents] = React.useState([]);
   const { loading, events } = useFetchEvents(true, {
     limit: 400,
   });
 
-  const handleOnChange = (position, event) => {
-    checkedState[position] = event.target.value;
-    setCheckedState(checkedState);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleOnChange = (value, eventLink) => {
+    const selectedState = value;
+    const tempIndex = formattedEvents.findIndex((x) => x.link === eventLink);
+    const tempArr = [...formattedEvents];
+    tempArr[tempIndex] = { ...tempArr[tempIndex], selected: selectedState };
+    setFormattedEvents(tempArr);
   };
 
   const handleFilterChange = (event) => {
     const link = event.target.value;
-    // console.log("SELECTED LINK EVENT", link);
-    let temp = [...selectedValueForFilter];
-    if (temp.includes(link)) {
-      temp = temp.filter((l) => l !== link);
-      setSelectedValueForFilter([...temp]);
+
+    if (link) {
+      let temp = [...selectedValueForFilter];
+      if (temp.includes(link)) {
+        temp = temp.filter((l) => l !== link);
+        setSelectedValueForFilter([link]);
+      } else {
+        temp = [...temp];
+        setSelectedValueForFilter([link]);
+      }
     } else {
-      temp = [...temp];
-      setSelectedValueForFilter([...temp]);
+      setSelectedValueForFilter([]);
     }
   };
 
-  const sendNotification = async (rows) => {
+  const sendNotification = async () => {
     try {
+      const filteredEvents =
+        selectedValueForFilter.length > 0
+          ? formattedEvents.filter(
+              (event) => event.link === selectedValueForFilter[0]
+            )
+          : [];
+
       const res = await Promise.allSettled(
-        checkedState.map(async (cs, index) => {
-          if (cs) {
-            return sendNotificationToCustomers({
-              eventId: rows[index].link,
-              // filterEventIds: selectedValueForFilter,
-            });
-          }
-        })
+        filteredEvents?.length > 0
+          ? filteredEvents.map(async (event) =>
+              sendNotificationToCustomers({
+                eventId: event.link,
+              })
+            )
+          : formattedEvents
+              .filter((event) => event.selected)
+              .map(async (event) =>
+                sendNotificationToCustomers({
+                  eventId: event.link,
+                })
+              )
       );
 
       if (res) {
@@ -127,20 +156,19 @@ function VendorPromotions() {
   };
 
   const handleAllCheckboxChange = () => {
-    if (allCheckedState) {
-      setCheckedState(checkedState.map(() => false));
-      setAllCheckedState(false);
-    } else {
-      setCheckedState(checkedState.map(() => true));
-      setAllCheckedState(true);
-    }
+    let temp = [...formattedEvents];
+
+    setFormattedEvents(
+      temp.map((el) => ({ ...el, selected: !allCheckedState }))
+    );
+    setAllCheckedState(!allCheckedState);
   };
 
-  //dummy data ends here
   React.useEffect(() => {
     if (events?.length) {
-      // events.map(() => {
-      setCheckedState(events.map(() => false));
+      setFormattedEvents(
+        events.map((event) => ({ ...event, selected: false }))
+      );
     }
   }, [events]);
 
@@ -166,8 +194,8 @@ function VendorPromotions() {
     );
   }
 
-  if (events?.length) {
-    const rows = events
+  if (formattedEvents?.length) {
+    const rows = formattedEvents
       .map((event) =>
         createData(
           event.link,
@@ -177,7 +205,8 @@ function VendorPromotions() {
           (event.orders ?? [])?.length,
           event.status,
           event.startDate,
-          event.endDate
+          event.endDate,
+          event.selected
         )
       )
       .filter((val) =>
@@ -185,6 +214,8 @@ function VendorPromotions() {
           ? selectedValueForFilter.includes(val.link)
           : true
       );
+
+    // console.log(rows);
 
     return (
       <Grid className={classes.root}>
@@ -211,42 +242,8 @@ function VendorPromotions() {
           </Grid>
 
           <Grid container alignItems="center" style={{ width: "fit-content" }}>
-            {/* <TextField
-              placeholder="Search"
-              InputProps={{
-                inputProps: {
-                  style: {
-                    fontSize: "0.8em",
-                    height: "100%",
-                  },
-                },
-                disableUnderline: true,
-                style: {
-                  border: "1px solid #8B8B8B",
-                  borderRadius: "5px",
-                },
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon
-                      style={{
-                        transform: "scale(0.8)",
-                        color: "#8B8B8B",
-                      }}
-                    />
-                  </InputAdornment>
-                ),
-              }}
-              className={classes.search}
-            /> */}
-            {/* <TextField
+            <TextField
               select
-              value={
-                selectedValueForFilter.length === 1
-                  ? events.filter(
-                      (e) => e.link === selectedValueForFilter[0]
-                    )[0]["name"]
-                  : "Filter events"
-              }
               className={classes.filterSelect}
               onChange={handleFilterChange}
               InputProps={{
@@ -274,6 +271,9 @@ function VendorPromotions() {
                 ),
               }}
             >
+              <MenuItem style={{ fontSize: "0.8em" }} value={""}>
+                {"None"}
+              </MenuItem>
               {events.map((event) => (
                 <MenuItem
                   style={{ fontSize: "0.8em" }}
@@ -283,7 +283,7 @@ function VendorPromotions() {
                   {event.name}
                 </MenuItem>
               ))}
-            </TextField> */}
+            </TextField>
           </Grid>
         </Grid>
 
@@ -331,13 +331,10 @@ function VendorPromotions() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row, index) => {
-                  console.log(
-                    "Is this getting re-renders ?",
-                    checkedState[index],
-                    index,
-                    allCheckedState
-                  );
+                {(rowsPerPage > 0
+                  ? rows.slice(page * rowsPerPage, (page + 1) * rowsPerPage)
+                  : rows
+                ).map((row, index) => {
                   return (
                     <TableRow
                       hover
@@ -349,9 +346,14 @@ function VendorPromotions() {
                       <TableCell>
                         <Checkbox
                           color="primary"
-                          value={checkedState[index]}
-                          checked={checkedState[index]}
-                          onChange={(event) => handleOnChange(index, event)}
+                          value={rows[index].selected}
+                          checked={rows[index].selected}
+                          onChange={(event) =>
+                            handleOnChange(
+                              !rows[index].selected,
+                              rows[index].link
+                            )
+                          }
                           size="small"
                           style={{ alignItems: "center", textAlign: "center" }}
                         />
@@ -371,7 +373,10 @@ function VendorPromotions() {
                                 icon={
                                   <Send
                                     size="small"
-                                    style={{ color: "#767676" }}
+                                    style={{
+                                      color: "#585858",
+                                      transform: "scale(0.5)",
+                                    }}
                                   />
                                 }
                                 onClick={() => sendNotification(rows)}
@@ -398,27 +403,22 @@ function VendorPromotions() {
               </TableBody>
             </Table>
           </TableContainer>
-        </Grid>
-        {/* <ReactPaginate
-              breakLabel="..."
-              previousLabel={"Previous"}
-              nextLabel={"Next"}
-              //onPageChange={handlePageClick}
-              // pageCount={Math.ceil(rows.length/rowsPerPage)}
-              pageCount={4}
-              pageRangeDisplayed={3}
-              marginPagesDisplayed={2}
-              renderOnZeroPageCount={null}
+          {formattedEvents?.length > rowsPerPage && (
+            <TablePagination
+              count={rows.length}
+              rowsPerPageOptions={[10]}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              component="div"
               onPageChange={handleChangePage}
-              containerClassName={classes.pagination}
-              pageClassName={classes.pageItem}
-              previousClassName={classes.pageItem}
-              nextClassName={classes.pageItem}
-              activeClassName={classes.active}
-            /> */}
+            />
+          )}
+        </Grid>
       </Grid>
     );
   }
+
+  return null;
 }
 
 const columns = [
@@ -458,7 +458,7 @@ const columns = [
 const styles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    padding: "2em",
+    padding: "2em 2em 5em 2em",
   },
   checkbox: {
     position: "relative",
@@ -483,12 +483,15 @@ const styles = makeStyles((theme) => ({
     marginBottom: "1em",
   },
   sendButton: {
+    border: "1px solid #585858",
     margin: "0",
+    fontSize: "0.875em",
     background: "white",
-    padding: "0.1em 0.5em",
+    color: "#585858",
+    padding: "0.1em 1em",
     height: "fit-content",
     "& > span > svg": {
-      marginLeft: "0.5em",
+      marginLeft: "0.1em",
     },
     "&:hover": {
       background: "#dedede",
