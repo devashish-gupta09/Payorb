@@ -452,7 +452,7 @@ function VendorCustomers() {
             </Table>
             {formattedCustomers?.length > rowsPerPage && (
               <TablePagination
-                count={rows}
+                count={rows.length}
                 rowsPerPageOptions={[10]}
                 rowsPerPage={rowsPerPage}
                 page={page}

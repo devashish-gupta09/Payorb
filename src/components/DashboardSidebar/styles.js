@@ -4,6 +4,7 @@ export const styles = makeStyles((theme) => ({
   container: {
     backgroundColor: "white",
     height: "calc(100vh - 88px)",
+    paddingTop: "2em",
   },
   drawer: {
     height: "600px",
