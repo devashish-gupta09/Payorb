@@ -49,6 +49,7 @@ function EventCard({
   handleEventDelete,
   editable = true,
   isVendor = true,
+  share = false,
   paymentDetails = {},
 }) {
   const classes = styles();
@@ -174,7 +175,7 @@ function EventCard({
                 .join(" ")}
             </div>
 
-            {paymentDetails?.status === "COMPLETE" ? (
+            {share || !isVendor || paymentDetails?.status === "COMPLETE" ? (
               <div
                 className={classes.topBannerButton}
                 style={{
@@ -274,7 +275,7 @@ function EventCard({
         <Grid container>
           <Grid
             item
-            sm={editable ? 12 : 9}
+            sm={editable ? 12 : isVendor ? 12 : 9}
             container
             justify={"space-between"}
             className={classes.textContainer}

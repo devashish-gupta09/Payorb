@@ -156,7 +156,7 @@ function ImageEventUpload({
                     marginRight: "0.5em",
                   }}
                 >
-                  Add More
+                  Add
                 </Button>
               ) : null}
 

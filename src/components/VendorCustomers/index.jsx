@@ -11,11 +11,11 @@ import {
   TextField,
   InputAdornment,
   MenuItem,
+  TablePagination,
 } from "@material-ui/core";
 import { CalendarToday, FilterList } from "@material-ui/icons";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import SearchIcon from "@material-ui/icons/Search";
 import React from "react";
 
 import { globalStyles } from "../../../styles/globalStyles";
@@ -34,9 +34,11 @@ function createData(
   date,
   events,
   eventList,
-  priceList
+  priceList,
+  selectFilter,
+  collapsed
 ) {
-  console.log("Events", events);
+  // console.log("Events", events);
   return {
     name,
     phoneNumber,
@@ -51,22 +53,17 @@ function createData(
           ),
         ]
       : "",
+    collapsed,
   };
 }
 
-function EventDetailsCell({
-  classes,
-  value,
-  column,
-  index,
-  tableContentCollapse,
-}) {
+function EventDetailsCell({ classes, value, column, index, rowCollapsed }) {
   return (
     <TableCell
       key={column.id}
       align={column.align}
       className={classes.tableContents}
-      style={{ margin: 0, padding: "0.25em" }}
+      style={{ margin: 0, padding: "0.5em 0" }}
     >
       <Typography
         style={{
@@ -75,47 +72,69 @@ function EventDetailsCell({
           padding: "0.2em",
         }}
       >
-        {tableContentCollapse[index]
-          ? value[0]
-          : value.map((val, index) => (
-              <Grid key={index}>
-                {val.name}
-                <Grid container justify={"space-evenly"}>
-                  <Grid item xs={6} container alignItems="center">
-                    <CalendarToday
-                      style={{
-                        transform: "scale(0.6)",
-                      }}
-                    />
-                    <Typography
-                      style={{
-                        color: "#8B8B8B",
-                        fontSize: "0.85em",
-                        marginLeft: "0.1em",
-                      }}
-                    >
-                      {getEventslotDuration(val.startDate, val.endDate).date}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6} container alignItems="center">
-                    <AccessTimeIcon
-                      style={{
-                        color: "#8B8B8B",
-                        transform: "scale(0.6)",
-                      }}
-                    />
-                    <Typography
-                      style={{
-                        color: "#8B8B8B",
-                        fontSize: "0.85em",
-                      }}
-                    >
-                      12:00 PM - 2:00 PM
-                    </Typography>
-                  </Grid>
+        {rowCollapsed ? (
+          <>
+            {value[0]?.name}
+            {value?.length > 1 ? (
+              <span
+                style={{
+                  borderRadius: "50%",
+                  background: "#C4C4C4",
+                  padding: "0.35em",
+                  marginLeft: "0.25em",
+                }}
+              >
+                +{value.length}
+              </span>
+            ) : null}
+          </>
+        ) : (
+          value.map((val, index) => (
+            <Grid
+              key={index}
+              style={{
+                paddingBottom: "0.5em",
+              }}
+            >
+              {val.name}
+              <Grid container justify={"space-evenly"}>
+                <Grid item xs={6} container alignItems="center">
+                  <CalendarToday
+                    style={{
+                      color: "#8B8B8B",
+                      transform: "scale(0.6)",
+                    }}
+                  />
+                  <Typography
+                    style={{
+                      color: "#8B8B8B",
+                      fontSize: "0.875em",
+                      marginLeft: "0.1em",
+                    }}
+                  >
+                    {getEventslotDuration(val.startDate, val.endDate).date}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6} container alignItems="center">
+                  <AccessTimeIcon
+                    style={{
+                      color: "#8B8B8B",
+                      transform: "scale(0.6)",
+                    }}
+                  />
+                  <Typography
+                    style={{
+                      color: "#8B8B8B",
+                      fontSize: "0.875em",
+                    }}
+                  >
+                    {getEventslotDuration(val.startDate, val.endDate).time}
+                  </Typography>
                 </Grid>
               </Grid>
-            ))}
+            </Grid>
+          ))
+        )}
       </Typography>
     </TableCell>
   );
@@ -133,66 +152,65 @@ function VendorCustomers() {
 
   const [tableContentCollapse, setTableContentsCollapse] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const [formattedCustomers, setFormattedCustomers] = React.useState([]);
   const { customers, loading } = useFetchVendorCustomers();
   const { events, loading: eventLoading } = useFetchEvents(true, {
-    limit: 400,
+    limit: 500,
     keys: ["name", "link"],
   });
 
   React.useEffect(() => {
     if (customers && events) {
-      let formattedCustomersData = [];
-      customers.forEach((customer) => {
+      let formattedCustomersData = customers.map((customer) => {
         let formattedEvents = customer?.events
           ?.map((link) => {
             return events.find((event) => event.link === link);
           })
           .filter((e) => e);
 
-        formattedCustomersData.push({
+        return {
           ...customer,
-          events: [...formattedEvents],
-        });
+          events: formattedEvents,
+          collapsed: true,
+        };
       });
-
       setFormattedCustomers([...formattedCustomersData]);
     }
   }, [customers, events]);
 
-  // React.useEffect(() => {
-  //   rows.map((item, index) => {
-  //     setTableContentsCollapse((tableContentCollapse) => [
-  //       ...tableContentCollapse,
-  //       true,
-  //     ]);
-  //   });
-  // }, []);
-
-  const handleTableCollapse = (index, value) => {
-    console.log(value);
-    setTableContentsCollapse(
-      tableContentCollapse.map((tableContent, id) =>
-        id === index ? value : tableContent
-      )
+  const handleTableCollapse = (row) => {
+    const index = formattedCustomers.findIndex(
+      (x) => x.phoneNumber === row.phoneNumber
     );
+
+    const temp = [...formattedCustomers];
+
+    temp[index].collapsed = !temp[index].collapsed;
+    setFormattedCustomers([...temp]);
   };
 
-  const handleFilterChange = (link) => {
-    let temp = [...selectedValueForFilter];
-    if (temp.includes(link)) {
-      temp = temp.filter((l) => l !== link);
-      setSelectedValueForFilter([...temp]);
+  const handleFilterChange = (event) => {
+    const link = event.target.value;
+
+    if (link) {
+      let temp = [...selectedValueForFilter];
+      if (temp.includes(link)) {
+        temp = temp.filter((l) => l !== link);
+        setSelectedValueForFilter([link]);
+      } else {
+        temp = [...temp, link];
+        setSelectedValueForFilter([link]);
+      }
     } else {
-      temp = [...temp, link];
-      setSelectedValueForFilter([...temp]);
+      setSelectedValueForFilter([]);
     }
   };
-  // const onAccept = () => {
-  //   sendNotification();
-  // };
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
   if (loading || eventLoading) {
     return (
@@ -203,7 +221,7 @@ function VendorCustomers() {
     );
   }
 
-  if (!formattedCustomers.length) {
+  if (!formattedCustomers?.length) {
     return (
       <DashboardCard>
         <PageTitle title="Payorb | Customers" />
@@ -216,7 +234,7 @@ function VendorCustomers() {
     );
   }
 
-  if (formattedCustomers && events) {
+  if (formattedCustomers?.length && events?.length) {
     const eventList = events.map((e) => e.name);
     const priceList = events.map((e) => e.price);
     const rows =
@@ -236,7 +254,8 @@ function VendorCustomers() {
                 customer.events,
                 eventList,
                 priceList,
-                selectedValueForFilter
+                selectedValueForFilter,
+                customer.collapsed
               )
             )
         : formattedCustomers.map((customer) =>
@@ -248,10 +267,12 @@ function VendorCustomers() {
               customer.events,
               eventList,
               priceList,
-              selectedValueForFilter
+              selectedValueForFilter,
+              customer.collapsed
             )
           );
 
+    console.log(rows);
     return (
       <Grid className={classes.root}>
         <PageTitle title="Payorb | Customers" />
@@ -273,33 +294,6 @@ function VendorCustomers() {
           </Grid>
 
           <Grid container alignItems="center" style={{ width: "fit-content" }}>
-            <TextField
-              placeholder="Search"
-              InputProps={{
-                inputProps: {
-                  style: {
-                    fontSize: "0.8em",
-                    height: "100%",
-                  },
-                },
-                disableUnderline: true,
-                style: {
-                  border: "2px solid #8B8B8B",
-                  borderRadius: "5px",
-                },
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon
-                      style={{
-                        transform: "scale(0.8)",
-                        color: "#8B8B8B",
-                      }}
-                    />
-                  </InputAdornment>
-                ),
-              }}
-              className={classes.search}
-            />
             <TextField
               select
               className={classes.filterSelect}
@@ -329,6 +323,9 @@ function VendorCustomers() {
                 ),
               }}
             >
+              <MenuItem style={{ fontSize: "0.8em" }} value={""}>
+                {"None"}
+              </MenuItem>
               {events.map((event) => (
                 <MenuItem
                   style={{ fontSize: "0.8em" }}
@@ -367,9 +364,12 @@ function VendorCustomers() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row, index) => {
+                {(rowsPerPage > 0
+                  ? rows.slice(page * rowsPerPage, (page + 1) * rowsPerPage)
+                  : rows
+                ).map((row, index) => {
                   return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                    <TableRow tabIndex={-1} key={index}>
                       {columns.map((column) => {
                         const value = row[column.id];
                         if (column.id === "events") {
@@ -379,7 +379,7 @@ function VendorCustomers() {
                               value={value}
                               column={column}
                               index={index}
-                              tableContentCollapse={tableContentCollapse}
+                              rowCollapsed={row.collapsed}
                             />
                           );
                         } else if (column.id === "price") {
@@ -392,22 +392,39 @@ function VendorCustomers() {
                             >
                               <Grid
                                 container
-                                alignItems="center"
+                                alignItems="flex-start"
                                 justifyContent={"space-between"}
                               >
-                                <Grid item xs={8} container>
-                                  {tableContentCollapse[index] ? (
+                                <Grid item xs={8}>
+                                  {row["events"].length === 1 ||
+                                  row.collapsed ? (
                                     <p> ₹{value[0]}</p>
                                   ) : (
-                                    value.map((val) => <p key={val}> ₹{val}</p>)
+                                    (value ?? [])?.map((val) => (
+                                      <Grid
+                                        key={val}
+                                        style={{
+                                          paddingTop: "0.25em",
+                                          paddingBottom: "1em",
+                                        }}
+                                      >
+                                        {" "}
+                                        ₹{val}
+                                      </Grid>
+                                    ))
                                   )}
                                 </Grid>
                                 <Grid item xs={4}>
                                   <ArrowDropDownIcon
+                                    className={
+                                      classes[
+                                        row.collapsed
+                                          ? "collapseArrowDown"
+                                          : "collapseArrowUp"
+                                      ]
+                                    }
                                     onClick={() => {
-                                      tableContentCollapse[index]
-                                        ? handleTableCollapse(index, false)
-                                        : handleTableCollapse(index, true);
+                                      handleTableCollapse(row);
                                     }}
                                   />
                                 </Grid>
@@ -433,25 +450,18 @@ function VendorCustomers() {
                 })}
               </TableBody>
             </Table>
+            {formattedCustomers?.length > rowsPerPage && (
+              <TablePagination
+                count={rows.length}
+                rowsPerPageOptions={[10]}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                component="div"
+                onPageChange={handleChangePage}
+              />
+            )}
           </TableContainer>
         </Grid>
-        {/* <ReactPaginate
-          breakLabel="..."
-          previousLabel={"Previous"}
-          nextLabel={"Next"}
-          //onPageChange={handlePageClick}
-          // pageCount={Math.ceil(rows.length/rowsPerPage)}
-          pageCount={4}
-          pageRangeDisplayed={3}
-          marginPagesDisplayed={2}
-          renderOnZeroPageCount={null}
-          // onPageChange={handleChangePage}
-          containerClassName={classes.pagination}
-          pageClassName={classes.pageItem}
-          previousClassName={classes.pageItem}
-          nextClassName={classes.pageItem}
-          activeClassName={classes.active}
-        /> */}
       </Grid>
     );
   }
@@ -496,7 +506,7 @@ const columns = [
 const styles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    padding: "2em",
+    padding: "2em 2em 5em 2em",
   },
   filterSelect: {
     width: "10em",
@@ -506,10 +516,10 @@ const styles = makeStyles((theme) => ({
     display: "flex",
     listStyle: "none",
     width: "fit-content",
-    right: "4em",
+    // right: "4em",
     position: "relative",
     float: "right",
-    marginTop: "-2em",
+    // marginTop: "-2em",
     [theme.breakpoints.down("sm")]: {
       marginTop: "0",
       right: "1em",
@@ -517,7 +527,7 @@ const styles = makeStyles((theme) => ({
   },
   pageItem: {
     border: "1px solid #DCDCDC",
-    padding: "0.5em",
+    padding: "0.5em 1.25em",
     fontSize: "0.8em",
     "&:hover": {
       background: "#767676",
@@ -538,12 +548,12 @@ const styles = makeStyles((theme) => ({
     marginBottom: "1em",
   },
   collapseArrowDown: {
-    transition: `transform .8s ease`,
+    transition: `transform .4s ease`,
     transform: `rotate(0deg)`,
   },
   collapseArrowUp: {
     transform: `rotate(-180deg)`,
-    transition: `transform .8s ease`,
+    transition: `transform .4s ease`,
   },
   search: {
     color: "#BDBDBD",

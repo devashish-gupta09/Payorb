@@ -12,6 +12,7 @@ import { delay } from "../../utils/dateTime";
 import { buildVendorDashboardUrl } from "../../utils/url";
 import { AppFooter } from "../AppFooter";
 import { Context } from "../AuthenticationContext";
+import CustomersView from "../CustomersView";
 import VendorDashboardHeader from "../DashboardHeader";
 import VendorDashboardSidebar from "../DashboardSidebar";
 import FallbackLoading from "../FallbackLoading";
@@ -24,6 +25,7 @@ import VendorEventCreationForm from "../VendorEventCreationForm";
 import VendorEvents from "../VendorEvents";
 import VendorFinancials from "../VendorFinancials";
 import VendorPromotions from "../VendorPromotions";
+import { VendorSchedule } from "../VendorSchedule";
 import { styles } from "./styles";
 
 function VendorDashboard() {
@@ -39,6 +41,7 @@ function VendorDashboard() {
 
     if (router.query.section) {
       switch (router.asPath) {
+        case `/vendor/${vendorId}/preview`:
         case `/vendor/${vendorId}/events/create`:
         case `/vendor/${vendorId}/events/create?trialClass=true`:
           return false;
@@ -56,6 +59,8 @@ function VendorDashboard() {
       if (router.query.section) {
         const { vendorId } = router.query;
         switch (router.asPath) {
+          case `/vendor/${vendorId}/preview`:
+            return <CustomersView needHeader={false} />;
           case `/vendor/${vendorId}/financials`:
             return <VendorFinancials />;
           case `/vendor/${vendorId}/promotions`:
@@ -68,6 +73,8 @@ function VendorDashboard() {
             return <VendorEventCreationForm trialClass={true} />;
           case `/vendor/${vendorId}/events`:
             return <VendorEvents />;
+          case `/vendor/${vendorId}/schedule`:
+            return <VendorSchedule />;
           default:
             return (
               <FallbackPage
@@ -133,41 +140,40 @@ function VendorDashboard() {
     }
   }, [router, userContext]);
 
-  return (
-    <>
-      {Alert()}
-      {loading ? (
-        <FallbackLoading />
-      ) : (
-        <UserAuthDetailsProvider>
-          <Grid>
-            <VendorDashboardHeader profileData={profileData} />
-            {checkIfSideBarAllowed() ? (
-              <Grid container className={classes.dashboard}>
-                <Grid item className={classes.sidebar}>
-                  <VendorDashboardSidebar profileData={profileData} />
-                </Grid>
-                <Grid item className={classes.mainContainer}>
-                  <VendorDashboardContainer>
-                    {getComponent(profileData)}
-                  </VendorDashboardContainer>
-                </Grid>
-              </Grid>
-            ) : (
-              <VendorDashboardContainer>
-                {getComponent(profileData)}
-              </VendorDashboardContainer>
-            )}
-            {/* <AuthAlertBanner /> */}
+  if (loading) {
+    return <FallbackLoading />;
+  }
 
-            {router.asPath === `/vendor/${router.query.vendorId}` && (
-              <AppFooter />
-            )}
-          </Grid>
-        </UserAuthDetailsProvider>
-      )}
-    </>
-  );
+  if (profileData)
+    return (
+      <UserAuthDetailsProvider>
+        <Grid>
+          <VendorDashboardHeader profileData={profileData} />
+          {checkIfSideBarAllowed() ? (
+            <Grid container className={classes.dashboard}>
+              <Grid item className={classes.sidebar}>
+                <VendorDashboardSidebar profileData={profileData} />
+              </Grid>
+              <Grid item className={classes.mainContainer}>
+                <VendorDashboardContainer>
+                  {getComponent(profileData)}
+                </VendorDashboardContainer>
+              </Grid>
+            </Grid>
+          ) : (
+            <VendorDashboardContainer>
+              {getComponent(profileData)}
+            </VendorDashboardContainer>
+          )}
+
+          {router.asPath === `/vendor/${router.query.vendorId}` && (
+            <AppFooter />
+          )}
+        </Grid>
+      </UserAuthDetailsProvider>
+    );
+
+  return <CustomersView />;
 }
 
 export default VendorDashboard;
