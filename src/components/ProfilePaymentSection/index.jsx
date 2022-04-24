@@ -88,6 +88,7 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
     validateOnChange: true,
     onSubmit: async (values) => {
       try {
+        console.log("IN OAYMENT");
         try {
           await fetchIFSCDetails(values.ifscCode);
         } catch (err) {

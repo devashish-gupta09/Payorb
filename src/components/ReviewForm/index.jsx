@@ -3,7 +3,10 @@ import {
   Grid,
   InputAdornment,
   makeStyles,
+  MenuItem,
+  Select,
   TextField,
+  Typography,
   useTheme,
 } from "@material-ui/core";
 import { Maximize, MoreHoriz } from "@material-ui/icons";
@@ -74,6 +77,7 @@ function ReviewForm() {
       eventId: "",
       vendorId: "",
       otp: "",
+      ratings: "",
     },
     validationSchema: createReviewValidationSchema,
     validateOnBlur: true,
@@ -189,6 +193,10 @@ function ReviewForm() {
       showAlert(`OTP could not be sent. ${err.message}`, ALERT_TYPES.ERROR);
     }
     setOtpLoading(false);
+  };
+
+  const handleRatingChange = (event) => {
+    formik.setFieldValue("ratings", event.target.value);
   };
 
   React.useEffect(() => {
@@ -322,6 +330,27 @@ function ReviewForm() {
                 disabled
               />
             </Grid>
+            <Grid item sm={4} style={{ paddingTop: "1em" }}>
+              <Typography style={{ width: "100%" }}>Ratings</Typography>
+              <Select
+                displayEmpty
+                id="ratings"
+                disableUnderline
+                variant="outlined"
+                style={{ color: "black" }}
+                value={formik.values.ratings}
+                onChange={handleRatingChange}
+              >
+                <MenuItem value={""}>
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value={1}>{"1"}</MenuItem>
+                <MenuItem value={2}>{"2"}</MenuItem>
+                <MenuItem value={3}>{"3"}</MenuItem>
+                <MenuItem value={4}>{"4"}</MenuItem>
+                <MenuItem value={5}>{"5"}</MenuItem>
+              </Select>
+            </Grid>
           </Grid>
           <Grid item sm={6}>
             <Grid
@@ -344,7 +373,7 @@ function ReviewForm() {
           </Grid>
         </Grid>
 
-        <Grid item sm={12} container>
+        <Grid item sm={6} container>
           <CustomTextField
             fullWidth
             multiline
