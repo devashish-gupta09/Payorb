@@ -2,7 +2,6 @@ import {
   Button,
   CircularProgress,
   Grid,
-  makeStyles,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -13,7 +12,6 @@ import React, { useState } from "react";
 import { useQuery } from "react-query";
 import useMobileDetect from "use-mobile-detect-hook";
 
-import { appColors } from "../../../styles/colors";
 import { globalStyles } from "../../../styles/globalStyles";
 import { ALERT_TYPES } from "../../constants/alerts";
 import {
@@ -22,8 +20,10 @@ import {
 } from "../../context/UserAuthDetailContext";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import { updateUser } from "../../services/auth";
+import { paymentSectionValidation } from "../../validations/paymentSection";
 import ButtonCapsule from "../ButtonCapsule";
 import Capsule from "../Capsule";
+import { styles } from "./styles";
 
 function getPaymentSectionValues(paymentDetails) {
   return {
@@ -32,6 +32,7 @@ function getPaymentSectionValues(paymentDetails) {
     accNumber: paymentDetails?.accNumber || "",
     ifscCode: paymentDetails?.ifscCode || "",
     bankAddress: paymentDetails?.bankAddress || "",
+    confirmAccNumber: "",
   };
 }
 
@@ -57,8 +58,9 @@ function getPaymentDetailsStatus(paymentDetails) {
   }
 }
 
-const fetchIFSCDetails = async (ifsc) => {
-  return (await axios.get(`https://ifsc.razorpay.com/${ifsc}`))?.data;
+const fetchIFSCDetails = async (ifsc, formik) => {
+  const res = await axios.get(`https://ifsc.razorpay.com/${ifsc}`);
+  return res?.data;
 };
 
 function ProfilePaymentSection({ profileData, updateProfile }) {
@@ -75,14 +77,27 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
     error: bankDataFetchError,
   } = useQuery(
     "fetch-ifsc-details",
-    () => fetchIFSCDetails(formik.values.ifscCode),
+    () => fetchIFSCDetails(formik.values.ifscCode, formik),
     { enabled: enabled, cacheTime: 0, retry: 0 }
   );
 
   const formik = useFormik({
     initialValues: getPaymentSectionValues(profileData.paymentDetails),
+    validationSchema: paymentSectionValidation,
+    validateOnBlur: true,
+    validateOnChange: true,
     onSubmit: async (values) => {
       try {
+        try {
+          await fetchIFSCDetails(values.ifscCode);
+        } catch (err) {
+          showAlert(
+            "IFSC Code not correct. Click on Fetch Details",
+            ALERT_TYPES.ERROR
+          );
+          return;
+        }
+
         const res = await updateUser({
           paymentDetails: {
             name: values.name,
@@ -116,6 +131,11 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
 
   const handleEdit = () => {
     setEdit(!edit);
+  };
+
+  const handleAccountNumberChange = (inputEvent) => {
+    formik.handleChange(inputEvent);
+    formik.setFieldValue("confirmAccNumber", "");
   };
 
   const globalClasses = globalStyles();
@@ -189,7 +209,7 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
                     id="accNumber"
                     label="Account Number"
                     variant="outlined"
-                    onChange={formik.handleChange}
+                    onChange={handleAccountNumberChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.accNumber}
                     error={
@@ -201,6 +221,34 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
                     }
                   />
                 </Grid>
+
+                {edit ? (
+                  <Grid container item sm={12}>
+                    <TextField
+                      fullWidth
+                      disabled={
+                        formik.values.accNumber ===
+                        formik.values.confirmAccNumber
+                      }
+                      className={classes.textInput}
+                      id="confirmAccNumber"
+                      label="Confirm Account Number"
+                      variant="outlined"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.confirmAccNumber}
+                      error={
+                        formik.touched.confirmAccNumber &&
+                        Boolean(formik.errors.confirmAccNumber)
+                      }
+                      helperText={
+                        formik.touched.confirmAccNumber &&
+                        formik.errors.confirmAccNumber
+                      }
+                    />
+                  </Grid>
+                ) : null}
+
                 <Grid container item sm={12}>
                   <TextField
                     disabled={!edit}
@@ -213,10 +261,13 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
                     onBlur={formik.handleBlur}
                     value={formik.values.ifscCode}
                     error={
-                      formik.touched.ifscCode && Boolean(formik.errors.ifscCode)
+                      bankDataFetchError ??
+                      (formik.touched.ifscCode &&
+                        Boolean(formik.errors.ifscCode))
                     }
                     helperText={
-                      formik.touched.ifscCode && formik.errors.ifscCode
+                      (bankDataFetchError && "IFSC code incorrect") ||
+                      (formik.touched.ifscCode && formik.errors.ifscCode)
                     }
                   />
                 </Grid>
@@ -245,7 +296,13 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
                       <ButtonCapsule
                         text="Save"
                         type="submit"
-                        disabled={bankDetails ? false : true}
+                        disabled={
+                          formik.errors.ifscCode ?? bankDataFetchError
+                            ? true
+                            : bankDetails
+                            ? false
+                            : true
+                        }
                         buttonStyle={classes.saveButton}
                       ></ButtonCapsule>
                       <Button
@@ -269,9 +326,8 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
           <Grid item sm={5} style={{ padding: "4em 2em 2em 2em" }}>
             {bankDataLoading ? (
               <CircularProgress />
-            ) : bankDataFetchError && formik.values.ifscCode ? (
-              <span>{JSON.stringify(bankDataFetchError)}</span>
-            ) : bankDetails ? (
+            ) : bankDataFetchError &&
+              formik.values.ifscCode ? null : bankDetails ? (
               <Grid
                 style={{
                   background: "#FFFAEB",
@@ -371,87 +427,5 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
     </Grid>
   );
 }
-
-const styles = makeStyles((theme) => ({
-  capsule: {
-    marginLeft: "0.3em",
-  },
-  root: {
-    borderRadius: "0.8em",
-    padding: "2em 8em",
-    [theme.breakpoints.down("sm")]: {
-      padding: "1.5em 1em",
-    },
-  },
-  description: {
-    width: "fit-content",
-    background: "rgba(255, 206, 49, 0.17)",
-    border: "1px solid rgb(255, 206, 49)",
-    padding: "0.5em",
-    borderRadius: "5px",
-  },
-  infoRowRoot: { paddingLeft: "1em", width: "fit-content" },
-  infoRow: {
-    padding: "1em 0",
-    width: "100%",
-    borderBottom: "2px",
-    borderColor: "#F2F2F2",
-    [theme.breakpoints.down("sm")]: {
-      padding: "1em",
-    },
-  },
-  reviewerLabel: {
-    color: appColors.grey,
-  },
-  reviewTime: {
-    color: appColors.grey,
-  },
-  textInput: {
-    color: "#BDBDBD",
-    marginBottom: "2em",
-    [theme.breakpoints.down("sm")]: {
-      width: "100%",
-      marginBottom: "1em",
-    },
-  },
-  saveButtonContainer: {
-    padding: "1em",
-    [theme.breakpoints.down("sm")]: {
-      padding: "1em 1em 1em 2.5em",
-    },
-  },
-  saveButton: {
-    // width: "20%",
-    fontWeight: "bold",
-    padding: "0.75em 2.5em",
-    marginRight: "1 em",
-    [theme.breakpoints.down("sm")]: {
-      width: "100%",
-    },
-  },
-  sectionTitle: {
-    width: "fit-content",
-  },
-  cancelButton: {
-    [theme.breakpoints.down("sm")]: {
-      margin: "1.5em 0 0.5em 0",
-    },
-  },
-  bankAddrContainer: {
-    paddingLeft: "4em",
-    [theme.breakpoints.down("sm")]: {
-      paddingLeft: 0,
-      paddingTop: 0,
-    },
-  },
-  detailRowContainer: {
-    paddingBottom: "0.5em",
-  },
-  detailRowTitle: {
-    color: "#8B8B8B",
-    paddingBottom: "0",
-    fontWeight: "300",
-  },
-}));
 
 export default ProfilePaymentSection;

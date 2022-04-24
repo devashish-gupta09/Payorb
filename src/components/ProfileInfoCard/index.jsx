@@ -1,7 +1,6 @@
 import { Grid, Typography } from "@material-ui/core";
 import {
   ContactPhone,
-  FiberManualRecord,
   LocationOn,
   LocationOnOutlined,
   Mail,
@@ -135,7 +134,7 @@ function ProfileInfoCard({ profileData, vendor, updateProfile }) {
                     onBlur: formik.handleSubmit,
                   }}
                 />
-                <Grid style={{ padding: "0.75em 0" }}>
+                {/* <Grid style={{ padding: "0.75em 0" }}>
                   <Typography gutterBottom style={{ fontWeight: "bold" }}>
                     Accounts
                   </Typography>
@@ -216,7 +215,7 @@ function ProfileInfoCard({ profileData, vendor, updateProfile }) {
                     NOTE: By connecting accounts you allow google to manage
                     calendar/google-meet
                   </Grid>
-                </Grid>
+                </Grid> */}
               </>
             ) : (
               <>
