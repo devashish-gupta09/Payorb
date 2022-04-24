@@ -7,4 +7,5 @@ export const createReviewValidationSchema = Yup.object({
   imageUrl: Yup.string().optional(),
   eventName: Yup.string().required(),
   review: Yup.string().required().max(1000),
+  ratings: Yup.number().required().min(1).max(5),
 });

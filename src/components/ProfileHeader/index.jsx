@@ -178,6 +178,8 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
       await updateUser({ bannerImgUrl: "" });
       updateProfile({ ...profileData, bannerImgUrl: "" });
       showAlert("Banner image deleted");
+
+      setDataUrl();
     } catch (err) {
       showAlert("Banner image failed to delete");
       // To be caught by sentry

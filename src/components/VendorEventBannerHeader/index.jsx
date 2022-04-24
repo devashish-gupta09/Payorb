@@ -38,7 +38,6 @@ export function randomNumber(min, max) {
 
 export const getRandomEventBanner = (category) => {
   const banners = EVENT_DEFAULT_BANNERS[category];
-  console.log("Banner length", banners.length);
   const index = randomNumber(0, 1);
   return banners[index];
 };

@@ -3,9 +3,11 @@ import { Star } from "@material-ui/icons";
 
 import ReadMore from "../ReadMore";
 
-const starCount = [0, 0, 0, 0];
+// const starCount = [0, 0, 0, 0];
 export const VendorReviewCard = ({ review }) => {
   const classes = styles();
+  const reviewArr = review?.ratings ? new Array(review?.ratings).fill(0) : [];
+  console.log("REVIEW ARR", reviewArr);
   return (
     <Grid className={classes.infoRowRoot} container>
       <Grid item xs={12}>
@@ -39,7 +41,7 @@ export const VendorReviewCard = ({ review }) => {
               container
               style={{ width: "fit-content", height: "fit-content" }}
             >
-              {starCount.map((star, index) => (
+              {reviewArr?.map((_, index) => (
                 <Star
                   style={{ color: "#FFCE31", fontSize: "1.25em" }}
                   key={index}

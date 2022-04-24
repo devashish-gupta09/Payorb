@@ -25,8 +25,8 @@ function PricingCard({ image }) {
           their time in managing business execution chores?
         </Typography>
         <Typography gutterBottom variant="body1">
-          Did you know that a majority of solopreneurs spend more than 30% of
-          their time in managing business execution chores?
+          Did you know that more than 20% of Solopreneurs consider shutting down
+          their business within one year of starting?
         </Typography>
         <Typography gutterBottom variant="body1">
           It doesn’t have to be that hard for you. Partner with PayOrb and kick
