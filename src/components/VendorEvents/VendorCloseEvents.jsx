@@ -63,23 +63,19 @@ export const VendorCloseEvents = ({ vendorId }) => {
     return (
       <Grid className={classes.events}>
         <Grid className={classes.events}>
-          <Typography
-            variant="h6"
-            style={{
-              marginBottom: "0.5em",
-              fontSize: "1em",
-            }}
-          >
+          <Typography variant="h6" className={classes.titleContainer}>
             Completed Events ({totalEvents})
           </Typography>
-          <EventsViewList
-            showOpen={false}
-            events={events}
-            handleEventDelete={handleEventDelete}
-            paymentDetails={verifiedDetails.find(
-              (vd) => vd.name === "paymentDetails"
-            )}
-          />
+          <Grid container justifyContent="center">
+            <EventsViewList
+              showOpen={false}
+              events={events}
+              handleEventDelete={handleEventDelete}
+              paymentDetails={verifiedDetails.find(
+                (vd) => vd.name === "paymentDetails"
+              )}
+            />
+          </Grid>
         </Grid>
         {moreEvents && (
           <Grid
@@ -137,6 +133,13 @@ const styles = makeStyles((theme) => ({
       margin: "1em 0",
     },
   },
+  titleContainer: {
+    marginBottom: "0.5em",
+    fontSize: "1em",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "1em",
+    },
+  },
   blue: {
     background: "linear-gradient(180deg, #68FDF3 0%, #00D4FF 219.05%);",
     borderRadius: "2em",
@@ -171,7 +174,7 @@ const styles = makeStyles((theme) => ({
     minHeight: "70vh",
     maxHeight: "100%",
     [theme.breakpoints.down("sm")]: {
-      paddingLeft: "1em",
+      // paddingLeft: "1em",
     },
   },
   createEvent: {

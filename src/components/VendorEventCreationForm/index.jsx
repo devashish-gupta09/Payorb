@@ -113,6 +113,9 @@ function VendorEventCreationForm({
   const classes = styles();
   const router = useRouter();
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [dialog, setDialog] = React.useState({ display: false, text: "" });
   const [dateError, setDateError] = React.useState(null);
   const [postEventDialog, setPostEventDialog] = React.useState(false);
@@ -122,7 +125,7 @@ function VendorEventCreationForm({
   const [croppedCoverImage, setCroppedCoverImage] = React.useState();
   const [croppedCoverBannerImages, setCroppedCoverBannerImages] =
     React.useState(event?.coverBannerImages ?? []);
-  const theme = useTheme();
+
   const [eventsLoading, setEventsLoading] = React.useState(false);
   const [loader, setLoader] = React.useState(false);
   const [trialClassQuotaExhausted, setTrialClassQuotaExhausted] =
@@ -595,7 +598,7 @@ function VendorEventCreationForm({
     <div
       className={classes.foundation}
       style={{
-        width: edit || clone ? "80vw" : "99vw",
+        width: edit || clone ? "80vw" : isMobile ? "100vw" : "99vw",
         height: getHeight(),
       }}
     >
@@ -639,7 +642,7 @@ function VendorEventCreationForm({
 
           <Grid
             container
-            style={{ width: "100%", padding: "0 8%" }}
+            className={classes.formContainer}
             alignItems="flex-start"
           >
             <Grid item sm={8} className={classes.leftContainer}>

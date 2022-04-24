@@ -7,7 +7,7 @@ export const styles = makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     [theme.breakpoints.down("sm")]: {
-      paddingTop: "4.5em",
+      // paddingTop: "4.5em",
     },
   },
   baseBackground: {
@@ -15,6 +15,9 @@ export const styles = makeStyles((theme) => ({
   },
   root: {
     width: "100%",
+    [theme.breakpoints.down("sm")]: {
+      width: "100vw",
+    },
   },
   container: {
     background: "white",
@@ -32,6 +35,13 @@ export const styles = makeStyles((theme) => ({
     padding: "0.5em 1em 0 1em",
     [theme.breakpoints.down("sm")]: {
       padding: "0",
+    },
+  },
+  formContainer: {
+    width: "100%",
+    padding: "0 8%",
+    [theme.breakpoints.down("sm")]: {
+      padding: "0 2em",
     },
   },
   rightContainer: {

@@ -12,12 +12,7 @@ function EventsViewList({
   const classes = styles();
 
   return (
-    <Grid
-      container
-      className={classes.root}
-      justifyContent="flex-start"
-      spacing={3}
-    >
+    <Grid container className={classes.root} spacing={3}>
       {events.map((event, index) => {
         return (
           <Grid
@@ -46,9 +41,11 @@ const styles = makeStyles((theme) => ({
   root: {
     height: "100%",
     //paddingBottom: "2em",
+    justifyContent: "flex-start",
     padding: "2em 0em",
     [theme.breakpoints.down("sm")]: {
-      width: "100vw",
+      justifyContent: "center",
+      width: "100%",
       padding: "1em 0",
     },
   },
