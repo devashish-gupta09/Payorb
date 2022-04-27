@@ -1,7 +1,14 @@
-import { Grid, makeStyles, TextField, Typography } from "@material-ui/core";
+import {
+  Grid,
+  Icon,
+  makeStyles,
+  TextField,
+  Typography,
+} from "@material-ui/core";
+import { Close, Edit } from "@material-ui/icons";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 
 import * as Yup from "yup";
 
@@ -21,6 +28,7 @@ function ProfileAboutCard({ profileData, vendor = true, updateProfile }) {
   const classes = styles();
   const router = useRouter();
   const { Alert, showAlert } = useAlertSnackbar();
+  const [aboutEdit, setAboutEdit] = useState(true);
 
   const formik = useFormik({
     initialValues: {
@@ -50,6 +58,10 @@ function ProfileAboutCard({ profileData, vendor = true, updateProfile }) {
     );
   };
 
+  const handleAboutEditClick = (val) => {
+    setAboutEdit(val);
+  };
+
   return (
     <Grid className={classes.root}>
       {Alert()}
@@ -67,20 +79,41 @@ function ProfileAboutCard({ profileData, vendor = true, updateProfile }) {
               </Typography>
             </Grid>
             {vendor ? (
-              <Grid>
+              <Grid
+                container
+                style={{ width: "fit-content" }}
+                alignItems="center"
+              >
                 <ButtonCapsule
                   onClick={handleOnProfileClick}
                   text="Profile Preview"
                   buttonStyle={`${classes.previewButton}`}
                 ></ButtonCapsule>
-                <ButtonCapsule
-                  disabled={
-                    formik.touched.about && Boolean(formik.errors.about)
-                  }
-                  text="Save Profile"
-                  buttonStyle={`${classes.saveButton}`}
-                  onClick={formik.handleSubmit}
-                ></ButtonCapsule>
+                {aboutEdit ? (
+                  <Icon
+                    style={{ marginLeft: "0.5em" }}
+                    onClick={() => handleAboutEditClick(false)}
+                  >
+                    <Edit />
+                  </Icon>
+                ) : (
+                  <>
+                    <ButtonCapsule
+                      disabled={
+                        formik.touched.about && Boolean(formik.errors.about)
+                      }
+                      text="Save Profile"
+                      buttonStyle={`${classes.saveButton}`}
+                      onClick={formik.handleSubmit}
+                    ></ButtonCapsule>
+                    <Icon
+                      style={{ marginLeft: "0.5em" }}
+                      onClick={() => handleAboutEditClick(true)}
+                    >
+                      <Close />
+                    </Icon>
+                  </>
+                )}
               </Grid>
             ) : null}
           </Grid>
@@ -101,7 +134,7 @@ function ProfileAboutCard({ profileData, vendor = true, updateProfile }) {
               onBlur={formik.handleBlur}
               maxRow={8}
               minRow={8}
-              disabled={!vendor}
+              disabled={!vendor || aboutEdit}
               InputProps={{ disableUnderline: true }}
               error={formik.touched.about && Boolean(formik.errors.about)}
               placeholder={
