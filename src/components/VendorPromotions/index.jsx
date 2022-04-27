@@ -143,7 +143,9 @@ function VendorPromotions() {
               )
       );
 
-      if (res) {
+      if (res.some((r) => !r.success)) {
+        showAlert("Notification already sent");
+      } else if (res) {
         showAlert("Notification sent");
       }
       setConfirmationDialogOpen(false);
@@ -251,6 +253,7 @@ function VendorPromotions() {
               select
               className={classes.filterSelect}
               onChange={handleFilterChange}
+              label="Upcoming Events"
               InputProps={{
                 disableUnderline: true,
                 inputProps: {
