@@ -6,6 +6,7 @@ import {
   Card,
   Link,
 } from "@material-ui/core";
+import { CallMade } from "@material-ui/icons";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
 import CreateIcon from "@material-ui/icons/Create";
@@ -16,7 +17,7 @@ import React from "react";
 import { EVENT_TYPES } from "../../constants/events";
 import { DEFAULT_EVENT_IMAGE } from "../../constants/images";
 import { getEventDate, getEventMonth } from "../../utils/dateTime";
-import { formatEventType } from "../../utils/events";
+import { formatEventType, isEventPastDate } from "../../utils/events";
 import ButtonCapsule from "../ButtonCapsule";
 import CustomConfirmationDialog from "../CustomConfirmationDialog";
 import { getEventslotDuration } from "../EventBooking";
@@ -275,7 +276,7 @@ function EventCard({
         <Grid container>
           <Grid
             item
-            sm={editable ? 12 : isVendor ? 12 : 9}
+            sm={12}
             container
             justify={"space-between"}
             className={classes.textContainer}
@@ -285,24 +286,68 @@ function EventCard({
                 <Typography className={classes.headline}>
                   {event.name}
                 </Typography>
-              </Grid>
-              <Grid item xs={4}>
-                <Typography className={classes.cost}>
-                  {event.trialClass ? (
-                    "Trial Class"
-                  ) : (
-                    <>&#8377; {event.price}</>
-                  )}
+                <Typography className={classes.descriptionText}>
+                  <ReadMore
+                    percent={20}
+                    text={event.description}
+                    className={classes.descriptionText}
+                  />
                 </Typography>
               </Grid>
+              <Grid item xs={4}>
+                <Grid>
+                  <Typography className={classes.cost}>
+                    {event.trialClass ? (
+                      "Trial Class"
+                    ) : (
+                      <>&#8377; {event.price}</>
+                    )}
+                  </Typography>
+                </Grid>
+
+                <Grid container justifyContent="flex-end">
+                  <Typography
+                    style={{
+                      fontSize: "0.9em",
+                      marginBottom: "0.5em",
+                    }}
+                  >
+                    {formatEventType(event.type)}
+                  </Typography>
+                </Grid>
+
+                {!editable && !isVendor && !isEventPastDate(event) ? (
+                  // <Grid
+                  //   item
+                  //   sm={3}
+                  //   container
+                  //   alignItems="center"
+                  //   justifyContent="center"
+                  // >
+                  <Link
+                    href={`/${
+                      event.vendorUserName
+                        ? event.vendorUserName
+                        : event.userUID
+                    }/${event.url ? event.url : event.link}`}
+                  >
+                    <ButtonCapsule
+                      text={"Book"}
+                      icon={
+                        <CallMade
+                          style={{
+                            padding: "0 0 0 0.25em",
+                            transform: "scale(1.1)",
+                          }}
+                        />
+                      }
+                      buttonStyle={classes.bookButton}
+                    />
+                  </Link>
+                ) : // </Grid>
+                null}
+              </Grid>
             </Grid>
-            <Typography className={classes.descriptionText}>
-              <ReadMore
-                percent={20}
-                text={event.description}
-                className={classes.descriptionText}
-              />
-            </Typography>
 
             {isVendor && (
               <Grid
@@ -341,7 +386,7 @@ function EventCard({
             )}
           </Grid>
 
-          {!editable && !isVendor ? (
+          {/* {!editable && !isVendor && !isEventPastDate(event) ? (
             <Grid
               item
               sm={3}
@@ -357,7 +402,7 @@ function EventCard({
                 <ButtonCapsule text={"Book"} buttonStyle={classes.bookButton} />
               </Link>
             </Grid>
-          ) : null}
+          ) : null} */}
         </Grid>
       </Card>
     </Grid>

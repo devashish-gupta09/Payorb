@@ -151,7 +151,8 @@ const ProfilePageCarauselEditForm = ({
         task.snapshot.ref.getDownloadURL().then(async (downloadURL) => {
           showAlert("Image Uploaded");
           await delay(2000);
-          setCroppedImage(downloadURL);
+          setCroppedImage();
+          setDataUrl();
           setData({
             link: downloadURL,
             type: "image",

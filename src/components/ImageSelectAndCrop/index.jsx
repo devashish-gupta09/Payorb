@@ -5,7 +5,7 @@ import {
   Typography,
   useTheme,
 } from "@material-ui/core";
-import { Add, Close } from "@material-ui/icons";
+import { AddPhotoAlternate, Close, InsertPhoto } from "@material-ui/icons";
 import React, { useRef } from "react";
 import "cropperjs/dist/cropper.css";
 import { Cropper } from "react-cropper";
@@ -90,7 +90,7 @@ function ImageSelectAndCrop({
                     padding: "0 1em",
                   }}
                 >
-                  <Add />
+                  <AddPhotoAlternate />
                 </Typography>
               </Tooltip>
               <input
@@ -128,11 +128,11 @@ function ImageSelectAndCrop({
             borderRadius: "8px",
           }}
         >
-          <Add
+          <InsertPhoto
             style={{
               color: "#DDDDDD",
               border: "2px solid",
-              borderRadius: "50%",
+              borderRadius: "5px",
               transform: "scale(4)",
               background: "#F6F6FA",
             }}

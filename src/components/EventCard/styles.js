@@ -193,6 +193,7 @@ export const styles = makeStyles((theme) => ({
     height: "100%",
   },
   bookButton: {
+    float: "right",
     padding: "0.5em 1.75em",
     [theme.breakpoints.down("sm")]: {
       margin: "1em 0",
