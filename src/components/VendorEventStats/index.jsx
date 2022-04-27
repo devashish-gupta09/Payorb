@@ -24,6 +24,7 @@ const styles = makeStyles((theme) => ({
     padding: "2em",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
+      padding: "1em",
     },
   },
   container: {
@@ -110,7 +111,6 @@ function VendorEventsStats() {
     });
 
   const handleChangePage = async (event, newPage) => {
-    console.log("NEW PAGE", newPage);
     if (newPage > page) {
       await loadMoreEvents();
     }

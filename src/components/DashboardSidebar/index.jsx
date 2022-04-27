@@ -24,26 +24,32 @@ function VendorDashboardSidebar({ profileData }) {
     setCurrentTab(value);
     switch (value) {
       case 0:
+        toggleDrawer();
         router.push(
           buildVendorDashboardUrl(getVendorIdFromUrl(router), "/events")
         );
         return;
       case 1:
+        closeDrawer();
         router.push(
           buildVendorDashboardUrl(getVendorIdFromUrl(router), "/financials")
         );
         return;
       case 2:
+        closeDrawer();
         router.push(
           buildVendorDashboardUrl(getVendorIdFromUrl(router), "/customers")
         );
+
         return;
       case 3:
+        closeDrawer();
         router.push(
           buildVendorDashboardUrl(getVendorIdFromUrl(router), "/promotions")
         );
         return;
       case 4:
+        closeDrawer();
         router.push(
           buildVendorDashboardUrl(getVendorIdFromUrl(router), "/schedule")
         );
@@ -51,6 +57,10 @@ function VendorDashboardSidebar({ profileData }) {
       default:
         break;
     }
+  };
+
+  const closeDrawer = () => {
+    setAppMenu(false);
   };
 
   const toggleDrawer = () => {
@@ -86,8 +96,9 @@ function VendorDashboardSidebar({ profileData }) {
               <Grid container>
                 <Grid
                   style={{
-                    width: "100%",
+                    width: "50%",
                     flexGrow: 1,
+                    background: "pink",
                   }}
                 >
                   <Tabs
@@ -134,7 +145,7 @@ function VendorDashboardSidebar({ profileData }) {
                               paddingRight: "1em",
                             }}
                           />
-                          Financials
+                          Financialshhhhhhh
                         </div>
                       }
                       values={1}

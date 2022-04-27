@@ -6,7 +6,7 @@ import { appColors } from "../../../styles/colors";
 function ValueCard({ title, subTitle, photo, bottomText, topBorderColor }) {
   const classes = styles({ topBorderColor });
   return (
-    <Grid style={{ padding: "1em 1em 0 0" }}>
+    <Grid className={classes.foundation}>
       <Grid className={classes.container}>
         <Grid container>
           <Grid item xs={4}>
@@ -24,6 +24,12 @@ function ValueCard({ title, subTitle, photo, bottomText, topBorderColor }) {
 }
 
 const styles = makeStyles((theme) => ({
+  foundation: {
+    padding: "1em 1em 0 0",
+    [theme.breakpoints.down("sm")]: {
+      padding: "0 0 1em 0",
+    },
+  },
   container: {
     padding: "1.5em 0.5em",
     height: "100%",
@@ -32,7 +38,7 @@ const styles = makeStyles((theme) => ({
     boxShadow: " 0px 0px 10px rgba(0, 0, 0, 0.1)",
     borderTopColor: ({ topBorderColor }) => topBorderColor || "black",
     [theme.breakpoints.down("sm")]: {
-      padding: "1em",
+      padding: "1.5em 1em",
     },
   },
   spacing: {

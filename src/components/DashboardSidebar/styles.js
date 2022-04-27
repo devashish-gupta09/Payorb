@@ -8,6 +8,8 @@ export const styles = makeStyles((theme) => ({
   },
   drawer: {
     height: "600px",
+    backgroundColor: "pink",
+    // "&Mui"
   },
   wideScreen: {
     display: "flex",
@@ -19,7 +21,7 @@ export const styles = makeStyles((theme) => ({
     display: "None",
     [theme.breakpoints.down("sm")]: {
       display: "flex",
-      position: "absolute",
+      // position: "absolute",
     },
   },
   header: {

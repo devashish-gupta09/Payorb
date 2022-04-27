@@ -12,6 +12,8 @@ import {
   TableRow,
   TextField,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 import { FilterList, Send } from "@material-ui/icons";
@@ -83,6 +85,9 @@ function VendorPromotions() {
   const { loading, events } = useFetchEvents(true, {
     limit: 400,
   });
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -291,7 +296,11 @@ function VendorPromotions() {
         <Grid container style={{ width: "100%" }}>
           <Grid style={{ width: "100%" }}>
             <img
-              src={"/assets/promotions-banner.svg"}
+              src={
+                isMobile
+                  ? "/assets/sidebar/promotions-banner-mobile.svg"
+                  : "/assets/promotions-banner.svg"
+              }
               className={classes.promotionsBanner}
             ></img>
           </Grid>
@@ -459,6 +468,9 @@ const styles = makeStyles((theme) => ({
   root: {
     width: "100%",
     padding: "2em 2em 5em 2em",
+    [theme.breakpoints.down("sm")]: {
+      padding: "2em 1em 5em 1em",
+    },
   },
   checkbox: {
     position: "relative",
@@ -542,6 +554,9 @@ const styles = makeStyles((theme) => ({
   promotionsBanner: {
     width: "100%",
     margin: "1em 0",
+    [theme.breakpoints.down("sm")]: {
+      margin: "2em 0 0 0",
+    },
   },
 }));
 

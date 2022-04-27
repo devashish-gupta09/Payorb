@@ -47,6 +47,9 @@ export const styles = makeStyles((theme) => ({
   drawerItemContainer: {
     padding: "2.5em 0",
     width: "95vw",
+    [theme.breakpoints.down("sm")]: {
+      padding: "0",
+    },
   },
   drawerTitleContainer: { padding: "3em 0 2em 0" },
   drawerClose: { color: "black" },

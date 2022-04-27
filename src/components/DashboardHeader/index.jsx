@@ -37,18 +37,33 @@ function VendorDashboardHeader({ profileData }) {
     setCurrentTab(value);
     switch (value) {
       case 0:
+        toggleDrawer();
         router.push(
           buildVendorDashboardUrl(getVendorIdFromUrl(router), "/events")
         );
         return;
       case 1:
+        toggleDrawer();
         router.push(
           buildVendorDashboardUrl(getVendorIdFromUrl(router), "/financials")
         );
         return;
       case 2:
+        toggleDrawer();
         router.push(
           buildVendorDashboardUrl(getVendorIdFromUrl(router), "/customers")
+        );
+        return;
+      case 3:
+        toggleDrawer();
+        router.push(
+          buildVendorDashboardUrl(getVendorIdFromUrl(router), "/promotions")
+        );
+        return;
+      case 4:
+        toggleDrawer();
+        router.push(
+          buildVendorDashboardUrl(getVendorIdFromUrl(router), "/schedule")
         );
         return;
       default:
@@ -126,7 +141,12 @@ function VendorDashboardHeader({ profileData }) {
         anchor="left"
         open={appMenu}
         onClose={toggleDrawer}
-        sx={{
+        PaperProps={{
+          style: {
+            width: isMobile ? "60%" : "100%",
+          },
+        }}
+        style={{
           width: "60vw",
           height: "calc(100vh - 72px)",
           flexShrink: 0,

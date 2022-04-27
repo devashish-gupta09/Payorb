@@ -28,7 +28,7 @@ function VendorRevenueUserAggSec() {
 
   if (loading) {
     return (
-      <Grid style={{ width: "96%" }}>
+      <Grid style={{ width: "100%", padding: matches ? "1em" : "1em" }}>
         <SkeletonLoading message="Loading dashboard stats" />
       </Grid>
     );
@@ -60,7 +60,7 @@ function VendorRevenueUserAggSec() {
           className={classes.fix}
           justifyContent="center"
         >
-          <Grid item xs={10} sm={6} className={`${classes.box}`}>
+          <Grid item xs={12} sm={6} className={`${classes.box}`}>
             <ValueCard
               title={`₹ ${numeral(stats.totalRevenue).format("0,0")}`}
               subTitle={"Total Revenue"}
@@ -69,7 +69,7 @@ function VendorRevenueUserAggSec() {
               topBorderColor={"#465DD6"}
             />
           </Grid>
-          <Grid item xs={10} sm={6} className={`${classes.box}`}>
+          <Grid item xs={12} sm={6} className={`${classes.box}`}>
             <ValueCard
               title={`${numeral(stats.totalCustomers).format("0,0")}`}
               subTitle={"Total Bookings"}
@@ -78,7 +78,7 @@ function VendorRevenueUserAggSec() {
               topBorderColor="#FFB648"
             />
           </Grid>
-          <Grid item xs={10} sm={6} className={`${classes.box}`}>
+          <Grid item xs={12} sm={6} className={`${classes.box}`}>
             <ValueCard
               title={`₹ ${numeral(stats.lastMonthSummary.revenue).format(
                 "0,0"
@@ -89,7 +89,7 @@ function VendorRevenueUserAggSec() {
               topBorderColor="#FF007F"
             />
           </Grid>
-          <Grid item xs={10} sm={6} className={`${classes.box}`}>
+          <Grid item xs={12} sm={6} className={`${classes.box}`}>
             <ValueCard
               title={`${numeral(stats.lastMonthSummary.customers).format(
                 "0,0"
@@ -117,6 +117,7 @@ const styles = makeStyles((theme) => ({
     padding: "2em",
     [theme.breakpoints.down("sm")]: {
       position: "static",
+      padding: "1em",
       marginLeft: "0",
     },
   },
@@ -138,6 +139,7 @@ const styles = makeStyles((theme) => ({
     // boxShadow: " 0px 0px 10px rgba(0, 0, 0, 0.1)",
     borderRadius: "0.4em",
     marginTop: "0.4em",
+
     // margin: "0.2em",
   },
   rightTopContainer: {
