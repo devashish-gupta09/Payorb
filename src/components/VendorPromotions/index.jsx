@@ -279,15 +279,17 @@ function VendorPromotions() {
               <MenuItem style={{ fontSize: "0.8em" }} value={""}>
                 {"None"}
               </MenuItem>
-              {events.map((event) => (
-                <MenuItem
-                  style={{ fontSize: "0.8em" }}
-                  key={event.link}
-                  value={event.link}
-                >
-                  {event.name}
-                </MenuItem>
-              ))}
+              {events
+                .filter((event) => new Date(event.startDate) > new Date())
+                .map((event) => (
+                  <MenuItem
+                    style={{ fontSize: "0.8em" }}
+                    key={event.link}
+                    value={event.link}
+                  >
+                    {event.name}
+                  </MenuItem>
+                ))}
             </TextField>
           </Grid>
         </Grid>
@@ -487,8 +489,8 @@ const styles = makeStyles((theme) => ({
     border: "1px solid #DCDCDC",
     padding: "0",
     [theme.breakpoints.down("sm")]: {
-      height: "45vh",
-      marginTop: "3.5em",
+      // height: "45vh",
+      marginTop: "1.5em",
     },
   },
   titleContainer: {
