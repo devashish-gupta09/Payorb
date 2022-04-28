@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import { Close, FilterNone } from "@material-ui/icons";
 import { useTheme } from "@material-ui/styles";
+import useHover from "@react-hook/hover";
 import copy from "clipboard-copy";
 import React from "react";
 
@@ -49,6 +50,8 @@ function PostEventCreationDialog(props) {
   const { Alert, showAlert } = useAlertSnackbar();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const logoRef = React.useRef(null);
+  const isHovering = useHover(logoRef, { enterDelay: 200, leaveDelay: 200 });
 
   const handleCopy = () => {
     showAlert("Link copied");
@@ -143,7 +146,7 @@ function PostEventCreationDialog(props) {
 
           <Grid item xs={isMobile ? 5 : 3}>
             <Grid container>
-              <SocialIcon
+              {/* <SocialIcon
                 network="instagram"
                 fgColor="#000000"
                 bgColor="transparent"
@@ -152,19 +155,22 @@ function PostEventCreationDialog(props) {
                   width: "2.5em",
                   padding: 0,
                 }}
-              />
-              <SocialIcon
-                onClick={handleFacebookShare}
-                network="facebook"
-                fgColor="#000000"
-                bgColor="transparent"
-                style={{
-                  height: "2.5em",
-                  width: "2.5em",
-                  padding: 0,
-                }}
-              />
-              <SocialIcon
+              /> */}
+              <div ref={logoRef}>
+                <SocialIcon
+                  ref={logoRef}
+                  onClick={handleFacebookShare}
+                  network="facebook"
+                  fgColor={isHovering ? "blue" : "#000000"}
+                  bgColor="transparent"
+                  style={{
+                    height: "2.5em",
+                    width: "2.5em",
+                    padding: 0,
+                  }}
+                />
+              </div>
+              {/* <SocialIcon
                 network="twitter"
                 fgColor="#000000"
                 bgColor="transparent"
@@ -173,7 +179,7 @@ function PostEventCreationDialog(props) {
                   width: "2.5em",
                   padding: 0,
                 }}
-              />
+              /> */}
             </Grid>
           </Grid>
           <Grid item xs={isMobile ? 7 : 6} style={{ paddingRight: "0.5em" }}>
