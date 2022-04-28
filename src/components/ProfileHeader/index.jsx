@@ -23,6 +23,7 @@ import useFetchVendorVerifiedDetails from "../../hooks/useFetchVendorAuth";
 import { updateUser } from "../../services/auth";
 import { delay } from "../../utils/dateTime";
 import firebase from "../../utils/firebase";
+import { buildVendorDashboardUrl, getVendorIdFromUrl } from "../../utils/url";
 import { FirebaseAuth } from "../AuthenticationContext";
 import ButtonCapsule from "../ButtonCapsule";
 import ImageSelectAndCrop from "../ImageSelectAndCrop";
@@ -112,7 +113,7 @@ const ProfileHeader = ({ profileData, updateProfile, isVendor }) => {
   };
 
   const handleBack = () => {
-    router.back();
+    router.push(buildVendorDashboardUrl(getVendorIdFromUrl(router), "/events"));
   };
 
   const handleSave = async () => {

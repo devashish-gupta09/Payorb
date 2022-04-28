@@ -64,7 +64,7 @@ function VendorDashboard() {
           case `/vendor/${vendorId}/financials`:
             return <VendorFinancials />;
           case `/vendor/${vendorId}/promotions`:
-            return <VendorPromotions />;
+            return <VendorPromotions vendorId={vendorId} />;
           case `/vendor/${vendorId}/customers`:
             return <VendorCustomers />;
           case `/vendor/${vendorId}/events/create`:

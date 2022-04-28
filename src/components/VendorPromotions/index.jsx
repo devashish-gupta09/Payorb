@@ -27,7 +27,6 @@ import { EVENT_STATUS } from "../../constants/events";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
 import useFetchEvents from "../../hooks/useFetchEvents";
 import { sendNotificationToCustomers } from "../../services/notification";
-import { getMonthDate } from "../../utils/dateTime";
 
 import ButtonCapsule from "../ButtonCapsule";
 import DashboardCard from "../DashboardCard";
@@ -69,7 +68,7 @@ const getEventStatus = (startDate, endDate) => {
   }
 };
 
-function VendorPromotions() {
+function VendorPromotions({ vendorId }) {
   const classes = styles();
   const globalClasses = globalStyles();
   const { Alert, showAlert } = useAlertSnackbar();
@@ -83,6 +82,7 @@ function VendorPromotions() {
   const [confirmationDialogOpen, setConfirmationDialogOpen] = React.useState();
   const [formattedEvents, setFormattedEvents] = React.useState([]);
   const { loading, events } = useFetchEvents(true, {
+    userUID: vendorId,
     limit: 400,
   });
 
@@ -207,7 +207,7 @@ function VendorPromotions() {
         createData(
           event.link,
           event.name,
-          getMonthDate(event.startDate, event.endDate),
+          new Date(event.createdDate).toLocaleDateString().split("/").join("-"),
           event.category,
           (event.orders ?? [])?.length,
           event.status,
@@ -221,8 +221,6 @@ function VendorPromotions() {
           ? selectedValueForFilter.includes(val.link)
           : true
       );
-
-    // console.log(rows);
 
     return (
       <Grid className={classes.root}>
@@ -297,7 +295,7 @@ function VendorPromotions() {
           </Grid>
         </Grid>
 
-        {/* Banner Image */}
+        {/* Banner Image
         <Grid container style={{ width: "100%" }}>
           <Grid style={{ width: "100%" }}>
             <img
@@ -309,7 +307,7 @@ function VendorPromotions() {
               className={classes.promotionsBanner}
             ></img>
           </Grid>
-        </Grid>
+        </Grid> */}
 
         {/* Table */}
         <Grid>
