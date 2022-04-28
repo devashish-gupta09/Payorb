@@ -8,8 +8,10 @@ import EventCard from "../EventCard";
 
 export const VendorPublicEvents = ({ vendorId, exceptEventLink = "" }) => {
   const classes = styles();
-  const { loading, events, error, loadMoreEvents, moreEvents } =
-    useFetchEvents(false);
+  const { loading, events, error, loadMoreEvents, moreEvents } = useFetchEvents(
+    false,
+    { userUID: vendorId }
+  );
 
   if (error) {
     return <h5>Error Loading events</h5>;
