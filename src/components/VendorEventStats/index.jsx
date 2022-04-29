@@ -15,7 +15,6 @@ import React from "react";
 
 import { EVENT_STATUS } from "../../constants/events";
 import useFetchEvents from "../../hooks/useFetchEvents";
-import { getMonthDate } from "../../utils/dateTime";
 import SkeletonLoading from "../SkeletonLoading";
 
 const styles = makeStyles((theme) => ({
@@ -139,19 +138,21 @@ function VendorEventsStats() {
   }
 
   if (events) {
-    const rows = events.map((event) =>
-      createData(
-        event.name,
-        getMonthDate(event.startDate, event.endDate),
-        event.orders.length,
-        event.mode,
-        event.revenue ? event.revenue : "0.0",
-        event.startDate,
-        event.endDate
-      )
-    );
+    const rows = events
+      .reverse()
+      .map((event) =>
+        createData(
+          event.name,
+          new Date(event.createdDate).toLocaleDateString().split("/").join("-"),
+          event.orders.length,
+          event.mode,
+          event.revenue ? event.revenue : "0.0",
+          event.startDate,
+          event.endDate
+        )
+      );
 
-    const pageCount = Math.ceil(totalEvents / rowsPerPage);
+    // const pageCount = Math.ceil(totalEvents / rowsPerPage);
     return (
       <Grid className={classes.root}>
         <Grid>

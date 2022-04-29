@@ -57,12 +57,14 @@ export const styles = makeStyles((theme) => ({
     marginRight: "1em",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
+      marginTop: "1em",
     },
   },
   sectionTitle: {
     width: "fit-content",
   },
   cancelButton: {
+    marginTop: "2em",
     [theme.breakpoints.down("sm")]: {
       margin: "1.5em 0 0.5em 0",
     },

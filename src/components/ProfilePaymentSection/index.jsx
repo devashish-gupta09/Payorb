@@ -283,44 +283,39 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
                   alignItems="center"
                   className={classes.saveButtonContainer}
                 >
-                  <Grid
-                    style={{
-                      paddingRight: isMobile ? "1em" : "0.5em",
-                      marginBottom: isMobile ? "1em" : 0,
-                    }}
-                  >
-                    <ButtonCapsule
-                      buttonStyle={classes.saveButton}
-                      text={"Fetch details"}
-                      onClick={() => setEnabled(!enabled)}
-                    ></ButtonCapsule>
-                  </Grid>
-
                   {edit ? (
-                    <Grid
-                      container
-                      justify="center"
-                      alignItems="center"
-                      style={{ width: "fit-content" }}
-                    >
-                      <ButtonCapsule
-                        text="Save"
-                        type="submit"
-                        disabled={
-                          formik.errors.ifscCode ?? bankDataFetchError
-                            ? true
-                            : bankDetails
-                            ? false
-                            : true
-                        }
-                        buttonStyle={classes.saveButton}
-                      ></ButtonCapsule>
-                      <Button
-                        onClick={handleEdit}
-                        className={classes.cancelButton}
+                    <Grid>
+                      <Grid
+                        container
+                        justify="center"
+                        alignItems="center"
+                        style={{ width: "fit-content" }}
                       >
-                        Cancel
-                      </Button>
+                        <ButtonCapsule
+                          buttonStyle={classes.saveButton}
+                          text={"Fetch details"}
+                          onClick={() => setEnabled(!enabled)}
+                        ></ButtonCapsule>
+
+                        <ButtonCapsule
+                          text="Save"
+                          type="submit"
+                          disabled={
+                            formik.errors.ifscCode ?? bankDataFetchError
+                              ? true
+                              : bankDetails
+                              ? false
+                              : true
+                          }
+                          buttonStyle={classes.saveButton}
+                        ></ButtonCapsule>
+                        <Button
+                          onClick={handleEdit}
+                          className={classes.cancelButton}
+                        >
+                          Cancel
+                        </Button>
+                      </Grid>
                     </Grid>
                   ) : (
                     <ButtonCapsule

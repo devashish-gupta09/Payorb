@@ -295,19 +295,19 @@ function VendorPromotions({ vendorId }) {
           </Grid>
         </Grid>
 
-        {/* Banner Image
+        {/* Banner Image */}
         <Grid container style={{ width: "100%" }}>
           <Grid style={{ width: "100%" }}>
             <img
               src={
                 isMobile
-                  ? "/assets/sidebar/promotions-banner-mobile.svg"
-                  : "/assets/promotions-banner.svg"
+                  ? "/assets/sidebar/promotions-banner-mobile.jpg"
+                  : "/assets/promotions-banner.jpg"
               }
               className={classes.promotionsBanner}
             ></img>
           </Grid>
-        </Grid> */}
+        </Grid>
 
         {/* Table */}
         <Grid>
@@ -557,6 +557,8 @@ const styles = makeStyles((theme) => ({
   promotionsBanner: {
     width: "100%",
     margin: "1em 0",
+    border: "1px solid rgba(0,0,0,0.25)",
+    borderRadius: "5px",
     [theme.breakpoints.down("sm")]: {
       margin: "2em 0 0 0",
     },
