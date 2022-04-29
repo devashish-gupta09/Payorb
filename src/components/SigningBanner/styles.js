@@ -35,9 +35,10 @@ export const styles = makeStyles((theme) => ({
     },
   },
   titleSectionContainer: {
-    paddingLeft: "1em",
-    width: "75%",
-    marginLeft: "11.5em",
+    paddingLeft: "10em",
+    width: "100%",
+    marginLeft: "10em",
+    // left: 0,
   },
   boldText: {
     fontWeight: "bold",
