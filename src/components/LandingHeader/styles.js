@@ -41,7 +41,7 @@ export const styles = makeStyles((theme) => ({
   },
   menuButtonContainer: {
     display: "None",
-    border: "2px solid",
+    // border: "2px solid",
     [theme.breakpoints.down("sm")]: {
       display: "flex",
       justifyContent: "center",
