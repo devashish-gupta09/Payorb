@@ -87,8 +87,6 @@ function EventBooking({ eventLink, vendorId }) {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { to, from } = router.query;
 
-  console.log(to, from);
-
   const { loading, events } = useFetchEvents(false, {
     link: eventLink,
     vendorId,
@@ -104,14 +102,17 @@ function EventBooking({ eventLink, vendorId }) {
     return (
       <Grid className={classes.foundation}>
         <PageTitle title="Payorb | Event Booking" />
-        {event?.coverImgUrl ? (
-          <VendorEventBannerHeader
-            eventData={event}
-            isVendor={false}
-            from={from}
-            to={to}
-          />
-        ) : null}
+        <Grid>
+          {event?.coverImgUrl ? (
+            <VendorEventBannerHeader
+              height={isMobile ? "17.5em" : undefined}
+              eventData={event}
+              isVendor={false}
+              from={from}
+              to={to}
+            />
+          ) : null}
+        </Grid>
         <Grid container className={classes.root} alignItems={"flex-start"}>
           <Grid
             item
@@ -288,7 +289,7 @@ const styles = makeStyles((theme) => ({
   foundation: {
     width: "100%",
     [theme.breakpoints.down("sm")]: {
-      paddingTop: "5em",
+      paddingTop: "0",
     },
   },
   root: {

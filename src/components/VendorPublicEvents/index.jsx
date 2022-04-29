@@ -1,4 +1,9 @@
-import { CircularProgress, Grid } from "@material-ui/core";
+import {
+  CircularProgress,
+  Grid,
+  useMediaQuery,
+  useTheme,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
 import useFetchEvents from "../../hooks/useFetchEvents";
@@ -8,6 +13,8 @@ import EventCard from "../EventCard";
 
 export const VendorPublicEvents = ({ vendorId, exceptEventLink = "" }) => {
   const classes = styles();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { loading, events, error, loadMoreEvents, moreEvents } = useFetchEvents(
     false,
     { userUID: vendorId }
@@ -23,11 +30,17 @@ export const VendorPublicEvents = ({ vendorId, exceptEventLink = "" }) => {
 
   if (events?.length) {
     return (
-      <Grid container spacing={3}>
+      <Grid container spacing={isMobile ? 0 : 3}>
         {events
           .filter((event) => event.link !== exceptEventLink)
           .map((event) => (
-            <Grid key={event.url} item sm={6}>
+            <Grid
+              key={event.url}
+              item
+              sm={6}
+              xs={12}
+              style={{ paddingBottom: isMobile ? "1em" : "0" }}
+            >
               <EventCard event={event} editable={false} isVendor={false} />
             </Grid>
           ))}

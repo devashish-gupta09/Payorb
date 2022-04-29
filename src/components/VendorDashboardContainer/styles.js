@@ -4,12 +4,13 @@ import { ALERT_BANNER_TYPES } from "../../constants/alerts";
 
 export const styles = makeStyles((theme) => ({
   container: {
-    minWidth: "100%",
-    maxWidth: "95vw",
+    // minWidth: "100%",
+    width: "100%",
     minHeight: "fit-content",
     maxHeight: "max-content",
-    [theme.breakpoints.between("sm", "md")]: {
-      padding: "2em 2em",
+    [theme.breakpoints.down("sm")]: {
+      width: "100vw",
+      // padding: "2em 2em",
     },
   },
   [ALERT_BANNER_TYPES.WARNING]: {

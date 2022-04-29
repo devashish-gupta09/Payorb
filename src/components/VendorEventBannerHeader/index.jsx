@@ -50,8 +50,9 @@ const VendorEventBannerHeader = ({
   handleBannerCroppedImage,
   isVendor,
   customBackHandler,
+  height,
 }) => {
-  const classes = styles(isVendor);
+  const classes = styles({ isVendor, height });
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [dialogOpen, setDialogOpen] = React.useState(false);
@@ -180,7 +181,7 @@ const VendorEventBannerHeader = ({
               >
                 {eventData.name}
               </Typography>
-              <Grid container justifyContent="center">
+              <Grid container justifyContent="center" alignItems="center">
                 <Grid
                   item
                   style={{
@@ -203,7 +204,10 @@ const VendorEventBannerHeader = ({
                 </Grid>
                 <Grid
                   item
-                  style={{ width: "fit-content" }}
+                  style={{
+                    width: "fit-content",
+                    marginBottom: isMobile ? "0.5em" : 0,
+                  }}
                   container
                   alignItems="center"
                 >
@@ -225,12 +229,13 @@ const VendorEventBannerHeader = ({
 
       <Grid
         container
+        alignItems="center"
         justifyContent="space-between"
         className={classes.buttonLayer}
       >
         <Grid>
           <ButtonCapsule
-            text=" Back"
+            text="Back"
             icon={<ArrowBack style={{ fontSize: "1.25em" }} />}
             iconBefore={true}
             buttonStyle={`${classes.backButton}`}
@@ -282,12 +287,12 @@ const VendorEventBannerHeader = ({
 const styles = makeStyles((theme) => ({
   root: {
     "--heightA": "100%",
-    height: "calc(100vh/2.75)",
+    height: ({ height }) => (height ? height : "calc(100vh/2.75)"),
     width: "100%",
     position: "relative",
     // padding: "0.5em 0",
     [theme.breakpoints.down("sm")]: {
-      height: "25vh",
+      height: ({ height }) => (height ? height : "25vh"),
     },
   },
   base: {
@@ -307,7 +312,7 @@ const styles = makeStyles((theme) => ({
     width: "100%",
     padding: "1em 2.5em",
     [theme.breakpoints.down("sm")]: {
-      padding: "1em 1.5em",
+      padding: "1em 0em",
     },
   },
   backButton: {
@@ -317,6 +322,13 @@ const styles = makeStyles((theme) => ({
     "&:hover": {
       transform: "scale(1.05)",
       background: "#FFFFFF",
+    },
+    [theme.breakpoints.down("sm")]: {
+      transform: "scale(0.75)",
+      "&:hover": {
+        transform: "scale(1)",
+        background: "#FFFFFF",
+      },
     },
   },
   editButton: {
