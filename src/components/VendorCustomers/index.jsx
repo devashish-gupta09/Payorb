@@ -272,7 +272,6 @@ function VendorCustomers() {
             )
           );
 
-    console.log(rows);
     return (
       <Grid className={classes.root}>
         <PageTitle title="Payorb | Customers" />
@@ -450,17 +449,17 @@ function VendorCustomers() {
                 })}
               </TableBody>
             </Table>
-            {formattedCustomers?.length > rowsPerPage && (
-              <TablePagination
-                count={rows.length}
-                rowsPerPageOptions={[10]}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                component="div"
-                onPageChange={handleChangePage}
-              />
-            )}
           </TableContainer>
+          {formattedCustomers?.length > rowsPerPage && (
+            <TablePagination
+              count={rows.length}
+              rowsPerPageOptions={[10]}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              component="div"
+              onPageChange={handleChangePage}
+            />
+          )}
         </Grid>
       </Grid>
     );

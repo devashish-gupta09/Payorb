@@ -62,7 +62,7 @@ function VendorRevenueUserAggSec() {
         >
           <Grid item xs={12} sm={6} className={`${classes.box}`}>
             <ValueCard
-              title={`₹ ${numeral(stats.totalRevenue).format("0,0")}`}
+              title={`₹ ${numeral(stats.ytdOrderAmountTotal).format("0,0")}`}
               subTitle={"Total Revenue"}
               photo={"/assets/vendorDashboard/yearlyTotalRevenue.svg"}
               bottomText={"This year"}
@@ -71,7 +71,7 @@ function VendorRevenueUserAggSec() {
           </Grid>
           <Grid item xs={12} sm={6} className={`${classes.box}`}>
             <ValueCard
-              title={`${numeral(stats.totalCustomers).format("0,0")}`}
+              title={`${numeral(stats.ytdOrderCustomerTotal).format("0,0")}`}
               subTitle={"Total Bookings"}
               photo={"/assets/vendorDashboard/yearlyTotalBookings.svg"}
               bottomText={"This year"}
@@ -80,7 +80,7 @@ function VendorRevenueUserAggSec() {
           </Grid>
           <Grid item xs={12} sm={6} className={`${classes.box}`}>
             <ValueCard
-              title={`₹ ${numeral(stats.lastMonthSummary.revenue).format(
+              title={`₹ ${numeral(stats.lastMonthOrderAmountTotal).format(
                 "0,0"
               )}`}
               subTitle={`Total Revenue (last month)`}
@@ -91,7 +91,7 @@ function VendorRevenueUserAggSec() {
           </Grid>
           <Grid item xs={12} sm={6} className={`${classes.box}`}>
             <ValueCard
-              title={`${numeral(stats.lastMonthSummary.customers).format(
+              title={`${numeral(stats.lastMonthOrderCustomersTotal).format(
                 "0,0"
               )}`}
               subTitle={"Total bookings (last month)"}

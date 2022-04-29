@@ -54,7 +54,7 @@ export const styles = makeStyles((theme) => ({
     // width: "20%",
     fontWeight: "bold",
     padding: "0.75em 2.5em",
-    marginRight: "1 em",
+    marginRight: "1em",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },

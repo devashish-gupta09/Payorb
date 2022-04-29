@@ -4,13 +4,14 @@ import {
   Grid,
   TextField,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@material-ui/core";
 import axios from "axios";
 
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
-import useMobileDetect from "use-mobile-detect-hook";
 
 import { globalStyles } from "../../../styles/globalStyles";
 import { ALERT_TYPES } from "../../constants/alerts";
@@ -68,7 +69,9 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
   const { dispatch } = useUserAuthDetails();
   const { Alert, showAlert } = useAlertSnackbar();
   const [edit, setEdit] = useState();
-  const { isMobile } = useMobileDetect();
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [enabled, setEnabled] = useState(false);
   const {
@@ -167,13 +170,13 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
       <form onSubmit={formik.handleSubmit}>
         <Grid container>
           <Grid container item sm={7}>
-            <Grid style={{ padding: "2em" }}>
+            <Grid style={{ padding: isMobile ? "0" : "2em" }}>
               <Grid
                 container
                 item
                 sm={12}
                 style={{
-                  padding: "2em 15% 2em 15%",
+                  padding: isMobile ? "2em" : "2em 15% 2em 15%",
                   boxShadow: "0 0 5px 0px rgba(0,0,0,0.25)",
                   borderRadius: "5px",
                 }}
@@ -280,8 +283,14 @@ function ProfilePaymentSection({ profileData, updateProfile }) {
                   alignItems="center"
                   className={classes.saveButtonContainer}
                 >
-                  <Grid style={{ paddingRight: "0.5em" }}>
+                  <Grid
+                    style={{
+                      paddingRight: isMobile ? "1em" : "0.5em",
+                      marginBottom: isMobile ? "1em" : 0,
+                    }}
+                  >
                     <ButtonCapsule
+                      buttonStyle={classes.saveButton}
                       text={"Fetch details"}
                       onClick={() => setEnabled(!enabled)}
                     ></ButtonCapsule>

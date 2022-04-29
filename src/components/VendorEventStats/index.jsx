@@ -240,16 +240,16 @@ function VendorEventsStats() {
                 })}
               </TableBody>
             </Table>
-            <TablePagination
-              page={page}
-              rowsPerPageOptions={[5, 10, 20]}
-              component="div"
-              count={totalEvents}
-              rowsPerPage={rowsPerPage}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
           </TableContainer>
+          <TablePagination
+            page={page}
+            rowsPerPageOptions={[5, 10, 20]}
+            component="div"
+            count={totalEvents}
+            rowsPerPage={rowsPerPage}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
         </Grid>
       </Grid>
     );
