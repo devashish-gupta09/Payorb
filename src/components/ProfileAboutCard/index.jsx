@@ -25,7 +25,6 @@ const profileAboutSectionValidation = Yup.object({
 });
 
 function ProfileAboutCard({ profileData, vendor = true, updateProfile }) {
-  const classes = styles();
   const router = useRouter();
   const { Alert, showAlert } = useAlertSnackbar();
   const [aboutEdit, setAboutEdit] = useState(true);
@@ -51,6 +50,8 @@ function ProfileAboutCard({ profileData, vendor = true, updateProfile }) {
       }
     },
   });
+
+  const classes = styles({ isVendor: vendor });
 
   const handleOnProfileClick = () => {
     router.push(
@@ -134,8 +135,12 @@ function ProfileAboutCard({ profileData, vendor = true, updateProfile }) {
               onBlur={formik.handleBlur}
               maxRow={8}
               minRow={8}
+              // className={classes.aboutText}
               disabled={!vendor || aboutEdit}
-              InputProps={{ disableUnderline: true }}
+              InputProps={{
+                classes: classes.aboutText,
+                disableUnderline: true,
+              }}
               error={formik.touched.about && Boolean(formik.errors.about)}
               placeholder={
                 vendor ? "Please add some information about yourself" : ""
@@ -192,6 +197,11 @@ function ProfileAboutCard({ profileData, vendor = true, updateProfile }) {
 }
 
 const styles = makeStyles((theme) => ({
+  aboutText: {
+    "& .MuiInputBase-input.Mui-disabled": {
+      color: ({ isVendor }) => (isVendor ? "black" : "#8B8B8B"),
+    },
+  },
   root: {
     borderRadius: "0.8em",
     padding: "2em",
