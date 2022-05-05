@@ -25,6 +25,7 @@ import { globalStyles } from "../../../styles/globalStyles";
 import { ALERT_TYPES } from "../../constants/alerts";
 import { EVENT_STATUS } from "../../constants/events";
 import useAlertSnackbar from "../../hooks/useAlertSnackbar";
+import useFetchVendorCustomers from "../../hooks/useFetchCustomers";
 import useFetchEvents from "../../hooks/useFetchEvents";
 import { sendNotificationToCustomers } from "../../services/notification";
 
@@ -86,6 +87,8 @@ function VendorPromotions({ vendorId }) {
     limit: 400,
   });
 
+  const { customers, loading: customerLoading } = useFetchVendorCustomers();
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -120,30 +123,28 @@ function VendorPromotions({ vendorId }) {
 
   const sendNotification = async () => {
     try {
-      const filteredEvents =
-        selectedValueForFilter.length > 0
-          ? formattedEvents.filter(
-              (event) => event.link === selectedValueForFilter[0]
-            )
-          : [];
-
-      const res = await Promise.allSettled(
-        filteredEvents?.length > 0
-          ? filteredEvents.map(async (event) =>
-              sendNotificationToCustomers({
-                eventId: event.link,
-              })
-            )
-          : formattedEvents
-              .filter((event) => event.selected)
-              .map(async (event) =>
-                sendNotificationToCustomers({
-                  eventId: event.link,
-                })
-              )
+      const filtered = formattedEvents.find((event) =>
+        selectedValueForFilter.includes(event.link)
       );
 
-      if (res.some((r) => !r.success)) {
+      let finalEvents = [];
+      if (filtered) {
+        finalEvents = formattedEvents
+          ?.filter(
+            (event) => event.selected && new Date(event.endDate) < new Date()
+            // filtered.category === event.category
+          )
+          .map((event) => event.link);
+      } else {
+        throw new Error("Select an event from upcoming events list");
+      }
+
+      const res = await sendNotificationToCustomers({
+        eventId: filtered.link,
+        filterEventIds: finalEvents,
+      });
+
+      if (res?.success) {
         showAlert("Notification already sent");
       } else if (res) {
         showAlert("Notification sent");
@@ -202,7 +203,9 @@ function VendorPromotions({ vendorId }) {
   }
 
   if (formattedEvents?.length) {
+    // Rows of the table are past or ongoing events.
     const rows = formattedEvents
+      .filter((event) => new Date(event.endDate) <= new Date())
       .map((event) =>
         createData(
           event.link,
@@ -216,11 +219,20 @@ function VendorPromotions({ vendorId }) {
           event.selected
         )
       )
-      .filter((val) =>
-        selectedValueForFilter?.length > 0
-          ? selectedValueForFilter.includes(val.link)
-          : true
-      );
+      .filter((val) => {
+        // if no filter selected, return all past events
+        if (selectedValueForFilter?.length === 0) return true;
+
+        const selectedEvent = formattedEvents.find((event) =>
+          selectedValueForFilter.includes(event.link)
+        );
+
+        if (!selectedEvent) {
+          return true;
+        }
+
+        return val.count > 0;
+      });
 
     return (
       <Grid className={classes.root}>
@@ -280,6 +292,7 @@ function VendorPromotions({ vendorId }) {
               <MenuItem style={{ fontSize: "0.8em" }} value={""}>
                 {"None"}
               </MenuItem>
+              {/* Render only upcoming events. */}
               {events
                 .filter((event) => new Date(event.startDate) > new Date())
                 .map((event) => (
